@@ -1,0 +1,14 @@
+D:\OneDrive\Documents\Programming\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\BudgetApplication.exe.config
+D:\OneDrive\Documents\Programming\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\BudgetApplication.exe
+D:\OneDrive\Documents\Programming\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\BudgetApplication.pdb
+D:\OneDrive\Documents\Programming\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\BudgetApplication.csprojResolveAssemblyReference.cache
+D:\OneDrive\Documents\Programming\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\MainWindow.g.cs
+D:\OneDrive\Documents\Programming\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\App.g.cs
+D:\OneDrive\Documents\Programming\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\BudgetApplication_MarkupCompile.cache
+D:\OneDrive\Documents\Programming\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\BudgetApplication_MarkupCompile.lref
+D:\OneDrive\Documents\Programming\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\MainWindow.baml
+D:\OneDrive\Documents\Programming\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\BudgetApplication.g.resources
+D:\OneDrive\Documents\Programming\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\BudgetApplication.Properties.Resources.resources
+D:\OneDrive\Documents\Programming\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\BudgetApplication.csproj.GenerateResource.Cache
+D:\OneDrive\Documents\Programming\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\BudgetApplication.exe
+D:\OneDrive\Documents\Programming\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\BudgetApplication.pdb
