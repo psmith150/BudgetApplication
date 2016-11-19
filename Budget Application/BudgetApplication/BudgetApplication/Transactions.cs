@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BudgetApplication.HelperClasses
 {
-    public class Transaction
+    public class Transaction : INotifyPropertyChanged
     {
         private DateTime _date;
         private String _item;
         private String _payee;
-        private decimal _price;
+        private decimal _amount;
         private String _category;
         private String _comment;
         private PaymentMethod _paymentMethod;
 
-        public Transaction(String item, String payee, decimal price, String category, DateTime? date = null, String comment = "", PaymentMethod paymentMethod = new CheckingAccount("DefaultChecking"))
+        public Transaction(String item, String payee, decimal price, String category, PaymentMethod paymentMethod, DateTime? date = null, String comment = "")
         {
             if (date == null)
             {
@@ -22,11 +23,13 @@ namespace BudgetApplication.HelperClasses
             _date = (DateTime) date;
             _item = item;
             _payee = payee;
-            _price = price;
+            _amount = price;
             _category = category;
             _comment = comment;
             _paymentMethod = paymentMethod;
         }
+
+        #region Getters and setters
 
         public DateTime Date
         {
@@ -37,6 +40,7 @@ namespace BudgetApplication.HelperClasses
             set
             {
                 _date = value;
+                NotifyPropertyChanged("Date");
             }
         }
 
@@ -51,6 +55,7 @@ namespace BudgetApplication.HelperClasses
                 if (!String.IsNullOrEmpty(value))
                 {
                     _item = String.Copy(value);
+                    NotifyPropertyChanged("Item");
                 }
             }
         }
@@ -66,19 +71,21 @@ namespace BudgetApplication.HelperClasses
                 if (!String.IsNullOrEmpty(value))
                 {
                     _payee = String.Copy(value);
+                    NotifyPropertyChanged("Payee");
                 }
             }
         }
 
-        public decimal Price
+        public decimal Amount
         {
             get
             {
-                return _price;
+                return _amount;
             }
             set
             {
-                _price = value;
+                _amount = value;
+                NotifyPropertyChanged("Amount");
             }
         }
 
@@ -92,6 +99,7 @@ namespace BudgetApplication.HelperClasses
             {
                 //TODO: check if category is valid
                 _category = String.Copy(value);
+                NotifyPropertyChanged("Category");
             }
         }
         
@@ -108,16 +116,46 @@ namespace BudgetApplication.HelperClasses
                     value = "";
                 }
                 _comment = value;
+                NotifyPropertyChanged("Comment");
             }
         }
 
+        //TODO
         public PaymentMethod PaymentMethod
         {
-
+            get
+            {
+                return _paymentMethod;
+            }
+            set
+            {
+                _paymentMethod = value;
+                NotifyPropertyChanged("PaymentMethod");
+            }
         }
+
+        #endregion
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Private Helpers
+
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
     }
 
-    abstract class PaymentMethod
+    public abstract class PaymentMethod
     {
         private String _name;
 
@@ -146,9 +184,14 @@ namespace BudgetApplication.HelperClasses
     {
         private decimal _creditLimit;
         private decimal _remainingCredit;
-        private List<Transaction> _transactions;
         
-        public CreditCard(decimal creditLimit)
+        public CreditCard(String name)
+        {
+            this.Name = name;
+            _creditLimit = 300;
+        }
+
+        public CreditCard(String name, decimal creditLimit)
         {
             if (creditLimit <= 0)
             {
@@ -156,13 +199,44 @@ namespace BudgetApplication.HelperClasses
             }
             _creditLimit = creditLimit;
         }
+
+        public decimal RemainingCredit
+        {
+            get
+            {
+                return _remainingCredit;
+            }
+            set
+            {
+                if (value >= 0)
+                {
+                    _remainingCredit = value;
+                }
+            }
+        }
     }
 
     public class CheckingAccount : PaymentMethod
     {
+        private int _checkNumber;
         public CheckingAccount(String name)
         {
-            
+            this.Name = name;
+        }
+
+        public int CheckNumber
+        {
+            get
+            {
+                return _checkNumber;
+            }
+            set
+            {
+                if (value >= 0)
+                {
+                    _checkNumber = value;
+                }
+            }
         }
     }
 
