@@ -61,7 +61,8 @@
                         <RowDefinition Height="50*" />
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0">
-                        <DatePicker SelectedDateFormat="Short"/>
+                        <!--<ComboBox x:Name="comboBox" ItemsSource="{Binding Categories}"/>-->
+                        <DatePicker></DatePicker>
                     </Border>
                     <Border Grid.Row="1">
                         <DataGrid x:Name="Transactions" ItemsSource="{Binding Transactions}" Background="DarkGray" AutoGenerateColumns="False">
@@ -70,7 +71,20 @@
                                 <DataGridTextColumn Header="Date" Binding="{Binding Path=Date, StringFormat=\{0:MM/dd/yyyy\}}"/>
                                 <DataGridTextColumn Header="Payee" Binding="{Binding Path=Payee}"/>
                                 <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, StringFormat=\{0:C\}}"/>
-                                <DataGridTextColumn Header="Category" Binding="{Binding Path=Category}"/>
+                                <DataGridTemplateColumn Header="Category">
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <ComboBox IsEditable="False" 
+                                                Text="{Binding Category,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                ItemsSource="{Binding Path=DataContext.Categories, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=Category}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="Payment Method" Binding="{Binding Path=PaymentMethod}"/>
                                 <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}"/>
                             </DataGrid.Columns>

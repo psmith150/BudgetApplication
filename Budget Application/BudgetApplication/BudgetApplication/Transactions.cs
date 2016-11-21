@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace BudgetApplication.HelperClasses
+namespace BudgetApplication.Model
 {
     public class Transaction : INotifyPropertyChanged
     {
@@ -10,23 +10,19 @@ namespace BudgetApplication.HelperClasses
         private String _item;
         private String _payee;
         private decimal _amount;
-        private String _category;
+        private Category _category;
         private String _comment;
         private PaymentMethod _paymentMethod;
 
-        public Transaction(String item, String payee, decimal price, String category, PaymentMethod paymentMethod, DateTime? date = null, String comment = "")
+        public Transaction()
         {
-            if (date == null)
-            {
-                date = DateTime.Today;
-            }
-            _date = (DateTime) date;
-            _item = item;
-            _payee = payee;
-            _amount = price;
-            _category = category;
-            _comment = comment;
-            _paymentMethod = paymentMethod;
+            _date = DateTime.Today;
+            _item = "";
+            _payee = "";
+            _amount = 0;
+            _category = null;
+            _comment = "";
+            _paymentMethod = null;
         }
 
         #region Getters and setters
@@ -89,16 +85,16 @@ namespace BudgetApplication.HelperClasses
             }
         }
 
-        public String Category
+        public Category Category
         {
             get
             {
-                return String.Copy(_category);
+                return _category;
             }
             set
             {
                 //TODO: check if category is valid
-                _category = String.Copy(value);
+                _category = value;
                 NotifyPropertyChanged("Category");
             }
         }
