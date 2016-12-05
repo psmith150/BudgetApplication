@@ -5,94 +5,66 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetApplication"
         mc:Ignorable="d"
-        Title="Budget Manager" Height="350" Width="525" WindowState="Maximized">
+        Title="Budget Manager"
+        WindowState="Maximized"
+        Style="{StaticResource CustomWindowStyle}">
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
-    <DockPanel>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2" >
-            <TabControl.Resources>
-                <Style x:Key="TabHeader" TargetType="{x:Type TabItem}">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type TabItem}">
-                                <Grid>
-                                    <Border 
-                                        Name="Border"
-                                        Margin="0,0,-4,0" 
-                                        Background="Green"
-                                        BorderBrush="Black" 
-                                        BorderThickness="1,1,1,1" 
-                                        CornerRadius="2,12,0,0" >
-                                        <ContentPresenter x:Name="ContentSite"
-                                            VerticalAlignment="Center"
-                                            HorizontalAlignment="Center"
-                                            ContentSource="Header"
-                                            Margin="12,2,12,2"
-                                            RecognizesAccessKey="True"/>
-                                    </Border>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="Border" Property="Background" Value="LightGreen" />
-                                    </Trigger>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Foreground" Value="Red"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </TabControl.Resources>
-            <TabItem Style="{StaticResource TabHeader}" Header="Budget">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            <TabItem Style="{StaticResource TabHeader}" Header="Spending">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            <TabItem Style="{StaticResource TabHeader}" Header="Budget vs Spending">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            <TabItem Style="{StaticResource TabHeader}" Header="Transactions">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50" />
-                        <RowDefinition Height="50*" />
-                    </Grid.RowDefinitions>
-                    <Border Grid.Row="0">
-                        <!--<ComboBox x:Name="comboBox" ItemsSource="{Binding Categories}"/>-->
-                        <DatePicker></DatePicker>
-                    </Border>
-                    <Border Grid.Row="1">
-                        <DataGrid x:Name="Transactions" ItemsSource="{Binding Transactions}" Background="DarkGray" AutoGenerateColumns="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Item" Binding="{Binding Path=Item, Mode=TwoWay}"/>
-                                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date, StringFormat=\{0:MM/dd/yyyy\}}"/>
-                                <DataGridTextColumn Header="Payee" Binding="{Binding Path=Payee}"/>
-                                <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, StringFormat=\{0:C\}}"/>
-                                <DataGridTemplateColumn Header="Category">
-                                    <DataGridTemplateColumn.CellEditingTemplate>
-                                        <DataTemplate>
-                                            <ComboBox IsEditable="False" 
+    <Window.Resources>
+    </Window.Resources>
+    <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
+        <TabControl.Resources>
+            <Style TargetType="{x:Type TabPanel}">
+                <Setter Property="Background" Value="Red"></Setter>
+            </Style>
+        </TabControl.Resources>
+        <TabItem Style="{StaticResource TabHeader}" Header="Budget">
+            <Grid Background="#FFE5E5E5"/>
+        </TabItem>
+        <TabItem Style="{StaticResource TabHeader}" Header="Spending">
+            <Grid Background="#FFE5E5E5"/>
+        </TabItem>
+        <TabItem Style="{StaticResource TabHeader}" Header="Budget vs Spending">
+            <Grid Background="#FFE5E5E5"/>
+        </TabItem>
+        <TabItem Style="{StaticResource TabHeader}" Header="Transactions">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50*" />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0">
+                    <!--<ComboBox x:Name="comboBox" ItemsSource="{Binding Categories}"/>-->
+                    <DatePicker></DatePicker>
+                </Border>
+                <Border Grid.Row="1">
+                    <DataGrid x:Name="Transactions" ItemsSource="{Binding Transactions}" Background="DarkGray" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Item" Binding="{Binding Path=Item, Mode=TwoWay}"/>
+                            <DataGridTextColumn Header="Date" Binding="{Binding Path=Date, StringFormat=\{0:MM/dd/yyyy\}}"/>
+                            <DataGridTextColumn Header="Payee" Binding="{Binding Path=Payee}"/>
+                            <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, StringFormat=\{0:C\}}"/>
+                            <DataGridTemplateColumn Header="Category">
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox IsEditable="False" 
                                                 Text="{Binding Category,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                 ItemsSource="{Binding Path=DataContext.Categories, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Path=Category}" />
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="Payment Method" Binding="{Binding Path=PaymentMethod}"/>
-                                <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Border>
-                </Grid>
-            </TabItem>
-        </TabControl>
-
-    </DockPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=Category}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Payment Method" Binding="{Binding Path=PaymentMethod}"/>
+                            <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+            </Grid>
+        </TabItem>
+    </TabControl>
 </Window>
