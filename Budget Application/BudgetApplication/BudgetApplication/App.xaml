@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:BudgetApplication"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary Source="/StyleDictionary.xaml"/>
+        <ResourceDictionary Source="StyleDictionary.xaml"/>
     </Application.Resources>
 </Application>

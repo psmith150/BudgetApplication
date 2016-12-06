@@ -24,5 +24,12 @@ namespace BudgetApplication
         {
             InitializeComponent();
         }
+
+        private void GroupsAndCategories_Click(object sender, RoutedEventArgs e)
+        {
+            //Open popup
+            GroupsAndCategoriesWindow popup = new GroupsAndCategoriesWindow();
+            popup.ShowDialog();
+        }
     }
 }

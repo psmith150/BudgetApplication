@@ -10,18 +10,21 @@ using System.Collections.ObjectModel;
 
 namespace BudgetApplication
 {
-    public class MainWindowViewModel
+    public class MainViewModel
     {
         private ObservableCollection<Transaction> _transactions;
         private ObservableCollection<Category> _categories;
         private ObservableCollection<Group> _groups;
-        public MainWindowViewModel()
+        private ObservableCollection<PaymentMethod> _paymentMethods;
+        public MainViewModel()
         {
             _categories = new ObservableCollection<Category>();
             _groups = new ObservableCollection<Group>();
             _transactions = new ObservableCollection<Transaction>();
+            _paymentMethods = new ObservableCollection<PaymentMethod>();
             CreditCard testCard = new CreditCard("testcard1");
-            Group testGroup = new Model.Group(false, "Test Group");
+            _paymentMethods.Add(testCard);
+            Group testGroup = new Group(false, "Test Group");
             _groups.Add(testGroup);
             Category testCategory = new Model.Category(testGroup, "test Category");
             _categories.Add(testCategory);
@@ -35,11 +38,14 @@ namespace BudgetApplication
             testTransaction.PaymentMethod = testCard;
             AddTransaction(testTransaction);
         }
-        public ObservableCollection<Transaction> Transactions
+
+        #region Common to all tabs
+
+        public ObservableCollection<Group> Groups
         {
             get
             {
-                return _transactions;
+                return _groups;
             }
             private set
             {
@@ -47,10 +53,20 @@ namespace BudgetApplication
             }
         }
 
-        public bool AddTransaction(Transaction transaction)
+        public bool AddGroup(Group group)
         {
-            //TODO: verify valid transaction
-            _transactions.Add(transaction);
+            foreach (Group currGroup in _groups)
+            {
+                if (currGroup.Name.Equals(group))
+                {
+                    return false;
+                }
+            }
+            if (String.IsNullOrEmpty(group.Name))
+            {
+                return false;
+            }
+            _groups.Add(group);
             return true;
         }
 
@@ -99,5 +115,55 @@ namespace BudgetApplication
             }
             return false;
         }
+
+        public ObservableCollection<PaymentMethod> PaymentMethods
+        {
+            get
+            {
+                return _paymentMethods;
+            }
+            private set
+            {
+
+            }
+        }
+
+        public bool AddPaymentMethod(PaymentMethod paymentMethod)
+        {
+            _paymentMethods.Add(paymentMethod);
+            return true;
+        }
+        #endregion
+
+        #region Budget tab
+        #endregion
+
+        #region Spending tab
+        #endregion
+
+        #region Comparison tab
+        #endregion
+
+        #region Transaction tab
+
+        public ObservableCollection<Transaction> Transactions
+        {
+            get
+            {
+                return _transactions;
+            }
+            private set
+            {
+
+            }
+        }
+
+        public bool AddTransaction(Transaction transaction)
+        {
+            //TODO: verify valid transaction
+            _transactions.Add(transaction);
+            return true;
+        }
+        #endregion
     }
 }

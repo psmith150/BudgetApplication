@@ -56,9 +56,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Budget.cs" />
-    <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="GroupsAndCategoriesWindow.xaml.cs">
+      <DependentUpon>GroupsAndCategoriesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainViewModel.cs" />
     <Compile Include="MoneyGrid.cs" />
     <Compile Include="Transactions.cs" />
+    <Page Include="GroupsAndCategoriesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
