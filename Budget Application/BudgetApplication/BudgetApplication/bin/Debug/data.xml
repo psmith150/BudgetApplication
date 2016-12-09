@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Data>
+  <Groups>
+    <Group>
+      <Name>Test Group</Name>
+      <IsIncome>False</IsIncome>
+    </Group>
+    <Group>
+      <Name>Income</Name>
+      <IsIncome>False</IsIncome>
+    </Group>
+  </Groups>
+  <Categories>
+    <Category>
+      <Name>test Category</Name>
+      <Group>Test Group</Group>
+    </Category>
+	<Category>
+      <Name>Paycheck</Name>
+      <Group>Income</Group>
+    </Category>
+  </Categories>
+  <PaymentMethods>
+    <CreditCard>
+	  <Name>testCard</Name>
+	  <CreditLimit>300</CreditLimit>
+	</CreditCard>
+  </PaymentMethods>
+  <Transactions>
+    <Transaction>
+	  <Date>12/8/2016</Date>
+	  <Item>Test Item</Item>
+	  <Payee>"Test payee</Payee>
+	  <Amount>10.00</Amount>
+	  <Comment>Test #1</Comment>
+	  <Category>test Category</Category>
+	  <PaymentMethod>testCard</PaymentMethod>
+	</Transaction>
+  </Transactions>
+</Data>

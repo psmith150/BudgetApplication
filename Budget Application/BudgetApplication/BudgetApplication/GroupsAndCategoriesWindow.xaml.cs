@@ -23,6 +23,10 @@ namespace BudgetApplication
         public GroupsAndCategoriesWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(CategoryList.ItemsSource);
             GroupList.SelectedIndex = 0;
             view.Filter = GroupFilter;
@@ -31,7 +35,8 @@ namespace BudgetApplication
         private bool GroupFilter(object item)
         {
             String selectedGroup = (GroupList.SelectedItem as Group).Name;
-            return true;
+            return ((item as Category).Group.Name.Equals(selectedGroup));
+            //return true;
         }
 
         private void AddGroup_Click(object sender, RoutedEventArgs e)
@@ -56,6 +61,7 @@ namespace BudgetApplication
 
         private void GroupList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            String selectedGroup = (GroupList.SelectedItem as Group).Name;
             CollectionViewSource.GetDefaultView(CategoryList.ItemsSource).Refresh();
         }
     }

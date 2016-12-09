@@ -154,6 +154,7 @@ namespace BudgetApplication.Model
     public abstract class PaymentMethod
     {
         private String _name;
+        private String _type;
 
         public String Name
         {
@@ -170,9 +171,24 @@ namespace BudgetApplication.Model
             }
         }
 
+        public String Type
+        {
+            get
+            {
+                return String.Copy(_type);
+            }
+            set
+            {
+                if (!String.IsNullOrEmpty(value))
+                {
+                    _type = String.Copy(value);
+                }
+            }
+        }
+
         public override String ToString()
         {
-            return this.Name;
+            return (this.Type + "," + this.Name);
         }
     }
 
@@ -181,14 +197,10 @@ namespace BudgetApplication.Model
         private decimal _creditLimit;
         private decimal _remainingCredit;
         
-        public CreditCard(String name)
+        public CreditCard(String name, decimal creditLimit = 300)
         {
             this.Name = name;
-            _creditLimit = 300;
-        }
-
-        public CreditCard(String name, decimal creditLimit)
-        {
+            this.Type = "Credit Card";
             if (creditLimit <= 0)
             {
                 creditLimit = 0;
@@ -218,6 +230,7 @@ namespace BudgetApplication.Model
         public CheckingAccount(String name)
         {
             this.Name = name;
+            this.Type = "Checking Account";
         }
 
         public int CheckNumber

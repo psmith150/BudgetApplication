@@ -13,10 +13,18 @@
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Name="GroupsAndCategories" Click="GroupsAndCategories_Click">
                 <TextBlock>Groups and Categories</TextBlock>
+            </Button>
+            <Button Grid.Column="1" Name="SaveData" Command="{Binding SaveData_ClickCommand}">
+                <TextBlock>Save Data</TextBlock>
+            </Button>
+            <Button Grid.Column="2" Name="LoadData" Command="{Binding LoadData_ClickCommand}">
+                <TextBlock>Load Data</TextBlock>
             </Button>
         </Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2">

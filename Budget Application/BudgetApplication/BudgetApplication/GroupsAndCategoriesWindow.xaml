@@ -5,10 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetApplication"
         mc:Ignorable="d"
-        Title="GroupsAndCategoriesWindow" Height="300" Width="300">
-    <Window.DataContext>
-        <local:MainViewModel/>
-    </Window.DataContext>
+        Title="GroupsAndCategoriesWindow" Height="300" Width="300" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

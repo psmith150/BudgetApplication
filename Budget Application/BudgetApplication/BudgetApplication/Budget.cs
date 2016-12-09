@@ -11,6 +11,10 @@ namespace BudgetApplication.Model
         {
             _group = group;
             _name = String.Copy(name);
+            if (group == null)
+            {
+                throw new ArgumentException("Null group");
+            }
         }
 
         public String Name
@@ -30,7 +34,10 @@ namespace BudgetApplication.Model
 
         public Group Group
         {
-            get; set;
+            get
+            {
+                return _group;
+            }
         }
 
         public bool IsIncome()

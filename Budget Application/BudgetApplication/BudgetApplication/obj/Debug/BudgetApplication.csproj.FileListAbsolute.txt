@@ -47,3 +47,6 @@ C:\Users\patricks\OneDrive\Documents\Programming\BudgetApplication\Budget Applic
 C:\Users\patricks\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\BudgetApplication.csproj.GenerateResource.Cache
 C:\Users\patricks\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\GroupsAndCategoriesWindow.g.cs
 C:\Users\patricks\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\GroupsAndCategoriesWindow.baml
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\GroupsAndCategoriesWindow.g.cs
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\App.baml
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\GroupsAndCategoriesWindow.baml

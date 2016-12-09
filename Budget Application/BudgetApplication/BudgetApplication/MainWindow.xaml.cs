@@ -29,6 +29,7 @@ namespace BudgetApplication
         {
             //Open popup
             GroupsAndCategoriesWindow popup = new GroupsAndCategoriesWindow();
+            popup.DataContext = this.DataContext;
             popup.ShowDialog();
         }
     }
