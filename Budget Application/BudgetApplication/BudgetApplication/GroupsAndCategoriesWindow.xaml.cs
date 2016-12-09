@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BudgetApplication.Model;
+using System.Collections.ObjectModel;
+
 
 namespace BudgetApplication
 {
@@ -23,7 +25,11 @@ namespace BudgetApplication
         public GroupsAndCategoriesWindow()
         {
             InitializeComponent();
+
         }
+
+        public event Action<Group> AddGroup;
+        public event Action<Category> AddCategory;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -36,12 +42,12 @@ namespace BudgetApplication
         {
             String selectedGroup = (GroupList.SelectedItem as Group).Name;
             return ((item as Category).Group.Name.Equals(selectedGroup));
-            //return true;
         }
 
         private void AddGroup_Click(object sender, RoutedEventArgs e)
         {
-
+            ObservableCollection<Group> groups = GroupList.ItemsSource as ObservableCollection<Group>;
+            groups.Add(new Group());
         }
 
         private void RemoveGroup_Click(object sender, RoutedEventArgs e)
@@ -51,7 +57,9 @@ namespace BudgetApplication
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-
+            //MessageBox.Show((GroupList.SelectedItem as Group).ToString());
+            ObservableCollection<Category> categories = CategoryList.ItemsSource as ObservableCollection<Category>;
+            categories.Add(new Category((GroupList.SelectedItem as Group)));
         }
 
         private void RemoveCategory_Click(object sender, RoutedEventArgs e)
@@ -61,6 +69,9 @@ namespace BudgetApplication
 
         private void GroupList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if ((GroupList.SelectedItem as Group) == null)
+                return;
+
             String selectedGroup = (GroupList.SelectedItem as Group).Name;
             CollectionViewSource.GetDefaultView(CategoryList.ItemsSource).Refresh();
         }

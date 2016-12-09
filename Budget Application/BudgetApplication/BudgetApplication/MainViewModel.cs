@@ -23,8 +23,6 @@ namespace BudgetApplication
         public MainViewModel()
         {
             LoadData();
-            _paymentMethods = new ObservableCollection<PaymentMethod>();
-            CreditCard testCard = new CreditCard("testcard1");
             _canExecute = true;
         }
 
@@ -177,7 +175,6 @@ namespace BudgetApplication
         #region Saving and Opening files
         public void SaveData()
         {
-            MessageBox.Show("Gets here 1");
             using (FileStream file = new FileStream("data.xml", FileMode.Create))
             {
                 using (StreamWriter stream = new StreamWriter(file))
@@ -206,6 +203,49 @@ namespace BudgetApplication
                             writer.WriteStartElement("Category");
                             writer.WriteElementString("Name", category.Name);
                             writer.WriteElementString("Group", category.Group.Name);
+                            writer.WriteEndElement();
+                        }
+                        writer.WriteEndElement();
+
+
+                        writer.WriteStartElement("PaymentMethods");
+                        foreach (PaymentMethod payment in _paymentMethods)
+                        {
+                            //MessageBox.Show(String.Format("{0}", category.Name));
+                            if(payment.PaymentType() == PaymentMethod.Type.CreditCard)
+                            {
+                                CreditCard card = payment as CreditCard;
+                                writer.WriteStartElement("CreditCard");
+                                writer.WriteElementString("Name", card.Name);
+                                writer.WriteElementString("CreditLimit", card.CreditLimit.ToString());
+                            }
+                            else if (payment.PaymentType() == PaymentMethod.Type.CheckingAccount)
+                            {
+                                CheckingAccount account = payment as CheckingAccount;
+                                writer.WriteStartElement("CheckingAccount");
+                                writer.WriteElementString("Name", account.Name);
+                            }
+                            else
+                            {
+                                throw new XmlException("Invalid payment method: " + payment.Name);
+                            }
+                            writer.WriteEndElement();
+                        }
+                        writer.WriteEndElement();
+
+
+                        writer.WriteStartElement("Transactions");
+                        foreach (Transaction transaction in _transactions)
+                        {
+                            //MessageBox.Show(String.Format("{0}", category.Name));
+                            writer.WriteStartElement("Transaction");
+                            writer.WriteElementString("Date", transaction.Date.ToString());
+                            writer.WriteElementString("Item", transaction.Item);
+                            writer.WriteElementString("Payee", transaction.Payee);
+                            writer.WriteElementString("Amount", transaction.Amount.ToString());
+                            writer.WriteElementString("Comment", transaction.Comment);
+                            writer.WriteElementString("Category", transaction.Category.Name);
+                            writer.WriteElementString("PaymentMethod", transaction.PaymentMethod.Name);
                             writer.WriteEndElement();
                         }
                         writer.WriteEndElement();
@@ -321,7 +361,6 @@ namespace BudgetApplication
                             {
                                 foreach (XmlNode property in paymentNode.ChildNodes)
                                 {
-                                    decimal creditLimit = 300;
                                     if (property.Name.Equals("Name"))
                                     {
                                         name = property.InnerText;
@@ -413,7 +452,7 @@ namespace BudgetApplication
                             transaction.Comment = comment;
                             transaction.Category = category;
                             transaction.PaymentMethod = payment;
-                            _transactions.Add(new Transaction());
+                            _transactions.Add(transaction);
                         }
                     }
                     else

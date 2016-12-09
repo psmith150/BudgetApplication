@@ -16,17 +16,23 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-            <Button Name="AddGroup" Style="{StaticResource AddGroupButton}" Click="AddGroup_Click"/>
-            <Button Name="RemoveGroup" Style="{StaticResource RemoveGroupButton}" Click="RemoveGroup_Click"/>
+            <Button Name="AddGroupButton" Style="{StaticResource AddGroupButton}" Click="AddGroup_Click"/>
+            <Button Name="RemoveGroupButton" Style="{StaticResource RemoveGroupButton}" Click="RemoveGroup_Click"/>
         </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-            <Button Name="AddCategory" Style="{StaticResource AddGroupButton}" Click="AddCategory_Click"/>
-            <Button Name="RemoveCategory" Style="{StaticResource RemoveGroupButton}" Click="RemoveCategory_Click"/>
+            <Button Name="AddCategoryButton" Style="{StaticResource AddGroupButton}" Click="AddCategory_Click"/>
+            <Button Name="RemoveCategoryButton" Style="{StaticResource RemoveGroupButton}" Click="RemoveCategory_Click"/>
         </StackPanel>
-        <ListView Name="GroupList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Groups}" SelectionChanged="GroupList_SelectionChanged">
-        </ListView>
-        <ListView Name="CategoryList" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Categories}">
-            
-        </ListView>
+        <DataGrid Name="GroupList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Groups}" AutoGenerateColumns="False" SelectionChanged="GroupList_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Group" Binding="{Binding Path=Name}"/>
+                <DataGridCheckBoxColumn Header="Is Income?" Binding="{Binding Path=IsIncome}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Name="CategoryList" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Categories}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Category" Binding="{Binding Path=Name}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

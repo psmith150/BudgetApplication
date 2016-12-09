@@ -7,7 +7,7 @@ namespace BudgetApplication.Model
         private String _name;
         private Group _group;
 
-        public Category(Group group, String name = "Default Category")
+        public Category(Group group, String name = "New Category")
         {
             _group = group;
             _name = String.Copy(name);
@@ -56,7 +56,7 @@ namespace BudgetApplication.Model
         private String _name;
         private bool _isIncome;
 
-        public Group(bool isIncome = false, String name = "Default Group")
+        public Group(bool isIncome = false, String name = "New Group")
         {
             _isIncome = isIncome;
             _name = String.Copy(name);
@@ -79,7 +79,14 @@ namespace BudgetApplication.Model
 
         public bool IsIncome
         {
-            get; set;
+            get
+            {
+                return _isIncome;
+            }
+            set
+            {
+                _isIncome = value;
+            }
         }
 
         public override string ToString()

@@ -2,39 +2,47 @@
 <Data>
   <Groups>
     <Group>
-      <Name>Test Group</Name>
+      <Name>Expenditures</Name>
       <IsIncome>False</IsIncome>
     </Group>
     <Group>
       <Name>Income</Name>
-      <IsIncome>False</IsIncome>
+      <IsIncome>True</IsIncome>
     </Group>
   </Groups>
   <Categories>
     <Category>
-      <Name>test Category</Name>
-      <Group>Test Group</Group>
+      <Name>Food</Name>
+      <Group>Expenditures</Group>
     </Category>
-	<Category>
+    <Category>
       <Name>Paycheck</Name>
       <Group>Income</Group>
+    </Category>
+    <Category>
+      <Name>Auto</Name>
+      <Group>Expenditures</Group>
+    </Category>
+    <Category>
+      <Name>Other</Name>
+      <Group>Expenditures</Group>
     </Category>
   </Categories>
   <PaymentMethods>
     <CreditCard>
-	  <Name>testCard</Name>
-	  <CreditLimit>300</CreditLimit>
-	</CreditCard>
+      <Name>Capital One QuicksilverOne</Name>
+      <CreditLimit>5300</CreditLimit>
+    </CreditCard>
   </PaymentMethods>
   <Transactions>
     <Transaction>
-	  <Date>12/8/2016</Date>
-	  <Item>Test Item</Item>
-	  <Payee>"Test payee</Payee>
-	  <Amount>10.00</Amount>
-	  <Comment>Test #1</Comment>
-	  <Category>test Category</Category>
-	  <PaymentMethod>testCard</PaymentMethod>
-	</Transaction>
+      <Date>12/8/2016 12:00:00 AM</Date>
+      <Item>Test Item</Item>
+      <Payee>Test payee</Payee>
+      <Amount>10.00</Amount>
+      <Comment>Test #1</Comment>
+      <Category>Food</Category>
+      <PaymentMethod>Capital One QuicksilverOne</PaymentMethod>
+    </Transaction>
   </Transactions>
 </Data>

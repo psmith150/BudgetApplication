@@ -154,7 +154,7 @@ namespace BudgetApplication.Model
     public abstract class PaymentMethod
     {
         private String _name;
-        private String _type;
+        public enum Type { CreditCard, CheckingAccount };
 
         public String Name
         {
@@ -171,24 +171,11 @@ namespace BudgetApplication.Model
             }
         }
 
-        public String Type
-        {
-            get
-            {
-                return String.Copy(_type);
-            }
-            set
-            {
-                if (!String.IsNullOrEmpty(value))
-                {
-                    _type = String.Copy(value);
-                }
-            }
-        }
+        abstract public Type PaymentType();
 
         public override String ToString()
         {
-            return (this.Type + "," + this.Name);
+            return (this.PaymentType() + "," + this.Name);
         }
     }
 
@@ -200,12 +187,28 @@ namespace BudgetApplication.Model
         public CreditCard(String name, decimal creditLimit = 300)
         {
             this.Name = name;
-            this.Type = "Credit Card";
             if (creditLimit <= 0)
             {
                 creditLimit = 0;
             }
             _creditLimit = creditLimit;
+        }
+
+        public override Type PaymentType()
+        {
+            return Type.CreditCard;
+        }
+
+        public decimal CreditLimit
+        {
+            get
+            {
+                return _creditLimit;
+            }
+            set
+            {
+                _creditLimit = value;
+            }
         }
 
         public decimal RemainingCredit
@@ -230,7 +233,11 @@ namespace BudgetApplication.Model
         public CheckingAccount(String name)
         {
             this.Name = name;
-            this.Type = "Checking Account";
+        }
+
+        public override Type PaymentType()
+        {
+            return Type.CheckingAccount;
         }
 
         public int CheckNumber
