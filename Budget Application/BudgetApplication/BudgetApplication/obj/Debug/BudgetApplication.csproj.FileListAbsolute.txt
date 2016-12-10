@@ -82,3 +82,16 @@ C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\BudgetA
 C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
 C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\Microsoft.Practices.ServiceLocation.xml
 C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\BudgetApplication.csprojResolveAssemblyReference.cache
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\GalaSoft.MvvmLight.dll
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\GalaSoft.MvvmLight.Extras.dll
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\GalaSoft.MvvmLight.Platform.dll
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\System.Windows.Interactivity.dll
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\GalaSoft.MvvmLight.pdb
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\GalaSoft.MvvmLight.xml
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\GalaSoft.MvvmLight.Extras.pdb
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\GalaSoft.MvvmLight.Extras.xml
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\GalaSoft.MvvmLight.Platform.pdb
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\GalaSoft.MvvmLight.Platform.xml
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\Microsoft.Practices.ServiceLocation.xml

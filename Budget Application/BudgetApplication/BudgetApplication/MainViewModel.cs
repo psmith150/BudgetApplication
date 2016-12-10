@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using System.Xml;
+using System.Collections.Specialized;
 
 namespace BudgetApplication
 {
@@ -20,8 +21,16 @@ namespace BudgetApplication
         private ObservableCollection<Category> _categories;
         private ObservableCollection<Group> _groups;
         private ObservableCollection<PaymentMethod> _paymentMethods;
+        private ObservableCollection<MoneyGridRow> _budgetValues;
         public MainViewModel()
         {
+            _groups = new ObservableCollection<Group>();
+            _categories = new ObservableCollection<Category>();
+            _transactions = new ObservableCollection<Transaction>();
+            _paymentMethods = new ObservableCollection<PaymentMethod>();
+            _budgetValues = new ObservableCollection<MoneyGridRow>();
+
+            _categories.CollectionChanged += UpdateCategories;
             LoadData();
             _canExecute = true;
         }
@@ -120,9 +129,43 @@ namespace BudgetApplication
             _paymentMethods.Add(paymentMethod);
             return true;
         }
+
+        public ObservableCollection<MoneyGridRow> BudgetRows
+        {
+            get
+            {
+                return _budgetValues;
+            }
+            set
+            {
+                _budgetValues = value;
+            }
+        }
         #endregion
 
         #region Budget tab
+        public void UpdateCategories(Object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (Category newCategory in e.NewItems)
+                {
+                    //MessageBox.Show(newCategory.Group.Name);
+                    _budgetValues.Add(new MoneyGridRow(newCategory.Group, newCategory));
+                }
+            }
+
+            if (e.OldItems != null)
+            {
+                foreach (Category oldCategory in e.OldItems)
+                {
+                    MoneyGridRow oldRow = _budgetValues.Where(row => row.Category == oldCategory).ElementAt(0);
+                    if (oldRow == null)
+                        throw new ArgumentException("Cannot locate deleted row");
+                    _budgetValues.Remove(oldRow);
+                }
+            }
+        }
         #endregion
 
         #region Spending tab
@@ -153,6 +196,7 @@ namespace BudgetApplication
         }
         #endregion
 
+        #region Command Helpers
         private ICommand _saveData_ClickCommand;
         private ICommand _loadData_ClickCommand;
         public ICommand SaveData_ClickCommand
@@ -171,6 +215,7 @@ namespace BudgetApplication
             }
         }
         private bool _canExecute;
+        #endregion
 
         #region Saving and Opening files
         public void SaveData()
@@ -260,10 +305,10 @@ namespace BudgetApplication
 
         public void LoadData()
         {
-            _groups = new ObservableCollection<Group>();
-            _categories = new ObservableCollection<Category>();
-            _transactions = new ObservableCollection<Transaction>();
-            _paymentMethods = new ObservableCollection<PaymentMethod>();
+            _groups.Clear();
+            _categories.Clear();
+            _transactions.Clear();
+            _paymentMethods.Clear();
             //MessageBox.Show("Gets here 2");
             try
             {
@@ -467,6 +512,7 @@ namespace BudgetApplication
             }
         }
         #endregion
+
     }
 
     public class CommandHandler : ICommand

@@ -29,7 +29,26 @@
         </Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
             <TabItem Style="{StaticResource TabHeader}" Header="Budget">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="BudgetValues" ItemsSource="{Binding BudgetRows}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Group" Binding="{Binding Path=Group}"/>
+                            <DataGridTextColumn Header="Category" Binding="{Binding Path=Category}"/>
+                            <DataGridTextColumn Header="January" Binding="{Binding Path=Values[0], StringFormat=\{0:C\}}"/>
+                            <DataGridTextColumn Header="February" Binding="{Binding Path=Values[1], StringFormat=\{0:C\}}"/>
+                            <DataGridTextColumn Header="March" Binding="{Binding Path=Values[2], StringFormat=\{0:C\}}"/>
+                            <DataGridTextColumn Header="April" Binding="{Binding Path=Values[3], StringFormat=\{0:C\}}"/>
+                            <DataGridTextColumn Header="May" Binding="{Binding Path=Values[4], StringFormat=\{0:C\}}"/>
+                            <DataGridTextColumn Header="June" Binding="{Binding Path=Values[5], StringFormat=\{0:C\}}"/>
+                            <DataGridTextColumn Header="July" Binding="{Binding Path=Values[6], StringFormat=\{0:C\}}"/>
+                            <DataGridTextColumn Header="August" Binding="{Binding Path=Values[7], StringFormat=\{0:C\}}"/>
+                            <DataGridTextColumn Header="September" Binding="{Binding Path=Values[8], StringFormat=\{0:C\}}"/>
+                            <DataGridTextColumn Header="October" Binding="{Binding Path=Values[9], StringFormat=\{0:C\}}"/>
+                            <DataGridTextColumn Header="November" Binding="{Binding Path=Values[10], StringFormat=\{0:C\}}"/>
+                            <DataGridTextColumn Header="December" Binding="{Binding Path=Values[11], StringFormat=\{0:C\}}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
             <TabItem Style="{StaticResource TabHeader}" Header="Spending">
                 <Grid Background="#FFE5E5E5"/>
