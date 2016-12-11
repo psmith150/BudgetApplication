@@ -75,20 +75,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Budget.cs" />
-    <Compile Include="GroupsAndCategoriesWindow.xaml.cs">
+    <Compile Include="Model\Budget.cs" />
+    <Compile Include="Model\GroupsAndCategoriesWindow.xaml.cs">
       <DependentUpon>GroupsAndCategoriesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainViewModel.cs" />
-    <Compile Include="MoneyGrid.cs" />
-    <Compile Include="Transactions.cs" />
+    <Compile Include="MyObservableCollection.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="Model\MoneyGrid.cs" />
+    <Compile Include="Model\Transactions.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Page Include="GroupsAndCategoriesWindow.xaml">
+    <Page Include="Model\GroupsAndCategoriesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -96,11 +96,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="StyleDictionary.xaml">
+    <Page Include="Application\StyleDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -123,7 +123,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="Application\packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

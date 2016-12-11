@@ -31,7 +31,7 @@
         </DataGrid>
         <DataGrid Name="CategoryList" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Categories}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Category" Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn Header="Category" Binding="{Binding Path=Name, Mode=TwoWay}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
