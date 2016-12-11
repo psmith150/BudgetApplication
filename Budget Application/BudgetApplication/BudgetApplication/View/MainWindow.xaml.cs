@@ -31,7 +31,7 @@ namespace BudgetApplication
             GroupsAndCategoriesWindow popup = new GroupsAndCategoriesWindow();
             popup.DataContext = this.DataContext;
             popup.ShowDialog();
-//BudgetValues.Items.Refresh();
+            BudgetValues.Items.Refresh();
         }
     }
 }

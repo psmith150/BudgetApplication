@@ -24,6 +24,7 @@ namespace BudgetApplication.ViewModel
         private MyObservableCollection<Group> _groups;
         private MyObservableCollection<PaymentMethod> _paymentMethods;
         private MyObservableCollection<MoneyGridRow> _budgetValues;
+        private Group budgetTotals;
         public MainViewModel()
         {
             _groups = new MyObservableCollection<Group>();
@@ -32,13 +33,16 @@ namespace BudgetApplication.ViewModel
             _paymentMethods = new MyObservableCollection<PaymentMethod>();
             _budgetValues = new MyObservableCollection<MoneyGridRow>();
 
-            //_categories.CollectionChanged += UpdateCategories;
+            budgetTotals = new Group(false, "Totals");
+            Category assets = new Category("Assets");
+            budgetTotals.Categories.Add(assets);
+
+            _categories.CollectionChanged += UpdateCategories;
             LoadData();
-            _budgetValues.Add(new MoneyGridRow(_categories.ElementAt(0).Group, _categories.ElementAt(0)));
+            _budgetValues.Add(new MoneyGridRow(budgetTotals, assets));
 
             _canExecute = true;
         }
-
         #region Common to all tabs
 
         public ObservableCollection<Group> Groups
@@ -116,6 +120,18 @@ namespace BudgetApplication.ViewModel
             return false;
         }
 
+        private Group GetCategoryGroup(Category category)
+        {
+            foreach (Group group in _groups)
+            {
+                if(group.Categories.Contains(category))
+                {
+                    return group;
+                }
+            }
+            return null;
+        }
+
         public MyObservableCollection<PaymentMethod> PaymentMethods
         {
             get
@@ -148,28 +164,35 @@ namespace BudgetApplication.ViewModel
         #endregion
 
         #region Budget tab
-        //public void UpdateCategories(Object sender, NotifyCollectionChangedEventArgs e)
-        //{
-        //    if (e.NewItems != null)
-        //    {
-        //        foreach (Category newCategory in e.NewItems)
-        //        {
-        //            //MessageBox.Show(newCategory.Group.Name);
-        //            _budgetValues.Add(new MoneyGridRow(newCategory.Group, newCategory));
-        //        }
-        //    }
+        public void UpdateCategories(Object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (Category newCategory in e.NewItems)
+                {
+                    //MessageBox.Show(newCategory.Group.Name);
+                    try
+                    {
+                        _budgetValues.Add(new MoneyGridRow(GetCategoryGroup(newCategory), newCategory));
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Debug.WriteLine(newCategory.Name);
+                    }
+                }
+            }
 
-        //    if (e.OldItems != null)
-        //    {
-        //        foreach (Category oldCategory in e.OldItems)
-        //        {
-        //            MoneyGridRow oldRow = _budgetValues.Where(row => row.Category == oldCategory).ElementAt(0);
-        //            if (oldRow == null)
-        //                throw new ArgumentException("Cannot locate deleted row");
-        //            _budgetValues.Remove(oldRow);
-        //        }
-        //    }
-        //}
+            if (e.OldItems != null)
+            {
+                foreach (Category oldCategory in e.OldItems)
+                {
+                    MoneyGridRow oldRow = _budgetValues.Where(row => row.Category == oldCategory).ElementAt(0);
+                    if (oldRow == null)
+                        throw new ArgumentException("Cannot locate deleted row");
+                    _budgetValues.Remove(oldRow);
+                }
+            }
+        }
         #endregion
 
         #region Spending tab
@@ -224,8 +247,6 @@ namespace BudgetApplication.ViewModel
         #region Saving and Opening files
         public void SaveData()
         {
-            Debug.WriteLine(_budgetValues.ElementAt(0).Category.Name);
-            return;
             using (FileStream file = new FileStream("data.xml", FileMode.Create))
             {
                 using (StreamWriter stream = new StreamWriter(file))
@@ -243,21 +264,19 @@ namespace BudgetApplication.ViewModel
                             writer.WriteStartElement("Group");
                             writer.WriteElementString("Name", group.Name);
                             writer.WriteElementString("IsIncome", group.IsIncome.ToString());
+
+                            writer.WriteStartElement("Categories");
+                            foreach (Category category in group.Categories)
+                            {
+                                writer.WriteStartElement("Category");
+                                writer.WriteElementString("Name", category.Name);
+                                writer.WriteEndElement();
+                            }
+                            writer.WriteEndElement();
+
                             writer.WriteEndElement();
                         }
                         writer.WriteEndElement();
-
-                        writer.WriteStartElement("Categories");
-                        foreach (Category category in _categories)
-                        {
-                            //MessageBox.Show(String.Format("{0}", category.Name));
-                            writer.WriteStartElement("Category");
-                            writer.WriteElementString("Name", category.Name);
-                            writer.WriteElementString("Group", category.Group.Name);
-                            writer.WriteEndElement();
-                        }
-                        writer.WriteEndElement();
-
 
                         writer.WriteStartElement("PaymentMethods");
                         foreach (PaymentMethod payment in _paymentMethods)
@@ -331,6 +350,7 @@ namespace BudgetApplication.ViewModel
                         {
                             String name = null;
                             bool isIncome = false;
+                            MyObservableCollection<Category> categories = new MyObservableCollection<Category>();
                             foreach(XmlNode property in groupNode.ChildNodes)
                             {
                                 if (property.Name.Equals("Name"))
@@ -341,45 +361,34 @@ namespace BudgetApplication.ViewModel
                                 {
                                     isIncome = Boolean.Parse(property.InnerText);
                                 }
+                                else if (property.Name.Equals("Categories"))
+                                {
+                                    Group newGroup = new Group(isIncome, name);
+                                    _groups.Add(newGroup);
+                                    foreach (XmlNode categoryNode in property.ChildNodes)
+                                    {
+                                        String categoryName = null;
+                                        foreach (XmlNode categoryProperty in categoryNode.ChildNodes)
+                                        {
+                                            if (categoryProperty.Name.Equals("Name"))
+                                            {
+                                                categoryName = categoryProperty.InnerText;
+                                            }
+                                            else
+                                            {
+                                                throw new XmlException("Unknown category property: " + categoryProperty.Name);
+                                            }
+                                        }
+                                        Category newCategory = new Category(categoryName);
+                                        newGroup.Categories.Add(newCategory);
+                                        _categories.Add(newCategory);
+                                    }
+                                }
                                 else
                                 {
                                     throw new XmlException("Unknown group property: " + property.Name);
                                 }
                             }
-                            _groups.Add(new Group(isIncome, name));
-                        }
-                    }
-                    else if (nodeName.Equals("Categories"))
-                    {
-                        foreach (XmlNode categoryNode in node.ChildNodes)
-                        {
-                            String name = null;
-                            String groupName = null;
-                            Group group = null;
-                            foreach (XmlNode property in categoryNode.ChildNodes)
-                            {
-                                if (property.Name.Equals("Name"))
-                                {
-                                    name = property.InnerText;
-                                }
-                                else if (property.Name.Equals("Group"))
-                                {
-                                    groupName = property.InnerText;
-                                }
-                                else
-                                {
-                                    throw new XmlException("Unknown category property: " + property.Name);
-                                }
-                            }
-                            try
-                            {
-                                group = _groups.Single(x => x.Name.Equals(groupName));
-                            }
-                            catch (Exception ex)
-                            {
-                                throw new XmlException("Invalid group name: " + groupName);
-                            }
-                            _categories.Add(new Category(group, name));
                         }
                     }
                     else if (nodeName.Equals("PaymentMethods"))

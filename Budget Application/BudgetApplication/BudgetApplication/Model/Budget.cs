@@ -7,16 +7,10 @@ namespace BudgetApplication.Model
     public class Category : INotifyPropertyChanged
     {
         private String _name;
-        private Group _group;
 
-        public Category(Group group, String name = "New Category")
+        public Category( String name = "New Category")
         {
-            _group = group;
             _name = String.Copy(name);
-            if (group == null)
-            {
-                throw new ArgumentException("Null group");
-            }
         }
 
         public String Name
@@ -34,19 +28,6 @@ namespace BudgetApplication.Model
                     Debug.WriteLine("Category changed");
                 }
             }
-        }
-
-        public Group Group
-        {
-            get
-            {
-                return _group;
-            }
-        }
-
-        public bool IsIncome()
-        {
-            return _group.IsIncome;
         }
 
         public override string ToString()
@@ -76,11 +57,13 @@ namespace BudgetApplication.Model
     {
         private String _name;
         private bool _isIncome;
+        private MyObservableCollection<Category> _categories;
 
         public Group(bool isIncome = false, String name = "New Group")
         {
             _isIncome = isIncome;
             _name = String.Copy(name);
+            _categories = new MyObservableCollection<Category>();
         }
 
         public String Name
@@ -109,6 +92,19 @@ namespace BudgetApplication.Model
             {
                 _isIncome = value;
                 NotifyPropertyChanged("IsIncome");
+            }
+        }
+
+        public MyObservableCollection<Category> Categories
+        {
+            get
+            {
+                return _categories;
+            }
+            set
+            {
+                _categories = value;
+                NotifyPropertyChanged("Categories");
             }
         }
 
@@ -150,6 +146,8 @@ namespace BudgetApplication.Model
                 throw new ArgumentException("Category cannot be null");
             _group = group;
             _category = category;
+            _category.PropertyChanged += CategoryModified;
+            _group.PropertyChanged += GroupModified;
         }
 
         public Group Group
@@ -165,11 +163,6 @@ namespace BudgetApplication.Model
             get
             {
                 return _category;
-            }
-            set
-            {
-                _category = value;
-                NotifyPropertyChanged("Category");
             }
         }
 
@@ -193,6 +186,15 @@ namespace BudgetApplication.Model
         #endregion
 
         #region Private Helpers
+
+        private void CategoryModified(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged("Category");
+        }
+        private void GroupModified(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged("Group");
+        }
 
         private void NotifyPropertyChanged(string propertyName)
         {

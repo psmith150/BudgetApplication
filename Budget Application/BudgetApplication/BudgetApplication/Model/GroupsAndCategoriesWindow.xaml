@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetApplication"
         mc:Ignorable="d"
-        Title="GroupsAndCategoriesWindow" Height="300" Width="300" Loaded="Window_Loaded">
+        Title="GroupsAndCategoriesWindow" Height="300" Width="300" Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -29,7 +29,7 @@
                 <DataGridCheckBoxColumn Header="Is Income?" Binding="{Binding Path=IsIncome}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Name="CategoryList" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Categories}" AutoGenerateColumns="False">
+        <DataGrid Name="CategoryList" Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Category" Binding="{Binding Path=Name, Mode=TwoWay}"/>
             </DataGrid.Columns>

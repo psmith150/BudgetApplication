@@ -4,30 +4,97 @@
     <Group>
       <Name>Expenditures</Name>
       <IsIncome>False</IsIncome>
+	  <Categories>
+	    <Category>
+		  <Name>Food</Name>
+		</Category>
+		<Category>
+		  <Name>Auto and Transportation</Name>
+		</Category>
+		<Category>
+		  <Name>Other</Name>
+		</Category>
+		<Category>
+		  <Name>Home Improvement</Name>
+		</Category>
+		<Category>
+		  <Name>Clothes</Name>
+		</Category>
+		<Category>
+		  <Name>Jewelry Insurance</Name>
+		</Category>
+		<Category>
+		  <Name>Renter's Insurance</Name>
+		</Category>
+		<Category>
+		  <Name>2013 Subaru WRX Insurance</Name>
+		</Category>
+		<Category>
+		  <Name>2011 Jeep Liberty Insurance</Name>
+		</Category>
+	  </Categories>
     </Group>
-    <Group>
-      <Name>Income</Name>
-      <IsIncome>True</IsIncome>
-    </Group>
+	<Group>
+	  <Name>Income</Name>
+	  <IsIncome>True</IsIncome>
+	  <Categories>
+		<Category>
+		  <Name>Patrick's paycheck (EOM)</Name>
+		</Category>
+		<Category>
+		  <Name>Reimbursements</Name>
+		</Category>
+		<Category>
+		  <Name>Other income</Name>
+		</Category>
+	  </Categories>
+	</Group>
+	<Group>
+	  <Name>Assets</Name>
+	  <IsIncome>False</IsIncome>
+	  <Categories>
+		<Category>
+		  <Name>Patrick's Schwab Investments</Name>
+		</Category>
+	  </Categories>
+	</Group>
+	<Group>
+	  <Name>Rent and Utilities</Name>
+	  <IsIncome>False</IsIncome>
+	  <Categories>
+		<Category>
+		  <Name>Apartment Rent</Name>
+		</Category>
+		<Category>
+		  <Name>Electricity Bill</Name>
+		</Category>
+		<Category>
+		  <Name>Internet Bill</Name>
+		</Category>
+		<Category>
+		  <Name>Cell Phone Bill</Name>
+		</Category>
+	  </Categories>
+	</Group>
+	<Group>
+	  <Name>Savings</Name>
+	  <IsIncome>False</IsIncome>
+	  <Categories>
+		<Category>
+		  <Name>Emergency Savings</Name>
+		</Category>
+		<Category>
+		  <Name>Patrick's Savings</Name>
+		</Category>
+		<Category>
+		  <Name>Riley's Savings</Name>
+		</Category>
+		<Category>
+		  <Name>Travel Savings</Name>
+		</Category>
+	  </Categories>
+	</Group>
   </Groups>
-  <Categories>
-    <Category>
-      <Name>Food</Name>
-      <Group>Expenditures</Group>
-    </Category>
-    <Category>
-      <Name>Paycheck</Name>
-      <Group>Income</Group>
-    </Category>
-    <Category>
-      <Name>Auto</Name>
-      <Group>Expenditures</Group>
-    </Category>
-    <Category>
-      <Name>Other</Name>
-      <Group>Expenditures</Group>
-    </Category>
-  </Categories>
   <PaymentMethods>
     <CreditCard>
       <Name>Capital One QuicksilverOne</Name>

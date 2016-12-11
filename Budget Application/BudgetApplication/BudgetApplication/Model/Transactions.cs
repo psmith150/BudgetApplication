@@ -95,15 +95,8 @@ namespace BudgetApplication.Model
             {
                 //TODO: check if category is valid
                 _category = value;
+                _category.PropertyChanged += CategoryModified;
                 NotifyPropertyChanged("Category");
-            }
-        }
-
-        public Group Group
-        {
-            get
-            {
-                return _category.Group;
             }
         }
         
@@ -147,6 +140,11 @@ namespace BudgetApplication.Model
         #endregion
 
         #region Private Helpers
+
+        private void CategoryModified(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged("Category");
+        }
 
         private void NotifyPropertyChanged(string propertyName)
         {

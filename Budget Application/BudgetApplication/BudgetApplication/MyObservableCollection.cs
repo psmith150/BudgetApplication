@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace BudgetApplication
 {
@@ -39,6 +40,7 @@ namespace BudgetApplication
         public void MemberPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            Debug.WriteLine("A collection member was changed");
         }
     }
 }

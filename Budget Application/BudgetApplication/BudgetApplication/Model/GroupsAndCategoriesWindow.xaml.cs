@@ -23,6 +23,7 @@ namespace BudgetApplication
     /// </summary>
     public partial class GroupsAndCategoriesWindow : Window
     {
+        private CollectionView view;
         public GroupsAndCategoriesWindow()
         {
             InitializeComponent();
@@ -34,19 +35,12 @@ namespace BudgetApplication
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(CategoryList.ItemsSource);
             GroupList.SelectedIndex = 0;
-            view.Filter = GroupFilter;
-        }
-
-        private bool GroupFilter(object item)
-        {
-            String selectedGroup = (GroupList.SelectedItem as Group).Name;
-            return ((item as Category).Group.Name.Equals(selectedGroup));
         }
 
         private void AddGroup_Click(object sender, RoutedEventArgs e)
         {
+            //TODO
             ObservableCollection<Group> groups = GroupList.ItemsSource as ObservableCollection<Group>;
             groups.Add(new Group());
         }
@@ -58,9 +52,12 @@ namespace BudgetApplication
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
+            //TODO
+            return;
             //MessageBox.Show((GroupList.SelectedItem as Group).ToString());
             ObservableCollection<Category> categories = CategoryList.ItemsSource as ObservableCollection<Category>;
-            categories.Add(new Category((GroupList.SelectedItem as Group)));
+            categories.Add(new Category());
+
         }
 
         private void RemoveCategory_Click(object sender, RoutedEventArgs e)
@@ -73,8 +70,13 @@ namespace BudgetApplication
             if ((GroupList.SelectedItem as Group) == null)
                 return;
 
-            String selectedGroup = (GroupList.SelectedItem as Group).Name;
-            CollectionViewSource.GetDefaultView(CategoryList.ItemsSource).Refresh();
+            Group selectedGroup = (GroupList.SelectedItem as Group);
+            CategoryList.ItemsSource = selectedGroup.Categories;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
         }
     }
 }
