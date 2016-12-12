@@ -12,8 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
-namespace BudgetApplication
+namespace BudgetApplication.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -31,7 +32,6 @@ namespace BudgetApplication
             GroupsAndCategoriesWindow popup = new GroupsAndCategoriesWindow();
             popup.DataContext = this.DataContext;
             popup.ShowDialog();
-            BudgetValues.Items.Refresh();
         }
     }
 }

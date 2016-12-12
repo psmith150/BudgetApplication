@@ -14,6 +14,7 @@ using System.Xml;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace BudgetApplication.ViewModel
 {
@@ -24,7 +25,12 @@ namespace BudgetApplication.ViewModel
         private MyObservableCollection<Group> _groups;
         private MyObservableCollection<PaymentMethod> _paymentMethods;
         private MyObservableCollection<MoneyGridRow> _budgetValues;
-        private Group budgetTotals;
+        private MyObservableCollection<MoneyGridRow> _budgetTotals;
+        private MyObservableCollection<MoneyGridRow> _spendingValues;
+        private MyObservableCollection<MoneyGridRow> _spendingTotals;
+        private MyObservableCollection<MoneyGridRow> _comparisonValues;
+        private MyObservableCollection<MoneyGridRow> _comparisonTotals;
+        private Group budgetTotalGroup;
         public MainViewModel()
         {
             _groups = new MyObservableCollection<Group>();
@@ -32,14 +38,21 @@ namespace BudgetApplication.ViewModel
             _transactions = new MyObservableCollection<Transaction>();
             _paymentMethods = new MyObservableCollection<PaymentMethod>();
             _budgetValues = new MyObservableCollection<MoneyGridRow>();
+            _budgetTotals = new MyObservableCollection<MoneyGridRow>();
+            _spendingValues = new MyObservableCollection<MoneyGridRow>();
+            _spendingTotals = new MyObservableCollection<MoneyGridRow>();
+            _comparisonValues = new MyObservableCollection<MoneyGridRow>();
+            _comparisonTotals = new MyObservableCollection<MoneyGridRow>();
 
-            budgetTotals = new Group(false, "Totals");
-            Category assets = new Category("Assets");
-            budgetTotals.Categories.Add(assets);
+            budgetTotalGroup = new Group(false, "Totals");
 
             _categories.CollectionChanged += UpdateCategories;
+            _groups.CollectionChanged += UpdateGroups;
+            _budgetValues.CollectionChanged += UpdateBudgetTotals;
+            _transactions.CollectionChanged += UpdateSpendingValues;
             LoadData();
-            _budgetValues.Add(new MoneyGridRow(budgetTotals, assets));
+
+            BudgetRefreshCommand = new RelayCommand(CalculateBudgetColumnTotals, () => _canExecute);
 
             _canExecute = true;
         }
@@ -161,6 +174,102 @@ namespace BudgetApplication.ViewModel
                 _budgetValues = value;
             }
         }
+
+        public MyObservableCollection<MoneyGridRow> BudgetTotals
+        {
+            get
+            {
+                return _budgetTotals;
+            }
+            set
+            {
+                _budgetTotals = value;
+            }
+        }
+
+        public MyObservableCollection<MoneyGridRow> SpendingRows
+        {
+            get
+            {
+                return _spendingValues;
+            }
+            set
+            {
+                _spendingValues = value;
+            }
+        }
+
+        public MyObservableCollection<MoneyGridRow> SpendingTotals
+        {
+            get
+            {
+                return _spendingTotals;
+            }
+            set
+            {
+                _spendingTotals = value;
+            }
+        }
+
+        public MyObservableCollection<MoneyGridRow> ComparisonRows
+        {
+            get
+            {
+                return _spendingValues;
+            }
+            set
+            {
+                _spendingValues = value;
+            }
+        }
+
+        public MyObservableCollection<MoneyGridRow> ComparisonTotals
+        {
+            get
+            {
+                return _spendingTotals;
+            }
+            set
+            {
+                _spendingTotals = value;
+            }
+        }
+
+        private void CalculateColumnTotals(ObservableCollection<MoneyGridRow> columnTotals, String propertyName)
+        {
+            MessageBox.Show(propertyName);
+            foreach (Group group in _groups)
+            {
+                decimal[] groupSum = new decimal[12];
+                MoneyGridRow total;
+                try
+                {
+                    total = columnTotals.Single(x => x.Category.Name.Equals(group.Name));
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException("Could not find corresponding total row", ex);
+                }
+                foreach (Category category in group.Categories)
+                {
+                    try
+                    {
+                        MoneyGridRow row = columnTotals.Single(x => x.Group == group && x.Category == category);
+                        for (int i = 0; i < row.Values.Length; i++)
+                        {
+                            groupSum[i] += row.Values[i];
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ArgumentException("Could not find corresponding row", ex);
+                    }
+                }
+                total.Values = groupSum;
+                RaisePropertyChanged(propertyName);
+            }
+        }
+
         #endregion
 
         #region Budget tab
@@ -174,10 +283,45 @@ namespace BudgetApplication.ViewModel
                     try
                     {
                         _budgetValues.Add(new MoneyGridRow(GetCategoryGroup(newCategory), newCategory));
+                        //_spendingValues.Add(new MoneyGridRow(GetCategoryGroup(newCategory), newCategory));
+                        //_comparisonValues.Add(new MoneyGridRow(GetCategoryGroup(newCategory), newCategory));
                     }
                     catch (ArgumentException ex)
                     {
-                        Debug.WriteLine(newCategory.Name);
+                        //Debug.WriteLine("Could not match group to category " + newCategory.Name);
+                        throw new ArgumentException("Could not match group to category " + newCategory.Name, ex);
+                    }
+                }
+            }
+
+            if (e.OldItems != null)
+            {
+                foreach (Category oldCategory in e.OldItems)
+                {
+                    MoneyGridRow oldRow = _budgetValues.Where(row => row.Category == oldCategory).ElementAt(0);
+                    if (oldRow == null)
+                        throw new ArgumentException("Cannot locate deleted row");
+                    _budgetValues.Remove(oldRow);
+                    //TODO: remove from other collections
+                }
+            }
+        }
+        public void UpdateGroups(Object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (Group newGroup in e.NewItems)
+                {
+                    //MessageBox.Show(newCategory.Group.Name);
+                    Category newCategory = new Category(newGroup.Name);
+                    try
+                    {
+                        _budgetTotals.Add(new MoneyGridRow(budgetTotalGroup, newCategory));
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        //Debug.WriteLine("Could not match group to category " + newCategory.Name);
+                        throw new ArgumentException("Could not match group to category " + newGroup.Name, ex);
                     }
                 }
             }
@@ -193,9 +337,67 @@ namespace BudgetApplication.ViewModel
                 }
             }
         }
+
+        public void UpdateBudgetTotals(Object sender, NotifyCollectionChangedEventArgs e)
+        {
+            CalculateColumnTotals(_budgetTotals, "BudgetTotals");
+        }
+
+        public RelayCommand BudgetRefreshCommand
+        {
+            get;
+            private set;
+        }
+
+        private void CalculateBudgetColumnTotals()
+        {
+            CalculateColumnTotals(_budgetTotals, "BudgetTotals");
+        }
+
+
         #endregion
 
         #region Spending tab
+        public void UpdateSpendingValues(Object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (Transaction newTransaction in e.NewItems)
+                {
+                    MoneyGridRow row;
+                    try
+                    {
+                        row = _spendingValues.Single(x => x.Category == newTransaction.Category);
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        throw new ArgumentException("Cannot find category for transaction category " + newTransaction.Category, ex);
+                    }
+                    //TODO: check year
+                    int month = newTransaction.Date.Month - 1;
+                    row.Values[month] += newTransaction.Amount;
+                }
+            }
+
+            if (e.OldItems != null)
+            {
+                foreach (Transaction oldTransaction in e.OldItems)
+                {
+                    MoneyGridRow row;
+                    try
+                    {
+                        row = _spendingValues.Single(x => x.Category == oldTransaction.Category);
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        throw new ArgumentException("Cannot find category for transaction category " + oldTransaction.Category, ex);
+                    }
+                    //TODO: check year
+                    int month = oldTransaction.Date.Month - 1;
+                    row.Values[month] -= oldTransaction.Amount;
+                }
+            }
+        }
         #endregion
 
         #region Comparison tab
@@ -270,6 +472,24 @@ namespace BudgetApplication.ViewModel
                             {
                                 writer.WriteStartElement("Category");
                                 writer.WriteElementString("Name", category.Name);
+
+                                writer.WriteStartElement("BudgetValues");
+                                MoneyGridRow row;
+                                try
+                                {
+                                    row = _budgetValues.Single(x => x.Group == group && x.Category == category);
+                                }
+                                catch
+                                {
+                                    throw new XmlException("Cannot find budget row for category " + category.Name + " and group " + group.Name);
+                                }
+                                foreach (decimal value in row.Values)
+                                {
+                                    Debug.WriteLine("gets here");
+                                    writer.WriteElementString("Value", value.ToString());
+                                }
+                                writer.WriteEndElement();
+                                
                                 writer.WriteEndElement();
                             }
                             writer.WriteEndElement();
@@ -374,14 +594,32 @@ namespace BudgetApplication.ViewModel
                                             {
                                                 categoryName = categoryProperty.InnerText;
                                             }
+                                            else if (categoryProperty.Name.Equals("BudgetValues"))
+                                            {
+                                                Category newCategory = new Category(categoryName);
+                                                newGroup.Categories.Add(newCategory);
+                                                _categories.Add(newCategory);
+                                                MoneyGridRow row;
+                                                try
+                                                {
+                                                    row = _budgetValues.Single(x => x.Group == newGroup && x.Category == newCategory);
+                                                }
+                                                catch
+                                                {
+                                                    throw new XmlException("Cannot find budget row for category " + newCategory.Name + " and group " + newGroup.Name);
+                                                }
+                                                decimal[] values = new decimal[12];
+                                                for (int i=0; i<12; i++)
+                                                {
+                                                    values[i] = Decimal.Parse(categoryProperty.ChildNodes[i].InnerText);
+                                                }
+                                                row.Values = values;
+                                            }
                                             else
                                             {
                                                 throw new XmlException("Unknown category property: " + categoryProperty.Name);
                                             }
                                         }
-                                        Category newCategory = new Category(categoryName);
-                                        newGroup.Categories.Add(newCategory);
-                                        _categories.Add(newCategory);
                                     }
                                 }
                                 else

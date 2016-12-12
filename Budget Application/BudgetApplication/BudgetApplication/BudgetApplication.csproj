@@ -80,11 +80,17 @@
       <DependentUpon>GroupsAndCategoriesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MyObservableCollection.cs" />
+    <Compile Include="MoneyGrid.xaml.cs">
+      <DependentUpon>MoneyGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="Model\MoneyGrid.cs" />
     <Compile Include="Model\Transactions.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="Model\GroupsAndCategoriesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MoneyGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

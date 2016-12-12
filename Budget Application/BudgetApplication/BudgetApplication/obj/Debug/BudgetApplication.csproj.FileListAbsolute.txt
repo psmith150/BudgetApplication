@@ -95,3 +95,5 @@ D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApp
 D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\App.g.cs
 D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\App.baml
 D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\BudgetApplication.csprojResolveAssemblyReference.cache
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\MoneyGrid.g.cs
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\MoneyGrid.baml
