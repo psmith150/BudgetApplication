@@ -76,7 +76,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Budget.cs" />
-    <Compile Include="Model\GroupsAndCategoriesWindow.xaml.cs">
+    <Compile Include="View\GroupsAndCategoriesWindow.xaml.cs">
       <DependentUpon>GroupsAndCategoriesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MyObservableCollection.cs" />
@@ -86,7 +86,7 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Model\Transactions.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Page Include="Model\GroupsAndCategoriesWindow.xaml">
+    <Page Include="View\GroupsAndCategoriesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

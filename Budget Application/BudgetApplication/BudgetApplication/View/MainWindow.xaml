@@ -10,6 +10,10 @@
         DataContext="{Binding Main, Source={StaticResource Locator}}" ResizeMode="CanResizeWithGrip"
         MinWidth="350">
     <Window.Resources>
+        <CollectionViewSource x:Key="TransactionsView" Source="{Binding Transactions}">
+        </CollectionViewSource>
+        <CollectionViewSource x:Key="PaymentTransactionsView" Source="{Binding Transactions}" Filter="PaymentTransactionsView_Filter">
+        </CollectionViewSource>
     </Window.Resources>
     <DockPanel Background="White">
         <Grid DockPanel.Dock="Top">
@@ -31,7 +35,7 @@
         </Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TabItem Style="{StaticResource TabHeader}" Header="Budget">
-                <local:MoneyGrid ValuesDataSource="{Binding BudgetRows}" TotalsDataSource="{Binding BudgetTotals}" IsReadOnly="false">
+                <local:MoneyGrid ValuesDataSource="{Binding BudgetRows}" TotalsDataSource="{Binding BudgetTotals}" IsReadOnly="false" OnEdit="{Binding BudgetRefreshCommand}">
                 </local:MoneyGrid>
             </TabItem>
             <TabItem Style="{StaticResource TabHeader}" Header="Spending">
@@ -53,7 +57,7 @@
                         <DatePicker></DatePicker>
                     </Border>
                     <Border Grid.Row="1">
-                        <DataGrid x:Name="Transactions" ItemsSource="{Binding Transactions}" Background="DarkGray" AutoGenerateColumns="False">
+                        <DataGrid x:Name="Transactions" ItemsSource="{Binding Source={StaticResource TransactionsView}}" Background="DarkGray" AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="Date">
                                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -98,6 +102,61 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </Border>
+                </Grid>
+            </TabItem>
+            <TabItem Style="{StaticResource TabHeader}" Header="Payment Methods">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" Orientation="Horizontal">
+                        <ComboBox x:Name="PaymentSelector" Width="Auto" ItemsSource="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" SelectedIndex="0" DisplayMemberPath="Name"/>
+                    </StackPanel>
+                    <DataGrid Grid.Row="1"  x:Name="PaymentTransactions" ItemsSource="{Binding Source={StaticResource PaymentTransactionsView}}" Background="DarkGray" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Date">
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding Path=Date}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=Date, StringFormat=\{0:MM/dd/yyyy\}}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Item" Binding="{Binding Path=Item, Mode=TwoWay}"/>
+                            <DataGridTextColumn Header="Payee" Binding="{Binding Path=Payee}"/>
+                            <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, StringFormat=\{0:C\}}"/>
+                            <DataGridComboBoxColumn Header="Category" SelectedValueBinding="{Binding Category}" DisplayMemberPath="Name">
+                                <DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Categories, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Categories, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
+                            <DataGridComboBoxColumn Header="Payment Method" SelectedValueBinding="{Binding PaymentMethod}" DisplayMemberPath="Name">
+                                <DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
+                            <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </TabItem>
         </TabControl>

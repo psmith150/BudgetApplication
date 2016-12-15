@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using BudgetApplication.Model;
 
 namespace BudgetApplication.View
 {
@@ -32,6 +33,23 @@ namespace BudgetApplication.View
             GroupsAndCategoriesWindow popup = new GroupsAndCategoriesWindow();
             popup.DataContext = this.DataContext;
             popup.ShowDialog();
+        }
+
+        private void PaymentTransactionsView_Filter(object sender, FilterEventArgs e)
+        {
+            Transaction transaction = e.Item as Transaction;
+            if (transaction != null && this.PaymentSelector.SelectedIndex >= 0)
+            {
+                Debug.WriteLine(this.PaymentSelector.SelectedIndex);
+                if ((PaymentSelector.SelectedValue as String).Equals(transaction.PaymentMethod.Name))
+                {
+                    e.Accepted = true;
+                }
+                else
+                {
+                    e.Accepted = false;
+                }
+            }
         }
     }
 }

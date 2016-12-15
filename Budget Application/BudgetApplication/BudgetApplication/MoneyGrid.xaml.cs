@@ -34,9 +34,11 @@ namespace BudgetApplication.View
 
         private void SetColumnMinWidth(object sender, RoutedEventArgs e)
         {
+            DataGridColumn column = ValuesGrid.Columns[0];
+            column.Width = new DataGridLength(1, DataGridLengthUnitType.Auto);
             for (int i = 2; i < ValuesGrid.Columns.Count; i++)
             {
-                DataGridColumn column = ValuesGrid.Columns[i];
+                column = ValuesGrid.Columns[i];
                 column.MinWidth = 50;
                 column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
@@ -82,6 +84,18 @@ namespace BudgetApplication.View
         // Using a DependencyProperty as the backing store for IsReadOnly.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsReadOnlyProperty =
             DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(MoneyGrid), new PropertyMetadata(false));
+
+
+
+        public ICommand OnEdit
+        {
+            get { return (ICommand)GetValue(OnEditProperty); }
+            set { SetValue(OnEditProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for OnEdit.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty OnEditProperty =
+            DependencyProperty.Register("OnEdit", typeof(ICommand), typeof(MoneyGrid), new PropertyMetadata(null));
 
 
     }

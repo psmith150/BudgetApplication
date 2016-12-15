@@ -16,7 +16,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 
-namespace BudgetApplication
+namespace BudgetApplication.View
 {
     /// <summary>
     /// Interaction logic for GroupsAndCategoriesWindow.xaml
@@ -40,14 +40,14 @@ namespace BudgetApplication
 
         private void AddGroup_Click(object sender, RoutedEventArgs e)
         {
-            //TODO
-            ObservableCollection<Group> groups = GroupList.ItemsSource as ObservableCollection<Group>;
-            groups.Add(new Group());
+            //AddGroupButton.Command.Execute(AddGroupButton.CommandParameter);
+            //GroupList.SelectedIndex = GroupList.Items.Count - 1;
         }
 
         private void RemoveGroup_Click(object sender, RoutedEventArgs e)
         {
-
+            //RemoveGroupButton.Command.
+            //GroupList.SelectedIndex = 0;
         }
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
@@ -55,8 +55,6 @@ namespace BudgetApplication
             //TODO
             return;
             //MessageBox.Show((GroupList.SelectedItem as Group).ToString());
-            ObservableCollection<Category> categories = CategoryList.ItemsSource as ObservableCollection<Category>;
-            categories.Add(new Category());
 
         }
 

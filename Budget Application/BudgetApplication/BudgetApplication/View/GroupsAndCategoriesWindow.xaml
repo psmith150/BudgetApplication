@@ -1,9 +1,10 @@
-﻿<Window x:Class="BudgetApplication.GroupsAndCategoriesWindow"
+﻿<Window x:Class="BudgetApplication.View.GroupsAndCategoriesWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BudgetApplication"
+        xmlns:local="clr-namespace:BudgetApplication.View"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="GroupsAndCategoriesWindow" Height="300" Width="300" Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
@@ -16,8 +17,9 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-            <Button Name="AddGroupButton" Style="{StaticResource AddGroupButton}" Click="AddGroup_Click"/>
-            <Button Name="RemoveGroupButton" Style="{StaticResource RemoveGroupButton}" Click="RemoveGroup_Click"/>
+            <Button Name="AddGroupButton" Style="{StaticResource AddGroupButton}" Command="{Binding AddGroupCommand}" Click="AddGroup_Click"/>
+            <Button Name="RemoveGroupButton" Style="{StaticResource RemoveGroupButton}" Command="{Binding RemoveGroupCommand}" CommandParameter="{Binding ElementName=GroupList, Path=SelectedItem}"
+                    Click="RemoveGroup_Click"/>
         </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
             <Button Name="AddCategoryButton" Style="{StaticResource AddGroupButton}" Click="AddCategory_Click"/>

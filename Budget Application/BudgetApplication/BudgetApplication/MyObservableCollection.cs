@@ -40,7 +40,7 @@ namespace BudgetApplication
         public void MemberPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-            Debug.WriteLine("A collection member was changed");
+            //Debug.WriteLine("A collection member was changed");
         }
     }
 }

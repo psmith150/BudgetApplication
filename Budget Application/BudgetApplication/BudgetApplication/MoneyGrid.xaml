@@ -27,7 +27,9 @@
                               Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="Column" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType=local:MoneyGrid, AncestorLevel=1}}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="CellEditEnding">
-                        <i:InvokeCommandAction Command="{Binding BudgetRefreshCommand}"/>
+                        <i:InvokeCommandAction Command="{Binding Path=OnEdit, RelativeSource={RelativeSource FindAncestor, 
+                                             AncestorType=local:MoneyGrid, 
+                                             AncestorLevel=1}}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <DataGrid.GroupStyle>
