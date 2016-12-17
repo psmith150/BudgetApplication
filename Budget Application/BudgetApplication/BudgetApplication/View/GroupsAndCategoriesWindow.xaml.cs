@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using BudgetApplication.Model;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Collections.Specialized;
 
 
 namespace BudgetApplication.View
@@ -23,11 +24,11 @@ namespace BudgetApplication.View
     /// </summary>
     public partial class GroupsAndCategoriesWindow : Window
     {
-        private CollectionView view;
+        private int lastGroupIndex;
+        private int lastCategoryIndex;
         public GroupsAndCategoriesWindow()
         {
             InitializeComponent();
-
         }
 
         public event Action<Group> AddGroup;
@@ -36,31 +37,50 @@ namespace BudgetApplication.View
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             GroupList.SelectedIndex = 0;
+            (GroupList.ItemsSource as MyObservableCollection<Group>).CollectionChanged += GroupRemoved;
+            (CategoryList.ItemsSource as MyObservableCollection<Category>).CollectionChanged += CategoryRemoved;
+
         }
 
         private void AddGroup_Click(object sender, RoutedEventArgs e)
         {
-            //AddGroupButton.Command.Execute(AddGroupButton.CommandParameter);
-            //GroupList.SelectedIndex = GroupList.Items.Count - 1;
+            GroupList.SelectedIndex = GroupList.Items.Count;
         }
 
-        private void RemoveGroup_Click(object sender, RoutedEventArgs e)
+        private void GroupRemoved(object sender, NotifyCollectionChangedEventArgs e)
         {
-            //RemoveGroupButton.Command.
             //GroupList.SelectedIndex = 0;
+            if (e.OldItems != null)
+            {
+                if (lastGroupIndex > 0)
+                {
+                    GroupList.SelectedIndex = lastGroupIndex - 1;
+                }
+                else
+                {
+                    GroupList.SelectedIndex = 0;
+                }
+            }
         }
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-            //TODO
-            return;
-            //MessageBox.Show((GroupList.SelectedItem as Group).ToString());
-
+            CategoryList.SelectedIndex = CategoryList.Items.Count;
         }
 
-        private void RemoveCategory_Click(object sender, RoutedEventArgs e)
+        private void CategoryRemoved(object sender, NotifyCollectionChangedEventArgs e)
         {
-
+            if (e.OldItems != null)
+            {
+                if(lastCategoryIndex > 0)
+                {
+                    CategoryList.SelectedIndex = lastCategoryIndex - 1;
+                }
+                else
+                {
+                    CategoryList.SelectedIndex = 0;
+                }
+            }
         }
 
         private void GroupList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -75,6 +95,16 @@ namespace BudgetApplication.View
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
+        }
+
+        private void RemoveGroupButton_Click(object sender, RoutedEventArgs e)
+        {
+            lastGroupIndex = GroupList.SelectedIndex;
+        }
+
+        private void RemoveCategoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            lastCategoryIndex = CategoryList.SelectedIndex;
         }
     }
 }

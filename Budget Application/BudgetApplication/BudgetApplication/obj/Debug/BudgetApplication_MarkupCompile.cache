@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\
 BudgetApplication
 none
 false
 DEBUG;TRACE
-C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\BudgetApplication\App.xaml
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\App.xaml
 41141470855
 
 12888284722
-69-2028461858
+69-1570152383
 View\GroupsAndCategoriesWindow.xaml;MoneyGrid.xaml;View\MainWindow.xaml;Application\StyleDictionary.xaml;
 
-True
+False
 

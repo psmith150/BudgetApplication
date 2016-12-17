@@ -132,6 +132,7 @@ namespace BudgetApplication.Model
         #endregion
     }
 
+
     public class MoneyGridRow : INotifyPropertyChanged
     {
         private Group _group;

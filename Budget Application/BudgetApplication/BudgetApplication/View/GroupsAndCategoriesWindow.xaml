@@ -19,11 +19,14 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
             <Button Name="AddGroupButton" Style="{StaticResource AddGroupButton}" Command="{Binding AddGroupCommand}" Click="AddGroup_Click"/>
             <Button Name="RemoveGroupButton" Style="{StaticResource RemoveGroupButton}" Command="{Binding RemoveGroupCommand}" CommandParameter="{Binding ElementName=GroupList, Path=SelectedItem}"
-                    Click="RemoveGroup_Click"/>
+                    Click="RemoveGroupButton_Click"/>
         </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-            <Button Name="AddCategoryButton" Style="{StaticResource AddGroupButton}" Click="AddCategory_Click"/>
-            <Button Name="RemoveCategoryButton" Style="{StaticResource RemoveGroupButton}" Click="RemoveCategory_Click"/>
+            <Button Name="AddCategoryButton" Style="{StaticResource AddGroupButton}"  Command="{Binding AddCategoryCommand}" CommandParameter="{Binding ElementName=GroupList, Path=SelectedItem}"
+                    Click="AddCategory_Click">
+            </Button>
+            <Button Name="RemoveCategoryButton" Style="{StaticResource RemoveGroupButton}" Command="{Binding RemoveCategoryCommand}" CommandParameter="{Binding ElementName=CategoryList, Path=SelectedItem}"
+                    Click="RemoveCategoryButton_Click"/>
         </StackPanel>
         <DataGrid Name="GroupList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Groups}" AutoGenerateColumns="False" SelectionChanged="GroupList_SelectionChanged">
             <DataGrid.Columns>

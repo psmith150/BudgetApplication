@@ -81,9 +81,7 @@ D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApp
 D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\GalaSoft.MvvmLight.Platform.xml
 D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
 D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\bin\Debug\Microsoft.Practices.ServiceLocation.xml
-D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\Model\GroupsAndCategoriesWindow.g.cs
 D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\View\MainWindow.g.cs
-D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\Model\GroupsAndCategoriesWindow.baml
 D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\Application\StyleDictionary.baml
 D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\View\MainWindow.baml
 D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\App.g.cs
@@ -99,3 +97,5 @@ C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\BudgetA
 C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\View\GroupsAndCategoriesWindow.g.cs
 C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\View\GroupsAndCategoriesWindow.baml
 C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\BudgetApplication.csprojResolveAssemblyReference.cache
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\View\GroupsAndCategoriesWindow.g.cs
+D:\OneDrive\Documents\Programming\BudgetApplication\Budget Application\BudgetApplication\BudgetApplication\obj\Debug\View\GroupsAndCategoriesWindow.baml

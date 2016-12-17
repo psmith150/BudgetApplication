@@ -58,12 +58,14 @@ namespace BudgetApplication.ViewModel
             BudgetRefreshCommand = new RelayCommand(OnBudgetValueUpdate, () => _canExecute);
             AddGroupCommand = new RelayCommand<Group>((group) => AddGroup(new Group()));
             RemoveGroupCommand = new RelayCommand<Group>((group) => RemoveGroup(group));
+            AddCategoryCommand = new RelayCommand<Group>((group) => AddCategory(group));
+            RemoveCategoryCommand = new RelayCommand<Category>((category) => RemoveCategory(category));
 
             _canExecute = true;
         }
         #region Common to all tabs
 
-        public ObservableCollection<Group> Groups
+        public MyObservableCollection<Group> Groups
         {
             get
             {
@@ -77,17 +79,34 @@ namespace BudgetApplication.ViewModel
 
         public bool AddGroup(Group group)
         {
-            foreach (Group currGroup in _groups)
-            {
-                if (currGroup.Name.Equals(group))
-                {
-                    return false;
-                }
-            }
             if (String.IsNullOrEmpty(group.Name))
             {
-                return false;
+                AddGroup(new Group());
             }
+            int index = 0;
+            bool nameExists = true;
+            String name = "";
+            while(nameExists)
+            {
+                nameExists = false;
+                if (index == 0)
+                {
+                    name = String.Copy(group.Name);
+                }
+                else
+                {
+                    name = String.Copy(group.Name) + index.ToString();
+                }
+                foreach (Group currGroup in _groups)
+                {
+                    if (name.Equals(currGroup.Name))
+                    {
+                        nameExists = true;
+                    }
+                }
+                index++;
+            }
+            group.Name = name;
             _groups.Add(group);
             return true;
         }
@@ -125,21 +144,60 @@ namespace BudgetApplication.ViewModel
         /// </summary>
         /// <param name="categoryName"></param>
         /// <returns></returns>
-        public bool AddCategory(Category category)
+        public bool AddCategory(Group group, Category category = null)
         {
-            foreach (Category currCategory in _categories)
+            if (category == null)
             {
-                if (currCategory.Name.Equals(category))
-                {
-                    return false;
-                }
+                category = new Category();
             }
             if (String.IsNullOrEmpty(category.Name))
             {
-                return false;
+                AddCategory(group, new Category());
             }
+
+            int index = 0;
+            bool nameExists = true;
+            String name = "";
+            while (nameExists)
+            {
+                nameExists = false;
+                if (index == 0)
+                {
+                    name = String.Copy(category.Name);
+                }
+                else
+                {
+                    name = String.Copy(category.Name) + index.ToString();
+                }
+                foreach (Category currCategory in _categories)
+                {
+                    if (name.Equals(currCategory.Name))
+                    {
+                        nameExists = true;
+                    }
+                }
+                index++;
+            }
+            category.Name = name;
+            group.Categories.Add(category);
             _categories.Add(category);
             return true;
+        }
+
+        public void RemoveCategory(Category category)
+        {
+            Group currGroup = GetCategoryGroup(category);
+            if (currGroup == null)
+            {
+                throw new ArgumentException("Category" + category.Name + " is not part of a group");
+            }
+            currGroup.Categories.Remove(category);
+            if (!_categories.Remove(category))
+            {
+                throw new ArgumentException("Category " + category.Name + " does not exist");
+            }
+            Debug.WriteLine("Removed category " + category.Name);
+
         }
 
         public bool IsValidCategory(string categoryName)
@@ -315,6 +373,16 @@ namespace BudgetApplication.ViewModel
         public RelayCommand<Group> RemoveGroupCommand
         {
             get; set;
+        }
+
+        public RelayCommand<Group> AddCategoryCommand
+        {
+            get;set;
+        }
+
+        public RelayCommand<Category> RemoveCategoryCommand
+        {
+            get;set;
         }
         #endregion
 
