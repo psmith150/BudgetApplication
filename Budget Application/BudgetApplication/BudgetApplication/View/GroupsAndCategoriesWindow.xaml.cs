@@ -26,6 +26,8 @@ namespace BudgetApplication.View
     {
         private int lastGroupIndex;
         private int lastCategoryIndex;
+        private Group lastGroup;
+        private Category lastCategory;
         public GroupsAndCategoriesWindow()
         {
             InitializeComponent();
@@ -37,22 +39,22 @@ namespace BudgetApplication.View
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             GroupList.SelectedIndex = 0;
-            (GroupList.ItemsSource as MyObservableCollection<Group>).CollectionChanged += GroupRemoved;
-            (CategoryList.ItemsSource as MyObservableCollection<Category>).CollectionChanged += CategoryRemoved;
+            (GroupList.ItemsSource as MyObservableCollection<Group>).CollectionChanged += GroupModified;
+            (CategoryList.ItemsSource as MyObservableCollection<Category>).CollectionChanged += CategoryModified;
 
         }
 
-        private void AddGroup_Click(object sender, RoutedEventArgs e)
+        private void ModifyGroup_Click(object sender, RoutedEventArgs e)
         {
             GroupList.SelectedIndex = GroupList.Items.Count;
         }
 
-        private void GroupRemoved(object sender, NotifyCollectionChangedEventArgs e)
+        private void GroupModified(object sender, NotifyCollectionChangedEventArgs e)
         {
             //GroupList.SelectedIndex = 0;
             if (e.OldItems != null)
             {
-                if (lastGroupIndex > 0)
+                if (lastGroupIndex > 0 && e.Action == NotifyCollectionChangedAction.Remove)
                 {
                     GroupList.SelectedIndex = lastGroupIndex - 1;
                 }
@@ -61,16 +63,20 @@ namespace BudgetApplication.View
                     GroupList.SelectedIndex = 0;
                 }
             }
+            if (e.Action == NotifyCollectionChangedAction.Move)
+            {
+                GroupList.SelectedItem = lastGroup;
+            }
         }
 
-        private void AddCategory_Click(object sender, RoutedEventArgs e)
+        private void ModifyCategory_Click(object sender, RoutedEventArgs e)
         {
             CategoryList.SelectedIndex = CategoryList.Items.Count;
         }
 
-        private void CategoryRemoved(object sender, NotifyCollectionChangedEventArgs e)
+        private void CategoryModified(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.OldItems != null)
+            if (e.OldItems != null && e.Action == NotifyCollectionChangedAction.Remove)
             {
                 if(lastCategoryIndex > 0)
                 {
@@ -81,6 +87,10 @@ namespace BudgetApplication.View
                     CategoryList.SelectedIndex = 0;
                 }
             }
+            if (e.Action == NotifyCollectionChangedAction.Move)
+            {
+                CategoryList.SelectedItem = lastCategory;
+            }
         }
 
         private void GroupList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -90,6 +100,7 @@ namespace BudgetApplication.View
 
             Group selectedGroup = (GroupList.SelectedItem as Group);
             CategoryList.ItemsSource = selectedGroup.Categories;
+            CategoryList.SelectedIndex = 0;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -97,14 +108,16 @@ namespace BudgetApplication.View
 
         }
 
-        private void RemoveGroupButton_Click(object sender, RoutedEventArgs e)
+        private void SaveGroupIndex_Click(object sender, RoutedEventArgs e)
         {
             lastGroupIndex = GroupList.SelectedIndex;
+            lastGroup = GroupList.SelectedItem as Group;
         }
 
-        private void RemoveCategoryButton_Click(object sender, RoutedEventArgs e)
+        private void SaveCategoryIndex_Click(object sender, RoutedEventArgs e)
         {
             lastCategoryIndex = CategoryList.SelectedIndex;
+            lastCategory = CategoryList.SelectedItem as Category;
         }
     }
 }

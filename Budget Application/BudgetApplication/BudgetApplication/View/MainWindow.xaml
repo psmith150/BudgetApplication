@@ -32,6 +32,9 @@
             <Button Grid.Column="2" Name="LoadData" Command="{Binding LoadData_ClickCommand}">
                 <TextBlock>Load Data</TextBlock>
             </Button>
+            <Button Grid.Column="3" Click="Button_Click">
+                <TextBlock>Refresh</TextBlock>
+            </Button>
         </Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TabItem Style="{StaticResource TabHeader}" Header="Budget">

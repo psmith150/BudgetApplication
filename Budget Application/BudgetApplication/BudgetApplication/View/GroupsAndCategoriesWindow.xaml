@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BudgetApplication.View"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        Title="GroupsAndCategoriesWindow" Height="300" Width="300" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="GroupsAndCategoriesWindow" Height="450" Width="450" Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,25 +16,63 @@
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-            <Button Name="AddGroupButton" Style="{StaticResource AddGroupButton}" Command="{Binding AddGroupCommand}" Click="AddGroup_Click"/>
-            <Button Name="RemoveGroupButton" Style="{StaticResource RemoveGroupButton}" Command="{Binding RemoveGroupCommand}" CommandParameter="{Binding ElementName=GroupList, Path=SelectedItem}"
-                    Click="RemoveGroupButton_Click"/>
-        </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-            <Button Name="AddCategoryButton" Style="{StaticResource AddGroupButton}"  Command="{Binding AddCategoryCommand}" CommandParameter="{Binding ElementName=GroupList, Path=SelectedItem}"
-                    Click="AddCategory_Click">
-            </Button>
-            <Button Name="RemoveCategoryButton" Style="{StaticResource RemoveGroupButton}" Command="{Binding RemoveCategoryCommand}" CommandParameter="{Binding ElementName=CategoryList, Path=SelectedItem}"
-                    Click="RemoveCategoryButton_Click"/>
-        </StackPanel>
-        <DataGrid Name="GroupList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Groups}" AutoGenerateColumns="False" SelectionChanged="GroupList_SelectionChanged">
+        <Grid Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Width="Auto">
+                <Button Name="AddGroupButton" Style="{StaticResource AddGroupButton}" Command="{Binding AddGroupCommand}" Click="ModifyGroup_Click"/>
+                <Button Name="RemoveGroupButton" Style="{StaticResource RemoveGroupButton}" Command="{Binding RemoveGroupCommand}" CommandParameter="{Binding ElementName=GroupList, Path=SelectedItem}"
+                        Click="SaveGroupIndex_Click"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" DockPanel.Dock="Right" Orientation="Horizontal" Width="Auto" >
+                <Button Name="GroupUpButton" Style="{StaticResource MoveUpButton}" Command="{Binding MoveGroupUpCommand}" 
+                         CommandParameter="{Binding ElementName=GroupList, Path=SelectedItem}" Click="SaveGroupIndex_Click"
+                        />
+                <Button Name="GroupDownButton" Style="{StaticResource MoveDownButton}" Command="{Binding MoveGroupDownCommand}"
+                        CommandParameter="{Binding ElementName=GroupList, Path=SelectedItem}" Click="SaveGroupIndex_Click"
+                        />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <Button Name="AddCategoryButton" Style="{StaticResource AddGroupButton}"  Command="{Binding AddCategoryCommand}" CommandParameter="{Binding ElementName=GroupList, Path=SelectedItem}"
+                    Click="ModifyCategory_Click">
+                </Button>
+                <Button Name="RemoveCategoryButton" Style="{StaticResource RemoveGroupButton}" Command="{Binding RemoveCategoryCommand}" CommandParameter="{Binding ElementName=CategoryList, Path=SelectedItem}"
+                    Click="SaveCategoryIndex_Click"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button Name="CategoryUpButton" Style="{StaticResource MoveUpButton}"  Command="{Binding MoveCategoryUpCommand}"
+                        CommandParameter="{Binding ElementName=CategoryList, Path=SelectedItem}" Click="SaveCategoryIndex_Click"
+                    />
+                <Button Name="CategoryDownButton" Style="{StaticResource MoveDownButton}" Command="{Binding MoveCategoryDownCommand}"
+                        CommandParameter="{Binding ElementName=CategoryList, Path=SelectedItem}" Click="SaveCategoryIndex_Click"
+                    />
+            </StackPanel>
+        </Grid>
+        <DataGrid Name="GroupList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Groups}" 
+                  AutoGenerateColumns="False" SelectionChanged="GroupList_SelectionChanged" CellStyle="{StaticResource SelectedCellStyle}">
+            <DataGrid.Resources>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Group" Binding="{Binding Path=Name}"/>
                 <DataGridCheckBoxColumn Header="Is Income?" Binding="{Binding Path=IsIncome}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Name="CategoryList" Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False">
+        <DataGrid Name="CategoryList" Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False"
+                  CellStyle="{StaticResource SelectedCellStyle}">
+            <DataGrid.Resources>
+                <!--<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Orange" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Orange" />-->
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Category" Binding="{Binding Path=Name, Mode=TwoWay}"/>
             </DataGrid.Columns>

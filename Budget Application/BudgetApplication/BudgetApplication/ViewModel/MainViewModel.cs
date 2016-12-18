@@ -60,6 +60,10 @@ namespace BudgetApplication.ViewModel
             RemoveGroupCommand = new RelayCommand<Group>((group) => RemoveGroup(group));
             AddCategoryCommand = new RelayCommand<Group>((group) => AddCategory(group));
             RemoveCategoryCommand = new RelayCommand<Category>((category) => RemoveCategory(category));
+            MoveGroupUpCommand = new RelayCommand<Group>((group) => MoveGroupUp(group));
+            MoveGroupDownCommand = new RelayCommand<Group>((group) => MoveGroupDown(group));
+            MoveCategoryUpCommand = new RelayCommand<Category>((category) => MoveCategoryUp(category));
+            MoveCategoryDownCommand = new RelayCommand<Category>((category) => MoveCategoryDown(category));
 
             _canExecute = true;
         }
@@ -77,56 +81,6 @@ namespace BudgetApplication.ViewModel
             }
         }
 
-        public bool AddGroup(Group group)
-        {
-            if (String.IsNullOrEmpty(group.Name))
-            {
-                AddGroup(new Group());
-            }
-            int index = 0;
-            bool nameExists = true;
-            String name = "";
-            while(nameExists)
-            {
-                nameExists = false;
-                if (index == 0)
-                {
-                    name = String.Copy(group.Name);
-                }
-                else
-                {
-                    name = String.Copy(group.Name) + index.ToString();
-                }
-                foreach (Group currGroup in _groups)
-                {
-                    if (name.Equals(currGroup.Name))
-                    {
-                        nameExists = true;
-                    }
-                }
-                index++;
-            }
-            group.Name = name;
-            _groups.Add(group);
-            return true;
-        }
-
-        public void RemoveGroup(Group group)
-        {
-            if (!_groups.Remove(group))
-            {
-                throw new ArgumentException("Group " + group.Name + " does not exist");
-            }
-            Debug.WriteLine("Removed group " + group.Name);
-
-            foreach (Category category in group.Categories)
-            {
-                Debug.WriteLine("Removed category " + category.Name);
-
-                _categories.Remove(category);
-            }
-        }
-
         public MyObservableCollection<Category> Categories
         {
             get
@@ -137,91 +91,6 @@ namespace BudgetApplication.ViewModel
             {
                 _categories = value;
             }
-        }
-
-        /// <summary>
-        /// Adds a category with the specified name to the category list
-        /// </summary>
-        /// <param name="categoryName"></param>
-        /// <returns></returns>
-        public bool AddCategory(Group group, Category category = null)
-        {
-            if (category == null)
-            {
-                category = new Category();
-            }
-            if (String.IsNullOrEmpty(category.Name))
-            {
-                AddCategory(group, new Category());
-            }
-
-            int index = 0;
-            bool nameExists = true;
-            String name = "";
-            while (nameExists)
-            {
-                nameExists = false;
-                if (index == 0)
-                {
-                    name = String.Copy(category.Name);
-                }
-                else
-                {
-                    name = String.Copy(category.Name) + index.ToString();
-                }
-                foreach (Category currCategory in _categories)
-                {
-                    if (name.Equals(currCategory.Name))
-                    {
-                        nameExists = true;
-                    }
-                }
-                index++;
-            }
-            category.Name = name;
-            group.Categories.Add(category);
-            _categories.Add(category);
-            return true;
-        }
-
-        public void RemoveCategory(Category category)
-        {
-            Group currGroup = GetCategoryGroup(category);
-            if (currGroup == null)
-            {
-                throw new ArgumentException("Category" + category.Name + " is not part of a group");
-            }
-            currGroup.Categories.Remove(category);
-            if (!_categories.Remove(category))
-            {
-                throw new ArgumentException("Category " + category.Name + " does not exist");
-            }
-            Debug.WriteLine("Removed category " + category.Name);
-
-        }
-
-        public bool IsValidCategory(string categoryName)
-        {
-            foreach (Category currCategory in _categories)
-            {
-                if (currCategory.Name.Equals(categoryName))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private Group GetCategoryGroup(Category category)
-        {
-            foreach (Group group in _groups)
-            {
-                if(group.Categories.Contains(category))
-                {
-                    return group;
-                }
-            }
-            return null;
         }
 
         public MyObservableCollection<PaymentMethod> PaymentMethods
@@ -359,6 +228,338 @@ namespace BudgetApplication.ViewModel
 
         #endregion
 
+        #region Methods to modify group and category collections
+
+        public bool AddGroup(Group group)
+        {
+            if (String.IsNullOrEmpty(group.Name))
+            {
+                AddGroup(new Group());
+            }
+            int index = 0;
+            bool nameExists = true;
+            String name = "";
+            while (nameExists)
+            {
+                nameExists = false;
+                if (index == 0)
+                {
+                    name = String.Copy(group.Name);
+                }
+                else
+                {
+                    name = String.Copy(group.Name) + index.ToString();
+                }
+                foreach (Group currGroup in _groups)
+                {
+                    if (name.Equals(currGroup.Name))
+                    {
+                        nameExists = true;
+                    }
+                }
+                index++;
+            }
+            group.Name = name;
+            _groups.Add(group);
+            return true;
+        }
+
+        public void RemoveGroup(Group group)
+        {
+            if (!_groups.Remove(group))
+            {
+                throw new ArgumentException("Group " + group.Name + " does not exist");
+            }
+            Debug.WriteLine("Removed group " + group.Name);
+
+            foreach (Category category in group.Categories)
+            {
+                Debug.WriteLine("Removed category " + category.Name);
+
+                _categories.Remove(category);
+            }
+        }
+
+        public void MoveGroupUp(Group group)
+        {
+            if (group == null)
+                return;
+            int index = _groups.IndexOf(group);
+            if (index < 0)
+            {
+                throw new ArgumentException("Group " + group.Name + " does not exist");
+            }
+            if (index > 0)
+            {
+                _groups.Move(index, index - 1);
+                _budgetTotals.Move(index, index - 1);
+                _spendingTotals.Move(index, index - 1);
+                _comparisonTotals.Move(index, index - 1);
+            }
+        }
+
+        public void MoveGroupDown(Group group)
+        {
+            if (group == null)
+                return;
+            int index = _groups.IndexOf(group);
+            if (index < 0)
+            {
+                throw new ArgumentException("Group " + group.Name + " does not exist");
+            }
+            if (index < _groups.Count-1)
+            {
+                _groups.Move(index, index + 1);
+                _budgetTotals.Move(index, index + 1);
+                _spendingTotals.Move(index, index + 1);
+                _comparisonTotals.Move(index, index + 1);
+            }
+        }
+
+        /// <summary>
+        /// Adds a category with the specified name to the category list
+        /// </summary>
+        /// <param name="categoryName"></param>
+        /// <returns></returns>
+        public bool AddCategory(Group group, Category category = null)
+        {
+            if (category == null)
+            {
+                category = new Category();
+            }
+            if (String.IsNullOrEmpty(category.Name))
+            {
+                AddCategory(group, new Category());
+            }
+
+            int index = 0;
+            bool nameExists = true;
+            String name = "";
+            while (nameExists)
+            {
+                nameExists = false;
+                if (index == 0)
+                {
+                    name = String.Copy(category.Name);
+                }
+                else
+                {
+                    name = String.Copy(category.Name) + index.ToString();
+                }
+                foreach (Category currCategory in _categories)
+                {
+                    if (name.Equals(currCategory.Name))
+                    {
+                        nameExists = true;
+                    }
+                }
+                index++;
+            }
+            category.Name = name;
+            group.Categories.Add(category);
+            _categories.Add(category);
+            int previousCategoryIndex = group.Categories.IndexOf(category) - 1;
+            if (previousCategoryIndex < 0)
+                return true;
+            MoneyGridRow previousRow;
+            try
+            {
+                previousRow = _budgetValues.Single(x => x.Category == group.Categories.ElementAt(previousCategoryIndex));
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Could not find row with category " + group.Categories.ElementAt(previousCategoryIndex));
+            }
+            int previousRowIndex = _budgetValues.IndexOf(previousRow);
+            _categories.Move(_budgetValues.Count - 1, previousRowIndex + 1);
+            _budgetValues.Move(_budgetValues.Count - 1, previousRowIndex + 1);
+            _spendingValues.Move(_budgetValues.Count - 1, previousRowIndex + 1);
+            _comparisonValues.Move(_budgetValues.Count - 1, previousRowIndex + 1);
+            return true;
+        }
+
+        public void RemoveCategory(Category category)
+        {
+            Group currGroup = GetCategoryGroup(category);
+            if (currGroup == null)
+            {
+                throw new ArgumentException("Category" + category.Name + " is not part of a group");
+            }
+            currGroup.Categories.Remove(category);
+            if (!_categories.Remove(category))
+            {
+                throw new ArgumentException("Category " + category.Name + " does not exist");
+            }
+            Debug.WriteLine("Removed category " + category.Name);
+
+        }
+
+        public void MoveCategoryUp(Category category)
+        {
+            if (category == null)
+                return;
+            Group group = GetCategoryGroup(category);
+            if (group == null)
+            {
+                throw new ArgumentException("Category " + category.Name + " does not belong to a group");
+            }
+            int index = group.Categories.IndexOf(category);
+            if (index < 0)
+            {
+                throw new ArgumentException("Group " + category.Name + " does not exist");
+            }
+            if (index > 0)
+            {
+                group.Categories.Move(index, index-1);
+                MoneyGridRow budgetRow = _budgetValues.Single(x => x.Category == category);
+                int rowIndex = _budgetValues.IndexOf(budgetRow);
+                Debug.WriteLine("index is " + rowIndex);
+                _budgetValues.Move(rowIndex, rowIndex-1);
+                Debug.WriteLine("new index is " + _budgetValues.IndexOf(budgetRow));
+                _spendingValues.Move(rowIndex, rowIndex - 1);
+                _comparisonValues.Move(rowIndex, rowIndex - 1);
+            }
+        }
+
+        public void MoveCategoryDown(Category category)
+        {
+            if (category == null)
+                return;
+            Group group = GetCategoryGroup(category);
+            if (group == null)
+            {
+                throw new ArgumentException("Category " + category.Name + " does not belong to a group");
+            }
+            int index = group.Categories.IndexOf(category);
+            if (index < 0)
+            {
+                throw new ArgumentException("Category " + category.Name + " does not exist");
+            }
+            if (index < group.Categories.Count - 1)
+            {
+                group.Categories.Move(index, index + 1);
+                MoneyGridRow budgetRow = _budgetValues.Single(x => x.Category == category);
+                int rowIndex = _budgetValues.IndexOf(budgetRow);
+                _budgetValues.Move(rowIndex, rowIndex + 1);
+                _spendingValues.Move(rowIndex, rowIndex + 1);
+                _comparisonValues.Move(rowIndex, rowIndex + 1);
+            }
+        }
+
+        private Group GetCategoryGroup(Category category)
+        {
+            foreach (Group group in _groups)
+            {
+                if (group.Categories.Contains(category))
+                {
+                    return group;
+                }
+            }
+            return null;
+        }
+
+        public void UpdateCategories(Object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null && e.Action != NotifyCollectionChangedAction.Move)
+            {
+                foreach (Category newCategory in e.NewItems)
+                {
+                    //MessageBox.Show(newCategory.Group.Name);
+                    Group group = GetCategoryGroup(newCategory);
+                    if (group == null)
+                    {
+
+                    }
+                    try
+                    {
+                        _budgetValues.Add(new MoneyGridRow(group, newCategory));
+                        _spendingValues.Add(new MoneyGridRow(group, newCategory));
+                        _comparisonValues.Add(new MoneyGridRow(group, newCategory));
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Debug.WriteLine("Could not match group to category " + newCategory.Name + ", " + GetCategoryGroup(newCategory).Name);
+                        throw new ArgumentException("Could not match group to category " + newCategory.Name, ex);
+                    }
+                }
+            }
+
+            if (e.OldItems != null && e.Action != NotifyCollectionChangedAction.Move)
+            {
+                foreach (Category oldCategory in e.OldItems)
+                {
+                    MoneyGridRow oldRow = _comparisonValues.Where(row => row.Category == oldCategory).ElementAt(0);
+                    if (oldRow == null)
+                        throw new ArgumentException("Cannot locate deleted row");
+                    _comparisonValues.Remove(oldRow);
+
+                    oldRow = _spendingValues.Where(row => row.Category == oldCategory).ElementAt(0);
+                    if (oldRow == null)
+                        throw new ArgumentException("Cannot locate deleted row");
+                    _spendingValues.Remove(oldRow);
+
+                    oldRow = _budgetValues.Where(row => row.Category == oldCategory).ElementAt(0);
+                    if (oldRow == null)
+                        throw new ArgumentException("Cannot locate deleted row");
+                    _budgetValues.Remove(oldRow);
+                    //TODO: remove from other collections
+                }
+            }
+        }
+        public void UpdateGroups(Object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null && e.Action != NotifyCollectionChangedAction.Move)
+            {
+                foreach (Group newGroup in e.NewItems)
+                {
+                    Debug.WriteLine("New group" + newGroup.Name);
+                    //Debug.WriteLine("Event: " + e.Action.ToString());
+
+                    //MessageBox.Show(newCategory.Group.Name);
+                    Category newCategory = new Category(newGroup.Name);
+                    try
+                    {
+                        _budgetTotals.Add(new MoneyGridRow(columnTotalsGroup, newCategory));
+                        _spendingTotals.Add(new MoneyGridRow(columnTotalsGroup, newCategory));
+                        _comparisonTotals.Add(new MoneyGridRow(columnTotalsGroup, newCategory));
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Debug.WriteLine("Could not match group to category " + newCategory.Name);
+                        throw new ArgumentException("Could not match group to category " + newGroup.Name, ex);
+                    }
+                }
+            }
+
+            if (e.OldItems != null && e.Action != NotifyCollectionChangedAction.Move)
+            {
+                foreach (Group oldGroup in e.OldItems)
+                {
+                    Debug.WriteLine("Group to be deleted: " + oldGroup.Name);
+                    foreach (MoneyGridRow row in _budgetValues)
+                    {
+                        Debug.WriteLine("Budget row: " + row.Category);
+                    }
+                    MoneyGridRow oldRow = _budgetTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
+                    if (oldRow == null)
+                        throw new ArgumentException("Cannot locate deleted row");
+                    _budgetTotals.Remove(oldRow);
+
+                    oldRow = _spendingTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
+                    if (oldRow == null)
+                        throw new ArgumentException("Cannot locate deleted row");
+                    _spendingTotals.Remove(oldRow);
+
+                    oldRow = _comparisonTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
+                    if (oldRow == null)
+                        throw new ArgumentException("Cannot locate deleted row");
+                    _comparisonTotals.Remove(oldRow);
+                }
+            }
+        }
+
+        #endregion
+
         #region Group and Category window
         public RelayCommand<Group> AddGroupCommand
         {
@@ -384,101 +585,30 @@ namespace BudgetApplication.ViewModel
         {
             get;set;
         }
+
+        public RelayCommand<Group> MoveGroupUpCommand
+        {
+            get; set;
+        }
+
+        public RelayCommand<Group> MoveGroupDownCommand
+        {
+            get; set;
+        }
+
+        public RelayCommand<Category> MoveCategoryUpCommand
+        {
+            get; set;
+        }
+
+        public RelayCommand<Category> MoveCategoryDownCommand
+        {
+            get; set;
+        }
         #endregion
 
         #region Budget tab
-        public void UpdateCategories(Object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.NewItems != null)
-            {
-                foreach (Category newCategory in e.NewItems)
-                {
-                    //MessageBox.Show(newCategory.Group.Name);
-                    MoneyGridRow row = new MoneyGridRow(GetCategoryGroup(newCategory), newCategory);
-                    try
-                    {
-                        _budgetValues.Add(new MoneyGridRow(GetCategoryGroup(newCategory), newCategory));
-                        _spendingValues.Add(new MoneyGridRow(GetCategoryGroup(newCategory), newCategory));
-                        _comparisonValues.Add(new MoneyGridRow(GetCategoryGroup(newCategory), newCategory));
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        Debug.WriteLine("Could not match group to category " + newCategory.Name + ", " + GetCategoryGroup(newCategory).Name);
-                        throw new ArgumentException("Could not match group to category " + newCategory.Name, ex);
-                    }
-                }
-            }
 
-            if (e.OldItems != null)
-            {
-                foreach (Category oldCategory in e.OldItems)
-                {
-                    MoneyGridRow oldRow = _comparisonValues.Where(row => row.Category == oldCategory).ElementAt(0);
-                    if (oldRow == null)
-                        throw new ArgumentException("Cannot locate deleted row");
-                    _comparisonValues.Remove(oldRow);
-
-                    oldRow = _spendingValues.Where(row => row.Category == oldCategory).ElementAt(0);
-                    if (oldRow == null)
-                        throw new ArgumentException("Cannot locate deleted row");
-                    _spendingValues.Remove(oldRow);
-
-                    oldRow = _budgetValues.Where(row => row.Category == oldCategory).ElementAt(0);
-                    if (oldRow == null)
-                        throw new ArgumentException("Cannot locate deleted row");
-                    _budgetValues.Remove(oldRow);
-                    //TODO: remove from other collections
-                }
-            }
-        }
-        public void UpdateGroups(Object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.NewItems != null)
-            {
-                foreach (Group newGroup in e.NewItems)
-                {
-                    //MessageBox.Show(newCategory.Group.Name);
-                    Category newCategory = new Category(newGroup.Name);
-                    try
-                    {
-                        _budgetTotals.Add(new MoneyGridRow(columnTotalsGroup, newCategory));
-                        _spendingTotals.Add(new MoneyGridRow(columnTotalsGroup, newCategory));
-                        _comparisonTotals.Add(new MoneyGridRow(columnTotalsGroup, newCategory));
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        Debug.WriteLine("Could not match group to category " + newCategory.Name);
-                        throw new ArgumentException("Could not match group to category " + newGroup.Name, ex);
-                    }
-                }
-            }
-
-            if (e.OldItems != null)
-            {
-                foreach (Group oldGroup in e.OldItems)
-                {
-                    Debug.WriteLine("Group to be deleted: " + oldGroup.Name);
-                    foreach(MoneyGridRow row in _budgetValues)
-                    {
-                        Debug.WriteLine("Budget row: " + row.Category);
-                    }
-                    MoneyGridRow oldRow = _budgetTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
-                    if (oldRow == null)
-                        throw new ArgumentException("Cannot locate deleted row");
-                    _budgetTotals.Remove(oldRow);
-
-                    oldRow = _spendingTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
-                    if (oldRow == null)
-                        throw new ArgumentException("Cannot locate deleted row");
-                    _spendingTotals.Remove(oldRow);
-
-                    oldRow = _comparisonTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
-                    if (oldRow == null)
-                        throw new ArgumentException("Cannot locate deleted row");
-                    _comparisonTotals.Remove(oldRow);
-                }
-            }
-        }
 
         public void UpdateBudgetTotals(Object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -578,7 +708,7 @@ namespace BudgetApplication.ViewModel
 
         public void UpdateComparisonValues(Object sender, NotifyCollectionChangedEventArgs e)
         {
-            Debug.WriteLine("Number of categories: " + _categories.Count + "Number of rows: " + _budgetValues.Count + " " + _spendingValues.Count + " " + _comparisonValues.Count);
+            //bug.WriteLine("Number of categories: " + _categories.Count + "Number of rows: " + _budgetValues.Count + " " + _spendingValues.Count + " " + _comparisonValues.Count);
             for (int i=0;i<_comparisonValues.Count; i++)
             {
                 for(int j=0;j<12;j++)
@@ -637,7 +767,6 @@ namespace BudgetApplication.ViewModel
         #region Saving and Opening files
         public void SaveData()
         {
-            CalculateSpendingColumnTotals();
             using (FileStream file = new FileStream("data.xml", FileMode.Create))
             {
                 using (StreamWriter stream = new StreamWriter(file))

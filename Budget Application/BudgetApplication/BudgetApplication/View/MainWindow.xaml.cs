@@ -51,5 +51,10 @@ namespace BudgetApplication.View
                 }
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateLayout();
+        }
     }
 }

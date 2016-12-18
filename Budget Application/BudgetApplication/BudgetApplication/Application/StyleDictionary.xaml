@@ -89,6 +89,44 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="MoveUpButton" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="25"/>
+        <Setter Property="Background" Value="Orange"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent">
+                        <Image Source="/Resources/Up_arrow.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="Black" />
+                            <Setter TargetName="border" Property="Background" Value="LightGray" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="MoveDownButton" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="25"/>
+        <Setter Property="Background" Value="Orange"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent">
+                        <Image Source="/Resources/Down_arrow.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="Black" />
+                            <Setter TargetName="border" Property="Background" Value="LightGray" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style x:Key="GroupedStyle" TargetType="{x:Type GroupItem}">
         <Setter Property="Margin" Value="0,0,0,5"/>
         <Setter Property="ClipToBounds" Value="True"/>
@@ -118,5 +156,16 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="SelectedCellStyle" TargetType="{x:Type DataGridCell}">
+        <Style.Triggers>
+            <Trigger Property="DataGridCell.IsSelected" Value="True">
+                <Setter Property="Background" Value="#BF0080FF" />
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

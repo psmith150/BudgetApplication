@@ -2,6 +2,160 @@
 <Data>
   <Groups>
     <Group>
+      <Name>Income</Name>
+      <IsIncome>True</IsIncome>
+      <Categories>
+        <Category>
+          <Name>Patrick's paycheck (EOM)</Name>
+          <BudgetValues>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+          </BudgetValues>
+        </Category>
+        <Category>
+          <Name>Reimbursements</Name>
+          <BudgetValues>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+          </BudgetValues>
+        </Category>
+        <Category>
+          <Name>Other income</Name>
+          <BudgetValues>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+          </BudgetValues>
+        </Category>
+      </Categories>
+    </Group>
+    <Group>
+      <Name>Assets</Name>
+      <IsIncome>False</IsIncome>
+      <Categories>
+        <Category>
+          <Name>Patrick's Schwab Investments</Name>
+          <BudgetValues>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+          </BudgetValues>
+        </Category>
+      </Categories>
+    </Group>
+    <Group>
+      <Name>Savings</Name>
+      <IsIncome>False</IsIncome>
+      <Categories>
+        <Category>
+          <Name>Emergency Savings</Name>
+          <BudgetValues>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+          </BudgetValues>
+        </Category>
+        <Category>
+          <Name>Travel Savings</Name>
+          <BudgetValues>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+          </BudgetValues>
+        </Category>
+        <Category>
+          <Name>Patrick's Savings</Name>
+          <BudgetValues>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+          </BudgetValues>
+        </Category>
+        <Category>
+          <Name>Riley's Savings</Name>
+          <BudgetValues>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+            <Value>0</Value>
+          </BudgetValues>
+        </Category>
+      </Categories>
+    </Group>
+    <Group>
       <Name>Expenditures</Name>
       <IsIncome>False</IsIncome>
       <Categories>
@@ -24,23 +178,6 @@
         </Category>
         <Category>
           <Name>Auto and Transportation</Name>
-          <BudgetValues>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-          </BudgetValues>
-        </Category>
-        <Category>
-          <Name>Other</Name>
           <BudgetValues>
             <Value>0</Value>
             <Value>0</Value>
@@ -158,14 +295,8 @@
             <Value>0</Value>
           </BudgetValues>
         </Category>
-      </Categories>
-    </Group>
-    <Group>
-      <Name>Income</Name>
-      <IsIncome>True</IsIncome>
-      <Categories>
         <Category>
-          <Name>Patrick's paycheck (EOM)</Name>
+          <Name>Gifts</Name>
           <BudgetValues>
             <Value>0</Value>
             <Value>0</Value>
@@ -182,7 +313,7 @@
           </BudgetValues>
         </Category>
         <Category>
-          <Name>Reimbursements</Name>
+          <Name>Health</Name>
           <BudgetValues>
             <Value>0</Value>
             <Value>0</Value>
@@ -199,30 +330,7 @@
           </BudgetValues>
         </Category>
         <Category>
-          <Name>Other income</Name>
-          <BudgetValues>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-          </BudgetValues>
-        </Category>
-      </Categories>
-    </Group>
-    <Group>
-      <Name>Assets</Name>
-      <IsIncome>False</IsIncome>
-      <Categories>
-        <Category>
-          <Name>Patrick's Schwab Investments</Name>
+          <Name>Other</Name>
           <BudgetValues>
             <Value>0</Value>
             <Value>0</Value>
@@ -297,80 +405,6 @@
         </Category>
         <Category>
           <Name>Cell Phone Bill</Name>
-          <BudgetValues>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-          </BudgetValues>
-        </Category>
-      </Categories>
-    </Group>
-    <Group>
-      <Name>Savings</Name>
-      <IsIncome>False</IsIncome>
-      <Categories>
-        <Category>
-          <Name>Emergency Savings</Name>
-          <BudgetValues>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-          </BudgetValues>
-        </Category>
-        <Category>
-          <Name>Patrick's Savings</Name>
-          <BudgetValues>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-          </BudgetValues>
-        </Category>
-        <Category>
-          <Name>Riley's Savings</Name>
-          <BudgetValues>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-            <Value>0</Value>
-          </BudgetValues>
-        </Category>
-        <Category>
-          <Name>Travel Savings</Name>
           <BudgetValues>
             <Value>0</Value>
             <Value>0</Value>
