@@ -13,11 +13,14 @@ namespace BudgetApplication
     public class MyObservableCollection<T> : ObservableCollection<T>
         where T : INotifyPropertyChanged
     {
-        private bool _suppressNotification;
         public MyObservableCollection() : base()
         {
             CollectionChanged += new NotifyCollectionChangedEventHandler(NewCollectionChanged);
-            _suppressNotification = false;
+        }
+
+        public MyObservableCollection(IEnumerable<T> enumerable) : base(enumerable)
+        {
+
         }
 
         void NewCollectionChanged(Object sender, NotifyCollectionChangedEventArgs e)

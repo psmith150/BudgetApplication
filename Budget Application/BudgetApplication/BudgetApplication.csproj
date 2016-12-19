@@ -80,18 +80,21 @@
     <Compile Include="View\GroupsAndCategoriesWindow.xaml.cs">
       <DependentUpon>GroupsAndCategoriesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MyObservableCollection.cs" />
-    <Compile Include="MoneyGrid.xaml.cs">
+    <Compile Include="Model\MyObservableCollection.cs" />
+    <Compile Include="View\MoneyGrid.xaml.cs">
       <DependentUpon>MoneyGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Model\Transactions.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\PaymentMethodsWindow.xaml.cs">
+      <DependentUpon>PaymentMethodsWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\GroupsAndCategoriesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MoneyGrid.xaml">
+    <Page Include="View\MoneyGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -108,6 +111,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Application\StyleDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PaymentMethodsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

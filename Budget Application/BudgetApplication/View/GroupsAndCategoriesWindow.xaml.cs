@@ -33,8 +33,6 @@ namespace BudgetApplication.View
             InitializeComponent();
         }
 
-        public event Action<Group> AddGroup;
-        public event Action<Category> AddCategory;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {

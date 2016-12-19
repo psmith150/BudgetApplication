@@ -31,6 +31,7 @@ namespace BudgetApplication.ViewModel
         private MyObservableCollection<MoneyGridRow> _comparisonValues;
         private MyObservableCollection<MoneyGridRow> _comparisonTotals;
         private Group columnTotalsGroup;
+        private String filepath = "data.xml";
         public MainViewModel()
         {
             _groups = new MyObservableCollection<Group>();
@@ -295,6 +296,8 @@ namespace BudgetApplication.ViewModel
                 _budgetTotals.Move(index, index - 1);
                 _spendingTotals.Move(index, index - 1);
                 _comparisonTotals.Move(index, index - 1);
+                //TODO: move entire group in budgetValues, etc
+
             }
         }
 
@@ -313,6 +316,13 @@ namespace BudgetApplication.ViewModel
                 _budgetTotals.Move(index, index + 1);
                 _spendingTotals.Move(index, index + 1);
                 _comparisonTotals.Move(index, index + 1);
+                int startIndex = _budgetValues.IndexOf(_budgetValues.First(x => x.Group == group));
+                int endIndex = _budgetValues.IndexOf(_budgetValues.Last(x => x.Group == group));
+                int offset = endIndex - startIndex + 1;
+                for (int i = startIndex; i <= endIndex; i++)
+                {
+                    _budgetValues.Move(i, i + 4);
+                }
             }
         }
 
@@ -368,7 +378,7 @@ namespace BudgetApplication.ViewModel
             }
             catch (Exception ex)
             {
-                throw new ArgumentException("Could not find row with category " + group.Categories.ElementAt(previousCategoryIndex));
+                throw new ArgumentException("Could not find row with category " + group.Categories.ElementAt(previousCategoryIndex), ex);
             }
             int previousRowIndex = _budgetValues.IndexOf(previousRow);
             _categories.Move(_budgetValues.Count - 1, previousRowIndex + 1);
@@ -639,18 +649,21 @@ namespace BudgetApplication.ViewModel
 
             foreach (Transaction transaction in _transactions)
             {
-                MoneyGridRow row;
-                try
+                if (transaction.Category != null)
                 {
-                    row = _spendingValues.Single(x => x.Category == transaction.Category);
+                    MoneyGridRow row;
+                    try
+                    {
+                        row = _spendingValues.Single(x => x.Category == transaction.Category);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ArgumentException("Cannot find category for transaction category " + transaction.Category, ex);
+                    }
+                    //TODO: check year
+                    int month = transaction.Date.Month - 1;
+                    row.Values[month] += transaction.Amount;
                 }
-                catch (ArgumentException ex)
-                {
-                    throw new ArgumentException("Cannot find category for transaction category " + transaction.Category, ex);
-                }
-                //TODO: check year
-                int month = transaction.Date.Month - 1;
-                row.Values[month] += transaction.Amount;
             }
 
             //if (e.NewItems != null)
@@ -767,7 +780,7 @@ namespace BudgetApplication.ViewModel
         #region Saving and Opening files
         public void SaveData()
         {
-            using (FileStream file = new FileStream("data.xml", FileMode.Create))
+            using (FileStream file = new FileStream(filepath, FileMode.Create))
             {
                 using (StreamWriter stream = new StreamWriter(file))
                 {
@@ -819,14 +832,14 @@ namespace BudgetApplication.ViewModel
                         foreach (PaymentMethod payment in _paymentMethods)
                         {
                             //MessageBox.Show(String.Format("{0}", category.Name));
-                            if(payment.PaymentType() == PaymentMethod.Type.CreditCard)
+                            if(payment.PaymentType == PaymentMethod.Type.CreditCard)
                             {
                                 CreditCard card = payment as CreditCard;
                                 writer.WriteStartElement("CreditCard");
                                 writer.WriteElementString("Name", card.Name);
                                 writer.WriteElementString("CreditLimit", card.CreditLimit.ToString());
                             }
-                            else if (payment.PaymentType() == PaymentMethod.Type.CheckingAccount)
+                            else if (payment.PaymentType == PaymentMethod.Type.CheckingAccount)
                             {
                                 CheckingAccount account = payment as CheckingAccount;
                                 writer.WriteStartElement("CheckingAccount");
@@ -875,7 +888,7 @@ namespace BudgetApplication.ViewModel
             try
             {
                 XmlDocument doc = new XmlDocument();
-                doc.Load("data.xml");
+                doc.Load(filepath);
 
                 foreach(XmlNode node in doc.DocumentElement.ChildNodes)
                 {
@@ -1078,7 +1091,7 @@ namespace BudgetApplication.ViewModel
             }
             catch (FileNotFoundException ex)
             {
-                
+                throw new FileNotFoundException("Could not load xml file from " + filepath, ex);
             }
         }
         #endregion

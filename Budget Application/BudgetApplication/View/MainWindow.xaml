@@ -21,6 +21,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Name="GroupsAndCategories" Click="GroupsAndCategories_Click">
@@ -34,6 +36,9 @@
             </Button>
             <Button Grid.Column="3" Click="Button_Click">
                 <TextBlock>Refresh</TextBlock>
+            </Button>
+            <Button Grid.Column="4" Name="PaymentMethods" Click="PaymentMethods_Click">
+                <TextBlock>Payment Methods</TextBlock>
             </Button>
         </Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -52,12 +57,10 @@
             <TabItem Style="{StaticResource TabHeader}" Header="Transactions">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50" />
-                        <RowDefinition Height="50*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0">
-                        <!--<ComboBox x:Name="comboBox" ItemsSource="{Binding Categories}"/>-->
-                        <DatePicker></DatePicker>
                     </Border>
                     <Border Grid.Row="1">
                         <DataGrid x:Name="Transactions" ItemsSource="{Binding Source={StaticResource TransactionsView}}" Background="DarkGray" AutoGenerateColumns="False">
@@ -115,6 +118,10 @@
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" Orientation="Horizontal">
                         <ComboBox x:Name="PaymentSelector" Width="Auto" ItemsSource="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" SelectedIndex="0" DisplayMemberPath="Name"/>
+                        <Label>Start Date</Label>
+                        <DatePicker Name="PaymentStartDate" />
+                        <Label>End Date</Label>
+                        <DatePicker Name="PaymentEndDate"/>
                     </StackPanel>
                     <DataGrid Grid.Row="1"  x:Name="PaymentTransactions" ItemsSource="{Binding Source={StaticResource PaymentTransactionsView}}" Background="DarkGray" AutoGenerateColumns="False">
                         <DataGrid.Columns>

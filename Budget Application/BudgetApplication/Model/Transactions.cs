@@ -161,6 +161,7 @@ namespace BudgetApplication.Model
     {
         private String _name;
         public enum Type { CreditCard, CheckingAccount };
+        protected string[] _typeNames = { "Credit Card", "Checking Account" };
 
         public String Name
         {
@@ -178,11 +179,22 @@ namespace BudgetApplication.Model
             }
         }
 
-        abstract public Type PaymentType();
+        abstract public Type PaymentType
+        {
+            get;
+        }
+
+        public String PaymentTypeName
+        {
+            get
+            {
+                return String.Copy(_typeNames[(int) PaymentType]);
+            }
+        }
 
         public override String ToString()
         {
-            return (this.PaymentType() + "," + this.Name);
+            return (this.PaymentType + ", " + this.Name);
         }
 
         #region INotifyPropertyChanged Members
@@ -207,7 +219,8 @@ namespace BudgetApplication.Model
     public class CreditCard : PaymentMethod
     {
         private decimal _creditLimit;
-        private decimal _remainingCredit;
+        private DateTime _startDate;
+        private DateTime _endDate;
         
         public CreditCard(String name, decimal creditLimit = 300)
         {
@@ -219,9 +232,12 @@ namespace BudgetApplication.Model
             _creditLimit = creditLimit;
         }
 
-        public override Type PaymentType()
+        public override Type PaymentType
         {
-            return Type.CreditCard;
+            get
+            {
+                return Type.CreditCard;
+            }
         }
 
         public decimal CreditLimit
@@ -237,51 +253,74 @@ namespace BudgetApplication.Model
             }
         }
 
-        public decimal RemainingCredit
+        public DateTime StartDate
         {
             get
             {
-                return _remainingCredit;
+                return _startDate;
             }
             set
             {
-                if (value >= 0)
-                {
-                    _remainingCredit = value;
-                    NotifyPropertyChanged("RemainingCredit");
-                }
+                _startDate = value;
+            }
+        }
+
+        public DateTime EndDate
+        {
+            get
+            {
+                return _endDate;
+            }
+            set
+            {
+                _endDate = value;
             }
         }
     }
 
     public class CheckingAccount : PaymentMethod
     {
-        private int _checkNumber;
+        private int _accountNumber;
+        private string _bank;
         public CheckingAccount(String name)
         {
             this.Name = name;
         }
 
-        public override Type PaymentType()
-        {
-            return Type.CheckingAccount;
-        }
-
-        public int CheckNumber
+        public override Type PaymentType
         {
             get
             {
-                return _checkNumber;
+                return Type.CheckingAccount;
+            }
+        }
+
+        public int AccountNumber
+        {
+            get
+            {
+                return _accountNumber;
             }
             set
             {
                 if (value >= 0)
                 {
-                    _checkNumber = value;
-                    NotifyPropertyChanged("CheckNumber");
+                    _accountNumber = value;
+                    NotifyPropertyChanged("AccountNumber");
                 }
             }
         }
-    }
 
+        public String Bank
+        {
+            get
+            {
+                return _bank;
+            }
+            set
+            {
+                _bank = value;
+            }
+        }
+    }
 }
