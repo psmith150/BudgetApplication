@@ -134,3 +134,4 @@ D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Budge
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csproj.GenerateResource.Cache
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\PaymentMethodsWindow.baml
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\PaymentMethodsWindow.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csprojResolveAssemblyReference.cache

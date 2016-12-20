@@ -30,6 +30,10 @@ namespace BudgetApplication.View
         {
             InitializeComponent();
             this.Loaded += SetColumnMinWidth;
+            CollectionViewSource cvs = this.FindResource("ValuesView") as CollectionViewSource;
+            PropertyGroupDescription prop = new PropertyGroupDescription("Group");
+            //prop.CustomSort = new GroupComparer();
+            cvs.GroupDescriptions.Add(prop);
         }
 
         private void SetColumnMinWidth(object sender, RoutedEventArgs e)
@@ -42,6 +46,11 @@ namespace BudgetApplication.View
                 column.MinWidth = 50;
                 column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
+        }
+
+        private void DataGrid_Sorting(object sender, DataGridSortingEventArgs e)
+        {
+            Debug.WriteLine("Sorting");
         }
 
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -60,7 +69,6 @@ namespace BudgetApplication.View
         // Using a DependencyProperty as the backing store for ValuesDataSource.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ValuesDataSourceProperty =
             DependencyProperty.Register("ValuesDataSource", typeof(IEnumerable<MoneyGridRow>), typeof(MoneyGrid));
-
 
 
         public IEnumerable<MoneyGridRow> TotalsDataSource
@@ -98,5 +106,13 @@ namespace BudgetApplication.View
             DependencyProperty.Register("OnEdit", typeof(ICommand), typeof(MoneyGrid), new PropertyMetadata(null));
 
 
+    }
+
+    public class GroupComparer : IComparer<Group>
+    {
+        public int Compare(Group group1, Group group2)
+        {
+            return String.Compare(group1.Name, group2.Name);
+        }
     }
 }

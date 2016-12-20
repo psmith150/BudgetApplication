@@ -319,9 +319,14 @@ namespace BudgetApplication.ViewModel
                 int startIndex = _budgetValues.IndexOf(_budgetValues.First(x => x.Group == group));
                 int endIndex = _budgetValues.IndexOf(_budgetValues.Last(x => x.Group == group));
                 int offset = endIndex - startIndex + 1;
+                //Debug.WriteLine("Line 3 is category " + _budgetValues.ElementAt(3).Category.Name);
+                _budgetValues.Move(3, 4);
+                //Debug.WriteLine("Line 3 is now category " + _budgetValues.ElementAt(3).Category.Name);
+                return;
                 for (int i = startIndex; i <= endIndex; i++)
                 {
-                    _budgetValues.Move(i, i + 4);
+                    _budgetValues.Move(3,4);
+                    Debug.WriteLine("Row moved from " + i + " to " + (i + 4));
                 }
             }
         }

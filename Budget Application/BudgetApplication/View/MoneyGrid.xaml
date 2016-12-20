@@ -5,15 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BudgetApplication.View"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:test="clr-namespace:System.Windows.Data;assembly=PresentationFramework"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <CollectionViewSource x:Key="ValuesView" Source="{Binding Path=ValuesDataSource, RelativeSource={RelativeSource FindAncestor, 
                                              AncestorType=local:MoneyGrid, 
                                              AncestorLevel=1}}">
-            <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Group"/>
+            <!--<CollectionViewSource.GroupDescriptions >
+                <test:PropertyGroupDescription PropertyName="Group" />
             </CollectionViewSource.GroupDescriptions>
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Group.Name"/>
+            </CollectionViewSource.SortDescriptions>-->
         </CollectionViewSource>
     </UserControl.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
@@ -24,7 +29,9 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <DataGrid Grid.Row="0" Width="{Binding Source={x:Reference TotalsGrid}, Path=ActualWidth}" x:Name="ValuesGrid" ItemsSource="{Binding Source={StaticResource ValuesView}}" 
-                              Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="Column" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType=local:MoneyGrid, AncestorLevel=1}}">
+                Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="Column" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType=local:MoneyGrid, AncestorLevel=1}}"
+                      CanUserSortColumns="False" Sorting="DataGrid_Sorting">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="CellEditEnding">
                         <i:InvokeCommandAction Command="{Binding Path=OnEdit, RelativeSource={RelativeSource FindAncestor, 
@@ -33,7 +40,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <DataGrid.GroupStyle>
-                    <!-- Style for groups at top level. -->
+                     <!--Style for groups at top level.--> 
                     <GroupStyle ContainerStyle="{StaticResource GroupedStyle}">
                     </GroupStyle>
                 </DataGrid.GroupStyle>
