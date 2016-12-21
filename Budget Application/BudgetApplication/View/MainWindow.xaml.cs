@@ -46,7 +46,8 @@ namespace BudgetApplication.View
             if (transaction != null && transaction.PaymentMethod != null && this.PaymentSelector.SelectedIndex >= 0)
             {
                 Debug.WriteLine(this.PaymentSelector.SelectedIndex);
-                if ((PaymentSelector.SelectedValue as String).Equals(transaction.PaymentMethod.Name))
+                Debug.WriteLine((PaymentSelector.SelectedItem).ToString());
+                if ((PaymentSelector.SelectedValue as PaymentMethod).Name.Equals(transaction.PaymentMethod.Name))
                 {
                     e.Accepted = true;
                 }

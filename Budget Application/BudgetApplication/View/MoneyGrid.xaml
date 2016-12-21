@@ -10,16 +10,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="ValuesView" Source="{Binding Path=ValuesDataSource, RelativeSource={RelativeSource FindAncestor, 
-                                             AncestorType=local:MoneyGrid, 
-                                             AncestorLevel=1}}">
-            <!--<CollectionViewSource.GroupDescriptions >
-                <test:PropertyGroupDescription PropertyName="Group" />
-            </CollectionViewSource.GroupDescriptions>
-            <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription PropertyName="Group.Name"/>
-            </CollectionViewSource.SortDescriptions>-->
-        </CollectionViewSource>
     </UserControl.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
         <Grid Background="#FFE5E5E5">
@@ -28,10 +18,9 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <DataGrid Grid.Row="0" Width="{Binding Source={x:Reference TotalsGrid}, Path=ActualWidth}" x:Name="ValuesGrid" ItemsSource="{Binding Source={StaticResource ValuesView}}" 
-                Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="Column" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType=local:MoneyGrid, AncestorLevel=1}}"
-                      CanUserSortColumns="False" Sorting="DataGrid_Sorting">
+            <DataGrid Grid.Row="0" Width="{Binding Source={x:Reference TotalsGrid}, Path=ActualWidth}" x:Name="ValuesGrid" ItemsSource="{Binding Path=ValuesDataSource, RelativeSource={RelativeSource FindAncestor, 
+                AncestorType=local:MoneyGrid, AncestorLevel=1}}" Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="Column" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType=local:MoneyGrid, AncestorLevel=1}}" CanUserSortColumns="False" Sorting="DataGrid_Sorting">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="CellEditEnding">
                         <i:InvokeCommandAction Command="{Binding Path=OnEdit, RelativeSource={RelativeSource FindAncestor, 
@@ -62,8 +51,7 @@
                 </DataGrid.Columns>
             </DataGrid>
             <DataGrid Grid.Row="1" x:Name="TotalsGrid" ItemsSource="{Binding Path=TotalsDataSource, RelativeSource={RelativeSource FindAncestor, 
-                                             AncestorType=local:MoneyGrid, 
-                                             AncestorLevel=1}}" Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="None" IsReadOnly="True">
+                AncestorType=local:MoneyGrid, AncestorLevel=1}}" Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="None" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Category" Binding="{Binding Category, Mode=OneWay}" Width="{Binding Source={x:Reference BudgetCategory}, Path=ActualWidth}"/>
                     <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False"/>

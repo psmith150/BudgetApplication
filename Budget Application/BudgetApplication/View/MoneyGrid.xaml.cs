@@ -17,7 +17,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using BudgetApplication.Model;
-
+using System.Collections;
 
 namespace BudgetApplication.View
 {
@@ -30,10 +30,6 @@ namespace BudgetApplication.View
         {
             InitializeComponent();
             this.Loaded += SetColumnMinWidth;
-            CollectionViewSource cvs = this.FindResource("ValuesView") as CollectionViewSource;
-            PropertyGroupDescription prop = new PropertyGroupDescription("Group");
-            //prop.CustomSort = new GroupComparer();
-            cvs.GroupDescriptions.Add(prop);
         }
 
         private void SetColumnMinWidth(object sender, RoutedEventArgs e)
@@ -60,15 +56,15 @@ namespace BudgetApplication.View
             e.Handled = true;
         }
 
-        public IEnumerable<MoneyGridRow> ValuesDataSource
+        public ListCollectionView ValuesDataSource
         {
-            get { return (IEnumerable<MoneyGridRow>)GetValue(ValuesDataSourceProperty); }
+            get { return (ListCollectionView)GetValue(ValuesDataSourceProperty); }
             set { SetValue(ValuesDataSourceProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ValuesDataSource.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ValuesDataSourceProperty =
-            DependencyProperty.Register("ValuesDataSource", typeof(IEnumerable<MoneyGridRow>), typeof(MoneyGrid));
+            DependencyProperty.Register("ValuesDataSource", typeof(ListCollectionView), typeof(MoneyGrid));
 
 
         public IEnumerable<MoneyGridRow> TotalsDataSource
@@ -105,14 +101,15 @@ namespace BudgetApplication.View
         public static readonly DependencyProperty OnEditProperty =
             DependencyProperty.Register("OnEdit", typeof(ICommand), typeof(MoneyGrid), new PropertyMetadata(null));
 
-
-    }
-
-    public class GroupComparer : IComparer<Group>
-    {
-        public int Compare(Group group1, Group group2)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            return String.Compare(group1.Name, group2.Name);
+            var dataView = (ListCollectionView)CollectionViewSource.GetDefaultView(ValuesGrid.ItemsSource);
+            dataView.Refresh();
+            //dataView.CustomSort = Comparer;
+            //dataView.Refresh();
+            //cvs.GroupDescriptions.RemoveAt(0);
+            //PropertyGroupDescription prop = new PropertyGroupDescription("Group");
+            //cvs.GroupDescriptions.Add(prop);
         }
     }
 }
