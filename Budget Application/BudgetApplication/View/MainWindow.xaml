@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetApplication.View"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Budget Manager" Height="350" Width="525" WindowState="Maximized" Style="{StaticResource MainWindowStyle}"
         DataContext="{Binding Main, Source={StaticResource Locator}}" ResizeMode="CanResizeWithGrip"
@@ -114,6 +115,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" Name="CreditDetailRow"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" Orientation="Horizontal">
@@ -124,7 +126,20 @@
                         <Label>End Date</Label>
                         <DatePicker Name="PaymentEndDate" SelectedDateChanged="PaymentEndDate_SelectedDateChanged"/>
                     </StackPanel>
-                    <DataGrid Grid.Row="1"  x:Name="PaymentTransactions" ItemsSource="{Binding Source={StaticResource PaymentTransactionsView}}" Background="DarkGray" AutoGenerateColumns="False">
+                    <StackPanel Grid.Row="1" Width="Auto" HorizontalAlignment="Stretch" Height="Auto" Background="Transparent" Orientation="Horizontal">
+                        <Label>Credit Limit:</Label>
+                        <Label Name="CreditLimitLabel" ContentStringFormat="{}{0:C}"/>
+                        <Label>Total Bill:</Label>
+                        <Label Name="TotalBillLabel"  ContentStringFormat="{}{0:C}"/>
+                        <Label>Payments:</Label>
+                        <xctk:DecimalUpDown Name="PaymentAmountBox" MinWidth="50" Height="25" VerticalContentAlignment="Center" FormatString="C2"
+                                            Watermark="Enter value" AllowSpin="False" ShowButtonSpinner="False" ValueChanged="PaymentAmountBox_ValueChanged"/>
+                        <Label>Net Bill:</Label>
+                        <Label Name="NetBillLabel"  ContentStringFormat="{}{0:C}"/>
+                        <Label>Remaining Credit:</Label>
+                        <Label Name="RemainingCreditLabel"  ContentStringFormat="{}{0:C}"/>
+                    </StackPanel>
+                    <DataGrid Grid.Row="2"  x:Name="PaymentTransactions" ItemsSource="{Binding Source={StaticResource PaymentTransactionsView}}" Background="DarkGray" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Date">
                                 <DataGridTemplateColumn.CellEditingTemplate>

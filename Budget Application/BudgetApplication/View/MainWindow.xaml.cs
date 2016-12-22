@@ -28,6 +28,7 @@ namespace BudgetApplication.View
             DateTime startDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             PaymentStartDate.SelectedDate = startDate;
             PaymentEndDate.SelectedDate = startDate.AddMonths(1).AddDays(-1);
+            PaymentAmountBox.Text = 0.ToString("C");
         }
 
         private void GroupsAndCategories_Click(object sender, RoutedEventArgs e)
@@ -92,6 +93,38 @@ namespace BudgetApplication.View
             PaymentStartDate.SelectedDate = (PaymentSelector.SelectedItem as PaymentMethod).StartDate;
             PaymentEndDate.SelectedDate = (PaymentSelector.SelectedItem as PaymentMethod).EndDate;
             RefreshFilter();
+            RecalculateCreditValues();
+        }
+
+        private void RecalculateCreditValues()
+        {
+            CreditCard card = PaymentSelector.SelectedItem as CreditCard;
+            if (card != null)
+            {
+                CreditDetailRow.Height = new GridLength(1, GridUnitType.Auto);
+                CreditLimitLabel.Content = card.CreditLimit;
+                ListCollectionView view = (ListCollectionView)CollectionViewSource.GetDefaultView(PaymentTransactions.ItemsSource);
+                decimal sum = 0;
+                Debug.WriteLine(view.Count);
+                Debug.WriteLine(view.GetItemAt(0));
+                foreach (Object obj in view)
+                {
+                    //Transaction transaction = obj as Transaction;
+                    //sum += transaction.Amount;
+                }
+                TotalBillLabel.Content = sum;
+                NetBillLabel.Content = sum - decimal.Parse(PaymentAmountBox.Text, System.Globalization.NumberStyles.Currency);
+                RemainingCreditLabel.Content = (decimal)CreditLimitLabel.Content - (decimal)NetBillLabel.Content;
+            }
+            else
+            {
+                CreditDetailRow.Height = new GridLength(0);
+            }
+        }
+
+        private void PaymentAmountBox_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            RecalculateCreditValues();
         }
     }
 }
