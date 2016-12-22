@@ -25,18 +25,21 @@ namespace BudgetApplication.View
         public MainWindow()
         {
             InitializeComponent();
+            DateTime startDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            PaymentStartDate.SelectedDate = startDate;
+            PaymentEndDate.SelectedDate = startDate.AddMonths(1).AddDays(-1);
         }
 
         private void GroupsAndCategories_Click(object sender, RoutedEventArgs e)
         {
             //Open popup
-            GroupsAndCategoriesWindow popup = new GroupsAndCategoriesWindow();
+            GroupsAndCategoriesWindow popup = new GroupsAndCategoriesWindow(this);
             popup.ShowDialog();
         }
 
         private void PaymentMethods_Click(object sender, RoutedEventArgs e)
         {
-            PaymentMethodsWindow popup = new PaymentMethodsWindow();
+            PaymentMethodsWindow popup = new PaymentMethodsWindow(this);
             popup.ShowDialog();
         }
 
@@ -47,7 +50,8 @@ namespace BudgetApplication.View
             {
                 Debug.WriteLine(this.PaymentSelector.SelectedIndex);
                 Debug.WriteLine((PaymentSelector.SelectedItem).ToString());
-                if ((PaymentSelector.SelectedValue as PaymentMethod).Name.Equals(transaction.PaymentMethod.Name))
+                if ((PaymentSelector.SelectedValue as PaymentMethod).Name.Equals(transaction.PaymentMethod.Name) 
+                    && PaymentStartDate.SelectedDate <= transaction.Date && PaymentEndDate.SelectedDate > transaction.Date)
                 {
                     e.Accepted = true;
                 }
@@ -61,6 +65,33 @@ namespace BudgetApplication.View
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             UpdateLayout();
+        }
+
+        private void RefreshFilter()
+        {
+            ListCollectionView view = (ListCollectionView)CollectionViewSource.GetDefaultView(PaymentTransactions.ItemsSource);
+            view.Refresh();
+        }
+
+        private void PaymentStartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (PaymentSelector.SelectedIndex >= 0)
+                (PaymentSelector.SelectedItem as PaymentMethod).StartDate = PaymentStartDate.SelectedDate ?? DateTime.Now;
+            RefreshFilter();
+        }
+
+        private void PaymentEndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (PaymentSelector.SelectedIndex >= 0)
+                (PaymentSelector.SelectedItem as PaymentMethod).EndDate = PaymentEndDate.SelectedDate ?? DateTime.Now;
+            RefreshFilter();
+        }
+
+        private void PaymentSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PaymentStartDate.SelectedDate = (PaymentSelector.SelectedItem as PaymentMethod).StartDate;
+            PaymentEndDate.SelectedDate = (PaymentSelector.SelectedItem as PaymentMethod).EndDate;
+            RefreshFilter();
         }
     }
 }

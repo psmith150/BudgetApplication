@@ -8,11 +8,17 @@
         xmlns:model="clr-namespace:BudgetApplication.Model"
         xmlns:prop="clr-namespace:System.Reflection;assembly=mscorlib"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d ignore"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
         Height="300" Width="500"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResizeWithGrip"
+        ShowInTaskbar="False"
+        Title="Manage Payment Methods">
     <Window.Resources>
+        <model:PaymentTypeToStringConverter x:Key="conv"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -20,8 +26,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
@@ -29,18 +35,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <!--<StackPanel Grid.Column="0" Orientation="Horizontal" Width="Auto">
-                <Button Name="AddPaymentButton" Style="{StaticResource AddGroupButton}" Command="{Binding AddPaymentCommand}" Click="ModifyPayment_Click"/>
-                <Button Name="RemovePaymentButton" Style="{StaticResource RemoveGroupButton}" Command="{Binding RemovePaymentCommand}" CommandParameter="{Binding ElementName=PaymentList, Path=SelectedItem}"
-                        Click="SavePaymentIndex_Click"/>
-            </StackPanel>-->
-        </Grid>
-        <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Width="Auto">
+                <Button Name="AddPaymentButton" Style="{StaticResource AddGroupButton}"  Click="AddPaymentButton_Click"  Command="{Binding AddPaymentMethodCommand}"/>
+                <Button Name="RemovePaymentButton" Style="{StaticResource RemoveGroupButton}" Click="RemovePaymentButton_Click" Command="{Binding RemovePaymentMethodCommand}"/>
+            </StackPanel>
         </Grid>
         <DataGrid Name="PaymentList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding PaymentMethods}" 
                   AutoGenerateColumns="False" SelectionChanged="PaymentList_SelectionChanged" CellStyle="{StaticResource SelectedCellStyle}">
@@ -48,16 +46,11 @@
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Payment Method" Binding="{Binding Path=Name}" Width="Auto"/>
-                <DataGridTextColumn Header="Type" Binding="{Binding Path=PaymentTypeName}" Width="Auto" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding Path=PaymentType, Converter={StaticResource conv}}" Width="Auto" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
-        <ListView Name="CreditCardPropertyList" Grid.Row="1" Grid.Column="1">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Property" Width="Auto" DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="Value" Width="Auto" DisplayMemberBinding="{Binding Age}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <xctk:PropertyGrid Grid.Row="1" Grid.Column="1" Name="PaymentPropertyList" Width="Auto" AutoGenerateProperties="True" ShowSearchBox="False"
+                           ShowSortOptions="False" ShowSummary="False" ShowTitle="False">  
+        </xctk:PropertyGrid>
     </Grid>
 </Window>

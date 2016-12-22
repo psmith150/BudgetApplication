@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\App.xaml
-5-1514025361
+61809848766
 
-18-2048028327
-702086498264
-View\GroupsAndCategoriesWindow.xaml;View\MoneyGrid.xaml;View\MainWindow.xaml;Application\StyleDictionary.xaml;View\PaymentMethodsWindow.xaml;
+192114508345
+761323445680
+View\GroupsAndCategoriesWindow.xaml;View\MoneyGrid.xaml;View\MainWindow.xaml;Application\StyleDictionary.xaml;View\AddPaymentPopup.xaml;View\PaymentMethodsWindow.xaml;
 
-True
+False
 

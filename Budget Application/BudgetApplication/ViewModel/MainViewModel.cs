@@ -71,6 +71,8 @@ namespace BudgetApplication.ViewModel
             MoveGroupDownCommand = new RelayCommand<Group>((group) => MoveGroupDown(group));
             MoveCategoryUpCommand = new RelayCommand<Category>((category) => MoveCategoryUp(category));
             MoveCategoryDownCommand = new RelayCommand<Category>((category) => MoveCategoryDown(category));
+            AddPaymentMethodCommand = new RelayCommand<PaymentMethod>((paymentMethod) => AddPaymentMethod(paymentMethod));
+            RemovePaymentMethodCommand = new RelayCommand<PaymentMethod>((paymentMethod) => RemovePaymentMethod(paymentMethod));
 
             _canExecute = true;
         }
@@ -145,12 +147,6 @@ namespace BudgetApplication.ViewModel
             {
 
             }
-        }
-
-        public bool AddPaymentMethod(PaymentMethod paymentMethod)
-        {
-            _paymentMethods.Add(paymentMethod);
-            return true;
         }
 
         public ListCollectionView BudgetRows
@@ -643,6 +639,39 @@ namespace BudgetApplication.ViewModel
         }
         #endregion
 
+        #region Methods to modify payment method collection
+        public void AddPaymentMethod(PaymentMethod paymentMethod)
+        {
+            if (paymentMethod == null)
+                return;
+            _paymentMethods.Add(paymentMethod);
+        }
+
+        public void RemovePaymentMethod(PaymentMethod paymentMethod)
+        {
+            try
+            {
+                _paymentMethods.Remove(paymentMethod);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Could not find specified payment method " + paymentMethod.Name, ex);
+            }
+        }
+        #endregion
+
+        #region Payment Methods window
+        public RelayCommand<PaymentMethod> AddPaymentMethodCommand
+        {
+            get; set;
+        }
+
+        public RelayCommand<PaymentMethod> RemovePaymentMethodCommand
+        {
+            get; set;
+        }
+        #endregion
+
         #region Budget tab
 
 
@@ -812,10 +841,7 @@ namespace BudgetApplication.ViewModel
 
         #region Saving and Opening files
         public void SaveData()
-        {
-            UpdateSpendingTotals();
-            RefreshListViews();
-            return;
+        {           
             using (FileStream file = new FileStream(filepath, FileMode.Create))
             {
                 using (StreamWriter stream = new StreamWriter(file))
@@ -880,11 +906,15 @@ namespace BudgetApplication.ViewModel
                                 CheckingAccount account = payment as CheckingAccount;
                                 writer.WriteStartElement("CheckingAccount");
                                 writer.WriteElementString("Name", account.Name);
+                                writer.WriteElementString("Bank", account.Bank);
+                                writer.WriteElementString("AccountNumber", account.AccountNumber.ToString());
                             }
                             else
                             {
                                 throw new XmlException("Invalid payment method: " + payment.Name);
                             }
+                            writer.WriteElementString("StartDate", payment.StartDate.ToString());
+                            writer.WriteElementString("EndDate", payment.EndDate.ToString());
                             writer.WriteEndElement();
                         }
                         writer.WriteEndElement();
@@ -1001,11 +1031,13 @@ namespace BudgetApplication.ViewModel
                         {
                             String name = null;
                             PaymentMethod payment = null;
+                            DateTime startDate = new DateTime();
+                            DateTime endDate = DateTime.Today;
                             if (paymentNode.Name.Equals("CreditCard"))
                             {
+                                decimal creditLimit = 300;
                                 foreach (XmlNode property in paymentNode.ChildNodes)
                                 {
-                                    decimal creditLimit = 300;
                                     if (property.Name.Equals("Name"))
                                     {
                                         name = property.InnerText;
@@ -1014,32 +1046,62 @@ namespace BudgetApplication.ViewModel
                                     {
                                         creditLimit = Decimal.Parse(property.InnerText);
                                     }
+                                    else if (property.Name.Equals("StartDate"))
+                                    {
+                                        startDate = DateTime.Parse(property.InnerText);
+                                    }
+                                    else if (property.Name.Equals("EndDate"))
+                                    {
+                                        endDate = DateTime.Parse(property.InnerText);
+                                    }
                                     else
                                     {
                                         throw new XmlException("Unknown credit card property: " + property.Name);
                                     }
-                                    payment = new CreditCard(name, creditLimit);
                                 }
+                                payment = new CreditCard(name, creditLimit);
                             }
                             else if (paymentNode.Name.Equals("CheckingAccount"))
                             {
+                                string bank = "";
+                                int accountNumber = 0;
                                 foreach (XmlNode property in paymentNode.ChildNodes)
                                 {
                                     if (property.Name.Equals("Name"))
                                     {
                                         name = property.InnerText;
                                     }
+                                    else if (property.Name.Equals("Bank"))
+                                    {
+                                        bank = property.InnerText;
+                                    }
+                                    else if (property.Name.Equals("AccountNumber"))
+                                    {
+                                        accountNumber = int.Parse(property.InnerText);
+                                    }
+                                    else if (property.Name.Equals("StartDate"))
+                                    {
+                                        startDate = DateTime.Parse(property.InnerText);
+                                    }
+                                    else if (property.Name.Equals("EndDate"))
+                                    {
+                                        endDate = DateTime.Parse(property.InnerText);
+                                    }
                                     else
                                     {
                                         throw new XmlException("Unknown checking account property: " + property.Name);
                                     }
-                                    payment = new CheckingAccount(name);
                                 }
+                                payment = new CheckingAccount(name);
+                                (payment as CheckingAccount).Bank = bank;
+                                (payment as CheckingAccount).AccountNumber = accountNumber;
                             }
                             else
                             {
                                 throw new XmlException("Unknown payment type: " + paymentNode.Name);
                             }
+                            payment.StartDate = startDate;
+                            payment.EndDate = endDate;
                             _paymentMethods.Add(payment);
                         }
                     }

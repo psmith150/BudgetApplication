@@ -117,11 +117,12 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" Orientation="Horizontal">
-                        <ComboBox x:Name="PaymentSelector" Width="Auto" ItemsSource="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" SelectedIndex="0" DisplayMemberPath="Name"/>
+                        <ComboBox x:Name="PaymentSelector" Width="Auto" ItemsSource="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                                  SelectedIndex="0" DisplayMemberPath="Name" SelectionChanged="PaymentSelector_SelectionChanged"/>
                         <Label>Start Date</Label>
-                        <DatePicker Name="PaymentStartDate" />
+                        <DatePicker Name="PaymentStartDate" SelectedDateChanged="PaymentStartDate_SelectedDateChanged"/>
                         <Label>End Date</Label>
-                        <DatePicker Name="PaymentEndDate"/>
+                        <DatePicker Name="PaymentEndDate" SelectedDateChanged="PaymentEndDate_SelectedDateChanged"/>
                     </StackPanel>
                     <DataGrid Grid.Row="1"  x:Name="PaymentTransactions" ItemsSource="{Binding Source={StaticResource PaymentTransactionsView}}" Background="DarkGray" AutoGenerateColumns="False">
                         <DataGrid.Columns>

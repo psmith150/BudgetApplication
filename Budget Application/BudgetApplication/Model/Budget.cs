@@ -12,7 +12,6 @@ namespace BudgetApplication.Model
         {
             _name = String.Copy(name);
         }
-
         public String Name
         {
             get

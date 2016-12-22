@@ -427,7 +427,16 @@
     <CreditCard>
       <Name>Capital One QuicksilverOne</Name>
       <CreditLimit>5300</CreditLimit>
+      <StartDate>12/1/2016 12:00:00 AM</StartDate>
+      <EndDate>12/31/2016 12:00:00 AM</EndDate>
     </CreditCard>
+    <CheckingAccount>
+      <Name>Primary Checking</Name>
+      <Bank>Ally</Bank>
+      <AccountNumber>101</AccountNumber>
+      <StartDate>1/1/2016 12:00:00 AM</StartDate>
+      <EndDate>12/31/2016 12:00:00 AM</EndDate>
+    </CheckingAccount>
   </PaymentMethods>
   <Transactions>
     <Transaction>

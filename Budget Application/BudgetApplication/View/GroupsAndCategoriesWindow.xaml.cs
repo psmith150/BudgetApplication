@@ -33,6 +33,11 @@ namespace BudgetApplication.View
             InitializeComponent();
         }
 
+        public GroupsAndCategoriesWindow(Window owner) : this()
+        {
+            this.Owner = owner;
+        }
+
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {

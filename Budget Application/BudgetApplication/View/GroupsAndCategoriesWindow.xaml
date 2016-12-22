@@ -7,7 +7,8 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
-        Title="GroupsAndCategoriesWindow" Height="450" Width="450" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="Manage Groups and Categories" Height="450" Width="450" Loaded="Window_Loaded" Closing="Window_Closing"
+        ShowInTaskbar="False" WindowStartupLocation="CenterOwner" ResizeMode="CanResizeWithGrip">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

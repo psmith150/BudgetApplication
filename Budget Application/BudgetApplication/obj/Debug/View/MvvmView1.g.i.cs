@@ -35,9 +35,9 @@ namespace BudgetApplication.View {
     
     
     /// <summary>
-    /// MvvmView1
+    /// AddPaymentPopup
     /// </summary>
-    public partial class MvvmView1 : System.Windows.Window, System.Windows.Markup.IComponentConnector {
+    public partial class AddPaymentPopup : System.Windows.Window, System.Windows.Markup.IComponentConnector {
         
         private bool _contentLoaded;
         

@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
+using System.Reflection;
+using System.Windows.Data;
+using System.Xml.Serialization;
 
 namespace BudgetApplication.Model
 {
@@ -157,12 +161,31 @@ namespace BudgetApplication.Model
         #endregion
     }
 
+    [XmlInclude(typeof(CreditCard))]
+    [XmlInclude(typeof(CheckingAccount))]
     public abstract class PaymentMethod : INotifyPropertyChanged
     {
         private String _name;
-        public enum Type { CreditCard, CheckingAccount };
+        private DateTime _startDate;
+        private DateTime _endDate;
+
+        public PaymentMethod(String name)
+        {
+            _name = name;
+            _startDate = new DateTime();
+            _endDate = DateTime.Today;
+        }
+
+        public enum Type
+        {
+            [Description("Credit Card")]
+            CreditCard,
+            [Description("Checking Account")]
+            CheckingAccount
+        };
         protected string[] _typeNames = { "Credit Card", "Checking Account" };
 
+        [Browsable(false)]
         public String Name
         {
             get
@@ -179,18 +202,38 @@ namespace BudgetApplication.Model
             }
         }
 
+        [Browsable(false)]
+        public DateTime StartDate
+        {
+            get
+            {
+                return _startDate;
+            }
+            set
+            {
+                _startDate = value;
+            }
+        }
+
+        [Browsable(false)]
+        public DateTime EndDate
+        {
+            get
+            {
+                return _endDate;
+            }
+            set
+            {
+                _endDate = value;
+            }
+        }
+
+        [Browsable(false)]
         abstract public Type PaymentType
         {
             get;
         }
 
-        public String PaymentTypeName
-        {
-            get
-            {
-                return String.Copy(_typeNames[(int) PaymentType]);
-            }
-        }
 
         public override String ToString()
         {
@@ -219,12 +262,9 @@ namespace BudgetApplication.Model
     public class CreditCard : PaymentMethod
     {
         private decimal _creditLimit;
-        private DateTime _startDate;
-        private DateTime _endDate;
         
-        public CreditCard(String name, decimal creditLimit = 300)
+        public CreditCard(String name, decimal creditLimit = 300) : base(name)
         {
-            this.Name = name;
             if (creditLimit <= 0)
             {
                 creditLimit = 0;
@@ -232,6 +272,7 @@ namespace BudgetApplication.Model
             _creditLimit = creditLimit;
         }
 
+        [Browsable(false)]
         public override Type PaymentType
         {
             get
@@ -239,7 +280,7 @@ namespace BudgetApplication.Model
                 return Type.CreditCard;
             }
         }
-
+        [DisplayName("Credit Limit")]
         public decimal CreditLimit
         {
             get
@@ -252,41 +293,19 @@ namespace BudgetApplication.Model
                 NotifyPropertyChanged("CreditLimit");
             }
         }
-
-        public DateTime StartDate
-        {
-            get
-            {
-                return _startDate;
-            }
-            set
-            {
-                _startDate = value;
-            }
-        }
-
-        public DateTime EndDate
-        {
-            get
-            {
-                return _endDate;
-            }
-            set
-            {
-                _endDate = value;
-            }
-        }
     }
 
     public class CheckingAccount : PaymentMethod
     {
         private int _accountNumber;
         private string _bank;
-        public CheckingAccount(String name)
+        public CheckingAccount(String name) : base(name)
         {
-            this.Name = name;
+            _accountNumber = 0;
+            _bank = "";
         }
 
+        [Browsable(false)]
         public override Type PaymentType
         {
             get
@@ -295,6 +314,7 @@ namespace BudgetApplication.Model
             }
         }
 
+        [DisplayName("Account Number")]
         public int AccountNumber
         {
             get
@@ -311,6 +331,7 @@ namespace BudgetApplication.Model
             }
         }
 
+        [DisplayName("Bank Name")]
         public String Bank
         {
             get
@@ -320,6 +341,38 @@ namespace BudgetApplication.Model
             set
             {
                 _bank = value;
+            }
+        }
+    }
+
+    public class PaymentTypeToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            Enum val = value as Enum;
+            string description = GetEnumDescription(val);
+            return description;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return string.Empty;
+        }
+
+        private string GetEnumDescription(Enum enumObj)
+        {
+            FieldInfo fieldInfo = enumObj.GetType().GetField(enumObj.ToString());
+
+            object[] attribArray = fieldInfo.GetCustomAttributes(false);
+
+            if (attribArray.Length == 0)
+            {
+                return enumObj.ToString();
+            }
+            else
+            {
+                DescriptionAttribute attrib = attribArray[0] as DescriptionAttribute;
+                return attrib.Description;
             }
         }
     }

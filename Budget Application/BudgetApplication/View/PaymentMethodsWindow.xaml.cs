@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Xceed.Wpf.Toolkit.PropertyGrid;
 
 namespace BudgetApplication.View
 {
@@ -23,6 +24,11 @@ namespace BudgetApplication.View
             InitializeComponent();
         }
 
+        public PaymentMethodsWindow(Window owner) : this()
+        {
+            this.Owner = owner;
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             PaymentList.SelectedIndex = 0;
@@ -33,11 +39,53 @@ namespace BudgetApplication.View
                 return;
 
             PaymentMethod selectedPayment= (PaymentList.SelectedItem as PaymentMethod);
+            PaymentPropertyList.SelectedObject = selectedPayment;
+        }
 
-            if (selectedPayment.PaymentType == PaymentMethod.Type.CreditCard)
+        private void RemovePaymentButton_Click(object sender, RoutedEventArgs e)
+        {
+            int index = PaymentList.SelectedIndex;
+            PaymentMethod selectedPayment = (PaymentList.SelectedItem as PaymentMethod);
+            if (selectedPayment == null)
+                return;
+
+            RemovePaymentButton.CommandParameter = selectedPayment;
+
+            if (index > 0)
+                PaymentList.SelectedIndex = index - 1;
+            else
+                PaymentList.SelectedIndex = 0;
+        }
+
+        private void AddPaymentButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddPaymentPopup popup = new AddPaymentPopup(this);
+            if(popup.ShowDialog() == true)
             {
-                ObservableCollection<PropertyInfo> properties = new ObservableCollection<PropertyInfo>(selectedPayment.GetType().GetProperties());
-                Debug.WriteLine(properties[0].GetValue(selectedPayment));
+                String name = popup.PaymentName;
+                PaymentMethod payment;
+                switch(popup.PaymentType)
+                {
+                    case PaymentMethod.Type.CreditCard:
+                    {
+                        payment = new CreditCard(name);
+                        break;
+                    }
+                    case PaymentMethod.Type.CheckingAccount:
+                    {
+                        payment = new CheckingAccount(name);
+                        Debug.WriteLine((payment as CheckingAccount).AccountNumber);
+                        break;
+                    }
+                    default:
+                    {
+                        payment = null;
+                        break;
+                    } 
+                }
+                Debug.WriteLine("Name is " + popup.PaymentName + "; type is " + popup.PaymentType);
+                AddPaymentButton.CommandParameter = payment;
+                PaymentList.SelectedIndex = PaymentList.Items.Count;
             }
         }
     }
