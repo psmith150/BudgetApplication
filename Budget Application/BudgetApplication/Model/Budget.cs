@@ -1,12 +1,19 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Xml.Serialization;
 
 namespace BudgetApplication.Model
 {
+    [Serializable]
     public class Category : INotifyPropertyChanged
     {
         private String _name;
+
+        public Category()
+        {
+            _name = "New Category";
+        }
 
         public Category( String name = "New Category")
         {
@@ -24,7 +31,7 @@ namespace BudgetApplication.Model
                 {
                     _name = String.Copy(value);
                     NotifyPropertyChanged("Name");
-                    Debug.WriteLine("Category changed");
+                    //Debug.WriteLine("Category changed");
                 }
             }
         }
@@ -52,11 +59,19 @@ namespace BudgetApplication.Model
         #endregion
     }
 
+    [Serializable]
     public class Group : INotifyPropertyChanged
     {
         private String _name;
         private bool _isIncome;
         private MyObservableCollection<Category> _categories;
+
+        public Group()
+        {
+            _isIncome = false;
+            _name = "New Group";
+            _categories = new MyObservableCollection<Category>();
+        }
 
         public Group(bool isIncome = false, String name = "New Group")
         {
@@ -131,12 +146,12 @@ namespace BudgetApplication.Model
         #endregion
     }
 
-
     public class MoneyGridRow : INotifyPropertyChanged
     {
         private Group _group;
         private Category _category;
         private decimal[] _values;
+
         public MoneyGridRow(Group group, Category category)
         {
             _values = new decimal[12];
@@ -156,6 +171,10 @@ namespace BudgetApplication.Model
             {
                 return _group;
             }
+            set
+            {
+                _group = value;
+            }
         }
 
         public Category Category
@@ -163,6 +182,10 @@ namespace BudgetApplication.Model
             get
             {
                 return _category;
+            }
+            set
+            {
+                _category = value;
             }
         }
 

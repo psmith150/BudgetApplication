@@ -163,11 +163,19 @@ namespace BudgetApplication.Model
 
     [XmlInclude(typeof(CreditCard))]
     [XmlInclude(typeof(CheckingAccount))]
+    [Serializable]
     public abstract class PaymentMethod : INotifyPropertyChanged
     {
         private String _name;
         private DateTime _startDate;
         private DateTime _endDate;
+
+        public PaymentMethod()
+        {
+            _name = "New Payment Method";
+            _startDate = new DateTime();
+            _endDate = DateTime.Today;
+        }
 
         public PaymentMethod(String name)
         {
@@ -259,10 +267,16 @@ namespace BudgetApplication.Model
         #endregion
     }
 
+    [Serializable]
     public class CreditCard : PaymentMethod
     {
         private decimal _creditLimit;
         
+        public CreditCard() : base()
+        {
+            _creditLimit = 300;
+        }
+
         public CreditCard(String name, decimal creditLimit = 300) : base(name)
         {
             if (creditLimit <= 0)
@@ -295,10 +309,18 @@ namespace BudgetApplication.Model
         }
     }
 
+    [Serializable]
     public class CheckingAccount : PaymentMethod
     {
         private int _accountNumber;
         private string _bank;
+
+        public CheckingAccount() : base()
+        {
+            _accountNumber = 0;
+            _bank = "";
+        }
+
         public CheckingAccount(String name) : base(name)
         {
             _accountNumber = 0;

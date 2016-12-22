@@ -17,6 +17,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System.Collections;
+using System.Xml.Serialization;
 
 namespace BudgetApplication.ViewModel
 {
@@ -298,11 +299,11 @@ namespace BudgetApplication.ViewModel
             {
                 throw new ArgumentException("Group " + group.Name + " does not exist");
             }
-            Debug.WriteLine("Removed group " + group.Name);
+            //Debug.WriteLine("Removed group " + group.Name);
 
             foreach (Category category in group.Categories)
             {
-                Debug.WriteLine("Removed category " + category.Name);
+                //Debug.WriteLine("Removed category " + category.Name);
 
                 _categories.Remove(category);
             }
@@ -429,7 +430,7 @@ namespace BudgetApplication.ViewModel
             {
                 throw new ArgumentException("Category " + category.Name + " does not exist");
             }
-            Debug.WriteLine("Removed category " + category.Name);
+            //Debug.WriteLine("Removed category " + category.Name);
 
         }
 
@@ -495,6 +496,7 @@ namespace BudgetApplication.ViewModel
 
         public void UpdateCategories(Object sender, NotifyCollectionChangedEventArgs e)
         {
+            //Debug.WriteLine("Adding category");
             if (e.NewItems != null && e.Action != NotifyCollectionChangedAction.Move)
             {
                 foreach (Category newCategory in e.NewItems)
@@ -567,10 +569,10 @@ namespace BudgetApplication.ViewModel
             {
                 foreach (Group oldGroup in e.OldItems)
                 {
-                    Debug.WriteLine("Group to be deleted: " + oldGroup.Name);
+                    //Debug.WriteLine("Group to be deleted: " + oldGroup.Name);
                     foreach (MoneyGridRow row in _budgetValues)
                     {
-                        Debug.WriteLine("Budget row: " + row.Category);
+                        //Debug.WriteLine("Budget row: " + row.Category);
                     }
                     MoneyGridRow oldRow = _budgetTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
                     if (oldRow == null)
@@ -596,11 +598,6 @@ namespace BudgetApplication.ViewModel
         public RelayCommand<Group> AddGroupCommand
         {
             get; set;
-        }
-
-        public void TestGroup(Group group)
-        {
-            Debug.WriteLine(group.Name);
         }
 
         public RelayCommand<Group> RemoveGroupCommand
@@ -719,7 +716,7 @@ namespace BudgetApplication.ViewModel
                     row.Values[month] += transaction.Amount;
                 }
             }
-            Debug.WriteLine("Spending Values Updated");
+            //Debug.WriteLine("Spending Values Updated");
             UpdateSpendingTotals();
 
             //if (e.NewItems != null)
@@ -764,7 +761,7 @@ namespace BudgetApplication.ViewModel
         public void UpdateSpendingTotals()
         {
             CalculateColumnTotals(_spendingValues, _spendingTotals, "SpendingTotals");
-            Debug.WriteLine("Spending Total Updated");
+            //Debug.WriteLine("Spending Total Updated");
         }
 
         private void CalculateSpendingColumnTotals()
@@ -846,6 +843,20 @@ namespace BudgetApplication.ViewModel
             {
                 using (StreamWriter stream = new StreamWriter(file))
                 {
+                    XmlSerializer dataSerializer = new XmlSerializer(typeof(DataWrapper));
+                    DataWrapper data = new DataWrapper();
+                    data.Groups = _groups;
+                    data.PaymentMethods = _paymentMethods;
+                    data.Transactions = _transactions;
+                    List<decimal[]> budgetData = new List<decimal[]>();
+                    foreach (MoneyGridRow row in _budgetValues)
+                    {
+                        budgetData.Add(row.Values);
+                    }
+                    data.BudgetValues = budgetData;
+                    dataSerializer.Serialize(stream, data);
+                    return;
+                    #region deprecated
                     XmlWriterSettings settings = new XmlWriterSettings();
                     settings.Indent = true;
                     using (XmlWriter writer = XmlWriter.Create(stream, settings))
@@ -939,8 +950,8 @@ namespace BudgetApplication.ViewModel
                         writer.WriteEndElement();
                         writer.WriteEndDocument();
                     }
+                    #endregion
                 }
-
             }
         }
 
@@ -950,7 +961,64 @@ namespace BudgetApplication.ViewModel
             _categories.Clear();
             _transactions.Clear();
             _paymentMethods.Clear();
-            //MessageBox.Show("Gets here 2");
+            DataWrapper data = new DataWrapper();
+            try
+            {
+                using (FileStream file = new FileStream(filepath, FileMode.Open))
+                {
+                    XmlSerializer dataSerializer = new XmlSerializer(typeof(DataWrapper));
+                    data = (DataWrapper)dataSerializer.Deserialize(file);
+                }
+            }
+            catch (IOException ex) //File does not exist; set everything to defaults
+            {
+
+            }
+            int index = 0;
+            foreach (Group group in data.Groups)
+            {
+                Group newGroup = new Group(group.IsIncome, group.Name);
+                _groups.Add(newGroup);
+                foreach (Category category in group.Categories)
+                {
+                    newGroup.Categories.Add(category);
+                    _categories.Add(category);
+                    MoneyGridRow row = _budgetValues.Single(x => x.Category == category);
+                    row.Values = data.BudgetValues.ElementAt(index);
+                    index++;
+                }
+            }
+            foreach (PaymentMethod payment in data.PaymentMethods)
+            {
+                _paymentMethods.Add(payment);
+            }
+            //Need to match transaction categories and payment methods
+            foreach (Transaction transaction in data.Transactions)
+            {
+                String categoryName = transaction.Category.Name;
+                string paymentName = transaction.PaymentMethod.Name;
+                try
+                {
+                    transaction.Category = _categories.Single(x => x.Name.Equals(categoryName));
+                }
+                catch (ArgumentException ex)
+                {
+                    throw new ArgumentException("Cannot find matching category " + transaction.Category.Name + " in categories list");
+                }
+                try
+                {
+                    transaction.PaymentMethod = _paymentMethods.Single(x => x.Name.Equals(paymentName));
+                }
+                catch (ArgumentException ex)
+                {
+                    throw new ArgumentException("Cannot find matching payment method " + transaction.PaymentMethod.Name + " in payment methods list");
+                }
+                _transactions.Add(transaction);
+            }
+            Debug.WriteLine(_budgetValues.Count);
+            return;
+
+
             try
             {
                 XmlDocument doc = new XmlDocument();
@@ -1217,5 +1285,15 @@ namespace BudgetApplication.ViewModel
         {
             _action();
         }
+    }
+
+    [Serializable]
+    [XmlRoot("Data")]
+    public class DataWrapper
+    {
+        public MyObservableCollection<Group> Groups { get; set; }
+        public MyObservableCollection<PaymentMethod> PaymentMethods { get; set; }
+        public MyObservableCollection<Transaction> Transactions { get; set; }
+        public List<decimal[]> BudgetValues { get; set; }
     }
 }

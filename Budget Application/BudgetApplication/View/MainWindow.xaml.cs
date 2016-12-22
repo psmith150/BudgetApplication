@@ -48,8 +48,8 @@ namespace BudgetApplication.View
             Transaction transaction = e.Item as Transaction;
             if (transaction != null && transaction.PaymentMethod != null && this.PaymentSelector.SelectedIndex >= 0)
             {
-                Debug.WriteLine(this.PaymentSelector.SelectedIndex);
-                Debug.WriteLine((PaymentSelector.SelectedItem).ToString());
+                //Debug.WriteLine(this.PaymentSelector.SelectedIndex);
+                //Debug.WriteLine((PaymentSelector.SelectedItem).ToString());
                 if ((PaymentSelector.SelectedValue as PaymentMethod).Name.Equals(transaction.PaymentMethod.Name) 
                     && PaymentStartDate.SelectedDate <= transaction.Date && PaymentEndDate.SelectedDate > transaction.Date)
                 {
