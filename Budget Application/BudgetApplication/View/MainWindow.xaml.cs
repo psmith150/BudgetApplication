@@ -106,11 +106,11 @@ namespace BudgetApplication.View
                 ListCollectionView view = (ListCollectionView)CollectionViewSource.GetDefaultView(PaymentTransactions.ItemsSource);
                 decimal sum = 0;
                 Debug.WriteLine(view.Count);
-                Debug.WriteLine(view.GetItemAt(0));
-                foreach (Object obj in view)
+                Debug.WriteLine((view.GetItemAt(0) as Transaction).Amount);
+                for (int i=0; i<view.Count-1; i++)
                 {
-                    //Transaction transaction = obj as Transaction;
-                    //sum += transaction.Amount;
+                    Transaction transaction = view.GetItemAt(i) as Transaction;
+                    sum += transaction.Amount;
                 }
                 TotalBillLabel.Content = sum;
                 NetBillLabel.Content = sum - decimal.Parse(PaymentAmountBox.Text, System.Globalization.NumberStyles.Currency);

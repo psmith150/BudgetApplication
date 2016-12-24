@@ -102,6 +102,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Budget.cs" />
+    <Compile Include="Model\MonthValues.cs" />
     <Compile Include="Model\RowCompare.cs" />
     <Compile Include="View\GroupsAndCategoriesWindow.xaml.cs">
       <DependentUpon>GroupsAndCategoriesWindow.xaml</DependentUpon>

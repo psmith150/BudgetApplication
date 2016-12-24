@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Xml.Serialization;
+using System.Collections.ObjectModel;
 
 namespace BudgetApplication.Model
 {
@@ -150,11 +151,12 @@ namespace BudgetApplication.Model
     {
         private Group _group;
         private Category _category;
-        private decimal[] _values;
+        private MonthValues _values;
 
         public MoneyGridRow(Group group, Category category)
         {
-            _values = new decimal[12];
+            _values = new MonthValues();
+            _values.PropertyChanged += ValuesModified;
             if (group == null)
                 throw new ArgumentException("Group cannot be null");
             if (category == null)
@@ -189,16 +191,24 @@ namespace BudgetApplication.Model
             }
         }
 
-        public decimal[] Values
+        public MonthValues Values
         {
             get
             {
                 return _values;
             }
-            set
+        }
+
+        public Decimal Sum
+        {
+            get
             {
-                _values = value;
-                NotifyPropertyChanged("Values");
+                decimal sum = 0;
+                for(int i=0; i<_values.Count; i++)
+                {
+                    sum += _values[i];
+                }
+                return sum;
             }
         }
 
@@ -217,6 +227,12 @@ namespace BudgetApplication.Model
         private void GroupModified(object sender, PropertyChangedEventArgs e)
         {
             NotifyPropertyChanged("Group");
+        }
+        private void ValuesModified(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged("Values");
+            //NotifyPropertyChanged("Sum");
+            //Debug.WriteLine("A value changed for row " + Category.Name);
         }
 
         private void NotifyPropertyChanged(string propertyName)

@@ -57,13 +57,13 @@ namespace BudgetApplication.ViewModel
 
             _categories.CollectionChanged += UpdateCategories;
             _groups.CollectionChanged += UpdateGroups;
-            _budgetValues.CollectionChanged += UpdateBudgetTotals;
-            _transactions.CollectionChanged += UpdateSpendingValues;
-            _spendingTotals.CollectionChanged += UpdateComparisonValues;
-            _budgetTotals.CollectionChanged += UpdateComparisonValues;
+            _budgetValues.MemberChanged += UpdateBudgetTotals;
+            _transactions.MemberChanged += UpdateSpendingValues;
+            _transactions.CollectionChanged += AddOrRemoveSpendingValues;
+            _spendingTotals.MemberChanged += UpdateComparisonValues;
+            _budgetTotals.MemberChanged += UpdateComparisonValues;
             LoadData();
 
-            BudgetRefreshCommand = new RelayCommand(OnBudgetValueUpdate, () => _canExecute);
             AddGroupCommand = new RelayCommand<Group>((group) => AddGroup(new Group()));
             RemoveGroupCommand = new RelayCommand<Group>((group) => RemoveGroup(group));
             AddCategoryCommand = new RelayCommand<Group>((group) => AddCategory(group));
@@ -230,7 +230,7 @@ namespace BudgetApplication.ViewModel
                     try
                     {
                         MoneyGridRow row = columnValues.Single(x => x.Group == group && x.Category == category);
-                        for (int i = 0; i < row.Values.Length; i++)
+                        for (int i = 0; i < row.Values.Count; i++)
                         {
                             groupSum[i] += row.Values[i];
                         }
@@ -243,16 +243,9 @@ namespace BudgetApplication.ViewModel
                         throw new ArgumentException("Could not find corresponding row", ex);
                     }
                 }
-                total.Values = groupSum;
-                RaisePropertyChanged(propertyName);
+                total.Values.Values = groupSum;
+                //RaisePropertyChanged(propertyName);
             }
-        }
-
-        private void OnBudgetValueUpdate()
-        {
-            CalculateBudgetColumnTotals();
-            UpdateComparisonValues(null, null);
-            //RefreshListViews();
         }
 
         #endregion
@@ -672,31 +665,25 @@ namespace BudgetApplication.ViewModel
         #region Budget tab
 
 
-        public void UpdateBudgetTotals(Object sender, NotifyCollectionChangedEventArgs e)
+        public void UpdateBudgetTotals(Object sender, PropertyChangedEventArgs e)
         {
-            CalculateColumnTotals(_budgetValues, _budgetTotals, "BudgetTotals");
+            //Debug.WriteLine("Updating budget totals");
+            if (e.PropertyName.Equals("Values"))
+                CalculateColumnTotals(_budgetValues, _budgetTotals, "BudgetTotals");
         }
-
-        public RelayCommand BudgetRefreshCommand
-        {
-            get;
-            private set;
-        }
-
-        private void CalculateBudgetColumnTotals()
-        {
-            CalculateColumnTotals(_budgetValues, _budgetTotals, "BudgetTotals");
-        }
-
 
         #endregion
 
         #region Spending tab
-        public void UpdateSpendingValues(Object sender, NotifyCollectionChangedEventArgs e)
+
+        //Possible update: add oldValue to transaction, find transaction being modified, and update the appropriate fields
+        public void UpdateSpendingValues(Object sender, PropertyChangedEventArgs e)
         {
+            if (!e.PropertyName.Equals("Category") && !e.PropertyName.Equals("Amount") && !e.PropertyName.Equals("Date"))
+                return;
             foreach (MoneyGridRow row in _spendingValues)
             {
-                row.Values = new decimal[12];
+                row.Values.Values = new decimal[12];
             }
             foreach (Transaction transaction in _transactions)
             {
@@ -758,6 +745,51 @@ namespace BudgetApplication.ViewModel
             //}
         }
 
+        public void AddOrRemoveSpendingValues(Object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null && e.Action != NotifyCollectionChangedAction.Move)
+            {
+                foreach (Transaction transaction in e.NewItems)
+                {
+                    if (transaction.Category != null)
+                    {
+                        MoneyGridRow row;
+                        try
+                        {
+                            row = _spendingValues.Single(x => x.Category == transaction.Category);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new ArgumentException("Cannot find category for transaction category " + transaction.Category, ex);
+                        }
+                        //TODO: check year
+                        int month = transaction.Date.Month - 1;
+                        row.Values[month] += transaction.Amount;
+                    }
+                }
+                UpdateSpendingTotals();
+            }
+            if (e.OldItems !=null && e.Action != NotifyCollectionChangedAction.Move)
+            {
+                foreach (Transaction transaction in e.OldItems)
+                {
+                    MoneyGridRow row;
+                    try
+                    {
+                        row = _spendingValues.Single(x => x.Category == transaction.Category);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ArgumentException("Cannot find category for transaction category " + transaction.Category, ex);
+                    }
+                    //TODO: check year
+                    int month = transaction.Date.Month - 1;
+                    row.Values[month] -= transaction.Amount;
+                }
+                UpdateSpendingTotals();
+            }
+        }
+
         public void UpdateSpendingTotals()
         {
             CalculateColumnTotals(_spendingValues, _spendingTotals, "SpendingTotals");
@@ -772,7 +804,7 @@ namespace BudgetApplication.ViewModel
 
         #region Comparison tab
 
-        public void UpdateComparisonValues(Object sender, NotifyCollectionChangedEventArgs e)
+        public void UpdateComparisonValues(Object sender, PropertyChangedEventArgs e)
         {
             //Debug.WriteLine("Number of categories: " + _categories.Count + "Number of rows: " + _budgetValues.Count + " " + _spendingValues.Count + " " + _comparisonValues.Count);
             for (int i = 0; i < _comparisonValues.Count; i++)
@@ -788,7 +820,7 @@ namespace BudgetApplication.ViewModel
             }
             if (_comparisonTotals.Count == _groups.Count)
                 CalculateColumnTotals(_comparisonValues, _comparisonTotals, "Comparison Totals");
-            _comparisonValues.MemberPropertyChanged(null, null);
+            //_comparisonValues.MemberPropertyChanged(null, null);
         }
 
         #endregion
@@ -851,106 +883,106 @@ namespace BudgetApplication.ViewModel
                     List<decimal[]> budgetData = new List<decimal[]>();
                     foreach (MoneyGridRow row in _budgetValues)
                     {
-                        budgetData.Add(row.Values);
+                        budgetData.Add(row.Values.Values);
                     }
                     data.BudgetValues = budgetData;
                     dataSerializer.Serialize(stream, data);
                     return;
-                    #region deprecated
-                    XmlWriterSettings settings = new XmlWriterSettings();
-                    settings.Indent = true;
-                    using (XmlWriter writer = XmlWriter.Create(stream, settings))
-                    {
-                        writer.WriteStartDocument();
-                        writer.WriteStartElement("Data");
+                    //#region deprecated
+                    //XmlWriterSettings settings = new XmlWriterSettings();
+                    //settings.Indent = true;
+                    //using (XmlWriter writer = XmlWriter.Create(stream, settings))
+                    //{
+                    //    writer.WriteStartDocument();
+                    //    writer.WriteStartElement("Data");
 
-                        writer.WriteStartElement("Groups");
-                        foreach (Group group in _groups)
-                        {
-                            writer.WriteStartElement("Group");
-                            writer.WriteElementString("Name", group.Name);
-                            writer.WriteElementString("IsIncome", group.IsIncome.ToString());
+                    //    writer.WriteStartElement("Groups");
+                    //    foreach (Group group in _groups)
+                    //    {
+                    //        writer.WriteStartElement("Group");
+                    //        writer.WriteElementString("Name", group.Name);
+                    //        writer.WriteElementString("IsIncome", group.IsIncome.ToString());
 
-                            writer.WriteStartElement("Categories");
-                            foreach (Category category in group.Categories)
-                            {
-                                writer.WriteStartElement("Category");
-                                writer.WriteElementString("Name", category.Name);
+                    //        writer.WriteStartElement("Categories");
+                    //        foreach (Category category in group.Categories)
+                    //        {
+                    //            writer.WriteStartElement("Category");
+                    //            writer.WriteElementString("Name", category.Name);
 
-                                writer.WriteStartElement("BudgetValues");
-                                MoneyGridRow row;
-                                try
-                                {
-                                    row = _budgetValues.Single(x => x.Group == group && x.Category == category);
-                                }
-                                catch
-                                {
-                                    throw new XmlException("Cannot find budget row for category " + category.Name + " and group " + group.Name);
-                                }
-                                foreach (decimal value in row.Values)
-                                {
-                                    writer.WriteElementString("Value", value.ToString());
-                                }
-                                writer.WriteEndElement();
+                    //            writer.WriteStartElement("BudgetValues");
+                    //            MoneyGridRow row;
+                    //            try
+                    //            {
+                    //                row = _budgetValues.Single(x => x.Group == group && x.Category == category);
+                    //            }
+                    //            catch
+                    //            {
+                    //                throw new XmlException("Cannot find budget row for category " + category.Name + " and group " + group.Name);
+                    //            }
+                    //            foreach (decimal value in row.Values)
+                    //            {
+                    //                writer.WriteElementString("Value", value.ToString());
+                    //            }
+                    //            writer.WriteEndElement();
 
-                                writer.WriteEndElement();
-                            }
-                            writer.WriteEndElement();
+                    //            writer.WriteEndElement();
+                    //        }
+                    //        writer.WriteEndElement();
 
-                            writer.WriteEndElement();
-                        }
-                        writer.WriteEndElement();
+                    //        writer.WriteEndElement();
+                    //    }
+                    //    writer.WriteEndElement();
 
-                        writer.WriteStartElement("PaymentMethods");
-                        foreach (PaymentMethod payment in _paymentMethods)
-                        {
-                            //MessageBox.Show(String.Format("{0}", category.Name));
-                            if (payment.PaymentType == PaymentMethod.Type.CreditCard)
-                            {
-                                CreditCard card = payment as CreditCard;
-                                writer.WriteStartElement("CreditCard");
-                                writer.WriteElementString("Name", card.Name);
-                                writer.WriteElementString("CreditLimit", card.CreditLimit.ToString());
-                            }
-                            else if (payment.PaymentType == PaymentMethod.Type.CheckingAccount)
-                            {
-                                CheckingAccount account = payment as CheckingAccount;
-                                writer.WriteStartElement("CheckingAccount");
-                                writer.WriteElementString("Name", account.Name);
-                                writer.WriteElementString("Bank", account.Bank);
-                                writer.WriteElementString("AccountNumber", account.AccountNumber.ToString());
-                            }
-                            else
-                            {
-                                throw new XmlException("Invalid payment method: " + payment.Name);
-                            }
-                            writer.WriteElementString("StartDate", payment.StartDate.ToString());
-                            writer.WriteElementString("EndDate", payment.EndDate.ToString());
-                            writer.WriteEndElement();
-                        }
-                        writer.WriteEndElement();
+                    //    writer.WriteStartElement("PaymentMethods");
+                    //    foreach (PaymentMethod payment in _paymentMethods)
+                    //    {
+                    //        //MessageBox.Show(String.Format("{0}", category.Name));
+                    //        if (payment.PaymentType == PaymentMethod.Type.CreditCard)
+                    //        {
+                    //            CreditCard card = payment as CreditCard;
+                    //            writer.WriteStartElement("CreditCard");
+                    //            writer.WriteElementString("Name", card.Name);
+                    //            writer.WriteElementString("CreditLimit", card.CreditLimit.ToString());
+                    //        }
+                    //        else if (payment.PaymentType == PaymentMethod.Type.CheckingAccount)
+                    //        {
+                    //            CheckingAccount account = payment as CheckingAccount;
+                    //            writer.WriteStartElement("CheckingAccount");
+                    //            writer.WriteElementString("Name", account.Name);
+                    //            writer.WriteElementString("Bank", account.Bank);
+                    //            writer.WriteElementString("AccountNumber", account.AccountNumber.ToString());
+                    //        }
+                    //        else
+                    //        {
+                    //            throw new XmlException("Invalid payment method: " + payment.Name);
+                    //        }
+                    //        writer.WriteElementString("StartDate", payment.StartDate.ToString());
+                    //        writer.WriteElementString("EndDate", payment.EndDate.ToString());
+                    //        writer.WriteEndElement();
+                    //    }
+                    //    writer.WriteEndElement();
 
 
-                        writer.WriteStartElement("Transactions");
-                        foreach (Transaction transaction in _transactions)
-                        {
-                            //MessageBox.Show(String.Format("{0}", category.Name));
-                            writer.WriteStartElement("Transaction");
-                            writer.WriteElementString("Date", transaction.Date.ToString());
-                            writer.WriteElementString("Item", transaction.Item);
-                            writer.WriteElementString("Payee", transaction.Payee);
-                            writer.WriteElementString("Amount", transaction.Amount.ToString());
-                            writer.WriteElementString("Comment", transaction.Comment);
-                            writer.WriteElementString("Category", transaction.Category.Name);
-                            writer.WriteElementString("PaymentMethod", transaction.PaymentMethod.Name);
-                            writer.WriteEndElement();
-                        }
-                        writer.WriteEndElement();
+                    //    writer.WriteStartElement("Transactions");
+                    //    foreach (Transaction transaction in _transactions)
+                    //    {
+                    //        //MessageBox.Show(String.Format("{0}", category.Name));
+                    //        writer.WriteStartElement("Transaction");
+                    //        writer.WriteElementString("Date", transaction.Date.ToString());
+                    //        writer.WriteElementString("Item", transaction.Item);
+                    //        writer.WriteElementString("Payee", transaction.Payee);
+                    //        writer.WriteElementString("Amount", transaction.Amount.ToString());
+                    //        writer.WriteElementString("Comment", transaction.Comment);
+                    //        writer.WriteElementString("Category", transaction.Category.Name);
+                    //        writer.WriteElementString("PaymentMethod", transaction.PaymentMethod.Name);
+                    //        writer.WriteEndElement();
+                    //    }
+                    //    writer.WriteEndElement();
 
-                        writer.WriteEndElement();
-                        writer.WriteEndDocument();
-                    }
-                    #endregion
+                    //    writer.WriteEndElement();
+                    //    writer.WriteEndDocument();
+                    //}
+                    //#endregion
                 }
             }
         }
@@ -984,7 +1016,7 @@ namespace BudgetApplication.ViewModel
                     newGroup.Categories.Add(category);
                     _categories.Add(category);
                     MoneyGridRow row = _budgetValues.Single(x => x.Category == category);
-                    row.Values = data.BudgetValues.ElementAt(index);
+                    row.Values.Values = data.BudgetValues.ElementAt(index);
                     index++;
                 }
             }
@@ -1015,250 +1047,250 @@ namespace BudgetApplication.ViewModel
                 }
                 _transactions.Add(transaction);
             }
-            Debug.WriteLine(_budgetValues.Count);
+            //Debug.WriteLine(_budgetValues.Count);
             return;
 
 
-            try
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(filepath);
+            //try
+            //{
+            //    XmlDocument doc = new XmlDocument();
+            //    doc.Load(filepath);
 
-                foreach (XmlNode node in doc.DocumentElement.ChildNodes)
-                {
-                    String nodeName = node.Name;
+            //    foreach (XmlNode node in doc.DocumentElement.ChildNodes)
+            //    {
+            //        String nodeName = node.Name;
 
-                    if (nodeName.Equals("Groups"))
-                    {
-                        foreach (XmlNode groupNode in node.ChildNodes)
-                        {
-                            String name = null;
-                            bool isIncome = false;
-                            MyObservableCollection<Category> categories = new MyObservableCollection<Category>();
-                            foreach (XmlNode property in groupNode.ChildNodes)
-                            {
-                                if (property.Name.Equals("Name"))
-                                {
-                                    name = property.InnerText;
-                                }
-                                else if (property.Name.Equals("IsIncome"))
-                                {
-                                    isIncome = Boolean.Parse(property.InnerText);
-                                }
-                                else if (property.Name.Equals("Categories"))
-                                {
-                                    Group newGroup = new Group(isIncome, name);
-                                    _groups.Add(newGroup);
-                                    foreach (XmlNode categoryNode in property.ChildNodes)
-                                    {
-                                        String categoryName = null;
-                                        foreach (XmlNode categoryProperty in categoryNode.ChildNodes)
-                                        {
-                                            if (categoryProperty.Name.Equals("Name"))
-                                            {
-                                                categoryName = categoryProperty.InnerText;
-                                            }
-                                            else if (categoryProperty.Name.Equals("BudgetValues"))
-                                            {
-                                                Category newCategory = new Category(categoryName);
-                                                newGroup.Categories.Add(newCategory);
-                                                _categories.Add(newCategory);
-                                                MoneyGridRow row;
-                                                try
-                                                {
-                                                    row = _budgetValues.Single(x => x.Group == newGroup && x.Category == newCategory);
-                                                }
-                                                catch
-                                                {
-                                                    throw new XmlException("Cannot find budget row for category " + newCategory.Name + " and group " + newGroup.Name);
-                                                }
-                                                decimal[] values = new decimal[12];
-                                                for (int i = 0; i < 12; i++)
-                                                {
-                                                    values[i] = Decimal.Parse(categoryProperty.ChildNodes[i].InnerText);
-                                                }
-                                                row.Values = values;
-                                            }
-                                            else
-                                            {
-                                                throw new XmlException("Unknown category property: " + categoryProperty.Name);
-                                            }
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    throw new XmlException("Unknown group property: " + property.Name);
-                                }
-                            }
-                        }
-                    }
-                    else if (nodeName.Equals("PaymentMethods"))
-                    {
-                        foreach (XmlNode paymentNode in node.ChildNodes)
-                        {
-                            String name = null;
-                            PaymentMethod payment = null;
-                            DateTime startDate = new DateTime();
-                            DateTime endDate = DateTime.Today;
-                            if (paymentNode.Name.Equals("CreditCard"))
-                            {
-                                decimal creditLimit = 300;
-                                foreach (XmlNode property in paymentNode.ChildNodes)
-                                {
-                                    if (property.Name.Equals("Name"))
-                                    {
-                                        name = property.InnerText;
-                                    }
-                                    else if (property.Name.Equals("CreditLimit"))
-                                    {
-                                        creditLimit = Decimal.Parse(property.InnerText);
-                                    }
-                                    else if (property.Name.Equals("StartDate"))
-                                    {
-                                        startDate = DateTime.Parse(property.InnerText);
-                                    }
-                                    else if (property.Name.Equals("EndDate"))
-                                    {
-                                        endDate = DateTime.Parse(property.InnerText);
-                                    }
-                                    else
-                                    {
-                                        throw new XmlException("Unknown credit card property: " + property.Name);
-                                    }
-                                }
-                                payment = new CreditCard(name, creditLimit);
-                            }
-                            else if (paymentNode.Name.Equals("CheckingAccount"))
-                            {
-                                string bank = "";
-                                int accountNumber = 0;
-                                foreach (XmlNode property in paymentNode.ChildNodes)
-                                {
-                                    if (property.Name.Equals("Name"))
-                                    {
-                                        name = property.InnerText;
-                                    }
-                                    else if (property.Name.Equals("Bank"))
-                                    {
-                                        bank = property.InnerText;
-                                    }
-                                    else if (property.Name.Equals("AccountNumber"))
-                                    {
-                                        accountNumber = int.Parse(property.InnerText);
-                                    }
-                                    else if (property.Name.Equals("StartDate"))
-                                    {
-                                        startDate = DateTime.Parse(property.InnerText);
-                                    }
-                                    else if (property.Name.Equals("EndDate"))
-                                    {
-                                        endDate = DateTime.Parse(property.InnerText);
-                                    }
-                                    else
-                                    {
-                                        throw new XmlException("Unknown checking account property: " + property.Name);
-                                    }
-                                }
-                                payment = new CheckingAccount(name);
-                                (payment as CheckingAccount).Bank = bank;
-                                (payment as CheckingAccount).AccountNumber = accountNumber;
-                            }
-                            else
-                            {
-                                throw new XmlException("Unknown payment type: " + paymentNode.Name);
-                            }
-                            payment.StartDate = startDate;
-                            payment.EndDate = endDate;
-                            _paymentMethods.Add(payment);
-                        }
-                    }
-                    else if (nodeName.Equals("Transactions"))
-                    {
-                        foreach (XmlNode transactionNode in node.ChildNodes)
-                        {
-                            DateTime date = DateTime.Today;
-                            String item = null;
-                            String payee = null;
-                            Decimal amount = 0;
-                            String comment = null;
-                            String categoryName = null;
-                            Category category = null;
-                            String paymentName = null;
-                            PaymentMethod payment = null;
+            //        if (nodeName.Equals("Groups"))
+            //        {
+            //            foreach (XmlNode groupNode in node.ChildNodes)
+            //            {
+            //                String name = null;
+            //                bool isIncome = false;
+            //                MyObservableCollection<Category> categories = new MyObservableCollection<Category>();
+            //                foreach (XmlNode property in groupNode.ChildNodes)
+            //                {
+            //                    if (property.Name.Equals("Name"))
+            //                    {
+            //                        name = property.InnerText;
+            //                    }
+            //                    else if (property.Name.Equals("IsIncome"))
+            //                    {
+            //                        isIncome = Boolean.Parse(property.InnerText);
+            //                    }
+            //                    else if (property.Name.Equals("Categories"))
+            //                    {
+            //                        Group newGroup = new Group(isIncome, name);
+            //                        _groups.Add(newGroup);
+            //                        foreach (XmlNode categoryNode in property.ChildNodes)
+            //                        {
+            //                            String categoryName = null;
+            //                            foreach (XmlNode categoryProperty in categoryNode.ChildNodes)
+            //                            {
+            //                                if (categoryProperty.Name.Equals("Name"))
+            //                                {
+            //                                    categoryName = categoryProperty.InnerText;
+            //                                }
+            //                                else if (categoryProperty.Name.Equals("BudgetValues"))
+            //                                {
+            //                                    Category newCategory = new Category(categoryName);
+            //                                    newGroup.Categories.Add(newCategory);
+            //                                    _categories.Add(newCategory);
+            //                                    MoneyGridRow row;
+            //                                    try
+            //                                    {
+            //                                        row = _budgetValues.Single(x => x.Group == newGroup && x.Category == newCategory);
+            //                                    }
+            //                                    catch
+            //                                    {
+            //                                        throw new XmlException("Cannot find budget row for category " + newCategory.Name + " and group " + newGroup.Name);
+            //                                    }
+            //                                    decimal[] values = new decimal[12];
+            //                                    for (int i = 0; i < 12; i++)
+            //                                    {
+            //                                        values[i] = Decimal.Parse(categoryProperty.ChildNodes[i].InnerText);
+            //                                    }
+            //                                    row.Values = values;
+            //                                }
+            //                                else
+            //                                {
+            //                                    throw new XmlException("Unknown category property: " + categoryProperty.Name);
+            //                                }
+            //                            }
+            //                        }
+            //                    }
+            //                    else
+            //                    {
+            //                        throw new XmlException("Unknown group property: " + property.Name);
+            //                    }
+            //                }
+            //            }
+            //        }
+            //        else if (nodeName.Equals("PaymentMethods"))
+            //        {
+            //            foreach (XmlNode paymentNode in node.ChildNodes)
+            //            {
+            //                String name = null;
+            //                PaymentMethod payment = null;
+            //                DateTime startDate = new DateTime();
+            //                DateTime endDate = DateTime.Today;
+            //                if (paymentNode.Name.Equals("CreditCard"))
+            //                {
+            //                    decimal creditLimit = 300;
+            //                    foreach (XmlNode property in paymentNode.ChildNodes)
+            //                    {
+            //                        if (property.Name.Equals("Name"))
+            //                        {
+            //                            name = property.InnerText;
+            //                        }
+            //                        else if (property.Name.Equals("CreditLimit"))
+            //                        {
+            //                            creditLimit = Decimal.Parse(property.InnerText);
+            //                        }
+            //                        else if (property.Name.Equals("StartDate"))
+            //                        {
+            //                            startDate = DateTime.Parse(property.InnerText);
+            //                        }
+            //                        else if (property.Name.Equals("EndDate"))
+            //                        {
+            //                            endDate = DateTime.Parse(property.InnerText);
+            //                        }
+            //                        else
+            //                        {
+            //                            throw new XmlException("Unknown credit card property: " + property.Name);
+            //                        }
+            //                    }
+            //                    payment = new CreditCard(name, creditLimit);
+            //                }
+            //                else if (paymentNode.Name.Equals("CheckingAccount"))
+            //                {
+            //                    string bank = "";
+            //                    int accountNumber = 0;
+            //                    foreach (XmlNode property in paymentNode.ChildNodes)
+            //                    {
+            //                        if (property.Name.Equals("Name"))
+            //                        {
+            //                            name = property.InnerText;
+            //                        }
+            //                        else if (property.Name.Equals("Bank"))
+            //                        {
+            //                            bank = property.InnerText;
+            //                        }
+            //                        else if (property.Name.Equals("AccountNumber"))
+            //                        {
+            //                            accountNumber = int.Parse(property.InnerText);
+            //                        }
+            //                        else if (property.Name.Equals("StartDate"))
+            //                        {
+            //                            startDate = DateTime.Parse(property.InnerText);
+            //                        }
+            //                        else if (property.Name.Equals("EndDate"))
+            //                        {
+            //                            endDate = DateTime.Parse(property.InnerText);
+            //                        }
+            //                        else
+            //                        {
+            //                            throw new XmlException("Unknown checking account property: " + property.Name);
+            //                        }
+            //                    }
+            //                    payment = new CheckingAccount(name);
+            //                    (payment as CheckingAccount).Bank = bank;
+            //                    (payment as CheckingAccount).AccountNumber = accountNumber;
+            //                }
+            //                else
+            //                {
+            //                    throw new XmlException("Unknown payment type: " + paymentNode.Name);
+            //                }
+            //                payment.StartDate = startDate;
+            //                payment.EndDate = endDate;
+            //                _paymentMethods.Add(payment);
+            //            }
+            //        }
+            //        else if (nodeName.Equals("Transactions"))
+            //        {
+            //            foreach (XmlNode transactionNode in node.ChildNodes)
+            //            {
+            //                DateTime date = DateTime.Today;
+            //                String item = null;
+            //                String payee = null;
+            //                Decimal amount = 0;
+            //                String comment = null;
+            //                String categoryName = null;
+            //                Category category = null;
+            //                String paymentName = null;
+            //                PaymentMethod payment = null;
 
-                            foreach (XmlNode property in transactionNode.ChildNodes)
-                            {
-                                if (property.Name.Equals("Date"))
-                                {
-                                    date = DateTime.Parse(property.InnerText);
-                                }
-                                else if (property.Name.Equals("Item"))
-                                {
-                                    item = property.InnerText;
-                                }
-                                else if (property.Name.Equals("Payee"))
-                                {
-                                    payee = property.InnerText;
-                                }
-                                else if (property.Name.Equals("Amount"))
-                                {
-                                    amount = Decimal.Parse(property.InnerText);
-                                }
-                                else if (property.Name.Equals("Comment"))
-                                {
-                                    comment = property.InnerText;
-                                }
-                                else if (property.Name.Equals("Category"))
-                                {
-                                    categoryName = property.InnerText;
-                                    try
-                                    {
-                                        category = _categories.Single(x => x.Name.Equals(categoryName));
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        throw new XmlException("Invalid category name: " + categoryName, ex);
-                                    }
-                                }
-                                else if (property.Name.Equals("PaymentMethod"))
-                                {
-                                    paymentName = property.InnerText;
-                                    try
-                                    {
-                                        payment = _paymentMethods.Single(x => x.Name.Equals(paymentName));
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        throw new XmlException("Invalid payment method name: " + paymentName, ex);
-                                    }
-                                }
-                                else
-                                {
-                                    throw new XmlException("Unknown transaction property: " + property.Name);
-                                }
-                            }
-                            Transaction transaction = new Transaction();
-                            transaction.Date = date;
-                            transaction.Item = item;
-                            transaction.Payee = payee;
-                            transaction.Amount = amount;
-                            transaction.Comment = comment;
-                            transaction.Category = category;
-                            transaction.PaymentMethod = payment;
-                            _transactions.Add(transaction);
-                        }
-                    }
-                    else
-                    {
-                        throw new XmlException("Unexpected node: " + nodeName);
-                    }
-                }
-            }
-            catch (FileNotFoundException ex)
-            {
-                throw new FileNotFoundException("Could not load xml file from " + filepath, ex);
-            }
+            //                foreach (XmlNode property in transactionNode.ChildNodes)
+            //                {
+            //                    if (property.Name.Equals("Date"))
+            //                    {
+            //                        date = DateTime.Parse(property.InnerText);
+            //                    }
+            //                    else if (property.Name.Equals("Item"))
+            //                    {
+            //                        item = property.InnerText;
+            //                    }
+            //                    else if (property.Name.Equals("Payee"))
+            //                    {
+            //                        payee = property.InnerText;
+            //                    }
+            //                    else if (property.Name.Equals("Amount"))
+            //                    {
+            //                        amount = Decimal.Parse(property.InnerText);
+            //                    }
+            //                    else if (property.Name.Equals("Comment"))
+            //                    {
+            //                        comment = property.InnerText;
+            //                    }
+            //                    else if (property.Name.Equals("Category"))
+            //                    {
+            //                        categoryName = property.InnerText;
+            //                        try
+            //                        {
+            //                            category = _categories.Single(x => x.Name.Equals(categoryName));
+            //                        }
+            //                        catch (Exception ex)
+            //                        {
+            //                            throw new XmlException("Invalid category name: " + categoryName, ex);
+            //                        }
+            //                    }
+            //                    else if (property.Name.Equals("PaymentMethod"))
+            //                    {
+            //                        paymentName = property.InnerText;
+            //                        try
+            //                        {
+            //                            payment = _paymentMethods.Single(x => x.Name.Equals(paymentName));
+            //                        }
+            //                        catch (Exception ex)
+            //                        {
+            //                            throw new XmlException("Invalid payment method name: " + paymentName, ex);
+            //                        }
+            //                    }
+            //                    else
+            //                    {
+            //                        throw new XmlException("Unknown transaction property: " + property.Name);
+            //                    }
+            //                }
+            //                Transaction transaction = new Transaction();
+            //                transaction.Date = date;
+            //                transaction.Item = item;
+            //                transaction.Payee = payee;
+            //                transaction.Amount = amount;
+            //                transaction.Comment = comment;
+            //                transaction.Category = category;
+            //                transaction.PaymentMethod = payment;
+            //                _transactions.Add(transaction);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            throw new XmlException("Unexpected node: " + nodeName);
+            //        }
+            //    }
+            //}
+            //catch (FileNotFoundException ex)
+            //{
+            //    throw new FileNotFoundException("Could not load xml file from " + filepath, ex);
+            //}
         }
         #endregion
 

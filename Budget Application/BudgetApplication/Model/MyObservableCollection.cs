@@ -13,9 +13,27 @@ namespace BudgetApplication
     public class MyObservableCollection<T> : ObservableCollection<T>
         where T : INotifyPropertyChanged
     {
+        private bool _delayNotification;
         public MyObservableCollection() : base()
         {
-            CollectionChanged += new NotifyCollectionChangedEventHandler(NewCollectionChanged);
+            //CollectionChanged += new NotifyCollectionChangedEventHandler(NewCollectionChanged);
+        }
+
+        public bool DelayNotification
+        {
+            get
+            {
+                return _delayNotification;
+            }
+            set
+            {
+                _delayNotification = value;
+                //End of delay
+                if (!_delayNotification)
+                {
+
+                }
+            }
         }
 
         public MyObservableCollection(IEnumerable<T> enumerable) : base(enumerable)
@@ -43,6 +61,9 @@ namespace BudgetApplication
 
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
+            if (_delayNotification)
+                return;
+            NewCollectionChanged(this, e);
             base.OnCollectionChanged(e);
         }
 
@@ -54,10 +75,20 @@ namespace BudgetApplication
         //    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Move));
         //}
 
-        public void MemberPropertyChanged(object sender, PropertyChangedEventArgs e)
+        public event PropertyChangedEventHandler MemberChanged;
+
+        private void MemberPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-            //Debug.WriteLine("A collection member was changed");
+            PropertyChangedEventHandler handler = MemberChanged;
+            if (handler != null)
+            {
+                //Debug.WriteLine(this);
+                //Debug.WriteLine(e.PropertyName);
+                MemberChanged(this, e);
+            }
+            //OnMemberChange()
+            //OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            //Debug.WriteLine("A collection member was changed: " + e.PropertyName);
         }
     }
 }

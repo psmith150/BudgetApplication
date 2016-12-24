@@ -44,7 +44,7 @@
         </Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TabItem Style="{StaticResource TabHeader}" Header="Budget">
-                <local:MoneyGrid ValuesDataSource="{Binding BudgetRows}" TotalsDataSource="{Binding BudgetTotals}" IsReadOnly="false" OnEdit="{Binding BudgetRefreshCommand}">
+                <local:MoneyGrid ValuesDataSource="{Binding BudgetRows}" TotalsDataSource="{Binding BudgetTotals}" IsReadOnly="false">
                 </local:MoneyGrid>
             </TabItem>
             <TabItem Style="{StaticResource TabHeader}" Header="Spending">
@@ -52,7 +52,8 @@
                 </local:MoneyGrid>
             </TabItem>
             <TabItem Style="{StaticResource TabHeader}" Header="Budget vs Spending">
-                <local:MoneyGrid ValuesDataSource="{Binding ComparisonRows}" TotalsDataSource="{Binding ComparisonTotals}" IsReadOnly="true">
+                <local:MoneyGrid ValuesDataSource="{Binding ComparisonRows}" TotalsDataSource="{Binding ComparisonTotals}" IsReadOnly="true"
+                                 IsComparison="True">
                 </local:MoneyGrid>
             </TabItem>
             <TabItem Style="{StaticResource TabHeader}" Header="Transactions">

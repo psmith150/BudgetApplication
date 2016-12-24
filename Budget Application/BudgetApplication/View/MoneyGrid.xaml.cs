@@ -18,6 +18,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using BudgetApplication.Model;
 using System.Collections;
+using System.Globalization;
 
 namespace BudgetApplication.View
 {
@@ -39,8 +40,15 @@ namespace BudgetApplication.View
             for (int i = 2; i < ValuesGrid.Columns.Count; i++)
             {
                 column = ValuesGrid.Columns[i];
+                if (i == ValuesGrid.Columns.Count-2)
+                    continue;
                 column.MinWidth = 50;
                 column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+                if (IsComparison)
+                {
+                    (column as DataGridTextColumn).ElementStyle = this.FindResource("ColorCodeStyle") as Style;
+                    (TotalsGrid.Columns[i] as DataGridTextColumn).ElementStyle = this.FindResource("ColorCodeStyle") as Style;
+                }
             }
         }
 
@@ -91,6 +99,19 @@ namespace BudgetApplication.View
 
 
 
+        public bool IsComparison
+        {
+            get { return (bool)GetValue(IsComparisonProperty); }
+            set { SetValue(IsComparisonProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsComparison.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsComparisonProperty =
+            DependencyProperty.Register("IsComparison", typeof(bool), typeof(MoneyGrid), new PropertyMetadata(false));
+
+
+
+
         public ICommand OnEdit
         {
             get { return (ICommand)GetValue(OnEditProperty); }
@@ -110,6 +131,27 @@ namespace BudgetApplication.View
             //cvs.GroupDescriptions.RemoveAt(0);
             //PropertyGroupDescription prop = new PropertyGroupDescription("Group");
             //cvs.GroupDescriptions.Add(prop);
+        }
+    }
+
+    public class ValueToBrushConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            decimal num = (decimal)value;
+            if (num >= 0)
+            {
+                return Brushes.Green;
+            }
+            else
+            {
+                return Brushes.Red;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }
