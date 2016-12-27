@@ -152,6 +152,7 @@ namespace BudgetApplication.Model
         private Group _group;
         private Category _category;
         private MonthValues _values;
+        private bool _isSum;
 
         public MoneyGridRow(Group group, Category category)
         {
@@ -165,6 +166,7 @@ namespace BudgetApplication.Model
             _category = category;
             _category.PropertyChanged += CategoryModified;
             _group.PropertyChanged += GroupModified;
+            _isSum = false;
         }
 
         public Group Group
@@ -199,10 +201,24 @@ namespace BudgetApplication.Model
             }
         }
 
+        public bool IsSum
+        {
+            get
+            {
+                return _isSum;
+            }
+            set
+            {
+                _isSum = value;
+            }
+        }
+
         public Decimal Sum
         {
             get
             {
+                if (_isSum)
+                    return Values[Values.Count - 1];
                 decimal sum = 0;
                 for(int i=0; i<_values.Count; i++)
                 {
@@ -231,7 +247,7 @@ namespace BudgetApplication.Model
         private void ValuesModified(object sender, PropertyChangedEventArgs e)
         {
             NotifyPropertyChanged("Values");
-            //NotifyPropertyChanged("Sum");
+            NotifyPropertyChanged("Sum");
             //Debug.WriteLine("A value changed for row " + Category.Name);
         }
 

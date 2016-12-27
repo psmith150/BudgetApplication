@@ -17,43 +17,36 @@
         </CollectionViewSource>
     </Window.Resources>
     <DockPanel Background="White">
-        <Grid DockPanel.Dock="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Name="GroupsAndCategories" Click="GroupsAndCategories_Click">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Button Name="GroupsAndCategories" Click="GroupsAndCategories_Click">
                 <TextBlock>Groups and Categories</TextBlock>
             </Button>
-            <Button Grid.Column="1" Name="SaveData" Command="{Binding SaveData_ClickCommand}">
+            <Button Name="SaveData" Command="{Binding SaveData_ClickCommand}">
                 <TextBlock>Save Data</TextBlock>
             </Button>
-            <Button Grid.Column="2" Name="LoadData" Command="{Binding LoadData_ClickCommand}">
+            <Button Name="LoadData" Command="{Binding LoadData_ClickCommand}">
                 <TextBlock>Load Data</TextBlock>
             </Button>
-            <Button Grid.Column="3" Click="Button_Click">
-                <TextBlock>Refresh</TextBlock>
-            </Button>
-            <Button Grid.Column="4" Name="PaymentMethods" Click="PaymentMethods_Click">
+            <Button Name="PaymentMethods" Click="PaymentMethods_Click">
                 <TextBlock>Payment Methods</TextBlock>
             </Button>
-        </Grid>
+            <Button Name="NewYear" Content="Add New Year"/>
+            <ComboBox Name="YearSelector" SelectedItem="{Binding CurrentYear}" ItemsSource="{Binding YearList}"/>
+        </StackPanel>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TabItem Style="{StaticResource TabHeader}" Header="Budget">
-                <local:MoneyGrid ValuesDataSource="{Binding BudgetRows}" TotalsDataSource="{Binding BudgetTotals}" IsReadOnly="false">
+                <local:MoneyGrid ValuesDataSource="{Binding BudgetRows}" TotalsDataSource="{Binding BudgetTotals}" IsReadOnly="false" 
+                                 BudgetAndSumDataSource="{Binding BudgetBudgetAndSum}">
                 </local:MoneyGrid>
             </TabItem>
             <TabItem Style="{StaticResource TabHeader}" Header="Spending">
-                <local:MoneyGrid ValuesDataSource="{Binding SpendingRows}" TotalsDataSource="{Binding SpendingTotals}" IsReadOnly="True">
+                <local:MoneyGrid ValuesDataSource="{Binding SpendingRows}" TotalsDataSource="{Binding SpendingTotals}" IsReadOnly="True" 
+                                 BudgetAndSumDataSource="{Binding SpendingBudgetAndSum}">
                 </local:MoneyGrid>
             </TabItem>
             <TabItem Style="{StaticResource TabHeader}" Header="Budget vs Spending">
                 <local:MoneyGrid ValuesDataSource="{Binding ComparisonRows}" TotalsDataSource="{Binding ComparisonTotals}" IsReadOnly="true"
-                                 IsComparison="True">
+                                 IsComparison="True" BudgetAndSumDataSource="{Binding ComparisonBudgetAndSum}">
                 </local:MoneyGrid>
             </TabItem>
             <TabItem Style="{StaticResource TabHeader}" Header="Transactions">

@@ -41,7 +41,7 @@
             </StackPanel>
         </Grid>
         <DataGrid Name="PaymentList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding PaymentMethods}" 
-                  AutoGenerateColumns="False" SelectionChanged="PaymentList_SelectionChanged" CellStyle="{StaticResource SelectedCellStyle}">
+                  AutoGenerateColumns="False" SelectionChanged="PaymentList_SelectionChanged" CellStyle="{StaticResource SelectedCellStyle}" CanUserAddRows="False">
             <DataGrid.Resources>
             </DataGrid.Resources>
             <DataGrid.Columns>

@@ -29,40 +29,73 @@ namespace BudgetApplication.ViewModel
         private MyObservableCollection<PaymentMethod> _paymentMethods;
         private MyObservableCollection<MoneyGridRow> _budgetValues;
         private MyObservableCollection<MoneyGridRow> _budgetTotals;
+        private TotalObservableCollection _budgetBudgetAndSum;
         private MyObservableCollection<MoneyGridRow> _spendingValues;
         private MyObservableCollection<MoneyGridRow> _spendingTotals;
+        private TotalObservableCollection _spendingBudgetAndSum;
         private MyObservableCollection<MoneyGridRow> _comparisonValues;
         private MyObservableCollection<MoneyGridRow> _comparisonTotals;
+        private TotalObservableCollection _comparisonBudgetAndSum;
+
         private ListCollectionView _budgetValueView;
         private ListCollectionView _spendingValueView;
         private ListCollectionView _comparisonValueView;
-        private Group columnTotalsGroup;
-        private String filepath = "data.xml";
+
+        private Group columnIncomeTotalsGroup;
+        private Group columnExpendituresTotalsGroup;
+
+        private ObservableCollection<String> _yearList;
+        private String fileName = "data";
+        private String filePath = "";
+        private String completeFilePath;
+        private String _currentYear;
         public MainViewModel()
         {
+            columnIncomeTotalsGroup = new Group(true, "Income Totals");
+            columnExpendituresTotalsGroup = new Group(false, "Expenditure totals");
+
             _groups = new MyObservableCollection<Group>();
             _categories = new MyObservableCollection<Category>();
             _transactions = new MyObservableCollection<Transaction>();
             _paymentMethods = new MyObservableCollection<PaymentMethod>();
             _budgetValues = new MyObservableCollection<MoneyGridRow>();
             _budgetTotals = new MyObservableCollection<MoneyGridRow>();
+            _budgetBudgetAndSum = new TotalObservableCollection(_budgetTotals);
             _spendingValues = new MyObservableCollection<MoneyGridRow>();
             _spendingTotals = new MyObservableCollection<MoneyGridRow>();
+            _spendingBudgetAndSum = new TotalObservableCollection(_spendingTotals);
             _comparisonValues = new MyObservableCollection<MoneyGridRow>();
             _comparisonTotals = new MyObservableCollection<MoneyGridRow>();
+            _comparisonBudgetAndSum = new TotalObservableCollection(_comparisonTotals);
+            _comparisonBudgetAndSum.IsComparison = true;
 
             InitListViews();
 
-            columnTotalsGroup = new Group(false, "Totals");
-
             _categories.CollectionChanged += UpdateCategories;
             _groups.CollectionChanged += UpdateGroups;
+            _groups.MemberChanged += GroupChanged;
             _budgetValues.MemberChanged += UpdateBudgetTotals;
             _transactions.MemberChanged += UpdateSpendingValues;
             _transactions.CollectionChanged += AddOrRemoveSpendingValues;
             _spendingTotals.MemberChanged += UpdateComparisonValues;
             _budgetTotals.MemberChanged += UpdateComparisonValues;
-            LoadData();
+
+            _yearList = new ObservableCollection<string>();
+            GetYears();
+            if (_yearList.Count == 0)
+            {
+                MessageBox.Show("No data found; creating blank file");
+                _currentYear = DateTime.Today.Year.ToString();
+                completeFilePath = filePath + fileName + "_" + _currentYear + ".xml";
+                SaveData();
+            }
+            else
+            {
+                _currentYear = _yearList.ElementAt(0);
+                completeFilePath = filePath + fileName + "_" + _currentYear + ".xml";
+                LoadData();
+            }
+
 
             AddGroupCommand = new RelayCommand<Group>((group) => AddGroup(new Group()));
             RemoveGroupCommand = new RelayCommand<Group>((group) => RemoveGroup(group));
@@ -166,6 +199,14 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        public TotalObservableCollection BudgetBudgetAndSum
+        {
+            get
+            {
+                return _budgetBudgetAndSum;
+            }
+        }
+
         public ListCollectionView SpendingRows
         {
             get
@@ -186,6 +227,14 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        public TotalObservableCollection SpendingBudgetAndSum
+        {
+            get
+            {
+                return _spendingBudgetAndSum;
+            }
+        }
+
         public ListCollectionView ComparisonRows
         {
             get
@@ -203,6 +252,37 @@ namespace BudgetApplication.ViewModel
             set
             {
                 _comparisonTotals = value;
+            }
+        }
+
+        public TotalObservableCollection ComparisonBudgetAndSum
+        {
+            get
+            {
+                return _comparisonBudgetAndSum;
+            }
+        }
+
+        public ObservableCollection<String> YearList
+        {
+            get
+            {
+                return _yearList;
+            }
+        }
+
+        public String CurrentYear
+        {
+            get
+            {
+                return _currentYear;
+            }
+            set
+            {
+                _currentYear = value;
+                Debug.WriteLine("Loading data for year: " + _currentYear);
+                completeFilePath = filePath + fileName + "_" + _currentYear + ".xml";
+                LoadData();
             }
         }
 
@@ -313,9 +393,18 @@ namespace BudgetApplication.ViewModel
             }
             if (index > 0)
             {
+                int startIndex = _budgetValues.IndexOf(_budgetValues.First(x => x.Group == group));
+                int targetIndex = _budgetValues.IndexOf(_budgetValues.First(x => x.Group == _groups.ElementAt(index - 1)));
+                int endIndex = _budgetValues.IndexOf(_budgetValues.Last(x => x.Group == group));
                 _groups.Move(index, index - 1);
                 MoveTotalRows(index, index - 1);
-                //TODO: move entire group in budgetValues, etc
+                int offset = targetIndex - startIndex;
+                for (int i = 0; i <= endIndex - startIndex; i++)
+                {
+                    MoveValueRows(startIndex, startIndex + offset);
+                    //Debug.WriteLine("Row moved from " + startIndex + " to " + (i + offset));
+                }
+                RefreshListViews();
             }
         }
 
@@ -336,12 +425,6 @@ namespace BudgetApplication.ViewModel
                 _groups.Move(index, index + 1);
                 MoveTotalRows(index, index + 1);
                 int offset = targetIndex - startIndex;
-                //Debug.WriteLine("Start at " + startIndex + "; end at " + targetIndex + "; offset is " + offset);
-                //Debug.WriteLine("Line 3 is category " + _budgetValues.ElementAt(3).Category.Name);
-                //_budgetValues.Move(3, 7);
-                //_budgetValueView.Refresh();
-                //Debug.WriteLine("Line 3 is now category " + _budgetValues.ElementAt(3).Category.Name);
-                //return;
                 for (int i = 0; i <= endIndex-startIndex; i++)
                 {
                     MoveValueRows(startIndex, startIndex+offset);
@@ -487,6 +570,16 @@ namespace BudgetApplication.ViewModel
             return null;
         }
 
+        public void CategoryChanged(Object sender, PropertyChangedEventArgs e)
+        {
+            //RefreshListViews();
+        }
+
+        public void GroupChanged(Object sender, PropertyChangedEventArgs e)
+        {
+            RefreshListViews();
+        }
+
         public void UpdateCategories(Object sender, NotifyCollectionChangedEventArgs e)
         {
             //Debug.WriteLine("Adding category");
@@ -546,9 +639,18 @@ namespace BudgetApplication.ViewModel
                     Category newCategory = new Category(newGroup.Name);
                     try
                     {
-                        _budgetTotals.Add(new MoneyGridRow(columnTotalsGroup, newCategory));
-                        _spendingTotals.Add(new MoneyGridRow(columnTotalsGroup, newCategory));
-                        _comparisonTotals.Add(new MoneyGridRow(columnTotalsGroup, newCategory));
+                        Group totalGroup;
+                        if (newGroup.IsIncome)
+                        {
+                            totalGroup = columnIncomeTotalsGroup;
+                        }
+                        else
+                        {
+                            totalGroup = columnExpendituresTotalsGroup;
+                        }
+                        _budgetTotals.Add(new MoneyGridRow(totalGroup, newCategory));
+                        _spendingTotals.Add(new MoneyGridRow(totalGroup, newCategory));
+                        _comparisonTotals.Add(new MoneyGridRow(totalGroup, newCategory));
                     }
                     catch (ArgumentException ex)
                     {
@@ -811,7 +913,11 @@ namespace BudgetApplication.ViewModel
             {
                 for (int j = 0; j < 12; j++)
                 {
-                    _comparisonValues.ElementAt(i).Values[j] = _budgetValues.ElementAt(i).Values[j] - _spendingValues.ElementAt(i).Values[j];
+                    if (_comparisonValues.ElementAt(i).Group.IsIncome)
+                        _comparisonValues.ElementAt(i).Values[j] = _spendingValues.ElementAt(i).Values[j] - _budgetValues.ElementAt(i).Values[j];
+                    else
+                        _comparisonValues.ElementAt(i).Values[j] = _budgetValues.ElementAt(i).Values[j] - _spendingValues.ElementAt(i).Values[j];
+
                     if (_spendingValues.ElementAt(i).Values[j] > 0)
                     {
                         //MessageBox.Show(i + " " + j);
@@ -869,9 +975,32 @@ namespace BudgetApplication.ViewModel
         #endregion
 
         #region Saving and Opening files
+        private void GetYears()
+        {
+            string[] files;
+            System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(fileName + @"_[0-9]{4}\.xml$");
+
+            files = Directory.GetFiles("./", "*.xml");
+            foreach (string file in files)
+            {
+                if (reg.IsMatch(file))
+                {
+                    System.Text.RegularExpressions.Match match = reg.Match(file);
+                    string year = match.Captures[0].Value;
+                    int index = year.IndexOf("_") + 1;
+                    int length = year.IndexOf(".") - index;
+                    year = year.Substring(index, length);
+                    //Debug.WriteLine("Found a file for year: " + year);
+                    _yearList.Add(year);
+                }
+            }
+        }
+
         public void SaveData()
-        {           
-            using (FileStream file = new FileStream(filepath, FileMode.Create))
+        {
+            RefreshListViews();
+            return;
+            using (FileStream file = new FileStream(completeFilePath, FileMode.Create))
             {
                 using (StreamWriter stream = new StreamWriter(file))
                 {
@@ -996,7 +1125,7 @@ namespace BudgetApplication.ViewModel
             DataWrapper data = new DataWrapper();
             try
             {
-                using (FileStream file = new FileStream(filepath, FileMode.Open))
+                using (FileStream file = new FileStream(completeFilePath, FileMode.Open))
                 {
                     XmlSerializer dataSerializer = new XmlSerializer(typeof(DataWrapper));
                     data = (DataWrapper)dataSerializer.Deserialize(file);

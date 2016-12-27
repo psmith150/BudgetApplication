@@ -90,6 +90,8 @@ namespace BudgetApplication.View
 
         private void PaymentSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (PaymentSelector.SelectedItem == null)
+                return;
             PaymentStartDate.SelectedDate = (PaymentSelector.SelectedItem as PaymentMethod).StartDate;
             PaymentEndDate.SelectedDate = (PaymentSelector.SelectedItem as PaymentMethod).EndDate;
             RefreshFilter();
@@ -105,8 +107,8 @@ namespace BudgetApplication.View
                 CreditLimitLabel.Content = card.CreditLimit;
                 ListCollectionView view = (ListCollectionView)CollectionViewSource.GetDefaultView(PaymentTransactions.ItemsSource);
                 decimal sum = 0;
-                Debug.WriteLine(view.Count);
-                Debug.WriteLine((view.GetItemAt(0) as Transaction).Amount);
+                //Debug.WriteLine(view.Count);
+                //Debug.WriteLine((view.GetItemAt(0) as Transaction).Amount);
                 for (int i=0; i<view.Count-1; i++)
                 {
                     Transaction transaction = view.GetItemAt(i) as Transaction;

@@ -49,6 +49,7 @@ namespace BudgetApplication.View
                     (column as DataGridTextColumn).ElementStyle = this.FindResource("ColorCodeStyle") as Style;
                     (TotalsGrid.Columns[i] as DataGridTextColumn).ElementStyle = this.FindResource("ColorCodeStyle") as Style;
                 }
+                (BudgetAndSumGrid.Columns[i] as DataGridTextColumn).ElementStyle = this.FindResource("ColorCodeStyle") as Style;
             }
         }
 
@@ -84,6 +85,20 @@ namespace BudgetApplication.View
         // Using a DependencyProperty as the backing store for TotalsDataSource.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TotalsDataSourceProperty =
             DependencyProperty.Register("TotalsDataSource", typeof(IEnumerable<MoneyGridRow>), typeof(MoneyGrid));
+
+
+
+        public IEnumerable<MoneyGridRow> BudgetAndSumDataSource
+        {
+            get { return (IEnumerable<MoneyGridRow>)GetValue(BudgetAndSumDataSourceProperty); }
+            set { SetValue(BudgetAndSumDataSourceProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BudgetAndSumDataSource.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BudgetAndSumDataSourceProperty =
+            DependencyProperty.Register("BudgetAndSumDataSource", typeof(IEnumerable<MoneyGridRow>), typeof(MoneyGrid));
+
+
 
 
 
@@ -138,7 +153,10 @@ namespace BudgetApplication.View
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            decimal num = (decimal)value;
+            if (value == null || String.IsNullOrEmpty(value as String))
+                return Brushes.White;
+            //Debug.WriteLine(value as string);
+            decimal num = decimal.Parse(value as String, NumberStyles.Currency);
             if (num >= 0)
             {
                 return Brushes.Green;

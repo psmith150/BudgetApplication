@@ -43,7 +43,7 @@ namespace BudgetApplication.View
         {
             GroupList.SelectedIndex = 0;
             (GroupList.ItemsSource as MyObservableCollection<Group>).CollectionChanged += GroupModified;
-            (CategoryList.ItemsSource as MyObservableCollection<Category>).CollectionChanged += CategoryModified;
+            //(CategoryList.ItemsSource as MyObservableCollection<Category>).CollectionChanged += CategoryModified;
 
         }
 
