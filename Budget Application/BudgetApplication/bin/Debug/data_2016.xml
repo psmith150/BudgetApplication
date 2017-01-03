@@ -148,6 +148,22 @@
         <CreditLimit>5300</CreditLimit>
       </PaymentMethod>
     </Transaction>
+    <Transaction>
+      <Date>2017-01-03T00:00:00-06:00</Date>
+      <Item>test2</Item>
+      <Payee>test2</Payee>
+      <Amount>12</Amount>
+      <Category>
+        <Name>Reimbursements</Name>
+      </Category>
+      <Comment>test #2</Comment>
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2016-12-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+      </PaymentMethod>
+    </Transaction>
   </Transactions>
   <BudgetValues>
     <ArrayOfDecimal>

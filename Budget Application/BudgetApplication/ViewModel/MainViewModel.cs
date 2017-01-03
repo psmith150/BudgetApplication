@@ -1000,8 +1000,6 @@ namespace BudgetApplication.ViewModel
 
         public void SaveData()
         {
-            RefreshListViews();
-            return;
             using (FileStream file = new FileStream(completeFilePath, FileMode.Create))
             {
                 using (StreamWriter stream = new StreamWriter(file))
@@ -1124,6 +1122,12 @@ namespace BudgetApplication.ViewModel
             _categories.Clear();
             _transactions.Clear();
             _paymentMethods.Clear();
+            _budgetValues.Clear();
+            _budgetTotals.Clear();
+            _spendingValues.Clear();
+            _spendingTotals.Clear();
+            _comparisonValues.Clear();
+            _comparisonTotals.Clear();
             DataWrapper data = new DataWrapper();
             try
             {
