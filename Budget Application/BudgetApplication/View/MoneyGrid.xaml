@@ -34,9 +34,8 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <DataGrid.GroupStyle>
-                     <!--Style for groups at top level.--> 
-                    <GroupStyle ContainerStyle="{StaticResource GroupedStyle}">
-                    </GroupStyle>
+                     <!--Style for groups at top level.-->
+                    <GroupStyle ContainerStyle="{StaticResource GroupedStyle}"/>
                 </DataGrid.GroupStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="BudgetCategory" Header="Category" Binding="{Binding Category, Mode=OneWay}" Width="Auto" IsReadOnly="True"/>
