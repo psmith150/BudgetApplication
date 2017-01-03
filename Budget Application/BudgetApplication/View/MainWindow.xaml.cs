@@ -14,6 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using BudgetApplication.Model;
+using System.Collections.Specialized;
+using BudgetApplication.ViewModel;
+using System.ComponentModel;
 
 namespace BudgetApplication.View
 {
@@ -29,6 +32,9 @@ namespace BudgetApplication.View
             PaymentStartDate.SelectedDate = startDate;
             PaymentEndDate.SelectedDate = startDate.AddMonths(1).AddDays(-1);
             PaymentAmountBox.Text = 0.ToString("C");
+
+            MainViewModel vm = this.DataContext as MainViewModel;
+            vm.TransactionModifiedEvent += Transactions_Modified;
         }
 
         private void GroupsAndCategories_Click(object sender, RoutedEventArgs e)
@@ -127,6 +133,30 @@ namespace BudgetApplication.View
         private void PaymentAmountBox_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             RecalculateCreditValues();
+        }
+
+        private void YearSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Transactions_Modified(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("Payment Method"))
+            {
+                //RefreshFilter();
+                //MessageBox.Show("Updating method");
+            }
+            else if (e.PropertyName.Equals("Date"))
+            {
+                RefreshFilter();
+                RecalculateCreditValues();
+            }
+            else if (e.PropertyName.Equals("Amount"))
+            {
+                //MessageBox.Show("Updating amount");
+                RecalculateCreditValues();
+            }
         }
     }
 }

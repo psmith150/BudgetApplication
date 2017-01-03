@@ -76,6 +76,7 @@ namespace BudgetApplication.ViewModel
             _groups.MemberChanged += GroupChanged;
             _budgetValues.MemberChanged += UpdateBudgetTotals;
             _transactions.MemberChanged += UpdateSpendingValues;
+            _transactions.MemberChanged += OnTransactionModified;
             _transactions.CollectionChanged += AddOrRemoveSpendingValues;
             _spendingTotals.MemberChanged += UpdateComparisonValues;
             _budgetTotals.MemberChanged += UpdateComparisonValues;
@@ -91,12 +92,13 @@ namespace BudgetApplication.ViewModel
             }
             else
             {
-                _currentYear = _yearList.ElementAt(0);
+                _currentYear = _yearList.ElementAt(1);
                 completeFilePath = filePath + fileName + "_" + _currentYear + ".xml";
                 LoadData();
             }
 
-
+            SaveDataCommand = new RelayCommand(() => SaveData());
+            LoadDataCommand = new RelayCommand(() => LoadData());
             AddGroupCommand = new RelayCommand<Group>((group) => AddGroup(new Group()));
             RemoveGroupCommand = new RelayCommand<Group>((group) => RemoveGroup(group));
             AddCategoryCommand = new RelayCommand<Group>((group) => AddCategory(group));
@@ -107,8 +109,8 @@ namespace BudgetApplication.ViewModel
             MoveCategoryDownCommand = new RelayCommand<Category>((category) => MoveCategoryDown(category));
             AddPaymentMethodCommand = new RelayCommand<PaymentMethod>((paymentMethod) => AddPaymentMethod(paymentMethod));
             RemovePaymentMethodCommand = new RelayCommand<PaymentMethod>((paymentMethod) => RemovePaymentMethod(paymentMethod));
-
-            _canExecute = true;
+            ChangeYearCommand = new RelayCommand<string>((newYear) => ChangeYear(newYear));
+            TestCommand = new RelayCommand(() => TestMethod());
         }
 
         #region Private helpers
@@ -284,6 +286,15 @@ namespace BudgetApplication.ViewModel
                 completeFilePath = filePath + fileName + "_" + _currentYear + ".xml";
                 LoadData();
             }
+        }
+
+        public RelayCommand<string> ChangeYearCommand
+        {
+            get; set;
+        }
+
+        public void ChangeYear(string newYear)
+        {
         }
 
         private void CalculateColumnTotals(ObservableCollection<MoneyGridRow> columnValues, ObservableCollection<MoneyGridRow> columnTotals, String propertyName)
@@ -951,30 +962,31 @@ namespace BudgetApplication.ViewModel
             _transactions.Add(transaction);
             return true;
         }
-        #endregion
 
-        #region Command Helpers
-        private ICommand _saveData_ClickCommand;
-        private ICommand _loadData_ClickCommand;
-        public ICommand SaveData_ClickCommand
+        public event PropertyChangedEventHandler TransactionModifiedEvent;
+
+        private void OnTransactionModified(object sender, PropertyChangedEventArgs e)
         {
-            get
+            // Your logic
+            if (TransactionModifiedEvent != null)
             {
-                return _saveData_ClickCommand ?? (_saveData_ClickCommand = new CommandHandler(() => SaveData(), _canExecute));
+                TransactionModifiedEvent(sender, e);
             }
         }
-
-        public ICommand LoadData_ClickCommand
-        {
-            get
-            {
-                return _loadData_ClickCommand ?? (_loadData_ClickCommand = new CommandHandler(() => LoadData(), _canExecute));
-            }
-        }
-        private bool _canExecute;
         #endregion
 
         #region Saving and Opening files
+
+        public RelayCommand LoadDataCommand
+        {
+            get;set;
+        }
+
+        public RelayCommand SaveDataCommand
+        {
+            get;set;
+        }
+
         private void GetYears()
         {
             string[] files;
@@ -998,8 +1010,7 @@ namespace BudgetApplication.ViewModel
 
         public void SaveData()
         {
-            RefreshListViews();
-            return;
+            //RefreshListViews();
             using (FileStream file = new FileStream(completeFilePath, FileMode.Create))
             {
                 using (StreamWriter stream = new StreamWriter(file))
@@ -1118,6 +1129,7 @@ namespace BudgetApplication.ViewModel
 
         public void LoadData()
         {
+            Debug.WriteLine("loading new data");
             _groups.Clear();
             _categories.Clear();
             _transactions.Clear();
@@ -1423,29 +1435,19 @@ namespace BudgetApplication.ViewModel
         }
         #endregion
 
-    }
-
-    public class CommandHandler : ICommand
-    {
-        private Action _action;
-        private bool _canExecute;
-        public CommandHandler(Action action, bool canExecute)
+        public RelayCommand TestCommand
         {
-            _action = action;
-            _canExecute = canExecute;
+            get;set;
         }
 
-        public bool CanExecute(object parameter)
+        public void TestMethod()
         {
-            return _canExecute;
+            _groups.Clear();
+            _categories.Clear();
+            _transactions.Clear();
+            _paymentMethods.Clear();
         }
 
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
-        {
-            _action();
-        }
     }
 
     [Serializable]
