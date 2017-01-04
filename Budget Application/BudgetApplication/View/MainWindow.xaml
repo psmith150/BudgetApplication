@@ -113,9 +113,10 @@
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0">
                         <!--Add the popup that appears when the filter is clicked-->
-                        <Popup Name="filterPopup" Placement="Bottom" StaysOpen="False" Width="200">
+                        <Popup Name="filterPopup" Placement="Bottom" StaysOpen="False" Width="200" Opened="filterPopup_Opened">
                             <Border Background="White" BorderBrush="Gray" BorderThickness="1,1,1,1">
                                 <StackPanel Margin="5,5,5,15">
+                                    <xctk:WatermarkTextBox Name="SearchBox" Watermark="Search" TextChanged="SearchBox_TextChanged"/>
                                     <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
                                         <Button Margin="0,0,0,0" Name="btnSelectAll" Click="btnSelectAll_Click">
                                             <Button.Template>
@@ -133,14 +134,15 @@
                                             </Button.Template>
                                         </Button>
                                     </StackPanel>
-
-                                    <ListBox x:Name="FilterBox" BorderThickness="0">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Item}" Checked="ApplyFilters" Unchecked="ApplyFilters" />
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
+                                    <Border Background="White" BorderBrush="Gray" BorderThickness="1,1,1,1">
+                                        <ListBox x:Name="FilterBox" BorderThickness="0" MaxHeight="200">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Item}" Checked="ApplyFilters" Unchecked="ApplyFilters" />
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </Border>
                                 </StackPanel>
                             </Border>
                         </Popup>

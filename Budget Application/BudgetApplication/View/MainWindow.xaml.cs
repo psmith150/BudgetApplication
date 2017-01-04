@@ -54,7 +54,6 @@ namespace BudgetApplication.View
                     continue;
                 AddTransaction(transaction);
             }
-            
         }
 
         private void GroupsAndCategories_Click(object sender, RoutedEventArgs e)
@@ -372,6 +371,30 @@ namespace BudgetApplication.View
         {
             ListCollectionView view = (ListCollectionView)CollectionViewSource.GetDefaultView(Transactions.ItemsSource);
             view.Refresh();
+        }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ListCollectionView view = (ListCollectionView)CollectionViewSource.GetDefaultView(FilterBox.ItemsSource);
+            view.Refresh();
+        }
+
+        private void filterPopup_Opened(object sender, EventArgs e)
+        {
+            ICollectionView view = (ICollectionView)CollectionViewSource.GetDefaultView(FilterBox.ItemsSource);
+            view.Filter += delegate (object obj)
+            {
+                if (String.IsNullOrEmpty(SearchBox.Text))
+                {
+                    return true;
+                }
+                else
+                {
+                    //Debug.WriteLine("Checking if " + (obj as CheckedListItem<string>).Item + " contains " + SearchBox.Text);
+                    int index = (obj as CheckedListItem<string>).Item.IndexOf(SearchBox.Text, StringComparison.InvariantCultureIgnoreCase);
+                    return index > -1;
+                }
+            };
         }
     }
 
