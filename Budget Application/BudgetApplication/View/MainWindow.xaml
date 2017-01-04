@@ -57,7 +57,7 @@
                     <Border Grid.Row="0">
                     </Border>
                     <Border Grid.Row="1">
-                        <DataGrid x:Name="Transactions" ItemsSource="{Binding Source={StaticResource TransactionsView}}" Background="DarkGray" AutoGenerateColumns="False" SelectionChanged="Transactions_SelectionChanged"
+                        <DataGrid x:Name="Transactions" ItemsSource="{Binding Source={StaticResource TransactionsView}}" Background="DarkGray" AutoGenerateColumns="False"
                                   ColumnHeaderStyle="{StaticResource FilteredHeaderStyle}" Loaded="Transactions_Loaded">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="Date" SortMemberPath="Date">

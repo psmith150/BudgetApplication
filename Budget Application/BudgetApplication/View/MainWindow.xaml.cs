@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.Diagnostics;
 using BudgetApplication.Model;
 using System.Windows.Controls.Primitives;
+using System.ComponentModel;
+using BudgetApplication.ViewModel;
 
 namespace BudgetApplication.View
 {
@@ -30,6 +32,9 @@ namespace BudgetApplication.View
             PaymentStartDate.SelectedDate = startDate;
             PaymentEndDate.SelectedDate = startDate.AddMonths(1).AddDays(-1);
             PaymentAmountBox.Text = 0.ToString("C");
+
+            MainViewModel vm = this.DataContext as MainViewModel;
+            vm.TransactionModifiedEvent += Transactions_Modified;
         }
 
         private void GroupsAndCategories_Click(object sender, RoutedEventArgs e)
@@ -130,9 +135,23 @@ namespace BudgetApplication.View
             RecalculateCreditValues();
         }
 
-        private void Transactions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Transactions_Modified(object sender, PropertyChangedEventArgs e)
         {
-
+            if (e.PropertyName.Equals("Payment Method"))
+            {
+                //RefreshFilter();
+                //MessageBox.Show("Updating method");
+            }
+            else if (e.PropertyName.Equals("Date"))
+            {
+                RefreshFilter();
+                RecalculateCreditValues();
+            }
+            else if (e.PropertyName.Equals("Amount"))
+            {
+                //MessageBox.Show("Updating amount");
+                RecalculateCreditValues();
+            }
         }
 
         private void Transactions_Loaded(object sender, RoutedEventArgs e)
@@ -140,12 +159,12 @@ namespace BudgetApplication.View
             foreach (DataGridColumn col in Transactions.Columns)
             {
                 DataGridColumnHeader header = col.Header as DataGridColumnHeader;
-                MessageBox.Show(header.ToString());
-                DependencyObject button = this.GetTemplateChild("FilterButton");
-                if (button != null)
-                {
-                    (button as Button).Click += Test;
-                }
+                //MessageBox.Show(header.ToString());
+                //DependencyObject button = this.GetTemplateChild("FilterButton");
+                //if (button != null)
+                //{
+                //    (button as Button).Click += Test;
+                //}
             }
         }
 

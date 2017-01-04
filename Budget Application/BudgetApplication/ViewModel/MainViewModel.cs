@@ -76,6 +76,7 @@ namespace BudgetApplication.ViewModel
             _groups.MemberChanged += GroupChanged;
             _budgetValues.MemberChanged += UpdateBudgetTotals;
             _transactions.MemberChanged += UpdateSpendingValues;
+            _transactions.MemberChanged += OnTransactionModified;
             _transactions.CollectionChanged += AddOrRemoveSpendingValues;
             _spendingTotals.MemberChanged += UpdateComparisonValues;
             _budgetTotals.MemberChanged += UpdateComparisonValues;
@@ -107,8 +108,6 @@ namespace BudgetApplication.ViewModel
             MoveCategoryDownCommand = new RelayCommand<Category>((category) => MoveCategoryDown(category));
             AddPaymentMethodCommand = new RelayCommand<PaymentMethod>((paymentMethod) => AddPaymentMethod(paymentMethod));
             RemovePaymentMethodCommand = new RelayCommand<PaymentMethod>((paymentMethod) => RemovePaymentMethod(paymentMethod));
-
-            _canExecute = true;
         }
 
         #region Private helpers
@@ -953,27 +952,14 @@ namespace BudgetApplication.ViewModel
             _transactions.Add(transaction);
             return true;
         }
-        #endregion
 
-        #region Command Helpers
-        private ICommand _saveData_ClickCommand;
-        private ICommand _loadData_ClickCommand;
-        public ICommand SaveData_ClickCommand
-        {
-            get
-            {
-                return _saveData_ClickCommand ?? (_saveData_ClickCommand = new CommandHandler(() => SaveData(), _canExecute));
-            }
-        }
+        public event PropertyChangedEventHandler TransactionModifiedEvent;
 
-        public ICommand LoadData_ClickCommand
+        private void OnTransactionModified(object sender, PropertyChangedEventArgs e)
         {
-            get
-            {
-                return _loadData_ClickCommand ?? (_loadData_ClickCommand = new CommandHandler(() => LoadData(), _canExecute));
-            }
+            if (TransactionModifiedEvent != null)
+                TransactionModifiedEvent(sender, e);
         }
-        private bool _canExecute;
         #endregion
 
         #region Saving and Opening files
@@ -1429,29 +1415,6 @@ namespace BudgetApplication.ViewModel
         }
         #endregion
 
-    }
-
-    public class CommandHandler : ICommand
-    {
-        private Action _action;
-        private bool _canExecute;
-        public CommandHandler(Action action, bool canExecute)
-        {
-            _action = action;
-            _canExecute = canExecute;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public void Execute(object parameter)
-        {
-            _action();
-        }
     }
 
     [Serializable]
