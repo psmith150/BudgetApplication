@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Diagnostics;
 using BudgetApplication.Model;
 using System.Windows.Controls.Primitives;
@@ -23,32 +14,38 @@ using System.Collections.Specialized;
 namespace BudgetApplication.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// This is the main window of the application. It shows all of the main data in a tabbed format.
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ObservableCollection<CheckedListItem<string>>[] checkedItems;
+        private ObservableCollection<CheckedListItem<string>>[] checkedItems;   //Used to keep track of what objects are checked
+
+        /// <summary>
+        /// Initializes a new MainWindow object.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
+            MainViewModel vm = this.DataContext as MainViewModel;
+            vm.TransactionModifiedEvent += Transactions_Modified;
+            vm.TransactionsChangedEvent += Transactions_Changed;
+
+            //Initialize data on Payments tab
             DateTime startDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             PaymentStartDate.SelectedDate = startDate;
             PaymentEndDate.SelectedDate = startDate.AddMonths(1).AddDays(-1);
             PaymentAmountBox.Text = 0.ToString("C");
 
+            //Initialize data on Transactions tab
             checkedItems = new ObservableCollection<CheckedListItem<string>>[7];
             for (int i = 0; i < checkedItems.Length; i++)
             {
                 checkedItems[i] = new ObservableCollection<CheckedListItem<string>>();
             }
 
-            MainViewModel vm = this.DataContext as MainViewModel;
-            vm.TransactionModifiedEvent += Transactions_Modified;
-            vm.TransactionsChangedEvent += Transactions_Changed;
-
-            foreach (Object obj in Transactions.ItemsSource)
+            foreach (Object obj in Transactions.ItemsSource)    //Initializes transactions. Necessary because MainViewModel loads before event handler is added.
             {
-                Debug.WriteLine("Object of type " + obj.GetType().ToString());
+                //Debug.WriteLine("Object of type " + obj.GetType().ToString());
                 Transaction transaction = obj as Transaction;
                 if (transaction == null)
                     continue;
@@ -56,6 +53,11 @@ namespace BudgetApplication.View
             }
         }
 
+        /// <summary>
+        /// Opens a GroupsAndCategoriesWindow modal object.
+        /// </summary>
+        /// <param name="sender">The sending button</param>
+        /// <param name="e">The arguments</param>
         private void GroupsAndCategories_Click(object sender, RoutedEventArgs e)
         {
             //Open popup
@@ -63,11 +65,18 @@ namespace BudgetApplication.View
             popup.ShowDialog();
         }
 
+        /// <summary>
+        /// Opens a PaymentMethodsWindow modal object.
+        /// </summary>
+        /// <param name="sender">The sending button</param>
+        /// <param name="e">The arguments</param>
         private void PaymentMethods_Click(object sender, RoutedEventArgs e)
         {
             PaymentMethodsWindow popup = new PaymentMethodsWindow(this);
             popup.ShowDialog();
         }
+
+        #region Payment Transactions Tab
 
         private void PaymentTransactionsView_Filter(object sender, FilterEventArgs e)
         {
@@ -154,6 +163,8 @@ namespace BudgetApplication.View
             RecalculateCreditValues();
         }
 
+        #endregion
+
         private void Transactions_Modified(object sender, PropertyChangedEventArgs e)
         {
             int index = -1;
@@ -192,36 +203,8 @@ namespace BudgetApplication.View
                 index = 6;
             }
 
-            String value;
             Transaction transaction = sender as Transaction;
-
-            switch (index)
-            {
-                case 0:
-                    value = transaction.Date.ToString("MM/dd/yyyy");
-                    break;
-                case 1:
-                    value = transaction.Item;
-                    break;
-                case 2:
-                    value = transaction.Payee;
-                    break;
-                case 3:
-                    value = transaction.Amount.ToString("C");
-                    break;
-                case 4:
-                    value = transaction.Category.Name;
-                    break;
-                case 5:
-                    value = transaction.PaymentMethod.Name;
-                    break;
-                case 6:
-                    value = transaction.Comment;
-                    break;
-                default:
-                    value = "";
-                    break;
-            }
+            String value = GetTransactionPropertyValueFromColumnIndex(index, transaction);
             //Debug.WriteLine("Number of items: " + checkedItems[index].Count);
             int count = checkedItems[index].Count(x => (x.Item as String).Equals(value));
             if (count == 0)
@@ -229,6 +212,8 @@ namespace BudgetApplication.View
                 checkedItems[index].Add(new CheckedListItem<string> { IsChecked = true, Item = value });
             }
         }
+
+        #region Transactions tab
 
         private void Transactions_Changed(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -304,34 +289,7 @@ namespace BudgetApplication.View
             {
                 for (int i=0; i<checkedItems.Length; i++)
                 {
-                    String value;
-                    switch (i)
-                    {
-                        case 0:
-                            value = transaction.Date.ToString("MM/dd/yyyy");
-                            break;
-                        case 1:
-                            value = transaction.Item;
-                            break;
-                        case 2:
-                            value = transaction.Payee;
-                            break;
-                        case 3:
-                            value = transaction.Amount.ToString("C");
-                            break;
-                        case 4:
-                            value = transaction.Category.Name;
-                            break;
-                        case 5:
-                            value = transaction.PaymentMethod.Name;
-                            break;
-                        case 6:
-                            value = transaction.Comment;
-                            break;
-                        default:
-                            value = "";
-                            break;
-                    }
+                    String value = GetTransactionPropertyValueFromColumnIndex(i, transaction);
                     int count = checkedItems[i].Where(x => x.IsChecked).Count(x => (x.Item as String).Equals(value));
                     if (count == 0)
                     {
@@ -396,43 +354,41 @@ namespace BudgetApplication.View
                 }
             };
         }
-    }
 
-    public class CheckedListItem<T> : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private bool isChecked;
-        private T item;
-
-        public CheckedListItem()
-        { }
-
-        public CheckedListItem(T item, bool isChecked = false)
+        private string GetTransactionPropertyValueFromColumnIndex(int index, Transaction transaction)
         {
-            this.item = item;
-            this.isChecked = isChecked;
-        }
-
-        public T Item
-        {
-            get { return item; }
-            set
+            String value = "";
+            switch (index)
             {
-                item = value;
-                if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Item"));
+                case 0:
+                    value = transaction.Date.ToString("MM/dd/yyyy");
+                    break;
+                case 1:
+                    value = transaction.Item;
+                    break;
+                case 2:
+                    value = transaction.Payee;
+                    break;
+                case 3:
+                    value = transaction.Amount.ToString("C");
+                    break;
+                case 4:
+                    value = transaction.Category.Name;
+                    break;
+                case 5:
+                    value = transaction.PaymentMethod.Name;
+                    break;
+                case 6:
+                    value = transaction.Comment;
+                    break;
+                default:
+                    Debug.WriteLine("Unrecognized column: " + index);
+                    value = "";
+                    break;
             }
+            return value;
         }
 
-
-        public bool IsChecked
-        {
-            get { return isChecked; }
-            set
-            {
-                isChecked = value;
-                if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("IsChecked"));
-            }
-        }
+        #endregion
     }
 }

@@ -1,54 +1,57 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
-using System.Windows.Input;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BudgetApplication.Model;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
-using System.Xml;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
-using System.Collections;
 using System.Xml.Serialization;
 
 namespace BudgetApplication.ViewModel
 {
+    /// <summary>
+    /// The view model for all the data in the application
+    /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        private MyObservableCollection<Transaction> _transactions;
-        private MyObservableCollection<Category> _categories;
-        private MyObservableCollection<Group> _groups;
-        private MyObservableCollection<PaymentMethod> _paymentMethods;
-        private MyObservableCollection<MoneyGridRow> _budgetValues;
-        private MyObservableCollection<MoneyGridRow> _budgetTotals;
-        private TotalObservableCollection _budgetBudgetAndSum;
-        private MyObservableCollection<MoneyGridRow> _spendingValues;
-        private MyObservableCollection<MoneyGridRow> _spendingTotals;
-        private TotalObservableCollection _spendingBudgetAndSum;
-        private MyObservableCollection<MoneyGridRow> _comparisonValues;
-        private MyObservableCollection<MoneyGridRow> _comparisonTotals;
-        private TotalObservableCollection _comparisonBudgetAndSum;
+        private MyObservableCollection<Transaction> _transactions;  //Collection of transactions
+        private MyObservableCollection<Category> _categories;   //Collection of categories
+        private MyObservableCollection<Group> _groups;  //collection of groups
+        private MyObservableCollection<PaymentMethod> _paymentMethods;  //Collection of payment methods
+        private MyObservableCollection<MoneyGridRow> _budgetValues; //Values used in the value grid of the budget view
+        private MyObservableCollection<MoneyGridRow> _budgetTotals; //Values used in the total grid of the budget view
+        private TotalObservableCollection _budgetBudgetAndSum; //Values used in the budget and sum grid of the budget view
+        private MyObservableCollection<MoneyGridRow> _spendingValues; //Values used in the value grid of the spending view
+        private MyObservableCollection<MoneyGridRow> _spendingTotals; //Values used in the total grid of the spending view
+        private TotalObservableCollection _spendingBudgetAndSum; //Values used in the budget and sum grid of the spending view
+        private MyObservableCollection<MoneyGridRow> _comparisonValues; //Values used in the value grid of the comparison view
+        private MyObservableCollection<MoneyGridRow> _comparisonTotals; //Values used in the total grid of the spending view
+        private TotalObservableCollection _comparisonBudgetAndSum; //Values used in the budget and sum grid of the comparison view
 
+        //List collection views used to display data for Values grids. Defined here to control grouping.
         private ListCollectionView _budgetValueView;
         private ListCollectionView _spendingValueView;
         private ListCollectionView _comparisonValueView;
 
+        //Groups for income and expenditures in the Totals grids.
         private Group columnIncomeTotalsGroup;
         private Group columnExpendituresTotalsGroup;
 
-        private ObservableCollection<String> _yearList;
-        private String fileName = "data";
-        private String filePath = "";
-        private String completeFilePath;
-        private String _currentYear;
+        private ObservableCollection<String> _yearList; //List of all years that files have been created for.
+        private String fileName = "data";   //Name of the data files: <fileName>_<_currentYear>.xml
+        private String filePath = "";   //File path of the data files.
+        private String completeFilePath;    //Complete file path
+        private String _currentYear;    //The year of data currently loaded.
+
+        /// <summary>
+        /// Instantiates a new MainViewModel object. Run when the application is launched. Initializes variables and loads data
+        /// </summary>
         public MainViewModel()
         {
             columnIncomeTotalsGroup = new Group(true, "Income Totals");
@@ -69,35 +72,37 @@ namespace BudgetApplication.ViewModel
             _comparisonBudgetAndSum = new TotalObservableCollection(_comparisonTotals);
             _comparisonBudgetAndSum.IsComparison = true;
 
-            InitListViews();
+            InitListViews();    //Creates the Values grid ListCollectionViews.
 
-            _categories.CollectionChanged += UpdateCategories;
-            _groups.CollectionChanged += UpdateGroups;
-            _groups.MemberChanged += GroupChanged;
-            _budgetValues.MemberChanged += UpdateBudgetTotals;
-            _transactions.MemberChanged += UpdateSpendingValues;
-            _transactions.MemberChanged += OnTransactionModified;
-            _transactions.CollectionChanged += AddOrRemoveSpendingValues;
-            _transactions.CollectionChanged += OnTransactionsChanged;
-            _spendingTotals.MemberChanged += UpdateComparisonValues;
-            _budgetTotals.MemberChanged += UpdateComparisonValues;
+            //Sets event handlers to make sure all data is updated
+            _categories.CollectionChanged += CategoryCollectionChanged;  //Used to add/remove rows
+            _groups.CollectionChanged += GroupsCollectionChanged;  //Used to add/remove rows
+            _groups.MemberChanged += GroupChanged;  //Used to update grouping
+            _budgetValues.MemberChanged += UpdateBudgetTotals;  //Update respective totals
+            _transactions.MemberChanged += UpdateSpendingValues;    //Update spending if transaction has been modified
+            _transactions.MemberChanged += OnTransactionModified;   //Trigger event for view to handle
+            _transactions.CollectionChanged += AddOrRemoveSpendingValues;   //Update spending if transaction has been added or removed
+            _transactions.CollectionChanged += OnTransactionsChanged;   //Trigger event for view to handle
+            _spendingTotals.MemberChanged += UpdateComparisonValues;    //Update comparison values if a spending values was changed. Totals used to allow bulk modification.
+            _budgetTotals.MemberChanged += UpdateComparisonValues;  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
 
             _yearList = new ObservableCollection<string>();
-            GetYears();
-            if (_yearList.Count == 0)
+            GetYears(); //Finds all the existing data files
+            if (_yearList.Count == 0)   //No data found; create empty file and save it.
             {
                 MessageBox.Show("No data found; creating blank file");
                 _currentYear = DateTime.Today.Year.ToString();
                 completeFilePath = filePath + fileName + "_" + _currentYear + ".xml";
                 SaveData();
             }
-            else
+            else    //Select most recent data. TODO: allow user to choose year
             {
-                _currentYear = _yearList.ElementAt(0);
+                _currentYear = _yearList.Last();
                 completeFilePath = filePath + fileName + "_" + _currentYear + ".xml";
                 LoadData();
             }
 
+            //Commands to allow binding to View
             SaveDataCommand = new RelayCommand(() => SaveData());
             LoadDataCommand = new RelayCommand(() => LoadData());
             AddGroupCommand = new RelayCommand<Group>((group) => AddGroup(new Group()));
@@ -114,6 +119,9 @@ namespace BudgetApplication.ViewModel
 
         #region Private helpers
 
+        /// <summary>
+        /// Initialize the ListCollectionViews with grouping. Used in the Value grids
+        /// </summary>
         private void InitListViews()
         {
             _budgetValueView = new ListCollectionView(_budgetValues);
@@ -124,6 +132,9 @@ namespace BudgetApplication.ViewModel
             _comparisonValueView.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
         }
 
+        /// <summary>
+        /// Refresh the ListCollectionViews. Used to update grouping.
+        /// </summary>
         private void RefreshListViews()
         {
             _budgetValueView.Refresh();
@@ -131,6 +142,11 @@ namespace BudgetApplication.ViewModel
             _comparisonValueView.Refresh();
         }
 
+        /// <summary>
+        /// Moves a row of values on all tabs
+        /// </summary>
+        /// <param name="start">Start index</param>
+        /// <param name="end">End index</param>
         private void MoveValueRows(int start, int end)
         {
             _budgetValues.Move(start, end);
@@ -138,6 +154,11 @@ namespace BudgetApplication.ViewModel
             _comparisonValues.Move(start, end);
         }
 
+        /// <summary>
+        /// Moves a row of totals on all tabs
+        /// </summary>
+        /// <param name="start">Start index</param>
+        /// <param name="end">End index</param>
         private void MoveTotalRows(int start, int end)
         {
             _budgetTotals.Move(start, end);
@@ -146,20 +167,22 @@ namespace BudgetApplication.ViewModel
         }
         #endregion
 
-        #region Common to all tabs
+        #region Fields
 
+        /// <summary>
+        /// The collection of groups
+        /// </summary>
         public MyObservableCollection<Group> Groups
         {
             get
             {
                 return _groups;
             }
-            private set
-            {
-
-            }
         }
 
+        /// <summary>
+        /// The collection of categories
+        /// </summary>
         public MyObservableCollection<Category> Categories
         {
             get
@@ -172,18 +195,20 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        /// <summary>
+        /// The collection of payment methods
+        /// </summary>
         public MyObservableCollection<PaymentMethod> PaymentMethods
         {
             get
             {
                 return _paymentMethods;
             }
-            set
-            {
-
-            }
         }
 
+        /// <summary>
+        /// The collection of values in the budget tab's Values grid
+        /// </summary>
         public ListCollectionView BudgetRows
         {
             get
@@ -192,6 +217,9 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        /// <summary>
+        /// The collection of values in the budget tab's Totals grid
+        /// </summary>
         public MyObservableCollection<MoneyGridRow> BudgetTotals
         {
             get
@@ -200,6 +228,9 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        /// <summary>
+        /// The collection of values in the budget tab's Budget and Sum grid
+        /// </summary>
         public TotalObservableCollection BudgetBudgetAndSum
         {
             get
@@ -208,6 +239,9 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        /// <summary>
+        /// The collection of values in the spending tab's Values grid
+        /// </summary>
         public ListCollectionView SpendingRows
         {
             get
@@ -216,6 +250,9 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        /// <summary>
+        /// The collection of values in the spending tab's Totals grid
+        /// </summary>
         public MyObservableCollection<MoneyGridRow> SpendingTotals
         {
             get
@@ -228,6 +265,9 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        /// <summary>
+        /// The collection of values in the spending tab's Budget and Sum grid
+        /// </summary>
         public TotalObservableCollection SpendingBudgetAndSum
         {
             get
@@ -236,6 +276,9 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        /// <summary>
+        /// The collection of values in the comparison tab's Values grid
+        /// </summary>
         public ListCollectionView ComparisonRows
         {
             get
@@ -244,6 +287,9 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        /// <summary>
+        /// The collection of values in the comparison tab's Totals grid
+        /// </summary>
         public MyObservableCollection<MoneyGridRow> ComparisonTotals
         {
             get
@@ -256,6 +302,9 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        /// <summary>
+        /// The collection of values in the comparison tab's Budget and Sum grid
+        /// </summary>
         public TotalObservableCollection ComparisonBudgetAndSum
         {
             get
@@ -264,6 +313,9 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        /// <summary>
+        /// The list of available years
+        /// </summary>
         public ObservableCollection<String> YearList
         {
             get
@@ -272,6 +324,9 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        /// <summary>
+        /// The year currently loaded. Reloads data when set.
+        /// </summary>
         public String CurrentYear
         {
             get
@@ -281,18 +336,28 @@ namespace BudgetApplication.ViewModel
             set
             {
                 _currentYear = value;
-                Debug.WriteLine("Loading data for year: " + _currentYear);
+                //Debug.WriteLine("Loading data for year: " + _currentYear);
                 completeFilePath = filePath + fileName + "_" + _currentYear + ".xml";
                 LoadData();
             }
         }
 
+        #endregion
+
+        #region Methods common to all tabs
+
+        /// <summary>
+        /// Calculates the sum of the columns in a value grid.
+        /// </summary>
+        /// <param name="columnValues">The values to be summed</param>
+        /// <param name="columnTotals">The values to hold the sums</param>
+        /// <param name="propertyName">The property name to trigger a notification</param>
         private void CalculateColumnTotals(ObservableCollection<MoneyGridRow> columnValues, ObservableCollection<MoneyGridRow> columnTotals, String propertyName)
         {
+            //Don't do anything if not all the rows have been loaded yet
             if (columnValues.Count < _categories.Count || columnTotals.Count < _groups.Count)
                 return;
-            //MessageBox.Show(propertyName);
-            foreach (Group group in _groups)
+            foreach (Group group in _groups) //For each group, find its total row and then sum all the category rows that are part of the group
             {
                 decimal[] groupSum = new decimal[12];
                 MoneyGridRow total;
@@ -333,8 +398,13 @@ namespace BudgetApplication.ViewModel
 
         #region Methods to modify group and category collections
 
-        public bool AddGroup(Group group)
+        /// <summary>
+        /// Adds the specified group to the collection
+        /// </summary>
+        /// <param name="group">The group to add</param>
+        public void AddGroup(Group group)
         {
+            //If the group has no name, create a default group
             if (String.IsNullOrEmpty(group.Name))
             {
                 AddGroup(new Group());
@@ -342,6 +412,7 @@ namespace BudgetApplication.ViewModel
             int index = 0;
             bool nameExists = true;
             String name = "";
+            //Check if the group name already exists. If so, create it with a number on the end.
             while (nameExists)
             {
                 nameExists = false;
@@ -364,9 +435,12 @@ namespace BudgetApplication.ViewModel
             }
             group.Name = name;
             _groups.Add(group);
-            return true;
         }
 
+        /// <summary>
+        /// Remove the specified group from the collection.
+        /// </summary>
+        /// <param name="group">The group to remove</param>
         public void RemoveGroup(Group group)
         {
             if (!_groups.Remove(group))
@@ -375,6 +449,7 @@ namespace BudgetApplication.ViewModel
             }
             //Debug.WriteLine("Removed group " + group.Name);
 
+            //Remove the group's categories
             foreach (Category category in group.Categories)
             {
                 //Debug.WriteLine("Removed category " + category.Name);
@@ -383,6 +458,10 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        /// <summary>
+        /// Moves the specified group closer to the front (0-index) of the collection.
+        /// </summary>
+        /// <param name="group">The group to move</param>
         public void MoveGroupUp(Group group)
         {
             if (group == null)
@@ -402,15 +481,20 @@ namespace BudgetApplication.ViewModel
                 MoveTotalRows(index, index - 1);
                 int offset = targetIndex - startIndex;
                 //Debug.WriteLine("Offset is " + offset);
+                //Move each row in the Values grids
                 for (int i = 0; i <= endIndex - startIndex; i++)
                 {
                     MoveValueRows(startIndex+i, startIndex + i + offset);
                     //Debug.WriteLine("Row moved from " + (startIndex+i) + " to " + (startIndex + i + offset));
                 }
-                RefreshListViews();
+                RefreshListViews(); //Refresh grouping
             }
         }
 
+        /// <summary>
+        /// Moves the specified group closer to the back (N-index) of the collection.
+        /// </summary>
+        /// <param name="group">The group to move</param>
         public void MoveGroupDown(Group group)
         {
             if (group == null)
@@ -428,21 +512,22 @@ namespace BudgetApplication.ViewModel
                 _groups.Move(index, index + 1);
                 MoveTotalRows(index, index + 1);
                 int offset = targetIndex - startIndex;
+                //Move each row in the Values grids
                 for (int i = 0; i <= endIndex-startIndex; i++)
                 {
                     MoveValueRows(startIndex, startIndex+offset);
                     //Debug.WriteLine("Row moved from " + startIndex + " to " + (i + offset));
                 }
-                RefreshListViews();
+                RefreshListViews(); //Refresh grouping
             }
         }
 
         /// <summary>
-        /// Adds a category with the specified name to the category list
+        /// Adds a category with the specified name to the category list.
         /// </summary>
-        /// <param name="categoryName"></param>
-        /// <returns></returns>
-        public bool AddCategory(Group group, Category category = null)
+        /// <param name="category">The category to add</param>
+        /// <param name="group">The group to associate the category to</param>
+        public void AddCategory(Group group, Category category = null)
         {
             if (category == null)
             {
@@ -456,6 +541,7 @@ namespace BudgetApplication.ViewModel
             int index = 0;
             bool nameExists = true;
             String name = "";
+            //Checks if name is already used. Adds a number to the end if so.
             while (nameExists)
             {
                 nameExists = false;
@@ -477,11 +563,11 @@ namespace BudgetApplication.ViewModel
                 index++;
             }
             category.Name = name;
-            group.Categories.Add(category);
+            group.Categories.Add(category); //Add the category to its group
             _categories.Add(category);
+
+            //Inserts the category in the correct position (after other categories in its group)
             int previousCategoryIndex = group.Categories.IndexOf(category) - 1;
-            if (previousCategoryIndex < 0)
-                return true;
             MoneyGridRow previousRow;
             try
             {
@@ -494,9 +580,12 @@ namespace BudgetApplication.ViewModel
             int previousRowIndex = _budgetValues.IndexOf(previousRow);
             _categories.Move(_budgetValues.Count - 1, previousRowIndex + 1);
             MoveValueRows(_budgetValues.Count - 1, previousRowIndex + 1);
-            return true;
         }
 
+        /// <summary>
+        /// Removes the specified category.
+        /// </summary>
+        /// <param name="category">The category to remove</param>
         public void RemoveCategory(Category category)
         {
             Group currGroup = GetCategoryGroup(category);
@@ -504,7 +593,7 @@ namespace BudgetApplication.ViewModel
             {
                 throw new ArgumentException("Category" + category.Name + " is not part of a group");
             }
-            currGroup.Categories.Remove(category);
+            currGroup.Categories.Remove(category);  //Remove from the group
             if (!_categories.Remove(category))
             {
                 throw new ArgumentException("Category " + category.Name + " does not exist");
@@ -513,6 +602,10 @@ namespace BudgetApplication.ViewModel
 
         }
 
+        /// <summary>
+        /// Move a category closer to the front (0-index) of its group's collection
+        /// </summary>
+        /// <param name="category">The category to move up</param>
         public void MoveCategoryUp(Category category)
         {
             if (category == null)
@@ -529,6 +622,7 @@ namespace BudgetApplication.ViewModel
             }
             if (index > 0)
             {
+                //Move all Value rows up
                 group.Categories.Move(index, index - 1);
                 MoneyGridRow budgetRow = _budgetValues.Single(x => x.Category == category);
                 int rowIndex = _budgetValues.IndexOf(budgetRow);
@@ -538,6 +632,10 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        /// <summary>
+        /// Move a category closer to the back (N-index) of its group's collection
+        /// </summary>
+        /// <param name="category">The category to move up</param>
         public void MoveCategoryDown(Category category)
         {
             if (category == null)
@@ -554,6 +652,7 @@ namespace BudgetApplication.ViewModel
             }
             if (index < group.Categories.Count - 1)
             {
+                //Move all the Values rows down
                 group.Categories.Move(index, index + 1);
                 MoneyGridRow budgetRow = _budgetValues.Single(x => x.Category == category);
                 int rowIndex = _budgetValues.IndexOf(budgetRow);
@@ -561,6 +660,11 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        /// <summary>
+        /// Finds the group corresponding to the specified category
+        /// </summary>
+        /// <param name="category">The category to locate</param>
+        /// <returns>The mathching group</returns>
         private Group GetCategoryGroup(Category category)
         {
             foreach (Group group in _groups)
@@ -573,19 +677,35 @@ namespace BudgetApplication.ViewModel
             return null;
         }
 
+        /// <summary>
+        /// Called when a category has its properties modified
+        /// </summary>
+        /// <param name="sender">The modified object</param>
+        /// <param name="e">The arguments</param>
         public void CategoryChanged(Object sender, PropertyChangedEventArgs e)
         {
             //RefreshListViews();
         }
 
+        /// <summary>
+        /// Called when a group has its properties modified. Used to update the groupings.
+        /// </summary>
+        /// <param name="sender">The modified object</param>
+        /// <param name="e">The arguments</param>
         public void GroupChanged(Object sender, PropertyChangedEventArgs e)
         {
             RefreshListViews();
         }
 
-        public void UpdateCategories(Object sender, NotifyCollectionChangedEventArgs e)
+        /// <summary>
+        /// Called when the category collection is changed. Used to add/remove Values rows.
+        /// </summary>
+        /// <param name="sender">The modified collection</param>
+        /// <param name="e">The arguments</param>
+        public void CategoryCollectionChanged(Object sender, NotifyCollectionChangedEventArgs e)
         {
             //Debug.WriteLine("Adding category");
+            //Adds Values rows
             if (e.NewItems != null && e.Action != NotifyCollectionChangedAction.Move)
             {
                 foreach (Category newCategory in e.NewItems)
@@ -606,7 +726,7 @@ namespace BudgetApplication.ViewModel
                         //throw new ArgumentException("Could not match group to category " + newCategory.Name, ex);
                 }
             }
-
+            //Removes Values rows. Order is important to avoid triggering data that doesn't exist. (1/4/2017: May be fixed now)
             if (e.OldItems != null && e.Action != NotifyCollectionChangedAction.Move)
             {
                 foreach (Category oldCategory in e.OldItems)
@@ -625,24 +745,27 @@ namespace BudgetApplication.ViewModel
                     if (oldRow == null)
                         throw new ArgumentException("Cannot locate deleted row");
                     _budgetValues.Remove(oldRow);
-                    //TODO: remove from other collections
                 }
             }
         }
-        public void UpdateGroups(Object sender, NotifyCollectionChangedEventArgs e)
+
+        /// <summary>
+        /// Called when the gropu collection is changed. Used to add/remove Totals rows.
+        /// </summary>
+        /// <param name="sender">The modified collection</param>
+        /// <param name="e">The arguments</param>
+        public void GroupsCollectionChanged(Object sender, NotifyCollectionChangedEventArgs e)
         {
+            //Adds Totals rows
             if (e.NewItems != null && e.Action != NotifyCollectionChangedAction.Move)
             {
                 foreach (Group newGroup in e.NewItems)
                 {
-                    //Debug.WriteLine("New group" + newGroup.Name);
-                    //Debug.WriteLine("Event: " + e.Action.ToString());
-
-                    //MessageBox.Show(newCategory.Group.Name);
                     Category newCategory = new Category(newGroup.Name);
                     try
                     {
                         Group totalGroup;
+                        //Gets the income state
                         if (newGroup.IsIncome)
                         {
                             totalGroup = columnIncomeTotalsGroup;
@@ -663,6 +786,7 @@ namespace BudgetApplication.ViewModel
                 }
             }
 
+            //Removes totals rows
             if (e.OldItems != null && e.Action != NotifyCollectionChangedAction.Move)
             {
                 foreach (Group oldGroup in e.OldItems)

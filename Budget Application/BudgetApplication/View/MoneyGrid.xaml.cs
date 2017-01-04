@@ -1,63 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.Specialized;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using BudgetApplication.Model;
-using System.Collections;
-using System.Globalization;
+
 
 namespace BudgetApplication.View
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// User control used to display a year's worth of budgeting or spending data.
     /// </summary>
     public partial class MoneyGrid : UserControl
     {
+        /// <summary>
+        /// Initializes a new MoneyGrid control.
+        /// </summary>
         public MoneyGrid()
         {
             InitializeComponent();
             this.Loaded += SetColumnMinWidth;
         }
 
+        /// <summary>
+        /// Runs on load of control. Used to make sure column widths never get too small.
+        /// Also sets color coding as needed.
+        /// </summary>
+        /// <param name="sender">The loaded object (this)</param>
+        /// <param name="e">The arguments</param>
         private void SetColumnMinWidth(object sender, RoutedEventArgs e)
         {
             DataGridColumn column = ValuesGrid.Columns[0];
-            column.Width = new DataGridLength(1, DataGridLengthUnitType.Auto);
+            column.Width = new DataGridLength(1, DataGridLengthUnitType.Auto);  //Category width is always auto
+            //Loops through other columns. Starts at 2 to avoid separator column. TODO: make less hacky.
             for (int i = 2; i < ValuesGrid.Columns.Count; i++)
             {
                 column = ValuesGrid.Columns[i];
-                if (i == ValuesGrid.Columns.Count-2)
+                if (i == ValuesGrid.Columns.Count-2)    //Ignores the other separator.
                     continue;
-                column.MinWidth = 50;
-                column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+                column.MinWidth = 50;   //Sets the min width
+                column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);  //Allows columns to expand
+                //Entire DataGrid is color coded if it's a comparison view
                 if (IsComparison)
                 {
                     (column as DataGridTextColumn).ElementStyle = this.FindResource("ColorCodeStyle") as Style;
                     (TotalsGrid.Columns[i] as DataGridTextColumn).ElementStyle = this.FindResource("ColorCodeStyle") as Style;
                 }
+                //Budget and sum rows are always color coded.
                 (BudgetAndSumGrid.Columns[i] as DataGridTextColumn).ElementStyle = this.FindResource("ColorCodeStyle") as Style;
             }
         }
 
-        private void DataGrid_Sorting(object sender, DataGridSortingEventArgs e)
-        {
-            Debug.WriteLine("Sorting");
-        }
-
+        /// <summary>
+        /// Handles scrolling of the datagrid.
+        /// </summary>
+        /// <param name="sender">The scrollviewer object</param>
+        /// <param name="e">The arguments</param>
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             ScrollViewer scv = (ScrollViewer)sender;
@@ -65,6 +65,9 @@ namespace BudgetApplication.View
             e.Handled = true;
         }
 
+        /// <summary>
+        /// Field for the data source for the values grid
+        /// </summary>
         public ListCollectionView ValuesDataSource
         {
             get { return (ListCollectionView)GetValue(ValuesDataSourceProperty); }
@@ -75,7 +78,9 @@ namespace BudgetApplication.View
         public static readonly DependencyProperty ValuesDataSourceProperty =
             DependencyProperty.Register("ValuesDataSource", typeof(ListCollectionView), typeof(MoneyGrid));
 
-
+        /// <summary>
+        /// Field for the data source for the totals grid
+        /// </summary>
         public IEnumerable<MoneyGridRow> TotalsDataSource
         {
             get { return (IEnumerable<MoneyGridRow>)GetValue(TotalsDataSourceProperty); }
@@ -86,8 +91,9 @@ namespace BudgetApplication.View
         public static readonly DependencyProperty TotalsDataSourceProperty =
             DependencyProperty.Register("TotalsDataSource", typeof(IEnumerable<MoneyGridRow>), typeof(MoneyGrid));
 
-
-
+        /// <summary>
+        /// Field for the data source of the budget and sum rows.
+        /// </summary>
         public IEnumerable<MoneyGridRow> BudgetAndSumDataSource
         {
             get { return (IEnumerable<MoneyGridRow>)GetValue(BudgetAndSumDataSourceProperty); }
@@ -98,10 +104,9 @@ namespace BudgetApplication.View
         public static readonly DependencyProperty BudgetAndSumDataSourceProperty =
             DependencyProperty.Register("BudgetAndSumDataSource", typeof(IEnumerable<MoneyGridRow>), typeof(MoneyGrid));
 
-
-
-
-
+        /// <summary>
+        /// Field to determine if values grid should be read only.
+        /// </summary>
         public bool IsReadOnly
         {
             get { return (bool)GetValue(IsReadOnlyProperty); }
@@ -112,8 +117,9 @@ namespace BudgetApplication.View
         public static readonly DependencyProperty IsReadOnlyProperty =
             DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(MoneyGrid), new PropertyMetadata(false));
 
-
-
+        /// <summary>
+        /// Field for if the control is part of the comparison view.
+        /// </summary>
         public bool IsComparison
         {
             get { return (bool)GetValue(IsComparisonProperty); }
@@ -123,53 +129,5 @@ namespace BudgetApplication.View
         // Using a DependencyProperty as the backing store for IsComparison.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsComparisonProperty =
             DependencyProperty.Register("IsComparison", typeof(bool), typeof(MoneyGrid), new PropertyMetadata(false));
-
-
-
-
-        public ICommand OnEdit
-        {
-            get { return (ICommand)GetValue(OnEditProperty); }
-            set { SetValue(OnEditProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for OnEdit.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty OnEditProperty =
-            DependencyProperty.Register("OnEdit", typeof(ICommand), typeof(MoneyGrid), new PropertyMetadata(null));
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var dataView = (ListCollectionView)CollectionViewSource.GetDefaultView(ValuesGrid.ItemsSource);
-            dataView.Refresh();
-            //dataView.CustomSort = Comparer;
-            //dataView.Refresh();
-            //cvs.GroupDescriptions.RemoveAt(0);
-            //PropertyGroupDescription prop = new PropertyGroupDescription("Group");
-            //cvs.GroupDescriptions.Add(prop);
-        }
-    }
-
-    public class ValueToBrushConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value == null || String.IsNullOrEmpty(value as String))
-                return Brushes.White;
-            //Debug.WriteLine(value as string);
-            decimal num = decimal.Parse(value as String, NumberStyles.Currency);
-            if (num >= 0)
-            {
-                return Brushes.Green;
-            }
-            else
-            {
-                return Brushes.Red;
-            }
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

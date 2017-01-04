@@ -35,7 +35,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style x:Key="MainWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
         <Setter Property="AllowsTransparency" Value="False"/>
@@ -47,7 +46,7 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Foreground" Value="Orange"/>
     </Style>
-
+    <!--Add, remove, move button styles-->
     <Style x:Key="AddGroupButton" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="25"/>
         <Setter Property="Background" Value="Orange"/>
@@ -124,6 +123,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!--Datagrid elements-->
     <Style x:Key="GroupedStyle" TargetType="{x:Type GroupItem}">
         <Setter Property="Margin" Value="0,0,0,5"/>
         <Setter Property="ClipToBounds" Value="True"/>
@@ -152,7 +152,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style x:Key="SelectedCellStyle" TargetType="{x:Type DataGridCell}">
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
@@ -163,64 +162,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
-    <Style x:Key="FilteredHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
-                    <Grid>
-                        <Themes:DataGridHeaderBorder BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" IsClickable="{TemplateBinding CanUserSort}" IsPressed="{TemplateBinding IsPressed}" IsHovered="{TemplateBinding IsMouseOver}" Padding="{TemplateBinding Padding}" SortDirection="{TemplateBinding SortDirection}" SeparatorBrush="{TemplateBinding SeparatorBrush}" SeparatorVisibility="{TemplateBinding SeparatorVisibility}">
-                            <DockPanel LastChildFill="True">
-                                <Button Margin="3,0,0,0" DockPanel.Dock="Right" Height="20" Width="20" Click="FilterButton_Click" Name="FilterButton">
-                                    <Button.Template>
-                                        <ControlTemplate>
-                                            <!--<ContentControl Template="{StaticResource FilterImage}"/>-->
-                                            <Image Source="/Resources/Filter.png" Width="15" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                        </ControlTemplate>
-                                    </Button.Template>
-                                </Button>
-                                <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                            </DockPanel>
-                        </Themes:DataGridHeaderBorder>
-                        <Thumb x:Name="PART_LeftHeaderGripper" HorizontalAlignment="Left">
-                            <Thumb.Style>
-                                <Style TargetType="{x:Type Thumb}">
-                                    <Setter Property="Width" Value="8"/>
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="Cursor" Value="SizeWE"/>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type Thumb}">
-                                                <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"/>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </Thumb.Style>
-                        </Thumb>
-                        <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Right">
-                            <Thumb.Style>
-                                <Style TargetType="{x:Type Thumb}">
-                                    <Setter Property="Width" Value="8"/>
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="Cursor" Value="SizeWE"/>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type Thumb}">
-                                                <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"/>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </Thumb.Style>
-                        </Thumb>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-
+    <!--Reference-->
     <ControlTemplate x:Key="FilterImage">
         <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
             <Canvas Name="svg2" Width="744" Height="750">

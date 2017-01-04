@@ -4,13 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BudgetApplication.View"
+             xmlns:model="clr-namespace:BudgetApplication.Model"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:test="clr-namespace:System.Windows.Data;assembly=PresentationFramework"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <local:ValueToBrushConverter x:Key="valConv"/>
+        <model:ValueToBrushConverter x:Key="valConv"/>
         <Style x:Key="ColorCodeStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="Background" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Text, Converter={StaticResource valConv}}"/>
         </Style>
@@ -23,9 +24,10 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <!--Values Grid-->
             <DataGrid Grid.Row="0" Width="{Binding Source={x:Reference TotalsGrid}, Path=ActualWidth}" x:Name="ValuesGrid" ItemsSource="{Binding Path=ValuesDataSource, RelativeSource={RelativeSource FindAncestor, 
                 AncestorType=local:MoneyGrid, AncestorLevel=1}}" Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="Column" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType=local:MoneyGrid, AncestorLevel=1}}" CanUserSortColumns="False" Sorting="DataGrid_Sorting">
+                IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType=local:MoneyGrid, AncestorLevel=1}}" CanUserSortColumns="False">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="CellEditEnding">
                         <i:InvokeCommandAction Command="{Binding Path=OnEdit, RelativeSource={RelativeSource FindAncestor, 
@@ -56,6 +58,7 @@
                     <DataGridTextColumn x:Name="BudgetTotal" Header="Total" Binding="{Binding Path=Sum, StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
+            <!--Totals Grid-->
             <DataGrid Grid.Row="1" x:Name="TotalsGrid" ItemsSource="{Binding Path=TotalsDataSource, RelativeSource={RelativeSource FindAncestor, 
                 AncestorType=local:MoneyGrid, AncestorLevel=1}}" Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="None" IsReadOnly="True">
                 <DataGrid.Columns>
@@ -78,6 +81,7 @@
                     <DataGridTextColumn Header="Total" Binding="{Binding Path=Sum, StringFormat=\{0:C\}}" IsReadOnly="True" Width="{Binding Source={x:Reference BudgetTotal}, Path=ActualWidth}"/>
                 </DataGrid.Columns>
             </DataGrid>
+            <!--Budget and Sum Grid-->
             <DataGrid Grid.Row="2" x:Name="BudgetAndSumGrid" ItemsSource="{Binding Path=BudgetAndSumDataSource, RelativeSource={RelativeSource FindAncestor, 
                 AncestorType=local:MoneyGrid, AncestorLevel=1}}" Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="None" IsReadOnly="True">
                 <DataGrid.Columns>

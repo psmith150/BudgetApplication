@@ -208,3 +208,4 @@ D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\bin\Debug\sv\Xc
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\StyleDictionary.baml
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\AddPaymentPopup.baml
+C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csprojResolveAssemblyReference.cache

@@ -102,10 +102,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\CheckedListItem.cs" />
+    <Compile Include="Model\CheckingAccount.cs" />
+    <Compile Include="Model\CreditCard.cs" />
+    <Compile Include="Model\Group.cs" />
+    <Compile Include="Model\MoneyGridRow.cs" />
+    <Compile Include="Model\PaymentMethod.cs" />
+    <Compile Include="Model\PaymentTypeToStringConverter.cs" />
+    <Compile Include="Model\Transaction.cs" />
+    <Compile Include="Model\ValueToBrushConverter.cs" />
     <Compile Include="StyleDictionary.xaml.cs">
       <DependentUpon>StyleDictionary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Budget.cs" />
     <Compile Include="Model\MonthValues.cs" />
     <Compile Include="Model\RowCompare.cs" />
     <Compile Include="Model\TotalObservableCollection.cs" />
@@ -117,7 +126,6 @@
       <DependentUpon>MoneyGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="Model\Transactions.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\AddPaymentPopup.xaml.cs">
       <DependentUpon>AddPaymentPopup.xaml</DependentUpon>

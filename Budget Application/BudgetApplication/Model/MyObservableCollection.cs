@@ -10,38 +10,38 @@ using System.Diagnostics;
 
 namespace BudgetApplication
 {
+    /// <summary>
+    /// An extension of ObservableCollection that features support for notifying when a member has a property changed.
+    /// This allows the view to update when an object is changed, not just added or removed.
+    /// </summary>
+    /// <typeparam name="T">The type of objects contained in the collection. Must implement INotifyPropertyChanged</typeparam>
     public class MyObservableCollection<T> : ObservableCollection<T>
         where T : INotifyPropertyChanged
     {
-        private bool _delayNotification;
+        /// <summary>
+        /// Base constructor.
+        /// </summary>
         public MyObservableCollection() : base()
         {
             //CollectionChanged += new NotifyCollectionChangedEventHandler(NewCollectionChanged);
         }
 
-        public bool DelayNotification
-        {
-            get
-            {
-                return _delayNotification;
-            }
-            set
-            {
-                _delayNotification = value;
-                //End of delay
-                if (!_delayNotification)
-                {
-
-                }
-            }
-        }
-
+        /// <summary>
+        /// Constructor for creating from an IEnumerable
+        /// </summary>
+        /// <param name="enumerable">The IEnumerable object to instantiate from</param>
         public MyObservableCollection(IEnumerable<T> enumerable) : base(enumerable)
         {
 
         }
 
-        void NewCollectionChanged(Object sender, NotifyCollectionChangedEventArgs e)
+        /// <summary>
+        /// When an item is added to the collection, it is given the proper event handler.
+        /// Event handler is removed from item when it is removed from the collection.
+        /// </summary>
+        /// <param name="sender">The MyObservableCollection instance</param>
+        /// <param name="e">The arguments</param>
+        void ModifyEventHandler(Object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
@@ -59,11 +59,13 @@ namespace BudgetApplication
             }
         }
 
+        /// <summary>
+        /// Overrides OnCollectionChanged to add the event handlers to members.
+        /// </summary>
+        /// <param name="e">The arguments</param>
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            if (_delayNotification)
-                return;
-            NewCollectionChanged(this, e);
+            ModifyEventHandler(this, e);
             base.OnCollectionChanged(e);
         }
 
@@ -75,8 +77,16 @@ namespace BudgetApplication
         //    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Move));
         //}
 
+        /// <summary>
+        /// Event to notify that a member of the collection has been modified.
+        /// </summary>
         public event PropertyChangedEventHandler MemberChanged;
 
+        /// <summary>
+        /// Raises the MemberChangedEvent
+        /// </summary>
+        /// <param name="sender">The member that has been modified</param>
+        /// <param name="e">The arguments</param>
         private void MemberPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             PropertyChangedEventHandler handler = MemberChanged;
@@ -86,8 +96,6 @@ namespace BudgetApplication
                 //Debug.WriteLine(e.PropertyName);
                 MemberChanged(sender, e);
             }
-            //OnMemberChange()
-            //OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             //Debug.WriteLine("A collection member was changed: " + e.PropertyName);
         }
     }

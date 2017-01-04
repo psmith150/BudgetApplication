@@ -7,7 +7,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
-        Title="Manage Groups and Categories" Height="450" Width="450" Loaded="Window_Loaded" Closing="Window_Closing"
+        Title="Manage Groups and Categories" Height="450" Width="450" Loaded="Window_Loaded"
         ShowInTaskbar="False" WindowStartupLocation="CenterOwner" ResizeMode="CanResizeWithGrip">
     <Grid>
         <Grid.RowDefinitions>
@@ -25,7 +25,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal" Width="Auto">
-                <Button Name="AddGroupButton" Style="{StaticResource AddGroupButton}" Command="{Binding AddGroupCommand}" Click="ModifyGroup_Click"/>
+                <Button Name="AddGroupButton" Style="{StaticResource AddGroupButton}" Command="{Binding AddGroupCommand}" Click="AddGroup_Click"/>
                 <Button Name="RemoveGroupButton" Style="{StaticResource RemoveGroupButton}" Command="{Binding RemoveGroupCommand}" CommandParameter="{Binding ElementName=GroupList, Path=SelectedItem}"
                         Click="SaveGroupIndex_Click"/>
             </StackPanel>
@@ -46,7 +46,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal">
                 <Button Name="AddCategoryButton" Style="{StaticResource AddGroupButton}"  Command="{Binding AddCategoryCommand}" CommandParameter="{Binding ElementName=GroupList, Path=SelectedItem}"
-                    Click="ModifyCategory_Click">
+                    Click="AddCategory_Click">
                 </Button>
                 <Button Name="RemoveCategoryButton" Style="{StaticResource RemoveGroupButton}" Command="{Binding RemoveCategoryCommand}" CommandParameter="{Binding ElementName=CategoryList, Path=SelectedItem}"
                     Click="SaveCategoryIndex_Click"/>
@@ -72,10 +72,6 @@
         </DataGrid>
         <DataGrid Name="CategoryList" Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False"
                   CellStyle="{StaticResource SelectedCellStyle}" CanUserAddRows="False" CanUserSortColumns="False">
-            <DataGrid.Resources>
-                <!--<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Orange" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Orange" />-->
-            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Category" Binding="{Binding Path=Name, Mode=TwoWay}"/>
             </DataGrid.Columns>
