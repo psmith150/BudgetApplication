@@ -83,7 +83,7 @@ namespace BudgetApplication.View
                         break;
                     } 
                 }
-                Debug.WriteLine("Name is " + popup.PaymentName + "; type is " + popup.PaymentType);
+                //Debug.WriteLine("Name is " + popup.PaymentName + "; type is " + popup.PaymentType);
                 AddPaymentButton.CommandParameter = payment;
                 PaymentList.SelectedIndex = PaymentList.Items.Count;
             }

@@ -84,7 +84,7 @@ namespace BudgetApplication
             {
                 //Debug.WriteLine(this);
                 //Debug.WriteLine(e.PropertyName);
-                MemberChanged(this, e);
+                MemberChanged(sender, e);
             }
             //OnMemberChange()
             //OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
