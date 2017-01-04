@@ -8,6 +8,8 @@ Add documentation.
 		MainWindow.xaml.cs
 	ViewModel
 		MainViewModel
+	Application
+		StyleDictionary
 Make UI look better.
 Make Add and Remove buttons prettier.
 Make MoneyGrid.SetColumnMinWidth less hacky.
@@ -22,3 +24,9 @@ When using 2+ filters on transaction tab, make it so filtered out values don't s
 	Probably will need to keep track of what has been filtered out.
 	Idea: use select statement where FilterBox.ItemsSource is assigned in FilterButton_Click
 Modify CheckedListItem to match other INotifyPropertyChanged implementations.
+Consolidate styles in StyleDictionary.
+Change file save location.
+Allow setting budget value for multiple cells at once.
+Copy/paste functionality.
+Allow user to choose year loaded at start.
+Add functionality to add year.
