@@ -21,17 +21,17 @@
             <Button Name="GroupsAndCategories" Click="GroupsAndCategories_Click">
                 <TextBlock>Groups and Categories</TextBlock>
             </Button>
-            <Button Name="SaveData" Command="{Binding SaveDataCommand}">
+            <Button Name="SaveData" Command="{Binding SaveData_ClickCommand}">
                 <TextBlock>Save Data</TextBlock>
             </Button>
-            <Button Name="LoadData" Command="{Binding LoadDataCommand}">
+            <Button Name="LoadData" Command="{Binding LoadData_ClickCommand}">
                 <TextBlock>Load Data</TextBlock>
             </Button>
             <Button Name="PaymentMethods" Click="PaymentMethods_Click">
                 <TextBlock>Payment Methods</TextBlock>
             </Button>
-            <Button Name="NewYear" Content="Add New Year" Command="{Binding TestCommand}"/>
-            <ComboBox Name="YearSelector" SelectedItem="{Binding CurrentYear}" ItemsSource="{Binding YearList}" SelectionChanged="YearSelector_SelectionChanged"/>
+            <Button Name="NewYear" Content="Add New Year"/>
+            <ComboBox Name="YearSelector" SelectedItem="{Binding CurrentYear}" ItemsSource="{Binding YearList}"/>
         </StackPanel>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TabItem Style="{StaticResource TabHeader}" Header="Budget">
@@ -120,7 +120,7 @@
                         <Label>End Date</Label>
                         <DatePicker Name="PaymentEndDate" SelectedDateChanged="PaymentEndDate_SelectedDateChanged"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="1" Width="Auto" HorizontalAlignment="Stretch" Height="Auto" Background="Transparent" Orientation="Horizontal" Grid.ColumnSpan="4">
+                    <StackPanel Grid.Row="1" Width="Auto" HorizontalAlignment="Stretch" Height="Auto" Background="Transparent" Orientation="Horizontal">
                         <Label>Credit Limit:</Label>
                         <Label Name="CreditLimitLabel" ContentStringFormat="{}{0:C}"/>
                         <Label>Total Bill:</Label>

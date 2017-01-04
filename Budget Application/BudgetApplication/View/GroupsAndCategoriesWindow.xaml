@@ -71,7 +71,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid Name="CategoryList" Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False"
-                  CellStyle="{StaticResource SelectedCellStyle}" CanUserAddRows="False" CanUserSortColumns="False">
+                  CellStyle="{StaticResource SelectedCellStyle}" CanUserAddRows="False">
             <DataGrid.Resources>
                 <!--<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Orange" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Orange" />-->
