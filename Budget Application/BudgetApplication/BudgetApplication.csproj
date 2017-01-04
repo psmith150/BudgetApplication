@@ -51,6 +51,7 @@
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="presentationframework.aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -101,6 +102,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="StyleDictionary.xaml.cs">
+      <DependentUpon>StyleDictionary.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\Budget.cs" />
     <Compile Include="Model\MonthValues.cs" />
     <Compile Include="Model\RowCompare.cs" />
@@ -141,7 +145,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Application\StyleDictionary.xaml">
+    <Page Include="StyleDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,7 +176,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Application\packages.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -188,6 +191,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Down_arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Filter.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,15 +6,14 @@
         xmlns:local="clr-namespace:BudgetApplication.View"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
         mc:Ignorable="d"
         Title="Budget Manager" Height="350" Width="525" WindowState="Maximized" Style="{StaticResource MainWindowStyle}"
         DataContext="{Binding Main, Source={StaticResource Locator}}" ResizeMode="CanResizeWithGrip"
         MinWidth="350">
     <Window.Resources>
-        <CollectionViewSource x:Key="TransactionsView" Source="{Binding Transactions}">
-        </CollectionViewSource>
-        <CollectionViewSource x:Key="PaymentTransactionsView" Source="{Binding Transactions}" Filter="PaymentTransactionsView_Filter">
-        </CollectionViewSource>
+        <CollectionViewSource x:Key="TransactionsView" Source="{Binding Transactions}"/>
+        <CollectionViewSource x:Key="PaymentTransactionsView" Source="{Binding Transactions}" Filter="PaymentTransactionsView_Filter"/>
     </Window.Resources>
     <DockPanel Background="White">
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
@@ -58,9 +57,10 @@
                     <Border Grid.Row="0">
                     </Border>
                     <Border Grid.Row="1">
-                        <DataGrid x:Name="Transactions" ItemsSource="{Binding Source={StaticResource TransactionsView}}" Background="DarkGray" AutoGenerateColumns="False">
+                        <DataGrid x:Name="Transactions" ItemsSource="{Binding Source={StaticResource TransactionsView}}" Background="DarkGray" AutoGenerateColumns="False" SelectionChanged="Transactions_SelectionChanged"
+                                  ColumnHeaderStyle="{StaticResource FilteredHeaderStyle}" Loaded="Transactions_Loaded">
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="Date">
+                                <DataGridTemplateColumn Header="Date" SortMemberPath="Date">
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
                                             <DatePicker SelectedDate="{Binding Path=Date}"/>
@@ -75,7 +75,7 @@
                                 <DataGridTextColumn Header="Item" Binding="{Binding Path=Item, Mode=TwoWay}"/>
                                 <DataGridTextColumn Header="Payee" Binding="{Binding Path=Payee}"/>
                                 <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, StringFormat=\{0:C\}}"/>
-                                <DataGridComboBoxColumn Header="Category" SelectedValueBinding="{Binding Category}" DisplayMemberPath="Name">
+                                <DataGridComboBoxColumn Header="Category" SelectedValueBinding="{Binding Category}" DisplayMemberPath="Name" SortMemberPath="Category.Name">
                                     <DataGridComboBoxColumn.ElementStyle>
                                         <Style TargetType="{x:Type ComboBox}">
                                             <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Categories, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />

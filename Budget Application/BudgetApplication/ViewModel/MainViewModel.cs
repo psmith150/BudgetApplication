@@ -397,12 +397,14 @@ namespace BudgetApplication.ViewModel
                 int targetIndex = _budgetValues.IndexOf(_budgetValues.First(x => x.Group == _groups.ElementAt(index - 1)));
                 int endIndex = _budgetValues.IndexOf(_budgetValues.Last(x => x.Group == group));
                 _groups.Move(index, index - 1);
+                //Debug.WriteLine("Moved group " + group.Name + " one row up");
                 MoveTotalRows(index, index - 1);
                 int offset = targetIndex - startIndex;
+                //Debug.WriteLine("Offset is " + offset);
                 for (int i = 0; i <= endIndex - startIndex; i++)
                 {
-                    MoveValueRows(startIndex, startIndex + offset);
-                    //Debug.WriteLine("Row moved from " + startIndex + " to " + (i + offset));
+                    MoveValueRows(startIndex+i, startIndex + i + offset);
+                    //Debug.WriteLine("Row moved from " + (startIndex+i) + " to " + (startIndex + i + offset));
                 }
                 RefreshListViews();
             }
@@ -998,8 +1000,6 @@ namespace BudgetApplication.ViewModel
 
         public void SaveData()
         {
-            RefreshListViews();
-            return;
             using (FileStream file = new FileStream(completeFilePath, FileMode.Create))
             {
                 using (StreamWriter stream = new StreamWriter(file))
@@ -1122,6 +1122,12 @@ namespace BudgetApplication.ViewModel
             _categories.Clear();
             _transactions.Clear();
             _paymentMethods.Clear();
+            _budgetValues.Clear();
+            _budgetTotals.Clear();
+            _spendingValues.Clear();
+            _spendingTotals.Clear();
+            _comparisonValues.Clear();
+            _comparisonTotals.Clear();
             DataWrapper data = new DataWrapper();
             try
             {

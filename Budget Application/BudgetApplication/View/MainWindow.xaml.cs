@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using BudgetApplication.Model;
+using System.Windows.Controls.Primitives;
 
 namespace BudgetApplication.View
 {
@@ -127,6 +128,30 @@ namespace BudgetApplication.View
         private void PaymentAmountBox_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             RecalculateCreditValues();
+        }
+
+        private void Transactions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Transactions_Loaded(object sender, RoutedEventArgs e)
+        {
+            foreach (DataGridColumn col in Transactions.Columns)
+            {
+                DataGridColumnHeader header = col.Header as DataGridColumnHeader;
+                MessageBox.Show(header.ToString());
+                DependencyObject button = this.GetTemplateChild("FilterButton");
+                if (button != null)
+                {
+                    (button as Button).Click += Test;
+                }
+            }
+        }
+
+        private void Test(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Click");
         }
     }
 }

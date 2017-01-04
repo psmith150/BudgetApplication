@@ -6,9 +6,9 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary>
-          <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:BudgetApplication.ViewModel" />
+          <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:BudgetApplication.ViewModel"/>
         </ResourceDictionary>
-        <ResourceDictionary Source="Application/StyleDictionary.xaml" />
+        <ResourceDictionary Source="StyleDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>
