@@ -106,6 +106,7 @@
     <Compile Include="Model\CheckedListItem.cs" />
     <Compile Include="Model\CheckingAccount.cs" />
     <Compile Include="Model\CreditCard.cs" />
+    <Compile Include="Model\DataWrapper.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\MoneyGridRow.cs" />
     <Compile Include="Model\PaymentMethod.cs" />

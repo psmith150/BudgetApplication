@@ -90,22 +90,22 @@
             <ComboBox Name="YearSelector" SelectedItem="{Binding CurrentYear}" ItemsSource="{Binding YearList}"/>
         </StackPanel>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <TabItem Style="{StaticResource TabHeader}" Header="Budget">
+            <TabItem Style="{StaticResource TabHeader}" Header="Budget" Name="BudgetTab">
                 <local:MoneyGrid ValuesDataSource="{Binding BudgetRows}" TotalsDataSource="{Binding BudgetTotals}" IsReadOnly="false" 
                                  BudgetAndSumDataSource="{Binding BudgetBudgetAndSum}">
                 </local:MoneyGrid>
             </TabItem>
-            <TabItem Style="{StaticResource TabHeader}" Header="Spending">
+            <TabItem Style="{StaticResource TabHeader}" Header="Spending" Name="SpendingTab">
                 <local:MoneyGrid ValuesDataSource="{Binding SpendingRows}" TotalsDataSource="{Binding SpendingTotals}" IsReadOnly="True" 
                                  BudgetAndSumDataSource="{Binding SpendingBudgetAndSum}">
                 </local:MoneyGrid>
             </TabItem>
-            <TabItem Style="{StaticResource TabHeader}" Header="Budget vs Spending">
+            <TabItem Style="{StaticResource TabHeader}" Header="Budget vs Spending" Name="Comparison Tab">
                 <local:MoneyGrid ValuesDataSource="{Binding ComparisonRows}" TotalsDataSource="{Binding ComparisonTotals}" IsReadOnly="true"
                                  IsComparison="True" BudgetAndSumDataSource="{Binding ComparisonBudgetAndSum}">
                 </local:MoneyGrid>
             </TabItem>
-            <TabItem Style="{StaticResource TabHeader}" Header="Transactions">
+            <TabItem Style="{StaticResource TabHeader}" Header="Transactions" Name="TransactionsTab">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -138,7 +138,7 @@
                                         <ListBox x:Name="FilterBox" BorderThickness="0" MaxHeight="200">
                                             <ListBox.ItemTemplate>
                                                 <DataTemplate>
-                                                    <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Item}" Checked="ApplyFilters" Unchecked="ApplyFilters" />
+                                                    <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Item}" Checked="RefreshTransactionFilters" Unchecked="RefreshTransactionFilters" />
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
                                         </ListBox>
@@ -196,7 +196,7 @@
                     </Border>
                 </Grid>
             </TabItem>
-            <TabItem Style="{StaticResource TabHeader}" Header="Payment Methods">
+            <TabItem Style="{StaticResource TabHeader}" Header="Payment Methods" Name="PaymentsTab">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
