@@ -370,6 +370,7 @@ namespace BudgetApplication.ViewModel
                 return;
             foreach (Group group in _groups) //For each group, find its total row and then sum all the category rows that are part of the group
             {
+                double groupTotal = 0.0;
                 decimal[] groupSum = new decimal[12];
                 MoneyGridRow total;
                 try
@@ -391,6 +392,7 @@ namespace BudgetApplication.ViewModel
                         {
                             groupSum[i] += row.Values[i];
                         }
+                        groupTotal += (double) row.Sum;
                     }
                     catch (Exception ex)
                     {
@@ -401,6 +403,22 @@ namespace BudgetApplication.ViewModel
                     }
                 }
                 total.Values.Values = groupSum;
+                groupTotal = (double) total.Sum;
+                foreach (Category category in group.Categories)
+                {
+                    try
+                    {
+                        MoneyGridRow row = columnValues.Single(x => x.Group == group && x.Category == category);
+                        row.Percentage = (double) row.Sum / groupTotal;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(propertyName + " does not contain row for group " + group + " and category " + category);
+                        continue;
+                        //Debug.WriteLine(columnValues.ElementAt(0).Group + " " + columnValues.ElementAt(0).Category);
+                        throw new ArgumentException("Could not find corresponding row", ex);
+                    }
+                }
                 //RaisePropertyChanged(propertyName);
             }
         }

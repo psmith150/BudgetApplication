@@ -109,6 +109,23 @@ namespace BudgetApplication.Model
         }
 
         /// <summary>
+        /// Represents what percentage of the group's sum is this category's sum
+        /// </summary>
+        public double Percentage
+        {
+            get
+            {
+                return Percentage;
+            }
+
+            set
+            {
+                Percentage = value;
+                NotifyPropertyChanged("Percentage");
+            }
+        }
+
+        /// <summary>
         /// Implementation of INotifyPropertyChanged
         /// </summary>
         #region INotifyPropertyChanged Members

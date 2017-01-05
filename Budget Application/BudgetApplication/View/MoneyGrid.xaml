@@ -56,6 +56,7 @@
                     <DataGridTextColumn x:Name="BudgetDecember" Header="December" Binding="{Binding Path=Values[11], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
                     <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>
                     <DataGridTextColumn x:Name="BudgetTotal" Header="Total" Binding="{Binding Path=Sum, StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="BudgetPercentage" Header="Percentage" Binding="{Binding Path=Percentage, StringFormat=\{0:P2\}, UpdateSourceTrigger=LostFocus}" Width="*" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
             <!--Totals Grid-->
