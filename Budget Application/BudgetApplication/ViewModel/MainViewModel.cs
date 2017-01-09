@@ -48,6 +48,7 @@ namespace BudgetApplication.ViewModel
         private String filePath = "";   //File path of the data files.
         private String completeFilePath;    //Complete file path
         private String _currentYear;    //The year of data currently loaded.
+        private bool _validYear;    //Returns if the supplied year is valid.
 
         /// <summary>
         /// Instantiates a new MainViewModel object. Run when the application is launched. Initializes variables and loads data
@@ -115,6 +116,7 @@ namespace BudgetApplication.ViewModel
             MoveCategoryDownCommand = new RelayCommand<Category>((category) => MoveCategoryDown(category));
             AddPaymentMethodCommand = new RelayCommand<PaymentMethod>((paymentMethod) => AddPaymentMethod(paymentMethod));
             RemovePaymentMethodCommand = new RelayCommand<PaymentMethod>((paymentMethod) => RemovePaymentMethod(paymentMethod));
+            AddYearCommand = new RelayCommand<String>((year) => AddYear(year));
         }
 
         #region Private helpers
@@ -353,6 +355,14 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        public Boolean ValidYear
+        {
+            get
+            {
+                return _validYear;
+            }
+        }
+
         #endregion
 
         #region Methods common to all tabs
@@ -368,6 +378,8 @@ namespace BudgetApplication.ViewModel
             //Don't do anything if not all the rows have been loaded yet
             if (columnValues.Count < _categories.Count || columnTotals.Count < _groups.Count)
                 return;
+            double totalGridIncomeTotal = 0.0;
+            double totalGridExpenditureTotal = 0.0;
             foreach (Group group in _groups) //For each group, find its total row and then sum all the category rows that are part of the group
             {
                 double groupTotal = 0.0;
@@ -404,6 +416,10 @@ namespace BudgetApplication.ViewModel
                 }
                 total.Values.Values = groupSum;
                 groupTotal = (double) total.Sum;
+                if (group.IsIncome)
+                    totalGridIncomeTotal += (double) total.Sum;
+                else
+                    totalGridExpenditureTotal += (double) total.Sum;
                 foreach (Category category in group.Categories)
                 {
                     try
@@ -420,6 +436,13 @@ namespace BudgetApplication.ViewModel
                     }
                 }
                 //RaisePropertyChanged(propertyName);
+            }
+            foreach(MoneyGridRow row in columnTotals)
+            {
+                if (row.Group.IsIncome)
+                    row.Percentage = (double)row.Sum / totalGridIncomeTotal;
+                else
+                    row.Percentage = (double)row.Sum / totalGridExpenditureTotal;
             }
         }
 
@@ -921,7 +944,13 @@ namespace BudgetApplication.ViewModel
         {
             if (paymentMethod == null)
                 return;
-            _paymentMethods.Add(paymentMethod);
+            PaymentMethod checkMethod = _paymentMethods.First(x => x.Name.Equals(paymentMethod.Name));
+            if (checkMethod != null)
+            {
+                MessageBox.Show("Payment method of the same name already exists; please choose another.");
+            }
+            else
+                _paymentMethods.Add(paymentMethod);
         }
 
         /// <summary>
@@ -1181,6 +1210,14 @@ namespace BudgetApplication.ViewModel
         }
 
         /// <summary>
+        /// Command to add a new year of data.
+        /// </summary>
+        public RelayCommand<String> AddYearCommand
+        {
+            get; set;
+        }
+
+        /// <summary>
         /// Search for all data files in the save directory.
         /// </summary>
         private void GetYears()
@@ -1200,6 +1237,64 @@ namespace BudgetApplication.ViewModel
                     year = year.Substring(index, length);
                     //Debug.WriteLine("Found a file for year: " + year);
                     _yearList.Add(year);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adds a new data file for the given year, if it is a valid year.
+        /// </summary>
+        /// <param name="year"></param>
+        private void AddYear(String year)
+        {
+            //Check if year already exists
+            foreach(String checkYear in _yearList)
+            {
+                if (checkYear.Equals(year))
+                {
+                    _validYear = false;
+                    return;
+                }
+            }
+            //Check if the year is a valid year (evaluates to an integer, has 4 digits)
+            int yearInt = 0;
+            bool test = int.TryParse(year, out yearInt);
+            if (!test || year.Length != 4)
+            {
+                _validYear = false;
+                return;
+            }
+
+            _yearList.Add(year);
+            InitNewFile();
+            _currentYear = year;
+
+            _validYear = true;
+        }
+
+        /// <summary>
+        /// Creates a new data file with no data in the current filepath
+        /// </summary>
+        private void InitNewFile()
+        {
+            using (FileStream file = new FileStream(completeFilePath, FileMode.Create))
+            {
+                using (StreamWriter stream = new StreamWriter(file))
+                {
+                    //Create the DataWrapper object and add the apprpriate data
+                    XmlSerializer dataSerializer = new XmlSerializer(typeof(DataWrapper));
+                    DataWrapper data = new DataWrapper();
+                    data.Groups = new MyObservableCollection<Group>();
+                    data.PaymentMethods = new MyObservableCollection<PaymentMethod>();
+                    data.Transactions = new MyObservableCollection<Transaction>();
+                    List<decimal[]> budgetData = new List<decimal[]>(); //Easiest to just store values in order
+                    foreach (MoneyGridRow row in _budgetValues)
+                    {
+                        budgetData.Add(new decimal[12]);
+                    }
+                    data.BudgetValues = budgetData;
+
+                    dataSerializer.Serialize(stream, data); //Saves the data using the attributes defined in each class
                 }
             }
         }
@@ -1260,7 +1355,7 @@ namespace BudgetApplication.ViewModel
             }
             catch (IOException ex) //File does not exist; set everything to defaults
             {
-
+                InitNewFile();
             }
 
             //Process the data

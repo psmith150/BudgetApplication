@@ -1,4 +1,3 @@
-Verify payment names are valid (not already in use).
 Make transaction tab's DataGrid a separate control.
 	Will require rework of filtering.
 Add documentation.
@@ -10,7 +9,6 @@ Add documentation.
 Make UI look better.
 Make Add and Remove buttons prettier.
 Make MoneyGrid.SetColumnMinWidth less hacky.
-Add percentage column.
 Add graphing capability.
 Improve MoneyGrid column width handling.
 	Remember last position.

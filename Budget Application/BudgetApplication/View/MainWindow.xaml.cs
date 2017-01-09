@@ -502,5 +502,16 @@ namespace BudgetApplication.View
                 checkedItems[index].Add(new CheckedListItem<string> { IsChecked = true, Item = value });
             }
         }
+
+        /// <summary>
+        /// Asks the user for a new year of data, and creates the file if the year is valid.
+        /// </summary>
+        /// <param name="sender">The button pressed</param>
+        /// <param name="e">The arguments</param>
+        private void NewYear_Click(object sender, RoutedEventArgs e)
+        {
+            AddYearPopup popup = new AddYearPopup(this);
+            popup.ShowDialog();
+        }
     }
 }

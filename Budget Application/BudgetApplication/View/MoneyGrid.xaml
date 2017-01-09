@@ -29,11 +29,11 @@
                 AncestorType=local:MoneyGrid, AncestorLevel=1}}" Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="Column" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                 IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType=local:MoneyGrid, AncestorLevel=1}}" CanUserSortColumns="False">
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="CellEditEnding">
+                    <!--<i:EventTrigger EventName="CellEditEnding">
                         <i:InvokeCommandAction Command="{Binding Path=OnEdit, RelativeSource={RelativeSource FindAncestor, 
                                              AncestorType=local:MoneyGrid, 
                                              AncestorLevel=1}}"/>
-                    </i:EventTrigger>
+                    </i:EventTrigger>-->
                 </i:Interaction.Triggers>
                 <DataGrid.GroupStyle>
                      <!--Style for groups at top level.-->
@@ -80,6 +80,7 @@
                     <DataGridTextColumn Header="December" Binding="{Binding Path=Values[11], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetDecember}, Path=ActualWidth}"/>
                     <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Total" Binding="{Binding Path=Sum, StringFormat=\{0:C\}}" IsReadOnly="True" Width="{Binding Source={x:Reference BudgetTotal}, Path=ActualWidth}"/>
+                    <DataGridTextColumn Header="Percentage" Binding="{Binding Path=Percentage, StringFormat=\{0:P2\}}" IsReadOnly="True" Width="{Binding Source={x:Reference BudgetPercentage}, Path=ActualWidth}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <!--Budget and Sum Grid-->
@@ -103,6 +104,7 @@
                     <DataGridTextColumn Header="December" Binding="{Binding Path=Values[11], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetDecember}, Path=ActualWidth}"/>
                     <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Total" Binding="{Binding Path=Sum, StringFormat=\{0:C\}}" IsReadOnly="True" Width="{Binding Source={x:Reference BudgetTotal}, Path=ActualWidth}"/>
+                    <DataGridTextColumn Header="Percentage" Binding="{Binding Path=Percentage, StringFormat=\{0:P2\}}" IsReadOnly="True" Width="{Binding Source={x:Reference BudgetPercentage}, Path=ActualWidth}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

@@ -34,11 +34,11 @@ namespace BudgetApplication.View
         {
             DataGridColumn column = ValuesGrid.Columns[0];
             column.Width = new DataGridLength(1, DataGridLengthUnitType.Auto);  //Category width is always auto
-            //Loops through other columns. Starts at 2 to avoid separator column. TODO: make less hacky.
-            for (int i = 2; i < ValuesGrid.Columns.Count; i++)
+            //Loops through other columns. Skips any columns that aren't text columns. Starts at 1 to avoid Category column
+            for (int i = 1; i < ValuesGrid.Columns.Count; i++)
             {
-                column = ValuesGrid.Columns[i];
-                if (i == ValuesGrid.Columns.Count-2)    //Ignores the other separator.
+                column = ValuesGrid.Columns[i] as DataGridTextColumn;
+                if (column == null) //Non text columns are separators.
                     continue;
                 column.MinWidth = 50;   //Sets the min width
                 column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);  //Allows columns to expand
@@ -49,6 +49,7 @@ namespace BudgetApplication.View
                     (TotalsGrid.Columns[i] as DataGridTextColumn).ElementStyle = this.FindResource("ColorCodeStyle") as Style;
                 }
                 //Budget and sum rows are always color coded.
+                //Debug.WriteLine("Column number: " + i);
                 (BudgetAndSumGrid.Columns[i] as DataGridTextColumn).ElementStyle = this.FindResource("ColorCodeStyle") as Style;
             }
         }

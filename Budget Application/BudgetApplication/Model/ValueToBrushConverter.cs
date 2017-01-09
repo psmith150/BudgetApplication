@@ -23,7 +23,13 @@ namespace BudgetApplication.Model
             if (value == null || String.IsNullOrEmpty(value as String))
                 return Brushes.White;
             //Debug.WriteLine(value as string);
-            decimal num = decimal.Parse(value as String, NumberStyles.Currency);
+            decimal num = 0;
+            bool succeeded = true;
+            succeeded = Decimal.TryParse(value as String, NumberStyles.Currency, CultureInfo.CurrentCulture, out num);
+            if(!succeeded)
+            {
+                return Brushes.White;
+            }
             if (num >= 0)
             {
                 return Brushes.Green;

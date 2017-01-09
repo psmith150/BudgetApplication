@@ -86,7 +86,7 @@
             <Button Name="PaymentMethods" Click="PaymentMethods_Click">
                 <TextBlock>Payment Methods</TextBlock>
             </Button>
-            <Button Name="NewYear" Content="Add New Year"/>
+            <Button Name="NewYear" Content="Add New Year" Click="NewYear_Click"/>
             <ComboBox Name="YearSelector" SelectedItem="{Binding CurrentYear}" ItemsSource="{Binding YearList}"/>
         </StackPanel>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -100,7 +100,7 @@
                                  BudgetAndSumDataSource="{Binding SpendingBudgetAndSum}">
                 </local:MoneyGrid>
             </TabItem>
-            <TabItem Style="{StaticResource TabHeader}" Header="Budget vs Spending" Name="Comparison Tab">
+            <TabItem Style="{StaticResource TabHeader}" Header="Budget vs Spending" Name="ComparisonTab">
                 <local:MoneyGrid ValuesDataSource="{Binding ComparisonRows}" TotalsDataSource="{Binding ComparisonTotals}" IsReadOnly="true"
                                  IsComparison="True" BudgetAndSumDataSource="{Binding ComparisonBudgetAndSum}">
                 </local:MoneyGrid>

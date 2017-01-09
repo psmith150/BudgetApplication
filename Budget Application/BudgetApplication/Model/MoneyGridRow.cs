@@ -12,6 +12,7 @@ namespace BudgetApplication.Model
         private Category _category; //The category of the row
         private MonthValues _values;    //The set of monthly values
         private bool _isSum;    //Whether or not the row represents a summation of other rows
+        private double _percentage;
 
         /// <summary>
         /// Instantiates a new MoneyGridRow object with the specified group and category.
@@ -32,6 +33,7 @@ namespace BudgetApplication.Model
             _category.PropertyChanged += CategoryModified;
             _group.PropertyChanged += GroupModified;
             _isSum = false;
+            _percentage = 0.0;
         }
 
         /// <summary>
@@ -115,12 +117,19 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return Percentage;
+                return _percentage;
             }
 
             set
             {
-                Percentage = value;
+                if (Double.IsNaN(value))
+                {
+                    _percentage = 0.0;
+                }
+                else
+                {
+                    _percentage = value;
+                }
                 NotifyPropertyChanged("Percentage");
             }
         }

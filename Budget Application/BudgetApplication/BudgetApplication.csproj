@@ -119,6 +119,9 @@
     <Compile Include="Model\MonthValues.cs" />
     <Compile Include="Model\RowCompare.cs" />
     <Compile Include="Model\TotalObservableCollection.cs" />
+    <Compile Include="View\AddYearPopup.xaml.cs">
+      <DependentUpon>AddYearPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\GroupsAndCategoriesWindow.xaml.cs">
       <DependentUpon>GroupsAndCategoriesWindow.xaml</DependentUpon>
     </Compile>
@@ -134,6 +137,10 @@
     <Compile Include="View\PaymentMethodsWindow.xaml.cs">
       <DependentUpon>PaymentMethodsWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\AddYearPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\GroupsAndCategoriesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
