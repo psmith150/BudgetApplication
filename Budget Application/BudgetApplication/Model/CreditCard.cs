@@ -10,6 +10,7 @@ namespace BudgetApplication.Model
     public class CreditCard : PaymentMethod
     {
         private decimal _creditLimit;   //The line of credit associated with the card.
+        private decimal _paymentAmount;
 
         /// <summary>
         /// Null parameter constructor for creating new instances automatically.
@@ -59,6 +60,19 @@ namespace BudgetApplication.Model
             {
                 _creditLimit = value;
                 NotifyPropertyChanged("CreditLimit");
+            }
+        }
+
+        public decimal PaymentAmount
+        {
+            get
+            {
+                return _paymentAmount;
+            }
+            set
+            {
+                _paymentAmount = value;
+                NotifyPropertyChanged("PaymentAmount");
             }
         }
     }

@@ -211,3 +211,5 @@ D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\
 C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csprojResolveAssemblyReference.cache
 C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\obj\Debug\View\AddYearPopup.g.cs
 C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\obj\Debug\View\AddYearPopup.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\AddYearPopup.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\AddYearPopup.baml

@@ -103,7 +103,7 @@ namespace BudgetApplication.View
         /// <param name="transaction"></param>
         private void AddTransaction(Transaction transaction)
         {
-            Debug.WriteLine("Transaction added " + transaction.ToString());
+            //Debug.WriteLine("Transaction added " + transaction.ToString());
             for (int i = 0; i < checkedItems.Length; i++)
             {
                 String value;
@@ -122,10 +122,16 @@ namespace BudgetApplication.View
                         value = transaction.Amount.ToString("C");
                         break;
                     case 4:
-                        value = transaction.Category.Name;
+                        if (transaction.Category == null)
+                            value = "";
+                        else
+                            value = transaction.Category.Name;
                         break;
                     case 5:
-                        value = transaction.PaymentMethod.Name;
+                        if (transaction.PaymentMethod == null)
+                            value = "";
+                        else
+                            value = transaction.PaymentMethod.Name;
                         break;
                     case 6:
                         value = transaction.Comment;
@@ -385,6 +391,10 @@ namespace BudgetApplication.View
                 return;
             PaymentStartDate.SelectedDate = (PaymentSelector.SelectedItem as PaymentMethod).StartDate;
             PaymentEndDate.SelectedDate = (PaymentSelector.SelectedItem as PaymentMethod).EndDate;
+            if ((PaymentSelector.SelectedItem as CreditCard) != null)
+            {
+                PaymentAmountBox.Text = (PaymentSelector.SelectedItem as CreditCard).PaymentAmount.ToString("C");
+            }
             RefreshPaymentFilter();
             RecalculateCreditValues();
         }
@@ -425,6 +435,11 @@ namespace BudgetApplication.View
         /// <param name="e">The arguments</param>
         private void PaymentAmountBox_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
+            CreditCard card = PaymentSelector.SelectedItem as CreditCard;
+            if (card != null)
+            {
+                card.PaymentAmount = decimal.Parse(PaymentAmountBox.Text, System.Globalization.NumberStyles.Currency);
+            }
             RecalculateCreditValues();
         }
 

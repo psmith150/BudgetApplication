@@ -620,18 +620,21 @@ namespace BudgetApplication.ViewModel
 
             //Inserts the category in the correct position (after other categories in its group)
             int previousCategoryIndex = group.Categories.IndexOf(category) - 1;
-            MoneyGridRow previousRow;
-            try
+            if (previousCategoryIndex >= 0)
             {
-                previousRow = _budgetValues.Single(x => x.Category == group.Categories.ElementAt(previousCategoryIndex));
+                MoneyGridRow previousRow;
+                try
+                {
+                    previousRow = _budgetValues.Single(x => x.Category == group.Categories.ElementAt(previousCategoryIndex));
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException("Could not find row with category " + group.Categories.ElementAt(previousCategoryIndex), ex);
+                }
+                int previousRowIndex = _budgetValues.IndexOf(previousRow);
+                _categories.Move(_budgetValues.Count - 1, previousRowIndex + 1);
+                MoveValueRows(_budgetValues.Count - 1, previousRowIndex + 1);
             }
-            catch (Exception ex)
-            {
-                throw new ArgumentException("Could not find row with category " + group.Categories.ElementAt(previousCategoryIndex), ex);
-            }
-            int previousRowIndex = _budgetValues.IndexOf(previousRow);
-            _categories.Move(_budgetValues.Count - 1, previousRowIndex + 1);
-            MoveValueRows(_budgetValues.Count - 1, previousRowIndex + 1);
         }
 
         /// <summary>
@@ -1170,7 +1173,7 @@ namespace BudgetApplication.ViewModel
             if (TransactionsChangedEvent != null)
             {
                 TransactionsChangedEvent(sender, e);
-                Debug.WriteLine("Transaction collection changed");
+                //Debug.WriteLine("Transaction collection changed");
             }
         }
 
