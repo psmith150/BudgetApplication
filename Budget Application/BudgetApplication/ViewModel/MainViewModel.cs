@@ -1250,6 +1250,7 @@ namespace BudgetApplication.ViewModel
         /// <param name="year"></param>
         private void AddYear(String year)
         {
+            Debug.WriteLine("Attempting to add year: " + year);
             //Check if year already exists
             foreach(String checkYear in _yearList)
             {
@@ -1269,8 +1270,9 @@ namespace BudgetApplication.ViewModel
             }
 
             _yearList.Add(year);
-            InitNewFile();
             _currentYear = year;
+            completeFilePath = filePath + fileName + "_" + _currentYear + ".xml";
+            InitNewFile();
 
             _validYear = true;
         }
@@ -1280,6 +1282,7 @@ namespace BudgetApplication.ViewModel
         /// </summary>
         private void InitNewFile()
         {
+            Debug.WriteLine("Creating new file at " + completeFilePath);
             using (FileStream file = new FileStream(completeFilePath, FileMode.Create))
             {
                 using (StreamWriter stream = new StreamWriter(file))
@@ -1334,6 +1337,7 @@ namespace BudgetApplication.ViewModel
         /// </summary>
         public void LoadData()
         {
+            Debug.WriteLine("Loading data");
             //Clears all existing data
             _groups.Clear();
             _categories.Clear();

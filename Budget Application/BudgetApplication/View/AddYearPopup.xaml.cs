@@ -34,14 +34,18 @@ namespace BudgetApplication.View
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
             String year = YearBox.Text;
-            OkButton.CommandParameter = year;
-            if ((this.Owner.DataContext as MainViewModel).ValidYear)
+            MainViewModel vm = this.Owner.DataContext as MainViewModel;
+            if (vm.AddYearCommand.CanExecute(year))
             {
-                this.DialogResult = true;
-            }
-            else
-            {
-                MessageBox.Show("Enter a valid year!");
+                vm.AddYearCommand.Execute(year);
+                if (vm.ValidYear)
+                {
+                    this.DialogResult = true;
+                }
+                else
+                {
+                    MessageBox.Show("Enter a valid year!");
+                }
             }
         }
 
