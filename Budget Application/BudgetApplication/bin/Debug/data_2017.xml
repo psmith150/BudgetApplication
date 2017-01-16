@@ -116,7 +116,7 @@
       <StartDate>2017-01-01T00:00:00</StartDate>
       <EndDate>2017-01-31T00:00:00</EndDate>
       <CreditLimit>5300</CreditLimit>
-      <PaymentAmount>-2029.38</PaymentAmount>
+      <PaymentAmount>772.39</PaymentAmount>
     </PaymentMethod>
     <PaymentMethod xsi:type="CreditCard">
       <Name>5/3 Credit Card</Name>
@@ -165,7 +165,7 @@
         <StartDate>2017-01-01T00:00:00</StartDate>
         <EndDate>2017-01-31T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-2029.38</PaymentAmount>
+        <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -182,7 +182,7 @@
         <StartDate>2017-01-01T00:00:00</StartDate>
         <EndDate>2017-01-31T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-2029.38</PaymentAmount>
+        <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -199,7 +199,7 @@
         <StartDate>2017-01-01T00:00:00</StartDate>
         <EndDate>2017-01-31T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-2029.38</PaymentAmount>
+        <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -216,7 +216,7 @@
         <StartDate>2017-01-01T00:00:00</StartDate>
         <EndDate>2017-01-31T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-2029.38</PaymentAmount>
+        <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -233,7 +233,7 @@
         <StartDate>2017-01-01T00:00:00</StartDate>
         <EndDate>2017-01-31T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-2029.38</PaymentAmount>
+        <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -250,7 +250,7 @@
         <StartDate>2017-01-01T00:00:00</StartDate>
         <EndDate>2017-01-31T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-2029.38</PaymentAmount>
+        <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -267,7 +267,7 @@
         <StartDate>2017-01-01T00:00:00</StartDate>
         <EndDate>2017-01-31T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-2029.38</PaymentAmount>
+        <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -284,7 +284,7 @@
         <StartDate>2017-01-01T00:00:00</StartDate>
         <EndDate>2017-01-31T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-2029.38</PaymentAmount>
+        <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -301,7 +301,7 @@
         <StartDate>2017-01-01T00:00:00</StartDate>
         <EndDate>2017-01-31T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-2029.38</PaymentAmount>
+        <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -318,7 +318,7 @@
         <StartDate>2017-01-01T00:00:00</StartDate>
         <EndDate>2017-01-31T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-2029.38</PaymentAmount>
+        <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -335,7 +335,7 @@
         <StartDate>2017-01-01T00:00:00</StartDate>
         <EndDate>2017-01-31T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-2029.38</PaymentAmount>
+        <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -352,7 +352,7 @@
         <StartDate>2017-01-01T00:00:00</StartDate>
         <EndDate>2017-01-31T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-2029.38</PaymentAmount>
+        <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -369,7 +369,7 @@
         <StartDate>2017-01-01T00:00:00</StartDate>
         <EndDate>2017-01-31T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-2029.38</PaymentAmount>
+        <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -421,6 +421,159 @@
         <EndDate>2016-12-31T00:00:00-06:00</EndDate>
         <AccountNumber>0</AccountNumber>
         <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-13T00:00:00</Date>
+      <Item>Paycheck</Item>
+      <Payee>DMC</Payee>
+      <Amount>2323.66</Amount>
+      <Category>
+        <Name>Patrick's paycheck (15th)</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-14T00:00:00-06:00</Date>
+      <Item>Emergency Fund</Item>
+      <Payee>Ally Bank</Payee>
+      <Amount>800</Amount>
+      <Category>
+        <Name>Emergency Savings</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-14T00:00:00-06:00</Date>
+      <Item>Travel Savings</Item>
+      <Payee>Ally Bank</Payee>
+      <Amount>540</Amount>
+      <Category>
+        <Name>Travel Savings</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-10T00:00:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Target</Payee>
+      <Amount>10.01</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-12T00:00:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Trader Joe's</Payee>
+      <Amount>32.09</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-14T00:00:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Mariano's</Payee>
+      <Amount>29.55</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-14T00:00:00</Date>
+      <Item>Haircut</Item>
+      <Payee>T3 Hair Salon</Payee>
+      <Amount>25</Amount>
+      <Category>
+        <Name>Other</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-14T00:00:00</Date>
+      <Item>Supplies</Item>
+      <Payee>Target</Payee>
+      <Amount>68.51</Amount>
+      <Category>
+        <Name>Other</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-11T00:00:00</Date>
+      <Item>Moisturizer</Item>
+      <Payee>Walmart</Payee>
+      <Amount>57.88</Amount>
+      <Category>
+        <Name>Other</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
   </Transactions>

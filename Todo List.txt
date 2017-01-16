@@ -1,11 +1,5 @@
 Make transaction tab's DataGrid a separate control.
 	Will require rework of filtering.
-Add documentation.
-	Model
-	View
-		MainWindow.xaml
-	Application
-		StyleDictionary
 Make UI look better.
 Make Add and Remove buttons prettier.
 Make MoneyGrid.SetColumnMinWidth less hacky.
@@ -35,3 +29,4 @@ Show % of current month's budget spent.
 Order transactions by date.
 Add auto-complete in cells.
 Fix the process of adding a new transaction to be less prone to crashing.
+Allow use of math in payments box.
