@@ -107,6 +107,12 @@
         <Category>
           <Name>Florida Trip</Name>
         </Category>
+        <Category>
+          <Name>DMC Expenses</Name>
+        </Category>
+        <Category>
+          <Name>Alaska Cruise</Name>
+        </Category>
       </Categories>
     </Group>
   </Groups>
@@ -576,6 +582,142 @@
         <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
+    <Transaction>
+      <Date>2017-01-16T00:00:00-06:00</Date>
+      <Item>Ticket</Item>
+      <Payee>City of Chicago</Payee>
+      <Amount>60</Amount>
+      <Category>
+        <Name>Auto and Transportation</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-16T00:00:00-06:00</Date>
+      <Item>Interest</Item>
+      <Payee>Ally Bank</Payee>
+      <Amount>0.52</Amount>
+      <Category>
+        <Name>Other income</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-16T00:00:00-06:00</Date>
+      <Item>Interest</Item>
+      <Payee>Ally Bank</Payee>
+      <Amount>8.59</Amount>
+      <Category>
+        <Name>Other income</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-16T00:00:00-06:00</Date>
+      <Item>Interest</Item>
+      <Payee>Ally Bank</Payee>
+      <Amount>1.26</Amount>
+      <Category>
+        <Name>Other income</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-16T00:00:00-06:00</Date>
+      <Item>Interest</Item>
+      <Payee>Ally Bank</Payee>
+      <Amount>0.5</Amount>
+      <Category>
+        <Name>Other income</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-16T00:00:00-06:00</Date>
+      <Item>Interest</Item>
+      <Payee>Ally Bank</Payee>
+      <Amount>0.14</Amount>
+      <Category>
+        <Name>Other income</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-16T00:00:00-06:00</Date>
+      <Item>Rewards Check</Item>
+      <Payee>Capital One</Payee>
+      <Amount>25</Amount>
+      <Category>
+        <Name>Other income</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-16T00:00:00-06:00</Date>
+      <Item>Seattle Flight</Item>
+      <Payee>Expedia</Payee>
+      <Amount>824.8</Amount>
+      <Category>
+        <Name>Alaska Cruise</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
   </Transactions>
   <BudgetValues>
     <ArrayOfDecimal>
@@ -899,6 +1041,34 @@
       <decimal>300</decimal>
       <decimal>300</decimal>
       <decimal>300</decimal>
+    </ArrayOfDecimal>
+    <ArrayOfDecimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+    </ArrayOfDecimal>
+    <ArrayOfDecimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
+      <decimal>0</decimal>
     </ArrayOfDecimal>
     <ArrayOfDecimal>
       <decimal>0</decimal>
