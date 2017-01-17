@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetApplication.View"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
         xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
@@ -13,7 +14,11 @@
         DataContext="{Binding Main, Source={StaticResource Locator}}" ResizeMode="CanResizeWithGrip"
         MinWidth="350">
     <Window.Resources>
-        <CollectionViewSource x:Key="TransactionsView" Source="{Binding Transactions}" Filter="TransactionsView_Filter"/>
+        <CollectionViewSource x:Key="TransactionsView" Source="{Binding Transactions}" Filter="TransactionsView_Filter">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Date"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
         <CollectionViewSource x:Key="PaymentTransactionsView" Source="{Binding Transactions}" Filter="PaymentTransactionsView_Filter"/>
 
         <Style x:Key="FilteredHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">

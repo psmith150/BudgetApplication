@@ -10,6 +10,7 @@ using System.ComponentModel;
 using BudgetApplication.ViewModel;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using NCalc;
 
 namespace BudgetApplication.View
 {
@@ -429,7 +430,8 @@ namespace BudgetApplication.View
         }
 
         /// <summary>
-        /// Recalculates credit values when the amount entered in the payments box changes
+        /// Recalculates credit values when the amount entered in the payments box changes. 
+        /// TODO: Parses the payment box text into a mathematical expression
         /// </summary>
         /// <param name="sender">The TextBox being changed</param>
         /// <param name="e">The arguments</param>
@@ -441,6 +443,28 @@ namespace BudgetApplication.View
                 card.PaymentAmount = decimal.Parse(PaymentAmountBox.Text, System.Globalization.NumberStyles.Currency);
             }
             RecalculateCreditValues();
+        }
+
+        private bool EvaluateExpression(String expression, out decimal result)
+        {
+            bool success = true;
+            NCalc.Expression ex = new NCalc.Expression(expression);
+            if (ex.HasErrors())
+            {
+                success = false;
+                result = 0;
+                return success;
+            }
+            try
+            {
+                result = (decimal)ex.Evaluate();
+            }
+            catch (EvaluationException e)
+            {
+                result = 0;
+                success = false;
+            }
+            return success;
         }
 
         /// <summary>

@@ -1337,7 +1337,7 @@ namespace BudgetApplication.ViewModel
         /// </summary>
         public void LoadData()
         {
-            Debug.WriteLine("Loading data");
+            //Debug.WriteLine("Loading data");
             //Clears all existing data
             _groups.Clear();
             _categories.Clear();
