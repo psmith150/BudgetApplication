@@ -21,10 +21,11 @@ Rework UpdateSpendingValues to be more efficient
 Check year on spending values.
 Add default data to new file.
 Allow copying groups, categories, and payment methods between years.
-Remove temporary button.
 Handle removal of transaction objects in transaction filtering.
-Fix removal of data when new year is added.
 Show % of current month's budget spent.
 Add auto-complete in cells.
 Fix the process of adding a new transaction to be less prone to crashing.
+	Probably due to filtering logic.
 Allow use of math in payments box.
+Add icon to taskbar and window
+Add tutorial
