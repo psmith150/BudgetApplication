@@ -294,10 +294,12 @@ namespace BudgetApplication.View
                     value = transaction.Amount.ToString("C");
                     break;
                 case 4:
-                    value = transaction.Category.Name;
+                    if (transaction.Category != null)
+                        value = transaction.Category.Name;
                     break;
                 case 5:
-                    value = transaction.PaymentMethod.Name;
+                    if (transaction.PaymentMethod != null)
+                        value = transaction.PaymentMethod.Name;
                     break;
                 case 6:
                     value = transaction.Comment;

@@ -19,8 +19,11 @@
                 <scm:SortDescription PropertyName="Date"/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
-        <CollectionViewSource x:Key="PaymentTransactionsView" Source="{Binding Transactions}" Filter="PaymentTransactionsView_Filter"/>
-
+        <CollectionViewSource x:Key="PaymentTransactionsView" Source="{Binding Transactions}" Filter="PaymentTransactionsView_Filter">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Date"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
         <Style x:Key="FilteredHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -231,7 +234,7 @@
                     </StackPanel>
                     <DataGrid Grid.Row="2"  x:Name="PaymentTransactions" ItemsSource="{Binding Source={StaticResource PaymentTransactionsView}}" Background="DarkGray" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Date">
+                            <DataGridTemplateColumn Header="Date" SortMemberPath="Date">
                                 <DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
                                         <DatePicker SelectedDate="{Binding Path=Date}"/>

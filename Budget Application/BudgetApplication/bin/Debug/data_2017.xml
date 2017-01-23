@@ -718,6 +718,193 @@
         <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
+    <Transaction>
+      <Date>2017-01-21T00:00:00</Date>
+      <Item>Riley's Doctor Visit</Item>
+      <Payee>Minute Clinic</Payee>
+      <Amount>93.41</Amount>
+      <Category>
+        <Name>Health</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-20T00:00:00</Date>
+      <Item>Gas</Item>
+      <Payee>Shell</Payee>
+      <Amount>30.58</Amount>
+      <Category>
+        <Name>Auto and Transportation</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-19T00:00:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Target</Payee>
+      <Amount>15.72</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-17T00:00:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Trader Joe's</Payee>
+      <Amount>18.99</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-22T00:00:00-06:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Mariano's</Payee>
+      <Amount>6.22</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-22T00:00:00-06:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Mariano's</Payee>
+      <Amount>7.48</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-22T00:00:00-06:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Whole Foods</Payee>
+      <Amount>19.14</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-22T00:00:00-06:00</Date>
+      <Item>Fasteners</Item>
+      <Payee>Home Depot</Payee>
+      <Amount>6.55</Amount>
+      <Category>
+        <Name>Home Improvement</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-20T00:00:00</Date>
+      <Item>Razor blades</Item>
+      <Payee>Dollar Shave Club</Payee>
+      <Amount>6</Amount>
+      <Category>
+        <Name>Other</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-18T00:00:00</Date>
+      <Item>Audio Book</Item>
+      <Payee>Audible</Payee>
+      <Amount>14.95</Amount>
+      <Category>
+        <Name>Other</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-15T00:00:00</Date>
+      <Item>Fabric</Item>
+      <Payee>Joann Fabric</Payee>
+      <Amount>19.37</Amount>
+      <Category>
+        <Name>Other</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-01T00:00:00</StartDate>
+        <EndDate>2017-01-31T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
   </Transactions>
   <BudgetValues>
     <ArrayOfDecimal>
