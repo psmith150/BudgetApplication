@@ -27,7 +27,8 @@
             <!--Values Grid-->
             <DataGrid Grid.Row="0" Width="{Binding Source={x:Reference TotalsGrid}, Path=ActualWidth}" x:Name="ValuesGrid" ItemsSource="{Binding Path=ValuesDataSource, RelativeSource={RelativeSource FindAncestor, 
                 AncestorType=local:MoneyGrid, AncestorLevel=1}}" Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="Column" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType=local:MoneyGrid, AncestorLevel=1}}" CanUserSortColumns="False">
+                IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType=local:MoneyGrid, AncestorLevel=1}}" CanUserSortColumns="False" 
+                CellEditEnding="ValuesGrid_CellEditEnding">
                 <i:Interaction.Triggers>
                     <!--<i:EventTrigger EventName="CellEditEnding">
                         <i:InvokeCommandAction Command="{Binding Path=OnEdit, RelativeSource={RelativeSource FindAncestor, 

@@ -14,7 +14,6 @@ When using 2+ filters on transaction tab, make it so filtered out values don't s
 	Idea: use select statement where FilterBox.ItemsSource is assigned in FilterButton_Click
 Consolidate styles in StyleDictionary.
 Change file save location.
-Allow setting budget value for multiple cells at once.
 Copy/paste functionality.
 Allow user to choose year loaded at start.
 Rework UpdateSpendingValues to be more efficient

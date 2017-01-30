@@ -130,5 +130,34 @@ namespace BudgetApplication.View
         // Using a DependencyProperty as the backing store for IsComparison.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsComparisonProperty =
             DependencyProperty.Register("IsComparison", typeof(bool), typeof(MoneyGrid), new PropertyMetadata(false));
+
+        /// <summary>
+        /// Fires when a cell is edited in the values grid.
+        /// Allows the user to apply the same value to an entire row with Ctrl+Enter when editing
+        /// </summary>
+        /// <param name="sender">The sending object</param>
+        /// <param name="e">The arguments</param>
+        private void ValuesGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            //Check if either Control key is pressed
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            {
+                //Get the current MoneyGridRow object
+                DataGridCellInfo cellInfo = ValuesGrid.SelectedCells[0];
+                MoneyGridRow row = cellInfo.Item as MoneyGridRow;
+
+                //Parse the new value into a decimal
+                decimal currentVal = decimal.Parse((e.EditingElement as TextBox).Text, System.Globalization.NumberStyles.Currency);
+
+                //Change the other values in the MoneyGridRow
+                //Note: A new array is used to avoid multiple PropertyChanged notifications
+                decimal[] values = new decimal[12];
+                for (int i = 0; i < row.Values.Count; i++)
+                {
+                    values[i] = currentVal;
+                }
+                row.Values.Values = values;
+            }
+        }
     }
 }
