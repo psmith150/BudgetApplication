@@ -1075,6 +1075,57 @@
         <PaymentAmount>772.39</PaymentAmount>
       </PaymentMethod>
     </Transaction>
+    <Transaction>
+      <Date>2017-01-29T00:00:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Jewel Osco</Payee>
+      <Amount>6.14</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-25T00:00:00</StartDate>
+        <EndDate>2017-02-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-30T00:00:00-06:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Target</Payee>
+      <Amount>32.04</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-25T00:00:00</StartDate>
+        <EndDate>2017-02-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-30T00:00:00-06:00</Date>
+      <Item>Travel Savings</Item>
+      <Payee>Ally Bank</Payee>
+      <Amount>-1007.80</Amount>
+      <Category>
+        <Name>Florida Trip</Name>
+      </Category>
+      <Comment>Florida trip</Comment>
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
   </Transactions>
   <BudgetValues>
     <ArrayOfDecimal>
