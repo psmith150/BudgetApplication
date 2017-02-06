@@ -1126,6 +1126,329 @@
         <Bank>Ally Bank</Bank>
       </PaymentMethod>
     </Transaction>
+    <Transaction>
+      <Date>2017-01-30T00:00:00</Date>
+      <Item>Rewards Check</Item>
+      <Payee>Capital One</Payee>
+      <Amount>25</Amount>
+      <Category>
+        <Name>Other income</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-31T00:00:00-06:00</Date>
+      <Item>Rewards Check</Item>
+      <Payee>Capital One</Payee>
+      <Amount>25</Amount>
+      <Category>
+        <Name>Other income</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-31T00:00:00-06:00</Date>
+      <Item>Birthday Money</Item>
+      <Payee>Ernest Bedard</Payee>
+      <Amount>25</Amount>
+      <Category>
+        <Name>Other income</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-31T00:00:00-06:00</Date>
+      <Item>Refund Check</Item>
+      <Payee>State Farm</Payee>
+      <Amount>13.3</Amount>
+      <Category>
+        <Name>Other income</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-31T00:00:00-06:00</Date>
+      <Item>Paycheck</Item>
+      <Payee>DMC</Payee>
+      <Amount>2319.12</Amount>
+      <Category>
+        <Name>Patrick's paycheck (EOM)</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-31T00:00:00-06:00</Date>
+      <Item>Riley's Savings</Item>
+      <Payee>Ally Bank</Payee>
+      <Amount>100</Amount>
+      <Category>
+        <Name>Riley's Savings</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-01-31T00:00:00-06:00</Date>
+      <Item>Patrick's Savings</Item>
+      <Payee>Ally Bank</Payee>
+      <Amount>100</Amount>
+      <Category>
+        <Name>Patrick's Savings</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-02-03T00:00:00-06:00</Date>
+      <Item>Rewards Check</Item>
+      <Payee>Capital One</Payee>
+      <Amount>25</Amount>
+      <Category>
+        <Name>Other income</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-02-03T00:00:00-06:00</Date>
+      <Item>Foam Roller</Item>
+      <Payee>Amazon</Payee>
+      <Amount>34.4</Amount>
+      <Category>
+        <Name>Other</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-25T00:00:00</StartDate>
+        <EndDate>2017-02-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-02-03T00:00:00-06:00</Date>
+      <Item>January Power</Item>
+      <Payee>Comed</Payee>
+      <Amount>151.70</Amount>
+      <Category>
+        <Name>Electricity Bill</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-02-03T00:00:00-06:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Mariano's</Payee>
+      <Amount>8.20</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-25T00:00:00</StartDate>
+        <EndDate>2017-02-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-02-03T00:00:00-06:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Mariano's</Payee>
+      <Amount>9.53</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-25T00:00:00</StartDate>
+        <EndDate>2017-02-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-02-03T00:00:00-06:00</Date>
+      <Item>Lunch</Item>
+      <Payee>Chipotle</Payee>
+      <Amount>8.36</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-25T00:00:00</StartDate>
+        <EndDate>2017-02-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-02-03T00:00:00-06:00</Date>
+      <Item>Gas</Item>
+      <Payee>Shell</Payee>
+      <Amount>33.49</Amount>
+      <Category>
+        <Name>Auto and Transportation</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-25T00:00:00</StartDate>
+        <EndDate>2017-02-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-02-01T00:00:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Trader Joe's</Payee>
+      <Amount>31.61</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-25T00:00:00</StartDate>
+        <EndDate>2017-02-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-02-02T00:00:00</Date>
+      <Item>February Rent</Item>
+      <Payee>The Regal Apartments</Payee>
+      <Amount>1757</Amount>
+      <Category>
+        <Name>Apartment Rent</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-02-02T00:00:00</Date>
+      <Item>February Internet</Item>
+      <Payee>Comcast</Payee>
+      <Amount>49.99</Amount>
+      <Category>
+        <Name>Internet Bill</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2016-12-31T00:00:00-06:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-02-04T00:00:00</Date>
+      <Item>Lyft Ride</Item>
+      <Payee>Lyft</Payee>
+      <Amount>3.82</Amount>
+      <Category>
+        <Name>Auto and Transportation</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-25T00:00:00</StartDate>
+        <EndDate>2017-02-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-02-04T00:00:00</Date>
+      <Item>Lyft Ride</Item>
+      <Payee>Lyft</Payee>
+      <Amount>6.81</Amount>
+      <Category>
+        <Name>Auto and Transportation</Name>
+      </Category>
+      <Comment>Will be reimbursed</Comment>
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-01-25T00:00:00</StartDate>
+        <EndDate>2017-02-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>772.39</PaymentAmount>
+      </PaymentMethod>
+    </Transaction>
   </Transactions>
   <BudgetValues>
     <ArrayOfDecimal>
