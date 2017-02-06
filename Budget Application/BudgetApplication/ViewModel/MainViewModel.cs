@@ -117,6 +117,7 @@ namespace BudgetApplication.ViewModel
             AddPaymentMethodCommand = new RelayCommand<PaymentMethod>((paymentMethod) => AddPaymentMethod(paymentMethod));
             RemovePaymentMethodCommand = new RelayCommand<PaymentMethod>((paymentMethod) => RemovePaymentMethod(paymentMethod));
             AddYearCommand = new RelayCommand<String>((year) => AddYear(year));
+            CopyDataCommand = new RelayCommand<string>((year) => CopyData(year));
         }
 
         #region Private helpers
@@ -1220,6 +1221,11 @@ namespace BudgetApplication.ViewModel
             get; set;
         }
 
+        public RelayCommand<String> CopyDataCommand
+        {
+            get; set;
+        }
+
         /// <summary>
         /// Search for all data files in the save directory.
         /// </summary>
@@ -1412,6 +1418,63 @@ namespace BudgetApplication.ViewModel
                 _transactions.Add(transaction);
             }
             //Debug.WriteLine(_budgetValues.Count);
+        }
+
+        /// <summary>
+        /// Copies groups, categories, and payment methods from an existing configuration
+        /// </summary>
+        /// <param name="yearSource">The year to copy from</param>
+        private void CopyData(String yearSource)
+        {
+            //Clears all existing data
+            _groups.Clear();
+            _categories.Clear();
+            _transactions.Clear();
+            _paymentMethods.Clear();
+            _budgetValues.Clear();
+            _budgetTotals.Clear();
+            _spendingValues.Clear();
+            _spendingTotals.Clear();
+            _comparisonValues.Clear();
+            _comparisonTotals.Clear();
+
+            //Retrieves the data using the serialize attributes
+            DataWrapper data = new DataWrapper();
+            String tempCompleteFilePath = filePath + fileName + "_" + yearSource + ".xml";
+            try
+            {
+                using (FileStream file = new FileStream(tempCompleteFilePath, FileMode.Open))
+                {
+                    XmlSerializer dataSerializer = new XmlSerializer(typeof(DataWrapper));
+                    data = (DataWrapper)dataSerializer.Deserialize(file);
+                }
+            }
+            catch (IOException ex) //File does not exist; set everything to defaults
+            {
+                InitNewFile();
+            }
+
+            //Process the data
+            int index = 0;
+            //Add groups, categories, and budget values
+            foreach (Group group in data.Groups)
+            {
+                Group newGroup = new Group(group.IsIncome, group.Name);
+                _groups.Add(newGroup);
+                foreach (Category category in group.Categories)
+                {
+                    newGroup.Categories.Add(category);
+                    _categories.Add(category);
+                    MoneyGridRow row = _budgetValues.Single(x => x.Category == category);
+                    row.Values.Values = new decimal[12];
+                    index++;
+                }
+            }
+            //Add payment methods
+            foreach (PaymentMethod payment in data.PaymentMethods)
+            {
+                _paymentMethods.Add(payment);
+            }
         }
         #endregion
 
