@@ -102,8 +102,10 @@ namespace BudgetApplication.View
         /// Adds the specified transaction to the transaction filters.
         /// </summary>
         /// <param name="transaction"></param>
+        //TODO: disabled 3/28/2017
         private void AddTransaction(Transaction transaction)
         {
+            //return;
             //Debug.WriteLine("Transaction added " + transaction.ToString());
             for (int i = 0; i < checkedItems.Length; i++)
             {
@@ -150,7 +152,7 @@ namespace BudgetApplication.View
         }
 
         /// <summary>
-        /// Run when the filter button on the column headers is clicked. Opens the popup at that locations and gives it the correct items source
+        /// Run when the filter button on the column headers is clicked. Opens the popup at that location and gives it the correct items source
         /// </summary>
         /// <param name="sender">The filter button</param>
         /// <param name="e">The arguments</param>
@@ -161,9 +163,13 @@ namespace BudgetApplication.View
             int index = parentColumn.DisplayIndex;
             //MessageBox.Show(index.ToString());
 
-            filterPopup.PlacementTarget = sender as Button;
+            ObservableCollection<CheckedListItem<string>> columnValues = new ObservableCollection<CheckedListItem<string>>();
+            ListCollectionView view = (ListCollectionView)CollectionViewSource.GetDefaultView(Transactions.ItemsSource);
 
-            FilterBox.ItemsSource = checkedItems[index];
+            filterPopup.PlacementTarget = sender as Button;
+            ICollectionView source = CollectionViewSource.GetDefaultView(checkedItems[index]);
+            source.SortDescriptions.Add(new SortDescription("Item", ListSortDirection.Ascending));
+            FilterBox.ItemsSource = source;
             filterPopup.IsOpen = true;
         }
 
@@ -369,6 +375,7 @@ namespace BudgetApplication.View
             if (PaymentSelector.SelectedIndex >= 0)
                 (PaymentSelector.SelectedItem as PaymentMethod).StartDate = PaymentStartDate.SelectedDate ?? DateTime.Now;
             RefreshPaymentFilter();
+            RecalculateCreditValues();
         }
 
         /// <summary>
@@ -381,6 +388,7 @@ namespace BudgetApplication.View
             if (PaymentSelector.SelectedIndex >= 0)
                 (PaymentSelector.SelectedItem as PaymentMethod).EndDate = PaymentEndDate.SelectedDate ?? DateTime.Now;
             RefreshPaymentFilter();
+            RecalculateCreditValues();
         }
 
         /// <summary>

@@ -1090,8 +1090,9 @@ namespace BudgetApplication.ViewModel
                     {
                         row = _spendingValues.Single(x => x.Category == transaction.Category);
                     }
-                    catch (Exception ex)
+                    catch (Exception ex)    //Category doesn't exist, so no need to remove amount from total
                     {
+                        return;
                         throw new ArgumentException("Cannot find category for transaction category " + transaction.Category, ex);
                     }
                     //TODO: check year
