@@ -9,6 +9,8 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
         xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
+        xmlns:Model="clr-namespace:BudgetApplication.Model"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Budget Manager" Height="350" Width="525" WindowState="Maximized" Style="{StaticResource MainWindowStyle}"
         DataContext="{Binding Main, Source={StaticResource Locator}}" ResizeMode="CanResizeWithGrip"
@@ -212,8 +214,19 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" Orientation="Horizontal">
-                        <ComboBox x:Name="PaymentSelector" Width="Auto" ItemsSource="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
-                                  SelectedIndex="0" DisplayMemberPath="Name" SelectionChanged="PaymentSelector_SelectionChanged"/>
+                        <ComboBox x:Name="PaymentSelector" Width="Auto" SelectedIndex="0" DisplayMemberPath="Name" SelectionChanged="PaymentSelector_SelectionChanged">
+                            <ComboBox.Resources>
+                                <CollectionViewSource x:Key="PaymentSelectorSource" Source="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                                <CollectionViewSource x:Key="AllPaymentsSource" Source="{Binding Path=DataContext.AllPayments, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                            </ComboBox.Resources>
+                            <ComboBox.ItemsSource>
+                                <CompositeCollection>
+                                    <!--<Model:CheckingAccount Name="All" StartDate="{x:Static System:DateTime.Now}" EndDate="{x:Static System:DateTime.Now}"/>-->
+                                    <CollectionContainer Collection="{Binding Source={StaticResource AllPaymentsSource}}"/>
+                                    <CollectionContainer Collection="{Binding Source={StaticResource PaymentSelectorSource}}"/>
+                                </CompositeCollection>
+                            </ComboBox.ItemsSource>
+                        </ComboBox>
                         <Label>Start Date</Label>
                         <DatePicker Name="PaymentStartDate" SelectedDateChanged="PaymentStartDate_SelectedDateChanged"/>
                         <Label>End Date</Label>
@@ -227,12 +240,33 @@
                         <Label>Payments:</Label>
                         <xctk:DecimalUpDown Name="PaymentAmountBox" MinWidth="50" Height="25" VerticalContentAlignment="Center" FormatString="C2"
                                             Watermark="Enter value" AllowSpin="False" ShowButtonSpinner="False" ValueChanged="PaymentAmountBox_ValueChanged"/>
+                        <TextBox Name="TestBox" MinWidth="50" Height="25" VerticalContentAlignment="Center" LostFocus="TestBox_TextChanged">
+                            <!--<TextBox.InputBindings>
+                                <KeyBinding Key="Enter" Command="{Binding EnterKeyCommand}"/>
+                                <KeyBinding Key="Tab" Command="{Binding TabKeyCommand}"/>
+                            </TextBox.InputBindings>-->
+                            <i:Interaction.Behaviors>
+                                <Model:TextBoxEnterKeyUpdateBehavior />
+                            </i:Interaction.Behaviors>
+                            <TextBox.Style>
+                                <Style TargetType="TextBox">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsFocused" Value="False">
+                                            <Setter Property="Text" Value="{Binding EvaluatedExpression, Mode=OneWay}"></Setter>
+                                        </Trigger>
+                                        <Trigger Property="IsFocused" Value="True">
+                                            <Setter Property="Text" Value="{Binding PaymentExpression}"></Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
                         <Label>Net Bill:</Label>
                         <Label Name="NetBillLabel"  ContentStringFormat="{}{0:C}"/>
                         <Label>Remaining Credit:</Label>
                         <Label Name="RemainingCreditLabel"  ContentStringFormat="{}{0:C}"/>
                     </StackPanel>
-                    <DataGrid Grid.Row="2"  x:Name="PaymentTransactions" ItemsSource="{Binding Source={StaticResource PaymentTransactionsView}}" Background="DarkGray" AutoGenerateColumns="False">
+                    <DataGrid Grid.Row="2"  x:Name="PaymentTransactions" ItemsSource="{Binding Source={StaticResource PaymentTransactionsView}}" Background="DarkGray" AutoGenerateColumns="False" RowEditEnding="PaymentTransactions_RowEditEnding">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Date" SortMemberPath="Date">
                                 <DataGridTemplateColumn.CellEditingTemplate>

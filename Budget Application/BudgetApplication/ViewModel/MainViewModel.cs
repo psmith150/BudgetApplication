@@ -50,6 +50,12 @@ namespace BudgetApplication.ViewModel
         private String _currentYear;    //The year of data currently loaded.
         private bool _validYear;    //Returns if the supplied year is valid.
 
+        private CheckingAccount _allPayments;
+        private ObservableCollection<PaymentMethod> _tempCollection;
+
+        private string _paymentExpression;
+        private decimal _evaluatedExpression;
+
         /// <summary>
         /// Instantiates a new MainViewModel object. Run when the application is launched. Initializes variables and loads data
         /// </summary>
@@ -57,6 +63,14 @@ namespace BudgetApplication.ViewModel
         {
             columnIncomeTotalsGroup = new Group(true, "Income Totals");
             columnExpendituresTotalsGroup = new Group(false, "Expenditure totals");
+
+            PaymentExpression = "";
+
+            _allPayments = new CheckingAccount("All");
+            _allPayments.StartDate = DateTime.Now.AddMonths(-1);
+            _allPayments.EndDate = DateTime.Now.AddMonths(1);
+            _tempCollection = new ObservableCollection<PaymentMethod>();
+            _tempCollection.Add(_allPayments);
 
             _groups = new MyObservableCollection<Group>();
             _categories = new MyObservableCollection<Category>();
@@ -84,8 +98,8 @@ namespace BudgetApplication.ViewModel
             _transactions.MemberChanged += OnTransactionModified;   //Trigger event for view to handle
             _transactions.CollectionChanged += AddOrRemoveSpendingValues;   //Update spending if transaction has been added or removed
             _transactions.CollectionChanged += OnTransactionsChanged;   //Trigger event for view to handle
-            _spendingTotals.MemberChanged += UpdateComparisonValues;    //Update comparison values if a spending values was changed. Totals used to allow bulk modification.
-            _budgetTotals.MemberChanged += UpdateComparisonValues;  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
+            //_spendingTotals.MemberChanged += UpdateComparisonValues;    //Update comparison values if a spending values was changed. Totals used to allow bulk modification.
+            //_budgetTotals.MemberChanged += UpdateComparisonValues;  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
 
             _yearList = new ObservableCollection<string>();
             GetYears(); //Finds all the existing data files
@@ -363,6 +377,36 @@ namespace BudgetApplication.ViewModel
                 return _validYear;
             }
         }
+
+        public ObservableCollection<PaymentMethod> AllPayments
+        {
+            get
+            {
+                return _tempCollection;
+            }
+        }
+
+        public String PaymentExpression
+        {
+            get
+            {
+                return _paymentExpression;
+            }
+            set
+            {
+                _paymentExpression = value;
+                EvaluateExpression(_paymentExpression, out _evaluatedExpression);
+            }
+        }
+
+        public String EvaluatedExpression
+        {
+            get
+            {
+                return string.Format("{0:C}", _evaluatedExpression); ;
+            }
+        }
+
 
         #endregion
 
@@ -1003,7 +1047,10 @@ namespace BudgetApplication.ViewModel
         {
             //Debug.WriteLine("Updating budget totals");
             if (e.PropertyName.Equals("Values"))
+            {
                 CalculateColumnTotals(_budgetValues, _budgetTotals, "BudgetTotals");
+                UpdateComparisonValues();
+            }
         }
 
         #endregion
@@ -1108,8 +1155,10 @@ namespace BudgetApplication.ViewModel
         /// </summary>
         public void UpdateSpendingTotals()
         {
+            Debug.WriteLine("Updating spending totals");
             CalculateColumnTotals(_spendingValues, _spendingTotals, "SpendingTotals");
             //Debug.WriteLine("Spending Total Updated");
+            UpdateComparisonValues();
         }
         #endregion
 
@@ -1121,18 +1170,30 @@ namespace BudgetApplication.ViewModel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void UpdateComparisonValues(Object sender, PropertyChangedEventArgs e)
+        public void UpdateComparisonValues()
         {
+            int numRedraws = 0;
             //Debug.WriteLine("Number of categories: " + _categories.Count + "Number of rows: " + _budgetValues.Count + " " + _spendingValues.Count + " " + _comparisonValues.Count);
             for (int i = 0; i < _comparisonValues.Count; i++)
             {
                 for (int j = 0; j < 12; j++)
                 {
+                    //Checks if value needs to be updated - reduces redraw time
                     //Sign adjusted for expenditure categories
                     if (_comparisonValues.ElementAt(i).Group.IsIncome)
+                    {
+                        if (_comparisonValues.ElementAt(i).Values[j] == _spendingValues.ElementAt(i).Values[j] - _budgetValues.ElementAt(i).Values[j])
+                            continue;
                         _comparisonValues.ElementAt(i).Values[j] = _spendingValues.ElementAt(i).Values[j] - _budgetValues.ElementAt(i).Values[j];
+                        numRedraws++;
+                    }
                     else
+                    {
+                        if (_comparisonValues.ElementAt(i).Values[j] == _budgetValues.ElementAt(i).Values[j] - _spendingValues.ElementAt(i).Values[j])
+                            continue;
                         _comparisonValues.ElementAt(i).Values[j] = _budgetValues.ElementAt(i).Values[j] - _spendingValues.ElementAt(i).Values[j];
+                        numRedraws++;
+                    }
 
                     if (_spendingValues.ElementAt(i).Values[j] > 0)
                     {
@@ -1140,9 +1201,10 @@ namespace BudgetApplication.ViewModel
                     }
                 }
             }
+            Debug.WriteLine("Number of redraws: " + numRedraws);
             //Update the Totals grid if it has all the groups
-            if (_comparisonTotals.Count == _groups.Count)
-                CalculateColumnTotals(_comparisonValues, _comparisonTotals, "Comparison Totals");
+            //if (_comparisonTotals.Count == _groups.Count)
+                //CalculateColumnTotals(_comparisonValues, _comparisonTotals, "Comparison Totals");
             //_comparisonValues.MemberPropertyChanged(null, null);
         }
 
@@ -1478,6 +1540,34 @@ namespace BudgetApplication.ViewModel
             }
         }
         #endregion
+
+        private bool EvaluateExpression(String expression, out decimal result)
+        {
+            if (expression.Length <= 0)
+            {
+                result = 0;
+                return false;
+            }
+            bool success = true;
+            NCalc.Expression ex = new NCalc.Expression(expression);
+            if (ex.HasErrors())
+            {
+                success = false;
+                result = 0;
+                return success;
+            }
+            try
+            {
+                result = Decimal.Parse(ex.Evaluate().ToString());
+                //result = Decimal.Parse(ex.Evaluate());
+            }
+            catch (Exception e)
+            {
+                result = 0;
+                success = false;
+            }
+            return success;
+        }
 
     }
 }

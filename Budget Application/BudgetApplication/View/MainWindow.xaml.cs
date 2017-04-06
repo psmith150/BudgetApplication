@@ -20,6 +20,8 @@ namespace BudgetApplication.View
     public partial class MainWindow : Window
     {
         private ObservableCollection<CheckedListItem<string>>[] checkedItems;   //Used to keep track of what objects are checked
+        private CheckingAccount _allPayments;
+        ObservableCollection<CheckingAccount> _tempCollection;
 
         /// <summary>
         /// Initializes a new MainWindow object.
@@ -36,6 +38,12 @@ namespace BudgetApplication.View
             PaymentStartDate.SelectedDate = startDate;
             PaymentEndDate.SelectedDate = startDate.AddMonths(1).AddDays(-1);
             PaymentAmountBox.Text = 0.ToString("C");
+
+            _allPayments = new CheckingAccount("All");
+            _allPayments.StartDate = DateTime.Now.AddMonths(-1);
+            _allPayments.EndDate = DateTime.Now.AddMonths(1);
+            _tempCollection = new ObservableCollection<CheckingAccount>();
+            _tempCollection.Add(_allPayments);
 
             //Initialize data on Transactions tab
             checkedItems = new ObservableCollection<CheckedListItem<string>>[7];
@@ -334,7 +342,7 @@ namespace BudgetApplication.View
             {
                 //Debug.WriteLine(this.PaymentSelector.SelectedIndex);
                 //Debug.WriteLine((PaymentSelector.SelectedItem).ToString());
-                if ((PaymentSelector.SelectedValue as PaymentMethod).Name.Equals(transaction.PaymentMethod.Name) 
+                if (((PaymentSelector.SelectedValue as PaymentMethod).Name.Equals(transaction.PaymentMethod.Name) || (PaymentSelector.SelectedValue as PaymentMethod).Name.Equals("All"))
                     && PaymentStartDate.SelectedDate <= transaction.Date && PaymentEndDate.SelectedDate > transaction.Date)
                 {
                     e.Accepted = true;
@@ -398,8 +406,10 @@ namespace BudgetApplication.View
         /// <param name="e">The arguments</param>
         private void PaymentSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (PaymentSelector.SelectedItem == null)
+            if (PaymentSelector.SelectedItem as PaymentMethod == null || PaymentStartDate == null || PaymentEndDate == null)
                 return;
+            //Debug.Write("SelectedItem " + (PaymentSelector.SelectedItem as PaymentMethod).StartDate + "\n");
+            //Debug.Write(PaymentStartDate.ToString());
             PaymentStartDate.SelectedDate = (PaymentSelector.SelectedItem as PaymentMethod).StartDate;
             PaymentEndDate.SelectedDate = (PaymentSelector.SelectedItem as PaymentMethod).EndDate;
             if ((PaymentSelector.SelectedItem as CreditCard) != null)
@@ -467,9 +477,10 @@ namespace BudgetApplication.View
             }
             try
             {
-                result = (decimal)ex.Evaluate();
+                result = Decimal.Parse(ex.Evaluate().ToString());
+                //result = Decimal.Parse(ex.Evaluate());
             }
-            catch (EvaluationException e)
+            catch (Exception e)
             {
                 result = 0;
                 success = false;
@@ -500,10 +511,12 @@ namespace BudgetApplication.View
         {
             int index = -1; //Column index that was modified
             //Performs actions based on which property was modified
+            bool refresh = false;
+            bool recalculate = false;
             if (e.PropertyName.Equals("Date"))
             {
-                RefreshPaymentFilter();
-                RecalculateCreditValues();
+                refresh = true;
+                recalculate = true;
                 index = 0;
             }
             else if (e.PropertyName.Equals("Item"))
@@ -517,7 +530,7 @@ namespace BudgetApplication.View
             else if (e.PropertyName.Equals("Amount"))
             {
                 //MessageBox.Show("Updating amount");
-                RecalculateCreditValues();
+                recalculate = true;
                 index = 3;
             }
             else if (e.PropertyName.Equals("Category"))
@@ -526,8 +539,8 @@ namespace BudgetApplication.View
             }
             else if (e.PropertyName.Equals("PaymentMethod"))
             {
-                RefreshPaymentFilter();
-                RecalculateCreditValues();
+                refresh = true;
+                recalculate = true;
                 //MessageBox.Show("Updating method");
                 index = 5;
             }
@@ -550,6 +563,16 @@ namespace BudgetApplication.View
             {
                 checkedItems[index].Add(new CheckedListItem<string> { IsChecked = true, Item = value });
             }
+
+            //Refresh and recalculate as needed
+            if (refresh)
+            {
+                //RefreshPaymentFilter();
+            }
+            if (recalculate)
+            {
+                RecalculateCreditValues();
+            }
         }
 
         /// <summary>
@@ -561,6 +584,37 @@ namespace BudgetApplication.View
         {
             AddYearPopup popup = new AddYearPopup(this);
             popup.ShowDialog();
+        }
+
+        /// <summary>
+        /// This method is used to force the datagrid to commit an edit before the payment filter is refreshed
+        /// </summary>
+        /// <param name="sender">The PaymentTransactions datagrid</param>
+        /// <param name="e">The parameters</param>
+        private void PaymentTransactions_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            if (PaymentTransactions.SelectedItem != null)
+            {
+                (sender as DataGrid).RowEditEnding -= PaymentTransactions_RowEditEnding;
+                (sender as DataGrid).CommitEdit();
+                RefreshPaymentFilter();
+                (sender as DataGrid).RowEditEnding += PaymentTransactions_RowEditEnding;
+            }
+            else return;
+        }
+
+        private void TestBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+            String text = (sender as TextBox).Text;
+            decimal value;
+            if( EvaluateExpression(text, out value))
+            {
+                Debug.WriteLine("Computed value is " + value);
+            }
+            else
+            {
+                Debug.WriteLine("Computation failed");
+            }
         }
     }
 }

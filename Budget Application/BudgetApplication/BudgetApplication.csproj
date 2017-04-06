@@ -109,6 +109,7 @@
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\CheckedListItem.cs" />
     <Compile Include="Model\CheckingAccount.cs" />
+    <Compile Include="Model\TextBoxEnterKeyUpdateBehavior.cs" />
     <Compile Include="Model\CreditCard.cs" />
     <Compile Include="Model\DataWrapper.cs" />
     <Compile Include="Model\Group.cs" />
