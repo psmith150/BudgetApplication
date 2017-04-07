@@ -40,6 +40,15 @@
                      <!--Style for groups at top level.-->
                     <GroupStyle ContainerStyle="{StaticResource GroupedStyle}"/>
                 </DataGrid.GroupStyle>
+                <!--<DataGrid.CellStyle>
+                    <Style>
+                        <Setter Property="DataGridCell.ToolTip">
+                            <Setter.Value>
+                                <ToolTip Name="ValuesGridToolTip" Content="{Binding Path=Category}" Background="#FFF" Opacity="0.88"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.CellStyle>-->
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="BudgetCategory" Header="Category" Binding="{Binding Category, Mode=OneWay}" Width="Auto" IsReadOnly="True"/>
                     <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>

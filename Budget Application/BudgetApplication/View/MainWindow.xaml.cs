@@ -38,6 +38,7 @@ namespace BudgetApplication.View
             PaymentStartDate.SelectedDate = startDate;
             PaymentEndDate.SelectedDate = startDate.AddMonths(1).AddDays(-1);
             PaymentAmountBox.Text = 0.ToString("C");
+            //TestBox.Text = 0.ToString("C");
 
             _allPayments = new CheckingAccount("All");
             _allPayments.StartDate = DateTime.Now.AddMonths(-1);
@@ -415,6 +416,7 @@ namespace BudgetApplication.View
             if ((PaymentSelector.SelectedItem as CreditCard) != null)
             {
                 PaymentAmountBox.Text = (PaymentSelector.SelectedItem as CreditCard).PaymentAmount.ToString("C");
+                //TestBox.Text = (PaymentSelector.SelectedItem as CreditCard).PaymentAmount.ToString("C");
             }
             RefreshPaymentFilter();
             RecalculateCreditValues();
@@ -460,7 +462,7 @@ namespace BudgetApplication.View
             CreditCard card = PaymentSelector.SelectedItem as CreditCard;
             if (card != null)
             {
-                card.PaymentAmount = decimal.Parse(PaymentAmountBox.Text, System.Globalization.NumberStyles.Currency);
+                //card.PaymentAmount = decimal.Parse(PaymentAmountBox.Text, System.Globalization.NumberStyles.Currency);
             }
             RecalculateCreditValues();
         }
@@ -478,7 +480,6 @@ namespace BudgetApplication.View
             try
             {
                 result = Decimal.Parse(ex.Evaluate().ToString());
-                //result = Decimal.Parse(ex.Evaluate());
             }
             catch (Exception e)
             {
@@ -603,18 +604,32 @@ namespace BudgetApplication.View
             else return;
         }
 
-        private void TestBox_TextChanged(object sender, RoutedEventArgs e)
+        private void PaymentExpression_Updated(object sender, RoutedEventArgs e)
         {
-            String text = (sender as TextBox).Text;
-            decimal value;
-            if( EvaluateExpression(text, out value))
+            CreditCard card = PaymentSelector.SelectedItem as CreditCard;
+            if (card != null)
             {
-                Debug.WriteLine("Computed value is " + value);
+                //card.PaymentAmount = decimal.Parse(PaymentAmountBox.Text, System.Globalization.NumberStyles.Currency);
+                card.PaymentExpression = (sender as TextBox).Text;
+                (sender as TextBox).Text = card.PaymentAmount.ToString("C");
             }
-            else
+            RecalculateCreditValues();
+        }
+
+        private void PaymentExpression_Editing(object sender, RoutedEventArgs e)
+        {
+            CreditCard card = PaymentSelector.SelectedItem as CreditCard;
+            if (card != null)
             {
-                Debug.WriteLine("Computation failed");
+                //card.PaymentAmount = decimal.Parse(PaymentAmountBox.Text, System.Globalization.NumberStyles.Currency);
+                (sender as TextBox).Text = card.PaymentExpression;
             }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            LoadYearPopup popup = new LoadYearPopup(this);
+            popup.ShowDialog();
         }
     }
 }

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\App.xaml
-7972415744
+8-1132122256
 
-33-853483881
+341693868547
 79495486326
-View\AddYearPopup.xaml;View\GroupsAndCategoriesWindow.xaml;View\MoneyGrid.xaml;View\MainWindow.xaml;StyleDictionary.xaml;View\AddPaymentPopup.xaml;View\PaymentMethodsWindow.xaml;
+View\LoadYearPopup.xaml;View\AddYearPopup.xaml;View\GroupsAndCategoriesWindow.xaml;View\MoneyGrid.xaml;View\MainWindow.xaml;StyleDictionary.xaml;View\AddPaymentPopup.xaml;View\PaymentMethodsWindow.xaml;
 
 True
 

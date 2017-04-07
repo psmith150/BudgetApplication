@@ -272,3 +272,5 @@ C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Vie
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.g.resources
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.Properties.Resources.resources
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csproj.GenerateResource.Cache
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\LoadYearPopup.g.cs
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\LoadYearPopup.baml

@@ -1,7 +1,6 @@
 Make transaction tab's DataGrid a separate control.
 	Will require rework of filtering.
 Make UI look better.
-Make Add and Remove buttons prettier.
 Make MoneyGrid.SetColumnMinWidth less hacky.
 Add graphing capability.
 Improve MoneyGrid column width handling.
@@ -23,7 +22,5 @@ Allow copying groups, categories, and payment methods between years.
 Handle removal of transaction objects in transaction filtering.
 Show % of current month's budget spent.
 Add auto-complete in cells.
-Allow use of math in payments box.
-Add icon to taskbar and window
 Add tutorial
 Change filter icon when filtered.

@@ -54,7 +54,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent">
-                        <TextBlock Text="+" Foreground="Green" FontWeight="ExtraBold" HorizontalAlignment="Center" Background="Transparent"/>
+                        <Image Source="/Resources/plus_sign.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -73,7 +73,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent">
-                        <TextBlock Text="-" Foreground="Red" FontWeight="ExtraBold" HorizontalAlignment="Center" Background="Transparent"/>
+                        <Image Source="/Resources/minus_sign.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
