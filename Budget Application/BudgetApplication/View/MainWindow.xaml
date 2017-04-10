@@ -97,22 +97,6 @@
                 <MenuItem Header="Payment Methods" Click="PaymentMethods_Click"/>
             </MenuItem>
         </Menu>
-        <!--<StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <Button Name="GroupsAndCategories" Click="GroupsAndCategories_Click">
-                <TextBlock>Groups and Categories</TextBlock>
-            </Button>
-            <Button Name="SaveData" Command="{Binding SaveDataCommand}">
-                <TextBlock>Save Data</TextBlock>
-            </Button>
-            <Button Name="LoadData" Command="{Binding LoadDataCommand}">
-                <TextBlock>Load Data</TextBlock>
-            </Button>
-            <Button Name="PaymentMethods" Click="PaymentMethods_Click">
-                <TextBlock>Payment Methods</TextBlock>
-            </Button>
-            <Button Name="NewYear" Content="Add New Year" Click="NewYear_Click"/>
-            <ComboBox Name="YearSelector" SelectedItem="{Binding CurrentYear}" ItemsSource="{Binding YearList}"/>
-        </StackPanel>-->
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TabItem Style="{StaticResource TabHeader}" Header="Budget" Name="BudgetTab">
                 <local:MoneyGrid ValuesDataSource="{Binding BudgetRows}" TotalsDataSource="{Binding BudgetTotals}" IsReadOnly="false" 
@@ -136,7 +120,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" Orientation="Horizontal">
-                        <ComboBox SelectedIndex="0">
+                        <ComboBox SelectedIndex="{Binding}">
                             <ComboBoxItem Content="January"/>
                             <ComboBoxItem Content="February"/>
                             <ComboBoxItem Content="March"/>

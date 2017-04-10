@@ -20,6 +20,7 @@ namespace BudgetApplication.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        //Data collections
         private MyObservableCollection<Transaction> _transactions;  //Collection of transactions
         private MyObservableCollection<Category> _categories;   //Collection of categories
         private MyObservableCollection<Group> _groups;  //collection of groups
@@ -33,6 +34,7 @@ namespace BudgetApplication.ViewModel
         private MyObservableCollection<MoneyGridRow> _comparisonValues; //Values used in the value grid of the comparison view
         private MyObservableCollection<MoneyGridRow> _comparisonTotals; //Values used in the total grid of the spending view
         private TotalObservableCollection _comparisonBudgetAndSum; //Values used in the budget and sum grid of the comparison view
+        private MyObservableCollection<MonthDetailRow> _monthDetails;
 
         //List collection views used to display data for Values grids. Defined here to control grouping.
         private ListCollectionView _budgetValueView;
@@ -43,6 +45,7 @@ namespace BudgetApplication.ViewModel
         private Group columnIncomeTotalsGroup;
         private Group columnExpendituresTotalsGroup;
 
+        //Data used for file management
         private ObservableCollection<String> _yearList; //List of all years that files have been created for.
         private String fileName = "data";   //Name of the data files: <fileName>_<_currentYear>.xml
         private String filePath = "";   //File path of the data files.
@@ -50,9 +53,12 @@ namespace BudgetApplication.ViewModel
         private String _currentYear;    //The year of data currently loaded.
         private bool _validYear;    //Returns if the supplied year is valid.
 
+        //Payment method to allow filtering by all payment methods
         private CheckingAccount _allPayments;
         private ObservableCollection<PaymentMethod> _allPaymentsCollection;
 
+        //Data used for display month details
+        private int _selectedMonth;
 
         /// <summary>
         /// Instantiates a new MainViewModel object. Run when the application is launched. Initializes variables and loads data
@@ -69,6 +75,7 @@ namespace BudgetApplication.ViewModel
             _allPaymentsCollection = new ObservableCollection<PaymentMethod>();
             _allPaymentsCollection.Add(_allPayments);
 
+            //Initialize groups
             _groups = new MyObservableCollection<Group>();
             _categories = new MyObservableCollection<Category>();
             _transactions = new MyObservableCollection<Transaction>();
@@ -83,6 +90,8 @@ namespace BudgetApplication.ViewModel
             _comparisonTotals = new MyObservableCollection<MoneyGridRow>();
             _comparisonBudgetAndSum = new TotalObservableCollection(_comparisonTotals);
             _comparisonBudgetAndSum.IsComparison = true;
+
+            _monthDetails = new MyObservableCollection<MonthDetailRow>();
 
             InitListViews();    //Creates the Values grid ListCollectionViews.
 
@@ -113,6 +122,9 @@ namespace BudgetApplication.ViewModel
                 completeFilePath = filePath + fileName + "_" + _currentYear + ".xml";
                 LoadData();
             }
+
+            //Set initial month to January
+            _selectedMonth = 0;
 
             //Commands to allow binding to View
             SaveDataCommand = new RelayCommand(() => SaveData());
@@ -368,6 +380,7 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        //Returns if a year is valid or not
         public Boolean ValidYear
         {
             get
@@ -376,11 +389,25 @@ namespace BudgetApplication.ViewModel
             }
         }
 
+        //The collection that contains the All Payments payment method
         public ObservableCollection<PaymentMethod> AllPayments
         {
             get
             {
                 return _allPaymentsCollection;
+            }
+        }
+
+        public int SelectedMonth
+        {
+            get
+            {
+                return _selectedMonth;
+            }
+            set
+            {
+                _selectedMonth = value;
+                RaisePropertyChanged("SelectedMonth");
             }
         }
 
@@ -1213,6 +1240,46 @@ namespace BudgetApplication.ViewModel
             //_comparisonValues.MemberPropertyChanged(null, null);
         }
 
+        #endregion
+
+        #region Month Details tab
+        private void UpdateMonthDetails()
+        {
+            _monthDetails.Clear();
+            int numRows = _budgetValues.Count;
+            List<MonthDetailRow> monthDetails = new List<MonthDetailRow>();
+            for (int i=0; i < numRows; i++)
+            {
+                Group currentGroup = _budgetValues.ElementAt(i).Group;
+                Category currentCategory = _budgetValues.ElementAt(i).Category;
+                MonthDetailRow currentDetail = new MonthDetailRow(currentGroup, currentCategory, _selectedMonth, Int32.Parse(_currentYear));
+                currentDetail.BudgetedAmount = _budgetValues.ElementAt(i).Values[_selectedMonth];
+                currentDetail.SpentAmount = _spendingValues.ElementAt(i).Values[_selectedMonth];
+                monthDetails.Add(currentDetail);
+            }
+            numRows = _budgetTotals.Count;
+            for (int i = 0; i < numRows; i++)
+            {
+                Group currentGroup = _budgetTotals.ElementAt(i).Group;
+                Category currentCategory = _budgetTotals.ElementAt(i).Category;
+                MonthDetailRow currentDetail = new MonthDetailRow(currentGroup, currentCategory, _selectedMonth, Int32.Parse(_currentYear));
+                currentDetail.BudgetedAmount = _budgetTotals.ElementAt(i).Values[_selectedMonth];
+                currentDetail.SpentAmount = _spendingTotals.ElementAt(i).Values[_selectedMonth];
+                monthDetails.Add(currentDetail);
+            }
+
+            numRows = _budgetBudgetAndSum.Count;
+            for (int i = 0; i < numRows; i++)
+            {
+                Group currentGroup = _budgetBudgetAndSum.ElementAt(i).Group;
+                Category currentCategory = _budgetBudgetAndSum.ElementAt(i).Category;
+                MonthDetailRow currentDetail = new MonthDetailRow(currentGroup, currentCategory, _selectedMonth, Int32.Parse(_currentYear));
+                currentDetail.BudgetedAmount = _budgetBudgetAndSum.ElementAt(i).Values[_selectedMonth];
+                currentDetail.SpentAmount = _spendingBudgetAndSum.ElementAt(i).Values[_selectedMonth];
+                monthDetails.Add(currentDetail);
+            }
+            _monthDetails.InsertRange(monthDetails);
+        }
         #endregion
 
         #region Transaction tab
