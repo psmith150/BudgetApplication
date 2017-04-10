@@ -216,3 +216,4 @@ pip-log.txt
 .mr.developer.cfg
 Budget Application/.vs/BudgetApplication/v14/.suo
 *.cache
+*.suo
