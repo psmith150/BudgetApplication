@@ -50,6 +50,10 @@ namespace BudgetApplication.ViewModel
         private String _currentYear;    //The year of data currently loaded.
         private bool _validYear;    //Returns if the supplied year is valid.
 
+        private CheckingAccount _allPayments;
+        private ObservableCollection<PaymentMethod> _allPaymentsCollection;
+
+
         /// <summary>
         /// Instantiates a new MainViewModel object. Run when the application is launched. Initializes variables and loads data
         /// </summary>
@@ -57,6 +61,13 @@ namespace BudgetApplication.ViewModel
         {
             columnIncomeTotalsGroup = new Group(true, "Income Totals");
             columnExpendituresTotalsGroup = new Group(false, "Expenditure totals");
+
+            //Default to showing all transactions in the last month
+            _allPayments = new CheckingAccount("All");
+            _allPayments.StartDate = DateTime.Now.AddMonths(-1);
+            _allPayments.EndDate = DateTime.Now;
+            _allPaymentsCollection = new ObservableCollection<PaymentMethod>();
+            _allPaymentsCollection.Add(_allPayments);
 
             _groups = new MyObservableCollection<Group>();
             _categories = new MyObservableCollection<Category>();
@@ -84,8 +95,8 @@ namespace BudgetApplication.ViewModel
             _transactions.MemberChanged += OnTransactionModified;   //Trigger event for view to handle
             _transactions.CollectionChanged += AddOrRemoveSpendingValues;   //Update spending if transaction has been added or removed
             _transactions.CollectionChanged += OnTransactionsChanged;   //Trigger event for view to handle
-            _spendingTotals.MemberChanged += UpdateComparisonValues;    //Update comparison values if a spending values was changed. Totals used to allow bulk modification.
-            _budgetTotals.MemberChanged += UpdateComparisonValues;  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
+            //_spendingTotals.MemberChanged += UpdateComparisonValues;    //Update comparison values if a spending values was changed. Totals used to allow bulk modification.
+            //_budgetTotals.MemberChanged += UpdateComparisonValues;  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
 
             _yearList = new ObservableCollection<string>();
             GetYears(); //Finds all the existing data files
@@ -352,7 +363,8 @@ namespace BudgetApplication.ViewModel
                 _currentYear = value;
                 //Debug.WriteLine("Loading data for year: " + _currentYear);
                 completeFilePath = filePath + fileName + "_" + _currentYear + ".xml";
-                LoadData();
+                //LoadData();
+                RaisePropertyChanged("CurrentYear");
             }
         }
 
@@ -363,6 +375,15 @@ namespace BudgetApplication.ViewModel
                 return _validYear;
             }
         }
+
+        public ObservableCollection<PaymentMethod> AllPayments
+        {
+            get
+            {
+                return _allPaymentsCollection;
+            }
+        }
+
 
         #endregion
 
@@ -405,7 +426,7 @@ namespace BudgetApplication.ViewModel
                         {
                             groupSum[i] += row.Values[i];
                         }
-                        groupTotal += (double) row.Sum;
+                        groupTotal += (double)row.Sum;
                     }
                     catch (Exception ex)
                     {
@@ -416,17 +437,17 @@ namespace BudgetApplication.ViewModel
                     }
                 }
                 total.Values.Values = groupSum;
-                groupTotal = (double) total.Sum;
+                groupTotal = (double)total.Sum;
                 if (group.IsIncome)
-                    totalGridIncomeTotal += (double) total.Sum;
+                    totalGridIncomeTotal += (double)total.Sum;
                 else
-                    totalGridExpenditureTotal += (double) total.Sum;
+                    totalGridExpenditureTotal += (double)total.Sum;
                 foreach (Category category in group.Categories)
                 {
                     try
                     {
                         MoneyGridRow row = columnValues.Single(x => x.Group == group && x.Category == category);
-                        row.Percentage = (double) row.Sum / groupTotal;
+                        row.Percentage = (double)row.Sum / groupTotal;
                     }
                     catch (Exception ex)
                     {
@@ -438,7 +459,7 @@ namespace BudgetApplication.ViewModel
                 }
                 //RaisePropertyChanged(propertyName);
             }
-            foreach(MoneyGridRow row in columnTotals)
+            foreach (MoneyGridRow row in columnTotals)
             {
                 if (row.Group.IsIncome)
                     row.Percentage = (double)row.Sum / totalGridIncomeTotal;
@@ -537,7 +558,7 @@ namespace BudgetApplication.ViewModel
                 //Move each row in the Values grids
                 for (int i = 0; i <= endIndex - startIndex; i++)
                 {
-                    MoveValueRows(startIndex+i, startIndex + i + offset);
+                    MoveValueRows(startIndex + i, startIndex + i + offset);
                     //Debug.WriteLine("Row moved from " + (startIndex+i) + " to " + (startIndex + i + offset));
                 }
                 RefreshListViews(); //Refresh grouping
@@ -566,9 +587,9 @@ namespace BudgetApplication.ViewModel
                 MoveTotalRows(index, index + 1);
                 int offset = targetIndex - startIndex;
                 //Move each row in the Values grids
-                for (int i = 0; i <= endIndex-startIndex; i++)
+                for (int i = 0; i <= endIndex - startIndex; i++)
                 {
-                    MoveValueRows(startIndex, startIndex+offset);
+                    MoveValueRows(startIndex, startIndex + offset);
                     //Debug.WriteLine("Row moved from " + startIndex + " to " + (i + offset));
                 }
                 RefreshListViews(); //Refresh grouping
@@ -776,10 +797,10 @@ namespace BudgetApplication.ViewModel
                     _spendingValues.Add(new MoneyGridRow(group, newCategory));
                     _comparisonValues.Add(new MoneyGridRow(group, newCategory));
 
-                        //Debug.WriteLine(_spendingValues.Count);
-                        //Debug.WriteLine("Current group " + group.Name);
-                        //Debug.WriteLine("Could not match group to category " + newCategory.Name + ", " + group.Name);
-                        //throw new ArgumentException("Could not match group to category " + newCategory.Name, ex);
+                    //Debug.WriteLine(_spendingValues.Count);
+                    //Debug.WriteLine("Current group " + group.Name);
+                    //Debug.WriteLine("Could not match group to category " + newCategory.Name + ", " + group.Name);
+                    //throw new ArgumentException("Could not match group to category " + newCategory.Name, ex);
                 }
             }
             //Removes Values rows. Order is important to avoid triggering data that doesn't exist. (1/4/2017: May be fixed now)
@@ -1003,7 +1024,19 @@ namespace BudgetApplication.ViewModel
         {
             //Debug.WriteLine("Updating budget totals");
             if (e.PropertyName.Equals("Values"))
+            {
                 CalculateColumnTotals(_budgetValues, _budgetTotals, "BudgetTotals");
+                UpdateComparisonValues();
+            }
+        }
+
+        /// <summary>
+        /// This function is used to force a refresh of the budget totals
+        /// </summary>
+        private void RefreshBudgetTotals()
+        {
+            CalculateColumnTotals(_budgetValues, _budgetTotals, "BudgetTotals");
+            UpdateComparisonValues();
         }
 
         #endregion
@@ -1081,7 +1114,7 @@ namespace BudgetApplication.ViewModel
                 UpdateSpendingTotals();
             }
             //Remove an old value
-            if (e.OldItems !=null && e.Action != NotifyCollectionChangedAction.Move)
+            if (e.OldItems != null && e.Action != NotifyCollectionChangedAction.Move)
             {
                 foreach (Transaction transaction in e.OldItems)
                 {
@@ -1090,13 +1123,37 @@ namespace BudgetApplication.ViewModel
                     {
                         row = _spendingValues.Single(x => x.Category == transaction.Category);
                     }
-                    catch (Exception ex)
+                    catch (Exception ex)    //Category doesn't exist, so no need to remove amount from total
                     {
+                        return;
                         throw new ArgumentException("Cannot find category for transaction category " + transaction.Category, ex);
                     }
                     //TODO: check year
                     int month = transaction.Date.Month - 1;
                     row.Values[month] -= transaction.Amount;
+                }
+                UpdateSpendingTotals();
+            }
+            //Recalculate all values due to reset
+            if (e.Action == NotifyCollectionChangedAction.Reset)
+            {
+                foreach (Transaction transaction in _transactions)
+                {
+                    if (transaction.Category != null)
+                    {
+                        MoneyGridRow row;
+                        try
+                        {
+                            row = _spendingValues.Single(x => x.Category == transaction.Category);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new ArgumentException("Cannot find category for transaction category " + transaction.Category, ex);
+                        }
+                        //TODO: check year
+                        int month = transaction.Date.Month - 1;
+                        row.Values[month] += transaction.Amount;
+                    }
                 }
                 UpdateSpendingTotals();
             }
@@ -1107,8 +1164,10 @@ namespace BudgetApplication.ViewModel
         /// </summary>
         public void UpdateSpendingTotals()
         {
+            //Debug.WriteLine("Updating spending totals");
             CalculateColumnTotals(_spendingValues, _spendingTotals, "SpendingTotals");
             //Debug.WriteLine("Spending Total Updated");
+            UpdateComparisonValues();
         }
         #endregion
 
@@ -1120,18 +1179,27 @@ namespace BudgetApplication.ViewModel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void UpdateComparisonValues(Object sender, PropertyChangedEventArgs e)
+        public void UpdateComparisonValues()
         {
             //Debug.WriteLine("Number of categories: " + _categories.Count + "Number of rows: " + _budgetValues.Count + " " + _spendingValues.Count + " " + _comparisonValues.Count);
             for (int i = 0; i < _comparisonValues.Count; i++)
             {
                 for (int j = 0; j < 12; j++)
                 {
+                    //Checks if value needs to be updated - reduces redraw time
                     //Sign adjusted for expenditure categories
                     if (_comparisonValues.ElementAt(i).Group.IsIncome)
+                    {
+                        if (_comparisonValues.ElementAt(i).Values[j] == _spendingValues.ElementAt(i).Values[j] - _budgetValues.ElementAt(i).Values[j])
+                            continue;
                         _comparisonValues.ElementAt(i).Values[j] = _spendingValues.ElementAt(i).Values[j] - _budgetValues.ElementAt(i).Values[j];
+                    }
                     else
+                    {
+                        if (_comparisonValues.ElementAt(i).Values[j] == _budgetValues.ElementAt(i).Values[j] - _spendingValues.ElementAt(i).Values[j])
+                            continue;
                         _comparisonValues.ElementAt(i).Values[j] = _budgetValues.ElementAt(i).Values[j] - _spendingValues.ElementAt(i).Values[j];
+                    }
 
                     if (_spendingValues.ElementAt(i).Values[j] > 0)
                     {
@@ -1258,7 +1326,7 @@ namespace BudgetApplication.ViewModel
         {
             Debug.WriteLine("Attempting to add year: " + year);
             //Check if year already exists
-            foreach(String checkYear in _yearList)
+            foreach (String checkYear in _yearList)
             {
                 if (checkYear.Equals(year))
                 {
@@ -1374,6 +1442,12 @@ namespace BudgetApplication.ViewModel
             //Process the data
             int index = 0;
             //Add groups, categories, and budget values
+            List<Group> tempGroups = new List<Group>();
+            List<Category> tempCategories = new List<Category>();
+            Stopwatch runTimer;
+            runTimer = Stopwatch.StartNew();
+            _budgetValues.MemberChanged -= UpdateBudgetTotals;
+            //Debug.WriteLine("Placeholder");
             foreach (Group group in data.Groups)
             {
                 Group newGroup = new Group(group.IsIncome, group.Name);
@@ -1387,14 +1461,23 @@ namespace BudgetApplication.ViewModel
                     index++;
                 }
             }
+            _budgetValues.MemberChanged += UpdateBudgetTotals;
+            RefreshBudgetTotals();
+            runTimer.Stop();
+            Debug.WriteLine("Reading groups and categories: " + runTimer.ElapsedTicks);
+            runTimer = Stopwatch.StartNew();
             //Add payment methods
             foreach (PaymentMethod payment in data.PaymentMethods)
             {
                 _paymentMethods.Add(payment);
             }
+            runTimer.Stop();
+            Debug.WriteLine("Reading payment methods: " + runTimer.ElapsedTicks);
+            runTimer = Stopwatch.StartNew();
             //Adds the transactions
             //Transactions are stored with different instances of the category and payment method objects. These need to 
             //be matched to the data loaded above. Matching is done using the name of each.
+            List<Transaction> tempTransactions = new List<Transaction>();
             foreach (Transaction transaction in data.Transactions)
             {
                 String categoryName = transaction.Category.Name;
@@ -1415,8 +1498,11 @@ namespace BudgetApplication.ViewModel
                 {
                     throw new ArgumentException("Cannot find matching payment method " + transaction.PaymentMethod.Name + " in payment methods list");
                 }
-                _transactions.Add(transaction);
+                tempTransactions.Add(transaction);
             }
+            _transactions.InsertRange(tempTransactions);
+            runTimer.Stop();
+            Debug.WriteLine("Reading transactions: " + runTimer.ElapsedTicks);
             //Debug.WriteLine(_budgetValues.Count);
         }
 
@@ -1477,6 +1563,5 @@ namespace BudgetApplication.ViewModel
             }
         }
         #endregion
-
     }
 }

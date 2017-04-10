@@ -217,3 +217,7 @@ pip-log.txt
 Budget Application/.vs/BudgetApplication/v14/.suo
 *.cache
 *.suo
+Budget Application/BudgetApplication/obj/Debug/BudgetApplication_MarkupCompile.i.cache
+*.suo
+Budget Application/BudgetApplication/bin/Debug/BudgetApplication.exe
+*.csproj

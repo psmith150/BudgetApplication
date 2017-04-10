@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace BudgetApplication.Model
 {
@@ -11,6 +12,7 @@ namespace BudgetApplication.Model
     {
         private decimal _creditLimit;   //The line of credit associated with the card.
         private decimal _paymentAmount;
+        private String _paymentExpression;  //The expression used to evaluate the payment amount
 
         /// <summary>
         /// Null parameter constructor for creating new instances automatically.
@@ -63,6 +65,7 @@ namespace BudgetApplication.Model
             }
         }
 
+        [Browsable(false)]
         public decimal PaymentAmount
         {
             get
@@ -74,6 +77,55 @@ namespace BudgetApplication.Model
                 _paymentAmount = value;
                 NotifyPropertyChanged("PaymentAmount");
             }
+        }
+
+        [Browsable(false)]
+        public String PaymentExpression
+        {
+            get
+            {
+                return _paymentExpression;
+            }
+            set
+            {
+                _paymentExpression = value;
+                //Debug.WriteLine("payment expression set");
+                if (EvaluateExpression(_paymentExpression, out _paymentAmount))
+                {
+                    NotifyPropertyChanged("PaymentAmount");
+                }
+                NotifyPropertyChanged("PaymentExpression");
+            }
+        }
+
+        private bool EvaluateExpression(String expression, out decimal result)
+        {
+            //Debug.WriteLine("Evaluating expression");
+            if (expression.Length <= 0)
+            {
+                result = 0;
+                return false;
+            }
+            bool success = true;
+            NCalc.Expression.CacheEnabled = false;
+            NCalc.Expression ex = new NCalc.Expression(expression);
+            if (ex.HasErrors())
+            {
+                success = false;
+                result = 0;
+                return success;
+            }
+            try
+            {
+                result = Decimal.Parse(ex.Evaluate().ToString());
+                //result = Decimal.Parse(ex.Evaluate());
+            }
+            catch (Exception e)
+            {
+                result = 0;
+                success = false;
+            }
+            return success;
         }
     }
 }

@@ -20,6 +20,8 @@ namespace BudgetApplication.View
     public partial class MainWindow : Window
     {
         private ObservableCollection<CheckedListItem<string>>[] checkedItems;   //Used to keep track of what objects are checked
+        private CheckingAccount _allPayments;
+        ObservableCollection<CheckingAccount> _tempCollection;
 
         /// <summary>
         /// Initializes a new MainWindow object.
@@ -36,6 +38,13 @@ namespace BudgetApplication.View
             PaymentStartDate.SelectedDate = startDate;
             PaymentEndDate.SelectedDate = startDate.AddMonths(1).AddDays(-1);
             PaymentAmountBox.Text = 0.ToString("C");
+            //TestBox.Text = 0.ToString("C");
+
+            _allPayments = new CheckingAccount("All");
+            _allPayments.StartDate = DateTime.Now.AddMonths(-1);
+            _allPayments.EndDate = DateTime.Now.AddMonths(1);
+            _tempCollection = new ObservableCollection<CheckingAccount>();
+            _tempCollection.Add(_allPayments);
 
             //Initialize data on Transactions tab
             checkedItems = new ObservableCollection<CheckedListItem<string>>[7];
@@ -102,8 +111,10 @@ namespace BudgetApplication.View
         /// Adds the specified transaction to the transaction filters.
         /// </summary>
         /// <param name="transaction"></param>
+        //TODO: disabled 3/28/2017
         private void AddTransaction(Transaction transaction)
         {
+            //return;
             //Debug.WriteLine("Transaction added " + transaction.ToString());
             for (int i = 0; i < checkedItems.Length; i++)
             {
@@ -150,7 +161,7 @@ namespace BudgetApplication.View
         }
 
         /// <summary>
-        /// Run when the filter button on the column headers is clicked. Opens the popup at that locations and gives it the correct items source
+        /// Run when the filter button on the column headers is clicked. Opens the popup at that location and gives it the correct items source
         /// </summary>
         /// <param name="sender">The filter button</param>
         /// <param name="e">The arguments</param>
@@ -161,9 +172,13 @@ namespace BudgetApplication.View
             int index = parentColumn.DisplayIndex;
             //MessageBox.Show(index.ToString());
 
-            filterPopup.PlacementTarget = sender as Button;
+            ObservableCollection<CheckedListItem<string>> columnValues = new ObservableCollection<CheckedListItem<string>>();
+            ListCollectionView view = (ListCollectionView)CollectionViewSource.GetDefaultView(Transactions.ItemsSource);
 
-            FilterBox.ItemsSource = checkedItems[index];
+            filterPopup.PlacementTarget = sender as Button;
+            ICollectionView source = CollectionViewSource.GetDefaultView(checkedItems[index]);
+            source.SortDescriptions.Add(new SortDescription("Item", ListSortDirection.Ascending));
+            FilterBox.ItemsSource = source;
             filterPopup.IsOpen = true;
         }
 
@@ -328,7 +343,7 @@ namespace BudgetApplication.View
             {
                 //Debug.WriteLine(this.PaymentSelector.SelectedIndex);
                 //Debug.WriteLine((PaymentSelector.SelectedItem).ToString());
-                if ((PaymentSelector.SelectedValue as PaymentMethod).Name.Equals(transaction.PaymentMethod.Name) 
+                if (((PaymentSelector.SelectedValue as PaymentMethod).Name.Equals(transaction.PaymentMethod.Name) || (PaymentSelector.SelectedValue as PaymentMethod).Name.Equals("All"))
                     && PaymentStartDate.SelectedDate <= transaction.Date && PaymentEndDate.SelectedDate > transaction.Date)
                 {
                     e.Accepted = true;
@@ -369,6 +384,7 @@ namespace BudgetApplication.View
             if (PaymentSelector.SelectedIndex >= 0)
                 (PaymentSelector.SelectedItem as PaymentMethod).StartDate = PaymentStartDate.SelectedDate ?? DateTime.Now;
             RefreshPaymentFilter();
+            RecalculateCreditValues();
         }
 
         /// <summary>
@@ -381,6 +397,7 @@ namespace BudgetApplication.View
             if (PaymentSelector.SelectedIndex >= 0)
                 (PaymentSelector.SelectedItem as PaymentMethod).EndDate = PaymentEndDate.SelectedDate ?? DateTime.Now;
             RefreshPaymentFilter();
+            RecalculateCreditValues();
         }
 
         /// <summary>
@@ -390,13 +407,16 @@ namespace BudgetApplication.View
         /// <param name="e">The arguments</param>
         private void PaymentSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (PaymentSelector.SelectedItem == null)
+            if (PaymentSelector.SelectedItem as PaymentMethod == null || PaymentStartDate == null || PaymentEndDate == null)
                 return;
+            //Debug.Write("SelectedItem " + (PaymentSelector.SelectedItem as PaymentMethod).StartDate + "\n");
+            //Debug.Write(PaymentStartDate.ToString());
             PaymentStartDate.SelectedDate = (PaymentSelector.SelectedItem as PaymentMethod).StartDate;
             PaymentEndDate.SelectedDate = (PaymentSelector.SelectedItem as PaymentMethod).EndDate;
             if ((PaymentSelector.SelectedItem as CreditCard) != null)
             {
                 PaymentAmountBox.Text = (PaymentSelector.SelectedItem as CreditCard).PaymentAmount.ToString("C");
+                //TestBox.Text = (PaymentSelector.SelectedItem as CreditCard).PaymentAmount.ToString("C");
             }
             RefreshPaymentFilter();
             RecalculateCreditValues();
@@ -442,7 +462,7 @@ namespace BudgetApplication.View
             CreditCard card = PaymentSelector.SelectedItem as CreditCard;
             if (card != null)
             {
-                card.PaymentAmount = decimal.Parse(PaymentAmountBox.Text, System.Globalization.NumberStyles.Currency);
+                //card.PaymentAmount = decimal.Parse(PaymentAmountBox.Text, System.Globalization.NumberStyles.Currency);
             }
             RecalculateCreditValues();
         }
@@ -459,9 +479,9 @@ namespace BudgetApplication.View
             }
             try
             {
-                result = (decimal)ex.Evaluate();
+                result = Decimal.Parse(ex.Evaluate().ToString());
             }
-            catch (EvaluationException e)
+            catch (Exception e)
             {
                 result = 0;
                 success = false;
@@ -492,10 +512,12 @@ namespace BudgetApplication.View
         {
             int index = -1; //Column index that was modified
             //Performs actions based on which property was modified
+            bool refresh = false;
+            bool recalculate = false;
             if (e.PropertyName.Equals("Date"))
             {
-                RefreshPaymentFilter();
-                RecalculateCreditValues();
+                refresh = true;
+                recalculate = true;
                 index = 0;
             }
             else if (e.PropertyName.Equals("Item"))
@@ -509,7 +531,7 @@ namespace BudgetApplication.View
             else if (e.PropertyName.Equals("Amount"))
             {
                 //MessageBox.Show("Updating amount");
-                RecalculateCreditValues();
+                recalculate = true;
                 index = 3;
             }
             else if (e.PropertyName.Equals("Category"))
@@ -518,8 +540,8 @@ namespace BudgetApplication.View
             }
             else if (e.PropertyName.Equals("PaymentMethod"))
             {
-                RefreshPaymentFilter();
-                RecalculateCreditValues();
+                refresh = true;
+                recalculate = true;
                 //MessageBox.Show("Updating method");
                 index = 5;
             }
@@ -542,6 +564,16 @@ namespace BudgetApplication.View
             {
                 checkedItems[index].Add(new CheckedListItem<string> { IsChecked = true, Item = value });
             }
+
+            //Refresh and recalculate as needed
+            if (refresh)
+            {
+                //RefreshPaymentFilter();
+            }
+            if (recalculate)
+            {
+                RecalculateCreditValues();
+            }
         }
 
         /// <summary>
@@ -552,6 +584,51 @@ namespace BudgetApplication.View
         private void NewYear_Click(object sender, RoutedEventArgs e)
         {
             AddYearPopup popup = new AddYearPopup(this);
+            popup.ShowDialog();
+        }
+
+        /// <summary>
+        /// This method is used to force the datagrid to commit an edit before the payment filter is refreshed
+        /// </summary>
+        /// <param name="sender">The PaymentTransactions datagrid</param>
+        /// <param name="e">The parameters</param>
+        private void PaymentTransactions_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            if (PaymentTransactions.SelectedItem != null)
+            {
+                (sender as DataGrid).RowEditEnding -= PaymentTransactions_RowEditEnding;
+                (sender as DataGrid).CommitEdit();
+                RefreshPaymentFilter();
+                (sender as DataGrid).RowEditEnding += PaymentTransactions_RowEditEnding;
+            }
+            else return;
+        }
+
+        private void PaymentExpression_Updated(object sender, RoutedEventArgs e)
+        {
+            CreditCard card = PaymentSelector.SelectedItem as CreditCard;
+            if (card != null)
+            {
+                //card.PaymentAmount = decimal.Parse(PaymentAmountBox.Text, System.Globalization.NumberStyles.Currency);
+                card.PaymentExpression = (sender as TextBox).Text;
+                (sender as TextBox).Text = card.PaymentAmount.ToString("C");
+            }
+            RecalculateCreditValues();
+        }
+
+        private void PaymentExpression_Editing(object sender, RoutedEventArgs e)
+        {
+            CreditCard card = PaymentSelector.SelectedItem as CreditCard;
+            if (card != null)
+            {
+                //card.PaymentAmount = decimal.Parse(PaymentAmountBox.Text, System.Globalization.NumberStyles.Currency);
+                (sender as TextBox).Text = card.PaymentExpression;
+            }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            LoadYearPopup popup = new LoadYearPopup(this);
             popup.ShowDialog();
         }
     }

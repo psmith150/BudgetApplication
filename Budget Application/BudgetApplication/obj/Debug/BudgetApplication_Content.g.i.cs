@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/filter.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("dollar_sign.ico")]
 
 

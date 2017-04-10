@@ -98,5 +98,16 @@ namespace BudgetApplication
             }
             //Debug.WriteLine("A collection member was changed: " + e.PropertyName);
         }
+
+        public void InsertRange(IEnumerable<T> items)
+        {
+            this.CheckReentrancy();
+            int index = this.Items.Count;
+            foreach (var item in items)
+            {
+                this.Items.Add(item);
+            }
+            this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
     }
 }

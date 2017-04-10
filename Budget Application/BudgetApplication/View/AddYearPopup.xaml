@@ -28,8 +28,7 @@
         <Viewbox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
             <Label Content="Enter the year you'd like to add."/>
         </Viewbox>
-        <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Name="YearBox">
-        </TextBox>
+        <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Name="YearBox"/>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Width="Auto" HorizontalAlignment="Center">
             <Button Content="Ok" Name="OkButton" Height="25" Width="50" Margin="0,0,5,0" Click="OkButton_Click"/>
             <Button Content="Cancel" Name="CancelButton" Height="25" Width="50" Margin="5,0,0,0" Click="CancelButton_Click"/>

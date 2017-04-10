@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Dollar_sign.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19026, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
@@ -109,6 +112,7 @@
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\CheckedListItem.cs" />
     <Compile Include="Model\CheckingAccount.cs" />
+    <Compile Include="Model\TextBoxEnterKeyUpdateBehavior.cs" />
     <Compile Include="Model\CreditCard.cs" />
     <Compile Include="Model\DataWrapper.cs" />
     <Compile Include="Model\Group.cs" />
@@ -123,6 +127,9 @@
     <Compile Include="Model\MonthValues.cs" />
     <Compile Include="Model\RowCompare.cs" />
     <Compile Include="Model\TotalObservableCollection.cs" />
+    <Compile Include="View\LoadYearPopup.xaml.cs">
+      <DependentUpon>LoadYearPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AddYearPopup.xaml.cs">
       <DependentUpon>AddYearPopup.xaml</DependentUpon>
     </Compile>
@@ -141,6 +148,10 @@
     <Compile Include="View\PaymentMethodsWindow.xaml.cs">
       <DependentUpon>PaymentMethodsWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\LoadYearPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\AddYearPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -214,6 +225,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Filter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\minus_sign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\plus_sign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Dollar_sign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Dollar_sign.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
