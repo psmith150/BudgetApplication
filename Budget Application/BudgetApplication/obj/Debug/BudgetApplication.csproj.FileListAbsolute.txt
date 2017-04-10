@@ -274,3 +274,5 @@ C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Bud
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csproj.GenerateResource.Cache
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\LoadYearPopup.g.cs
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\LoadYearPopup.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\LoadYearPopup.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\LoadYearPopup.baml

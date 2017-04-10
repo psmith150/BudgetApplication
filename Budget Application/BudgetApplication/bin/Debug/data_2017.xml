@@ -123,6 +123,7 @@
       <EndDate>2017-04-25T00:00:00</EndDate>
       <CreditLimit>5300</CreditLimit>
       <PaymentAmount>-7.99</PaymentAmount>
+      <PaymentExpression>-7.99</PaymentExpression>
     </PaymentMethod>
     <PaymentMethod xsi:type="CreditCard">
       <Name>5/3 Credit Card</Name>
@@ -172,6 +173,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -189,6 +191,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -206,6 +209,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -223,6 +227,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -240,6 +245,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -257,6 +263,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -274,6 +281,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -291,6 +299,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -308,6 +317,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -325,6 +335,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -342,6 +353,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -359,6 +371,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -376,6 +389,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -495,6 +509,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -512,6 +527,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -529,6 +545,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -546,6 +563,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -563,6 +581,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -580,6 +599,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -716,6 +736,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -733,6 +754,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -750,6 +772,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -767,6 +790,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -784,6 +808,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -801,6 +826,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -818,6 +844,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -835,6 +862,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -852,6 +880,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -869,6 +898,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -886,6 +916,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -903,6 +934,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -920,6 +952,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -937,6 +970,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -954,6 +988,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -971,6 +1006,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -988,6 +1024,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1005,6 +1042,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1022,6 +1060,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1039,6 +1078,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1056,6 +1096,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1073,6 +1114,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1090,6 +1132,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1107,6 +1150,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1277,6 +1321,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1311,6 +1356,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1328,6 +1374,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1345,6 +1392,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1362,6 +1410,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1379,6 +1428,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1430,6 +1480,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1447,6 +1498,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1464,6 +1516,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1481,6 +1534,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1498,6 +1552,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1515,6 +1570,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1532,6 +1588,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1549,6 +1606,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1566,6 +1624,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1583,6 +1642,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1600,6 +1660,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1617,6 +1678,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1634,6 +1696,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1651,6 +1714,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1668,6 +1732,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1685,6 +1750,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1702,6 +1768,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1719,6 +1786,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1736,6 +1804,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1753,6 +1822,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1770,6 +1840,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1787,6 +1858,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1804,6 +1876,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1821,6 +1894,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1838,6 +1912,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1855,6 +1930,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1872,6 +1948,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1889,6 +1966,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1906,6 +1984,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1923,6 +2002,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1940,6 +2020,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1957,6 +2038,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1974,6 +2056,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -1991,6 +2074,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2008,6 +2092,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2025,6 +2110,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2042,6 +2128,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2059,6 +2146,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2076,6 +2164,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2093,6 +2182,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2110,6 +2200,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2127,6 +2218,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2144,6 +2236,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2161,6 +2254,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2178,6 +2272,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2195,6 +2290,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2212,6 +2308,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2229,6 +2326,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2246,6 +2344,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2263,6 +2362,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2280,6 +2380,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2297,6 +2398,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2314,6 +2416,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2331,6 +2434,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2348,6 +2452,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2365,6 +2470,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2382,6 +2488,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2399,6 +2506,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2416,6 +2524,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2433,6 +2542,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2450,6 +2560,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2467,6 +2578,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2484,6 +2596,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2501,6 +2614,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2518,6 +2632,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2535,6 +2650,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2552,6 +2668,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2569,6 +2686,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2586,6 +2704,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2603,6 +2722,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2620,6 +2740,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2637,6 +2758,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2654,6 +2776,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2671,6 +2794,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2688,6 +2812,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2739,6 +2864,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2756,6 +2882,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2977,6 +3104,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -2994,6 +3122,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3011,6 +3140,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3028,6 +3158,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3045,6 +3176,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3062,6 +3194,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3079,6 +3212,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3096,6 +3230,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3113,6 +3248,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3130,6 +3266,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3147,6 +3284,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3215,6 +3353,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3334,6 +3473,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3351,6 +3491,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3368,6 +3509,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3385,6 +3527,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3402,6 +3545,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3419,6 +3563,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3436,6 +3581,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3453,6 +3599,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3470,6 +3617,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3487,6 +3635,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3504,6 +3653,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3538,6 +3688,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3555,6 +3706,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3572,6 +3724,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3606,6 +3759,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3623,6 +3777,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3640,6 +3795,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3657,6 +3813,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3674,6 +3831,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3691,6 +3849,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3708,6 +3867,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3725,6 +3885,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3742,6 +3903,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3759,6 +3921,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3776,6 +3939,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3793,6 +3957,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3895,6 +4060,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3912,6 +4078,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3929,6 +4096,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3946,6 +4114,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -3963,6 +4132,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4014,6 +4184,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4031,6 +4202,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4048,6 +4220,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4065,6 +4238,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4082,6 +4256,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4099,6 +4274,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4116,6 +4292,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4133,6 +4310,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4150,6 +4328,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4184,6 +4363,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4201,6 +4381,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4218,6 +4399,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4235,6 +4417,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4252,6 +4435,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4269,6 +4453,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4286,6 +4471,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4303,6 +4489,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4320,6 +4507,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4337,6 +4525,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4354,6 +4543,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4371,6 +4561,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4422,6 +4613,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4439,6 +4631,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4456,6 +4649,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4473,6 +4667,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4490,6 +4685,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4507,6 +4703,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4643,6 +4840,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4660,6 +4858,7 @@
         <EndDate>2017-04-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
         <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -4677,6 +4876,150 @@
         <EndDate>2016-12-31T00:00:00-06:00</EndDate>
         <AccountNumber>0</AccountNumber>
         <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-04-08T00:00:00</Date>
+      <Item>Haircut</Item>
+      <Payee>T3 Salon and Spa</Payee>
+      <Amount>25</Amount>
+      <Category>
+        <Name>Other</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-03-25T00:00:00</StartDate>
+        <EndDate>2017-04-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-04-07T00:00:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Mariano's</Payee>
+      <Amount>34.66</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-03-25T00:00:00</StartDate>
+        <EndDate>2017-04-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-04-04T00:00:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Trader Joe's</Payee>
+      <Amount>28.3</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-03-25T00:00:00</StartDate>
+        <EndDate>2017-04-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-04-04T00:00:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Mariano's</Payee>
+      <Amount>15.41</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-03-25T00:00:00</StartDate>
+        <EndDate>2017-04-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-04-08T00:00:00</Date>
+      <Item>Cupcakes</Item>
+      <Payee>Molly's Cupcakes</Payee>
+      <Amount>8.36</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-03-25T00:00:00</StartDate>
+        <EndDate>2017-04-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-04-08T00:00:00</Date>
+      <Item>Stuart's Gift</Item>
+      <Payee>Amazon</Payee>
+      <Amount>35.73</Amount>
+      <Category>
+        <Name>Gifts</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-03-25T00:00:00</StartDate>
+        <EndDate>2017-04-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-04-08T00:00:00</Date>
+      <Item>Tires</Item>
+      <Payee>Discount Tire</Payee>
+      <Amount>798.35</Amount>
+      <Category>
+        <Name>Auto and Transportation</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-03-25T00:00:00</StartDate>
+        <EndDate>2017-04-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2017-04-07T00:00:00</Date>
+      <Item>Lunch</Item>
+      <Payee>Chipotle</Payee>
+      <Amount>8.29</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-03-25T00:00:00</StartDate>
+        <EndDate>2017-04-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>-7.99</PaymentAmount>
+        <PaymentExpression>-7.99</PaymentExpression>
       </PaymentMethod>
     </Transaction>
   </Transactions>
