@@ -133,7 +133,6 @@ D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Budge
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csproj.GenerateResource.Cache
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\PaymentMethodsWindow.baml
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\PaymentMethodsWindow.g.cs
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csprojResolveAssemblyReference.cache
 C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\bin\Debug\BudgetApplication.exe.config
 C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\bin\Debug\BudgetApplication.exe
 C:\Training\BudgetApplication\trunk\Budget Application\BudgetApplication\bin\Debug\BudgetApplication.pdb
@@ -276,3 +275,4 @@ C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Vie
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\LoadYearPopup.baml
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\LoadYearPopup.g.cs
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\LoadYearPopup.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csprojResolveAssemblyReference.cache
