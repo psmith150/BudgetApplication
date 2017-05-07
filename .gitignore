@@ -221,3 +221,7 @@ Budget Application/BudgetApplication/obj/Debug/BudgetApplication_MarkupCompile.i
 *.suo
 Budget Application/BudgetApplication/bin/Debug/BudgetApplication.exe
 *.csproj
+*.Cache
+Budget Application/BudgetApplication/obj/Debug/BudgetApplication.csprojResolveAssemblyReference.cache
+*.lref
+Budget Application/BudgetApplication/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
