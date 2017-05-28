@@ -113,7 +113,7 @@
                                  IsComparison="True" BudgetAndSumDataSource="{Binding ComparisonBudgetAndSum}">
                 </local:MoneyGrid>
             </TabItem>
-            <TabItem Style="{StaticResource TabHeader}" Header="Month Details" Name="ProgressTab">
+            <!--<TabItem Style="{StaticResource TabHeader}" Header="Month Details" Name="ProgressTab">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -136,7 +136,7 @@
                         </ComboBox>
                     </StackPanel>
                 </Grid>
-            </TabItem>
+            </TabItem>-->
             <TabItem Style="{StaticResource TabHeader}" Header="Transactions" Name="TransactionsTab">
                 <Grid>
                     <Grid.RowDefinitions>
