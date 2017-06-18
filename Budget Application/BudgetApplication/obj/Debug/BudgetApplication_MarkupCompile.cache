@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\
 BudgetApplication
 none
 false
 DEBUG;TRACE
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\App.xaml
-8-1132122256
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\App.xaml
+91387482678
 
-30665606251
-79159099346
-View\LoadYearPopup.xaml;View\AddYearPopup.xaml;View\GroupsAndCategoriesWindow.xaml;View\MoneyGrid.xaml;View\MainWindow.xaml;StyleDictionary.xaml;View\AddPaymentPopup.xaml;View\PaymentMethodsWindow.xaml;
+34-136134480
+79495486326
+View\LoadYearPopup.xaml;View\AddYearPopup.xaml;View\GroupsAndCategoriesWindow.xaml;View\MoneyGrid.xaml;View\MainWindow.xaml;StyleDictionary.xaml;View\AddPaymentPopup.xaml;View\MonthDetailView.xaml;View\PaymentMethodsWindow.xaml;
 
 False
 

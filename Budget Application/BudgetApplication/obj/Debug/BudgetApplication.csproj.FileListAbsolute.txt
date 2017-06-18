@@ -276,5 +276,5 @@ C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Vie
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\LoadYearPopup.g.cs
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\LoadYearPopup.baml
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csprojResolveAssemblyReference.cache
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\MonthDetailView.baml
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\MonthDetailView.g.cs
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\MonthDetailView.baml

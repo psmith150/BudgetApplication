@@ -11,6 +11,7 @@ using BudgetApplication.ViewModel;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using NCalc;
+using System.Windows.Input;
 
 namespace BudgetApplication.View
 {
@@ -85,6 +86,9 @@ namespace BudgetApplication.View
             PaymentMethodsWindow popup = new PaymentMethodsWindow(this);
             popup.ShowDialog();
         }
+
+        #region Month Details tab
+        #endregion
 
         #region Transactions tab
 

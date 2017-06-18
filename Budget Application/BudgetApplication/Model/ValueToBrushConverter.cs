@@ -8,7 +8,7 @@ namespace BudgetApplication.Model
     /// <summary>
     /// Converter used to color code cells depending on value. Only converts one way
     /// </summary>
-    public class ValueToBrushConverter : IValueConverter
+    public class MoneyValueToBrushConverter : IValueConverter
     {
         /// <summary>
         /// String value to Brush. Positive values are green, negative are red

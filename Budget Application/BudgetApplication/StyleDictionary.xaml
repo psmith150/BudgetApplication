@@ -134,7 +134,7 @@
                         <Expander.Header>
                             <DockPanel>
                                 <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="5,0,0,0" Width="150" Foreground="White"/>
-                                <TextBlock FontWeight="Bold" Text="{Binding ItemCount}" Foreground="White"/>
+                                <!--<TextBlock FontWeight="Bold" Text="{Binding ItemCount}" Foreground="White"/>-->
                             </DockPanel>
                         </Expander.Header>
                         <ItemsPresenter />
@@ -148,6 +148,15 @@
             <Setter.Value>
                 <ControlTemplate>
                     <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="Gray"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="DataGridProgressBarStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -127,7 +127,9 @@
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\CheckedListItem.cs" />
     <Compile Include="Model\CheckingAccount.cs" />
+    <Compile Include="Model\ColumnWidthToDatePositionConverter.cs" />
     <Compile Include="Model\MonthDetailRow.cs" />
+    <Compile Include="Model\OnTargetToBrushConverter.cs" />
     <Compile Include="Model\TextBoxEnterKeyUpdateBehavior.cs" />
     <Compile Include="Model\CreditCard.cs" />
     <Compile Include="Model\DataWrapper.cs" />
@@ -160,6 +162,9 @@
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\AddPaymentPopup.xaml.cs">
       <DependentUpon>AddPaymentPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MonthDetailView.xaml.cs">
+      <DependentUpon>MonthDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PaymentMethodsWindow.xaml.cs">
       <DependentUpon>PaymentMethodsWindow.xaml</DependentUpon>
@@ -198,6 +203,10 @@
     </Page>
     <Page Include="View\AddPaymentPopup.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MonthDetailView.xaml">
+      <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PaymentMethodsWindow.xaml">

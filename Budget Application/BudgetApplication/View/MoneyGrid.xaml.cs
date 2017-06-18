@@ -6,7 +6,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Diagnostics;
 using BudgetApplication.Model;
-
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace BudgetApplication.View
 {
@@ -22,6 +22,18 @@ namespace BudgetApplication.View
         {
             InitializeComponent();
             this.Loaded += SetColumnMinWidth;
+            FitColumnsCommand = new RelayCommand(() => FitColumns());
+        }
+
+        public RelayCommand FitColumnsCommand
+        {
+            get; set;
+        }
+
+        public void FitColumns()
+        {
+            MainGrid.Width = ScrollViewer.ActualWidth;
+            Debug.WriteLine("Gets here");
         }
 
         /// <summary>

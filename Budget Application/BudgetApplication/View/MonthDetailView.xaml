@@ -1,12 +1,99 @@
-﻿<Window x:Class="BudgetApplication.View.MonthDetailView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ignore="http://www.galasoft.ch/ignore"
-        mc:Ignorable="d ignore"
-        DataContext="{Binding ViewModelName, Source={StaticResource Locator}}">
-
+﻿<UserControl x:Class="BudgetApplication.View.MonthDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BudgetApplication.View"
+             xmlns:model="clr-namespace:BudgetApplication.Model"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:test="clr-namespace:System.Windows.Data;assembly=PresentationFramework"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <model:OnTargetToBrushConverter x:Key="valConv"/>
+        <model:ColumnWidthToDatePositionConverter x:Key="widthConv"/>
+    </UserControl.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Name="MonthPickerPanel" Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" Orientation="Horizontal">
+            <ComboBox SelectedIndex="{Binding Path=SelectedMonthDataSource, RelativeSource={RelativeSource FindAncestor, 
+                AncestorType=local:MonthDetailView, AncestorLevel=1}}" Width="100">
+                <ComboBoxItem Content="January"/>
+                <ComboBoxItem Content="February"/>
+                <ComboBoxItem Content="March"/>
+                <ComboBoxItem Content="April"/>
+                <ComboBoxItem Content="May"/>
+                <ComboBoxItem Content="June"/>
+                <ComboBoxItem Content="July"/>
+                <ComboBoxItem Content="August"/>
+                <ComboBoxItem Content="September"/>
+                <ComboBoxItem Content="October"/>
+                <ComboBoxItem Content="November"/>
+                <ComboBoxItem Content="December"/>
+            </ComboBox>
+            <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat=MM/dd/yyyy}" VerticalAlignment="Stretch" Width="75" TextAlignment="Center" Foreground="Goldenrod">
+                <TextBlock.Margin>
+                    <MultiBinding Converter ="{StaticResource widthConv}">
+                        <Binding ElementName="CategoryColumn" Path="ActualWidth"/>
+                        <Binding ElementName="ProgressColumn" Path="ActualWidth"/>
+                        <Binding Path="PercentMonthDataSource" RelativeSource="{RelativeSource FindAncestor, 
+                            AncestorType=local:MonthDetailView, AncestorLevel=1}"/>
+                        <MultiBinding.ConverterParameter>
+                            <sys:Int32>-135</sys:Int32>
+                        </MultiBinding.ConverterParameter>
+                    </MultiBinding>
+                </TextBlock.Margin>
+            </TextBlock>
+        </StackPanel>
+        <DataGrid Grid.Row="1"  Name="DetailGrid" AutoGenerateColumns="False" ItemsSource="{Binding Path=MonthDetailsDataSource, RelativeSource={RelativeSource FindAncestor, 
+                AncestorType=local:MonthDetailView, AncestorLevel=1}}" IsReadOnly="True" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" 
+                  HeadersVisibility="Column" CanUserSortColumns="False">
+            <DataGrid.GroupStyle>
+                <!--Style for groups at top level.-->
+                <GroupStyle ContainerStyle="{StaticResource GroupedStyle}"/>
+            </DataGrid.GroupStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Category" Binding="{Binding Category, Mode=OneWay}" x:Name="CategoryColumn"/>
+                <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False"/>
+                <DataGridTemplateColumn x:Name="ProgressColumn" Header="Progress" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <ProgressBar Value="{Binding PercentSpent, Mode=OneWay}" Minimum="0" Maximum="1" 
+                                             Foreground="{Binding OnTarget, Converter={StaticResource valConv}}"/>
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat=" {0:c}/{1:c}">
+                                            <Binding Path="SpentAmount"/>
+                                            <Binding Path="BudgetedAmount"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Height="{Binding Source={x:Reference DetailGrid}, Path=ActualWidth}">
+            <Rectangle Name="DateIndicator" Fill="Goldenrod" Width="2" >
+                <Rectangle.Margin>
+                    <MultiBinding Converter ="{StaticResource widthConv}">
+                        <Binding ElementName="CategoryColumn" Path="ActualWidth"/>
+                        <Binding ElementName="ProgressColumn" Path="ActualWidth"/>
+                        <Binding Path="PercentMonthDataSource" RelativeSource="{RelativeSource FindAncestor, 
+                            AncestorType=local:MonthDetailView, AncestorLevel=1}"/>
+                        <MultiBinding.ConverterParameter>
+                            <sys:Int32>2</sys:Int32>
+                        </MultiBinding.ConverterParameter>
+                    </MultiBinding>
+                </Rectangle.Margin>
+            </Rectangle>
+        </StackPanel>
     </Grid>
-</Window>
+</UserControl>

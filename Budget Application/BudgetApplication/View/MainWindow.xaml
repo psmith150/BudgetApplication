@@ -113,30 +113,11 @@
                                  IsComparison="True" BudgetAndSumDataSource="{Binding ComparisonBudgetAndSum}">
                 </local:MoneyGrid>
             </TabItem>
-            <!--<TabItem Style="{StaticResource TabHeader}" Header="Month Details" Name="ProgressTab">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" Orientation="Horizontal">
-                        <ComboBox SelectedIndex="{Binding}">
-                            <ComboBoxItem Content="January"/>
-                            <ComboBoxItem Content="February"/>
-                            <ComboBoxItem Content="March"/>
-                            <ComboBoxItem Content="April"/>
-                            <ComboBoxItem Content="May"/>
-                            <ComboBoxItem Content="June"/>
-                            <ComboBoxItem Content="July"/>
-                            <ComboBoxItem Content="August"/>
-                            <ComboBoxItem Content="September"/>
-                            <ComboBoxItem Content="October"/>
-                            <ComboBoxItem Content="November"/>
-                            <ComboBoxItem Content="December"/>
-                        </ComboBox>
-                    </StackPanel>
-                </Grid>
-            </TabItem>-->
+            <TabItem Style="{StaticResource TabHeader}" Header="Month Details" Name="ProgressTab">
+                <local:MonthDetailView MonthDetailsDataSource="{Binding MonthDetails}" SelectedMonthDataSource ="{Binding SelectedMonth, Mode=TwoWay}"
+                                       PercentMonthDataSource="{Binding PercentMonth}">
+                </local:MonthDetailView>
+            </TabItem>
             <TabItem Style="{StaticResource TabHeader}" Header="Transactions" Name="TransactionsTab">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -180,7 +161,7 @@
                         </Popup>
                     </Border>
                     <Border Grid.Row="1">
-                        <DataGrid x:Name="Transactions" ItemsSource="{Binding Source={StaticResource TransactionsView}}" Background="DarkGray" AutoGenerateColumns="False"
+                        <DataGrid x:Name="Transactions" ItemsSource="{Binding Source={StaticResource TransactionsView}}" AutoGenerateColumns="False"
                                   ColumnHeaderStyle="{StaticResource FilteredHeaderStyle}">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="Date" SortMemberPath="Date">

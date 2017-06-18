@@ -1,12 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace BudgetApplication.Model
 {
     /// <summary>
     /// Class to represent a row of data in the Month Details tab
     /// </summary>
-    class MonthDetailRow : INotifyPropertyChanged
+    public class MonthDetailRow : INotifyPropertyChanged
     {
         Group _group;
         Category _category;
@@ -14,6 +15,7 @@ namespace BudgetApplication.Model
         decimal _spentAmount;
         double _percentSpent;
         double _percentMonth;
+        bool _onTarget;
 
         /// <summary>
         /// 
@@ -26,10 +28,10 @@ namespace BudgetApplication.Model
         {
             _group = group;
             _category = category;
-            _budgetedAmount = budgetedAmount;
-            _spentAmount = spentAmount;
+            BudgetedAmount = budgetedAmount;
+            SpentAmount = spentAmount;
             _percentSpent = 0.0;
-            _percentMonth = DateTime.Now.Day / DateTime.DaysInMonth(currentYear, currentMonth+1);
+            _percentMonth = (double)DateTime.Now.Day / DateTime.DaysInMonth(currentYear, currentMonth+1);
         }
 
         public Group Group
@@ -92,17 +94,37 @@ namespace BudgetApplication.Model
             }
         }
 
+        public bool OnTarget
+        {
+            get
+            {
+                return _onTarget;
+            }
+        }
+
         private void UpdatePercentSpent()
         {
             if (_budgetedAmount == 0)
             {
-                _percentSpent = 0.0;
+                if (_spentAmount > 0)
+                {
+                    _onTarget = false;
+                }
+                else
+                {
+                    _onTarget = true;
+                }
+                _percentSpent = 1.0;
             }
             else
             {
                 _percentSpent = (double)_spentAmount / (double)_budgetedAmount;
+                _onTarget = _percentSpent <= _percentMonth;
             }
+            if (_group.IsIncome)
+                _onTarget = !_onTarget;
             NotifyPropertyChanged("PercentSpent");
+            NotifyPropertyChanged("OnTarget");
         }
 
         /// <summary>

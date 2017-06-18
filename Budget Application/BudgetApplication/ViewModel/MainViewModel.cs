@@ -40,6 +40,7 @@ namespace BudgetApplication.ViewModel
         private ListCollectionView _budgetValueView;
         private ListCollectionView _spendingValueView;
         private ListCollectionView _comparisonValueView;
+        private ListCollectionView _monthDetailsView;
 
         //Groups for income and expenditures in the Totals grids.
         private Group columnIncomeTotalsGroup;
@@ -104,8 +105,11 @@ namespace BudgetApplication.ViewModel
             _transactions.MemberChanged += OnTransactionModified;   //Trigger event for view to handle
             _transactions.CollectionChanged += AddOrRemoveSpendingValues;   //Update spending if transaction has been added or removed
             _transactions.CollectionChanged += OnTransactionsChanged;   //Trigger event for view to handle
-            //_spendingTotals.MemberChanged += UpdateComparisonValues;    //Update comparison values if a spending values was changed. Totals used to allow bulk modification.
-            //_budgetTotals.MemberChanged += UpdateComparisonValues;  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
+                                                                        //_spendingTotals.MemberChanged += UpdateComparisonValues;    //Update comparison values if a spending values was changed. Totals used to allow bulk modification.
+                                                                        //_budgetTotals.MemberChanged += UpdateComparisonValues;  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
+
+            //Set initial month to current month
+            _selectedMonth = DateTime.Now.Month - 1;
 
             _yearList = new ObservableCollection<string>();
             GetYears(); //Finds all the existing data files
@@ -123,9 +127,6 @@ namespace BudgetApplication.ViewModel
                 LoadData();
             }
 
-            //Set initial month to January
-            _selectedMonth = 0;
-
             //Commands to allow binding to View
             SaveDataCommand = new RelayCommand(() => SaveData());
             LoadDataCommand = new RelayCommand(() => LoadData());
@@ -141,6 +142,7 @@ namespace BudgetApplication.ViewModel
             RemovePaymentMethodCommand = new RelayCommand<PaymentMethod>((paymentMethod) => RemovePaymentMethod(paymentMethod));
             AddYearCommand = new RelayCommand<String>((year) => AddYear(year));
             CopyDataCommand = new RelayCommand<string>((year) => CopyData(year));
+
         }
 
         #region Private helpers
@@ -156,6 +158,8 @@ namespace BudgetApplication.ViewModel
             _spendingValueView.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
             _comparisonValueView = new ListCollectionView(_comparisonValues);
             _comparisonValueView.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
+            _monthDetailsView = new ListCollectionView(_monthDetails);
+            _monthDetailsView.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
         }
 
         /// <summary>
@@ -408,6 +412,28 @@ namespace BudgetApplication.ViewModel
             {
                 _selectedMonth = value;
                 RaisePropertyChanged("SelectedMonth");
+                UpdateMonthDetails();
+                Debug.WriteLine("Updating month to " + _selectedMonth);
+                RaisePropertyChanged("MonthDetails");
+                RaisePropertyChanged("PercentMonth");
+            }
+        }
+
+        public ListCollectionView MonthDetails
+        {
+            get
+            {
+                return _monthDetailsView;
+            }
+        }
+
+        public double PercentMonth
+        {
+            get
+            {
+                if (_selectedMonth != DateTime.Now.Month - 1)
+                    return 1.0;
+                return (double)DateTime.Now.Day / DateTime.DaysInMonth(Int32.Parse(_currentYear), _selectedMonth);
             }
         }
 
@@ -1279,6 +1305,7 @@ namespace BudgetApplication.ViewModel
                 monthDetails.Add(currentDetail);
             }
             _monthDetails.InsertRange(monthDetails);
+            //Debug.WriteLine("Days so far: " + DateTime.Now.Day + "; total in month: " + DateTime.DaysInMonth(Int32.Parse(_currentYear), _selectedMonth + 1));
         }
         #endregion
 
@@ -1548,6 +1575,7 @@ namespace BudgetApplication.ViewModel
             foreach (Transaction transaction in data.Transactions)
             {
                 String categoryName = transaction.Category.Name;
+                Debug.WriteLine(transaction.Item + " " + transaction.Date);
                 string paymentName = transaction.PaymentMethod.Name;
                 try
                 {
@@ -1571,6 +1599,7 @@ namespace BudgetApplication.ViewModel
             runTimer.Stop();
             Debug.WriteLine("Reading transactions: " + runTimer.ElapsedTicks);
             //Debug.WriteLine(_budgetValues.Count);
+            UpdateMonthDetails();
         }
 
         /// <summary>
