@@ -119,7 +119,7 @@ namespace BudgetApplication.Model
             else
             {
                 _percentSpent = (double)_spentAmount / (double)_budgetedAmount;
-                _onTarget = _percentSpent <= _percentMonth;
+                _onTarget = _percentSpent - _percentMonth <= 0.001;
             }
             if (_group.IsIncome)
                 _onTarget = !_onTarget;

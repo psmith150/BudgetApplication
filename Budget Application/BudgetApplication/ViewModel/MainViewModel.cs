@@ -1532,7 +1532,6 @@ namespace BudgetApplication.ViewModel
             {
                 InitNewFile();
             }
-
             //Process the data
             int index = 0;
             //Add groups, categories, and budget values
@@ -1558,7 +1557,7 @@ namespace BudgetApplication.ViewModel
             _budgetValues.MemberChanged += UpdateBudgetTotals;
             RefreshBudgetTotals();
             runTimer.Stop();
-            Debug.WriteLine("Reading groups and categories: " + runTimer.ElapsedTicks);
+            //Debug.WriteLine("Reading groups and categories: " + runTimer.ElapsedTicks);
             runTimer = Stopwatch.StartNew();
             //Add payment methods
             foreach (PaymentMethod payment in data.PaymentMethods)
@@ -1566,7 +1565,7 @@ namespace BudgetApplication.ViewModel
                 _paymentMethods.Add(payment);
             }
             runTimer.Stop();
-            Debug.WriteLine("Reading payment methods: " + runTimer.ElapsedTicks);
+            //Debug.WriteLine("Reading payment methods: " + runTimer.ElapsedTicks);
             runTimer = Stopwatch.StartNew();
             //Adds the transactions
             //Transactions are stored with different instances of the category and payment method objects. These need to 
@@ -1575,8 +1574,8 @@ namespace BudgetApplication.ViewModel
             foreach (Transaction transaction in data.Transactions)
             {
                 String categoryName = transaction.Category.Name;
-                Debug.WriteLine(transaction.Item + " " + transaction.Date);
-                string paymentName = transaction.PaymentMethod.Name;
+                //Debug.WriteLine(transaction.Item + " " + transaction.PaymentMethod.Name);
+                String paymentName = transaction.PaymentMethod.Name;
                 try
                 {
                     transaction.Category = _categories.Single(x => x.Name.Equals(categoryName));
@@ -1597,7 +1596,7 @@ namespace BudgetApplication.ViewModel
             }
             _transactions.InsertRange(tempTransactions);
             runTimer.Stop();
-            Debug.WriteLine("Reading transactions: " + runTimer.ElapsedTicks);
+            //Debug.WriteLine("Reading transactions: " + runTimer.ElapsedTicks);
             //Debug.WriteLine(_budgetValues.Count);
             UpdateMonthDetails();
         }
