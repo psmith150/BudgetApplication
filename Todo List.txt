@@ -20,7 +20,6 @@ Check year on spending values.
 Add default data to new file.
 Allow copying groups, categories, and payment methods between years.
 Handle removal of transaction objects in transaction filtering.
-Show % of current month's budget spent.
 Add auto-complete in cells.
 Add tutorial
 Change filter icon when filtered.

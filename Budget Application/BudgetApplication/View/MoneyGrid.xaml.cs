@@ -33,7 +33,7 @@ namespace BudgetApplication.View
         public void FitColumns()
         {
             MainGrid.Width = ScrollViewer.ActualWidth;
-            Debug.WriteLine("Gets here");
+            //Debug.WriteLine("Gets here");
         }
 
         /// <summary>
