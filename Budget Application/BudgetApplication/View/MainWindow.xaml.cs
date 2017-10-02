@@ -21,8 +21,6 @@ namespace BudgetApplication.View
     public partial class MainWindow : Window
     {
         private ObservableCollection<CheckedListItem<string>>[] checkedItems;   //Used to keep track of what objects are checked
-        private CheckingAccount _allPayments;
-        ObservableCollection<CheckingAccount> _tempCollection;
 
         /// <summary>
         /// Initializes a new MainWindow object.
@@ -41,12 +39,6 @@ namespace BudgetApplication.View
             PaymentAmountBox.Text = 0.ToString("C");
             //TestBox.Text = 0.ToString("C");
 
-            _allPayments = new CheckingAccount("All");
-            _allPayments.StartDate = DateTime.Now.AddMonths(-1);
-            _allPayments.EndDate = DateTime.Now.AddMonths(1);
-            _tempCollection = new ObservableCollection<CheckingAccount>();
-            _tempCollection.Add(_allPayments);
-
             //Initialize data on Transactions tab
             checkedItems = new ObservableCollection<CheckedListItem<string>>[7];
             for (int i = 0; i < checkedItems.Length; i++)
@@ -60,7 +52,7 @@ namespace BudgetApplication.View
                 Transaction transaction = obj as Transaction;
                 if (transaction == null)
                     continue;
-                AddTransaction(transaction);
+                //AddTransaction(transaction);
             }
         }
 
@@ -118,7 +110,6 @@ namespace BudgetApplication.View
         //TODO: disabled 3/28/2017
         private void AddTransaction(Transaction transaction)
         {
-            //return;
             //Debug.WriteLine("Transaction added " + transaction.ToString());
             for (int i = 0; i < checkedItems.Length; i++)
             {
@@ -440,7 +431,7 @@ namespace BudgetApplication.View
                 decimal sum = 0;
                 //Debug.WriteLine(view.Count);
                 //Debug.WriteLine((view.GetItemAt(0) as Transaction).Amount);
-                for (int i=0; i<view.Count-1; i++)
+                for (int i = 0; i < view.Count - 1; i++)
                 {
                     Transaction transaction = view.GetItemAt(i) as Transaction;
                     sum += transaction.Amount;

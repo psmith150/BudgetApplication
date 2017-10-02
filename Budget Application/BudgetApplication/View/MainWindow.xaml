@@ -36,8 +36,8 @@
                                     <Button Margin="3,0,0,0" DockPanel.Dock="Right" Height="20" Width="20" Click="FilterButton_Click" Name="FilterButton">
                                         <Button.Template>
                                             <ControlTemplate>
-                                                <!--<ContentControl Template="{StaticResource FilterImage}"/>-->
-                                                <Image Source="/Resources/Filter.png" Width="15" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                                <ContentControl Template="{StaticResource FilterImage}"/>
+                                                <!--<Image Source="/Resources/Filter.png" Width="15" Height="15" RenderOptions.BitmapScalingMode="HighQuality"/>-->
                                             </ControlTemplate>
                                         </Button.Template>
                                     </Button>
@@ -162,7 +162,7 @@
                     </Border>
                     <Border Grid.Row="1">
                         <DataGrid x:Name="Transactions" ItemsSource="{Binding Source={StaticResource TransactionsView}}" AutoGenerateColumns="False"
-                                  ColumnHeaderStyle="{StaticResource FilteredHeaderStyle}">
+                            ColumnHeaderStyle="{StaticResource FilteredHeaderStyle}">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="Date" SortMemberPath="Date">
                                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -178,7 +178,7 @@
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="Item" Binding="{Binding Path=Item, Mode=TwoWay}"/>
                                 <DataGridTextColumn Header="Payee" Binding="{Binding Path=Payee}"/>
-                                <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, StringFormat=\{0:C\}}"/>
+                                <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:C\}}"/>
                                 <DataGridComboBoxColumn Header="Category" SelectedValueBinding="{Binding Category}" DisplayMemberPath="Name" SortMemberPath="Category.Name">
                                     <DataGridComboBoxColumn.ElementStyle>
                                         <Style TargetType="{x:Type ComboBox}">
@@ -224,7 +224,6 @@
                             </ComboBox.Resources>
                             <ComboBox.ItemsSource>
                                 <CompositeCollection>
-                                    <!--<Model:CheckingAccount Name="All" StartDate="{x:Static System:DateTime.Now}" EndDate="{x:Static System:DateTime.Now}"/>-->
                                     <CollectionContainer Collection="{Binding Source={StaticResource AllPaymentsSource}}"/>
                                     <CollectionContainer Collection="{Binding Source={StaticResource PaymentSelectorSource}}"/>
                                 </CompositeCollection>
@@ -247,11 +246,11 @@
                             <i:Interaction.Behaviors>
                                 <Model:TextBoxEnterKeyUpdateBehavior/>
                             </i:Interaction.Behaviors>
-                            <!--<TextBox.Style>
+                            <TextBox.Style>
                                 <Style TargetType="TextBox">
                                     <Style.Triggers>
                                         <Trigger Property="IsFocused" Value="False">
-                                            --><!--<Setter Property="Text" Value="{Binding EvaluatedExpression, Mode=OneWay}"/>--><!--
+                                            <Setter Property="Text" Value="{Binding EvaluatedExpression, Mode=OneWay}"/>
                                             <Setter Property="Text" Value="{Binding ElementName=PaymentSelector, Path=SelectedItem.PaymentAmount, Mode=OneWay, StringFormat={}{0:C}}"/>
                                         </Trigger>
                                         <Trigger Property="IsFocused" Value="True">
@@ -259,7 +258,7 @@
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
-                            </TextBox.Style>-->
+                            </TextBox.Style>
                         </TextBox>
                         <Label>Net Bill:</Label>
                         <Label Name="NetBillLabel"  ContentStringFormat="{}{0:C}"/>

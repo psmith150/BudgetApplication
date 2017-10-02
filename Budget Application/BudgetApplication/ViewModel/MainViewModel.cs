@@ -105,8 +105,8 @@ namespace BudgetApplication.ViewModel
             _transactions.MemberChanged += OnTransactionModified;   //Trigger event for view to handle
             _transactions.CollectionChanged += AddOrRemoveSpendingValues;   //Update spending if transaction has been added or removed
             _transactions.CollectionChanged += OnTransactionsChanged;   //Trigger event for view to handle
-                                                                        //_spendingTotals.MemberChanged += UpdateComparisonValues;    //Update comparison values if a spending values was changed. Totals used to allow bulk modification.
-                                                                        //_budgetTotals.MemberChanged += UpdateComparisonValues;  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
+            //_spendingTotals.MemberChanged += UpdateComparisonValues;    //Update comparison values if a spending values was changed. Totals used to allow bulk modification.
+            //_budgetTotals.MemberChanged += UpdateComparisonValues;  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
 
             //Set initial month to current month
             _selectedMonth = DateTime.Now.Month - 1;
@@ -880,7 +880,7 @@ namespace BudgetApplication.ViewModel
         }
 
         /// <summary>
-        /// Called when the gropu collection is changed. Used to add/remove Totals rows.
+        /// Called when the group collection is changed. Used to add/remove Totals rows.
         /// </summary>
         /// <param name="sender">The modified collection</param>
         /// <param name="e">The arguments</param>
@@ -1105,6 +1105,7 @@ namespace BudgetApplication.ViewModel
         /// <param name="e">The arguments</param>
         public void UpdateSpendingValues(Object sender, PropertyChangedEventArgs e)
         {
+            Debug.WriteLine("Transaction modified!");
             //Only category, date, and amount will change the spending data
             if (!e.PropertyName.Equals("Category") && !e.PropertyName.Equals("Amount") && !e.PropertyName.Equals("Date"))
                 return;

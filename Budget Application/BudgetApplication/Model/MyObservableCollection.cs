@@ -95,6 +95,7 @@ namespace BudgetApplication
                 //Debug.WriteLine(this);
                 //Debug.WriteLine(e.PropertyName);
                 MemberChanged(sender, e);
+                //Debug.WriteLine("A collection member was changed: " + e.PropertyName);
             }
             //Debug.WriteLine("A collection member was changed: " + e.PropertyName);
         }
@@ -106,6 +107,7 @@ namespace BudgetApplication
             foreach (var item in items)
             {
                 this.Items.Add(item);
+                item.PropertyChanged += MemberPropertyChanged;
             }
             this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
