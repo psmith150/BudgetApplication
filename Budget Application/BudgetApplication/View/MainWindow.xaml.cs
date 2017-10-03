@@ -184,6 +184,8 @@ namespace BudgetApplication.View
         /// <param name="e">The arguments</param>
         private void TransactionsView_Filter(object sender, FilterEventArgs e)
         {
+            e.Accepted = true; //10/2/2017: Disabled
+            return;
             Transaction transaction = e.Item as Transaction;
             if (transaction != null && checkedItems != null)
             {

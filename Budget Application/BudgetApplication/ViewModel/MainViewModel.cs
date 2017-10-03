@@ -34,7 +34,7 @@ namespace BudgetApplication.ViewModel
         private MyObservableCollection<MoneyGridRow> _comparisonValues; //Values used in the value grid of the comparison view
         private MyObservableCollection<MoneyGridRow> _comparisonTotals; //Values used in the total grid of the spending view
         private TotalObservableCollection _comparisonBudgetAndSum; //Values used in the budget and sum grid of the comparison view
-        private MyObservableCollection<MonthDetailRow> _monthDetails;
+        private MyObservableCollection<MonthDetailRow> _monthDetails; //Values for showing the percentage spent in each category
 
         //List collection views used to display data for Values grids. Defined here to control grouping.
         private ListCollectionView _budgetValueView;
@@ -1080,6 +1080,7 @@ namespace BudgetApplication.ViewModel
             {
                 CalculateColumnTotals(_budgetValues, _budgetTotals, "BudgetTotals");
                 UpdateComparisonValues();
+                UpdateMonthDetails();
             }
         }
 
@@ -1090,6 +1091,7 @@ namespace BudgetApplication.ViewModel
         {
             CalculateColumnTotals(_budgetValues, _budgetTotals, "BudgetTotals");
             UpdateComparisonValues();
+            UpdateMonthDetails();
         }
 
         #endregion
@@ -1222,6 +1224,7 @@ namespace BudgetApplication.ViewModel
             CalculateColumnTotals(_spendingValues, _spendingTotals, "SpendingTotals");
             //Debug.WriteLine("Spending Total Updated");
             UpdateComparisonValues();
+            UpdateMonthDetails();
         }
         #endregion
 
@@ -1599,7 +1602,6 @@ namespace BudgetApplication.ViewModel
             runTimer.Stop();
             //Debug.WriteLine("Reading transactions: " + runTimer.ElapsedTicks);
             //Debug.WriteLine(_budgetValues.Count);
-            UpdateMonthDetails();
         }
 
         /// <summary>
