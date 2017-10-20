@@ -178,7 +178,7 @@
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="Item" Binding="{Binding Path=Item, Mode=TwoWay}"/>
                                 <DataGridTextColumn Header="Payee" Binding="{Binding Path=Payee}"/>
-                                <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:C\}}"/>
+                                <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat=\{0:C\}}"/>
                                 <DataGridComboBoxColumn Header="Category" SelectedValueBinding="{Binding Category}" DisplayMemberPath="Name" SortMemberPath="Category.Name">
                                     <DataGridComboBoxColumn.ElementStyle>
                                         <Style TargetType="{x:Type ComboBox}">
@@ -188,6 +188,7 @@
                                     <DataGridComboBoxColumn.EditingElementStyle>
                                         <Style TargetType="{x:Type ComboBox}">
                                             <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Categories, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                            <EventSetter Event="RequestBringIntoView" Handler="OnRequestBringIntoView"/>
                                         </Style>
                                     </DataGridComboBoxColumn.EditingElementStyle>
                                 </DataGridComboBoxColumn>
@@ -281,7 +282,7 @@
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="Item" Binding="{Binding Path=Item, Mode=TwoWay}"/>
                             <DataGridTextColumn Header="Payee" Binding="{Binding Path=Payee}"/>
-                            <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, StringFormat=\{0:C\}}"/>
+                            <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat=\{0:C\}}"/>
                             <DataGridComboBoxColumn Header="Category" SelectedValueBinding="{Binding Category}" DisplayMemberPath="Name">
                                 <DataGridComboBoxColumn.ElementStyle>
                                     <Style TargetType="{x:Type ComboBox}">
@@ -291,6 +292,7 @@
                                 <DataGridComboBoxColumn.EditingElementStyle>
                                     <Style TargetType="{x:Type ComboBox}">
                                         <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Categories, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                        <EventSetter Event="RequestBringIntoView" Handler="OnRequestBringIntoView"/>
                                     </Style>
                                 </DataGridComboBoxColumn.EditingElementStyle>
                             </DataGridComboBoxColumn>
