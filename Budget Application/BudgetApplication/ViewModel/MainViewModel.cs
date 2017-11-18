@@ -1020,9 +1020,10 @@ namespace BudgetApplication.ViewModel
         /// <param name="paymentMethod">The payment method to add</param>
         public void AddPaymentMethod(PaymentMethod paymentMethod)
         {
+            Debug.WriteLine("Adding payment method.");
             if (paymentMethod == null)
                 return;
-            PaymentMethod checkMethod = _paymentMethods.First(x => x.Name.Equals(paymentMethod.Name));
+            PaymentMethod checkMethod = _paymentMethods.FirstOrDefault(x => x.Name.Equals(paymentMethod.Name));
             if (checkMethod != null)
             {
                 MessageBox.Show("Payment method of the same name already exists; please choose another.");

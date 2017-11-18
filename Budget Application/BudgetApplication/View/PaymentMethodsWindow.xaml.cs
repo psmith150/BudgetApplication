@@ -84,6 +84,7 @@ namespace BudgetApplication.View
             {
                 String name = popup.PaymentName;
                 PaymentMethod payment;
+                //Debug.WriteLine("Added payment " + name + " of type " + popup.PaymentType.ToString());
                 switch(popup.PaymentType)   //Determines which type of payment to produce.
                 {
                     case PaymentMethod.Type.CreditCard:
@@ -100,7 +101,7 @@ namespace BudgetApplication.View
                 }
                 //Debug.WriteLine("Name is " + popup.PaymentName + "; type is " + popup.PaymentType);
                 AddPaymentButton.CommandParameter = payment;
-                PaymentList.SelectedIndex = PaymentList.Items.Count;
+                //PaymentList.SelectedIndex = PaymentList.Items.Count;
             }
         }
     }

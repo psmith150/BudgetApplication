@@ -12,7 +12,7 @@ When using 2+ filters on transaction tab, make it so filtered out values don't s
 	Probably will need to keep track of what has been filtered out.
 	Idea: use select statement where FilterBox.ItemsSource is assigned in FilterButton_Click
 Consolidate styles in StyleDictionary.
-Change file save location.
+Change file save location. - User selectable
 Copy/paste functionality.
 Allow user to choose year loaded at start.
 Rework UpdateSpendingValues to be more efficient

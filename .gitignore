@@ -225,3 +225,5 @@ Budget Application/BudgetApplication/bin/Debug/BudgetApplication.exe
 Budget Application/BudgetApplication/obj/Debug/BudgetApplication.csprojResolveAssemblyReference.cache
 *.lref
 Budget Application/BudgetApplication/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+Budget Application/BudgetApplication/obj/Debug/View/PaymentMethodsWindow.baml
+Budget Application/BudgetApplication/obj/Debug/View/PaymentMethodsWindow.g.i.cs
