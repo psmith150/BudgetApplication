@@ -433,7 +433,7 @@ namespace BudgetApplication.ViewModel
             {
                 if (_selectedMonth != DateTime.Now.Month - 1)
                     return 1.0;
-                return (double)DateTime.Now.Day / DateTime.DaysInMonth(Int32.Parse(_currentYear), _selectedMonth);
+                return (double)DateTime.Now.Day / DateTime.DaysInMonth(Int32.Parse(_currentYear), _selectedMonth+1);
             }
         }
 
