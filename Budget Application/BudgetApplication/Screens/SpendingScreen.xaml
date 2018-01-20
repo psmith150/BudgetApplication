@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="BudgetApplication.Screens.SpendingScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BudgetApplication.Screens"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:model="clr-namespace:BudgetApplication.Model"
+             xmlns:customControls="clr-namespace:BudgetApplication.CustomControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance Type=local:SpendingViewModel}">
+    <Grid>
+        <customControls:MoneyGrid ValuesDataSource="{Binding SpendingRows}" TotalsDataSource="{Binding SpendingTotals}" IsReadOnly="True" 
+                                 BudgetAndSumDataSource="{Binding SpendingBudgetAndSum}">
+        </customControls:MoneyGrid>
+    </Grid>
+</UserControl>

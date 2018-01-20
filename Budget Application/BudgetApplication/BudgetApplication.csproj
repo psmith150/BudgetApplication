@@ -50,9 +50,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Dollar_sign.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19026, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
       <Private>True</Private>
@@ -77,6 +82,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -124,6 +131,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BaseViewModel.cs" />
+    <Compile Include="CustomControls\HoverButton.cs" />
+    <Compile Include="CustomControls\MoneyGrid.xaml.cs">
+      <DependentUpon>MoneyGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="IOC\IOCContainer.cs" />
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\CheckedListItem.cs" />
     <Compile Include="Model\CheckingAccount.cs" />
@@ -139,12 +152,43 @@
     <Compile Include="Model\PaymentTypeToStringConverter.cs" />
     <Compile Include="Model\Transaction.cs" />
     <Compile Include="Model\ValueToBrushConverter.cs" />
+    <Compile Include="Popups\PopupEventArgs.cs" />
+    <Compile Include="Popups\PopupViewModel.cs" />
+    <Compile Include="Popups\SettingsPopup.xaml.cs">
+      <DependentUpon>SettingsPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popups\SettingsViewModel.cs" />
+    <Compile Include="Screens\SpendingScreen.xaml.cs">
+      <DependentUpon>SpendingScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ComparisonScreen.xaml.cs">
+      <DependentUpon>ComparisonScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\BudgetScreen.xaml.cs">
+      <DependentUpon>BudgetScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\SpendingViewModel.cs" />
+    <Compile Include="Screens\ComparisonViewModel.cs" />
+    <Compile Include="Screens\BudgetViewModel.cs" />
+    <Compile Include="Screens\ScreenViewModel.cs" />
+    <Compile Include="Screens\MonthDetailScreen.xaml.cs">
+      <DependentUpon>MonthDetailScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\TemplateScreen.xaml.cs">
+      <DependentUpon>TemplateScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\MonthDetailViewModel.cs" />
+    <Compile Include="Screens\TemplateViewModel.cs" />
+    <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Services\SessionService.cs" />
     <Compile Include="StyleDictionary.xaml.cs">
       <DependentUpon>StyleDictionary.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\MonthValues.cs" />
     <Compile Include="Model\RowCompare.cs" />
     <Compile Include="Model\TotalObservableCollection.cs" />
+    <Compile Include="ValueConverters\TypeToBoolConverter.cs" />
+    <Compile Include="ValueConverters\ViewModelToViewConverter.cs" />
     <Compile Include="View\LoadYearPopup.xaml.cs">
       <DependentUpon>LoadYearPopup.xaml</DependentUpon>
     </Compile>
@@ -169,6 +213,38 @@
     <Compile Include="View\PaymentMethodsWindow.xaml.cs">
       <DependentUpon>PaymentMethodsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindowViewModel.cs" />
+    <Page Include="CustomControls\MoneyGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popups\SettingsPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\SpendingScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\ComparisonScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\BudgetScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\MonthDetailScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\TemplateScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\LoadYearPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -210,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PaymentMethodsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,11 +341,6 @@
     <Resource Include="Resources\Dollar_sign.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Dollar_sign.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
@@ -277,6 +352,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
