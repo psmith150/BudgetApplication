@@ -1,6 +1,8 @@
 ﻿
 FC:\Training\BudgetApplication\Budget Application\BudgetApplication\App.xaml;;
 FC:\Training\BudgetApplication\Budget Application\BudgetApplication\CustomControls\MoneyGrid.xaml;;
+FC:\Training\BudgetApplication\Budget Application\BudgetApplication\Popups\PaymentMethodsPopup.xaml;;
+FC:\Training\BudgetApplication\Budget Application\BudgetApplication\Popups\GroupAndCategoriesPopup.xaml;;
 FC:\Training\BudgetApplication\Budget Application\BudgetApplication\Popups\SettingsPopup.xaml;;
 FC:\Training\BudgetApplication\Budget Application\BudgetApplication\Screens\SpendingScreen.xaml;;
 FC:\Training\BudgetApplication\Budget Application\BudgetApplication\Screens\ComparisonScreen.xaml;;

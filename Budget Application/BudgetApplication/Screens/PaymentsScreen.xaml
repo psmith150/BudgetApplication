@@ -6,20 +6,21 @@
              xmlns:local="clr-namespace:BudgetApplication.Screens"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:Model="clr-namespace:BudgetApplication.Model"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=local:PaymentsViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto" Name="CreditDetailRow"/>
+            <RowDefinition Name="CreditDetailRow" Height="{Binding CreditRowHeight}"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <!--<StackPanel Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" Orientation="Horizontal">
-            <ComboBox x:Name="PaymentSelector" Width="Auto" SelectedIndex="0" DisplayMemberPath="Name" SelectionChanged="PaymentSelector_SelectionChanged">
+        <StackPanel Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" Orientation="Horizontal">
+            <ComboBox x:Name="PaymentSelector" Width="Auto" SelectedIndex="0" DisplayMemberPath="Name" SelectedItem="{Binding SelectedPaymentMethod}">
                 <ComboBox.Resources>
-                    <CollectionViewSource x:Key="PaymentSelectorSource" Source="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
-                    <CollectionViewSource x:Key="AllPaymentsSource" Source="{Binding Path=DataContext.AllPayments, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                    <CollectionViewSource x:Key="PaymentSelectorSource" Source="{Binding PaymentMethods}"/>
+                    <CollectionViewSource x:Key="AllPaymentsSource" Source="{Binding AllPaymentsCOllection}"/>
                 </ComboBox.Resources>
                 <ComboBox.ItemsSource>
                     <CompositeCollection>
@@ -29,19 +30,17 @@
                 </ComboBox.ItemsSource>
             </ComboBox>
             <Label>Start Date</Label>
-            <DatePicker Name="PaymentStartDate" SelectedDateChanged="PaymentStartDate_SelectedDateChanged"/>
+            <DatePicker Name="PaymentStartDate" SelectedDate="{Binding SelectedStartDate}"/>
             <Label>End Date</Label>
-            <DatePicker Name="PaymentEndDate" SelectedDateChanged="PaymentEndDate_SelectedDateChanged"/>
+            <DatePicker Name="PaymentEndDate" SelectedDate="{Binding SelectedEndDate}"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Width="Auto" HorizontalAlignment="Stretch" Height="Auto" Background="Transparent" Orientation="Horizontal">
             <Label>Credit Limit:</Label>
-            <Label Name="CreditLimitLabel" ContentStringFormat="{}{0:C}"/>
+            <Label Name="CreditLimitLabel" Content="{Binding CreditLimit}"/>
             <Label>Total Bill:</Label>
-            <Label Name="TotalBillLabel"  ContentStringFormat="{}{0:C}"/>
+            <Label Name="TotalBillLabel"  Content="{Binding TotalBill}"/>
             <Label>Payments:</Label>
-            --><!--<xctk:DecimalUpDown Name="PaymentAmountBox" MinWidth="50" Height="25" VerticalContentAlignment="Center" FormatString="C2"
-                                            Watermark="Enter value" AllowSpin="False" ShowButtonSpinner="False" ValueChanged="PaymentAmountBox_ValueChanged"/>--><!--
-            <TextBox Name="PaymentAmountBox" Width="75" Height="25" VerticalContentAlignment="Center" LostFocus="PaymentExpression_Updated" GotFocus="PaymentExpression_Editing">
+            <TextBox Name="PaymentAmountBox" Width="75" Height="25" VerticalContentAlignment="Center">
                 <i:Interaction.Behaviors>
                     <Model:TextBoxEnterKeyUpdateBehavior/>
                 </i:Interaction.Behaviors>
@@ -60,11 +59,11 @@
                 </TextBox.Style>
             </TextBox>
             <Label>Net Bill:</Label>
-            <Label Name="NetBillLabel"  ContentStringFormat="{}{0:C}"/>
+            <Label Name="NetBillLabel" Content="{Binding NetBill}"/>
             <Label>Remaining Credit:</Label>
-            <Label Name="RemainingCreditLabel"  ContentStringFormat="{}{0:C}"/>
+            <Label Name="RemainingCreditLabel" Content="{Binding RemainingCredit}"/>
         </StackPanel>
-        <DataGrid Grid.Row="2"  x:Name="PaymentTransactions" ItemsSource="{Binding Source={StaticResource PaymentTransactionsView}}" Background="DarkGray" AutoGenerateColumns="False" RowEditEnding="PaymentTransactions_RowEditEnding">
+        <DataGrid Grid.Row="2"  x:Name="PaymentTransactions" ItemsSource="{Binding PaymentTransactionsView}" Background="DarkGray" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Date" SortMemberPath="Date">
                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -84,12 +83,12 @@
                 <DataGridComboBoxColumn Header="Category" SelectedValueBinding="{Binding Category}" DisplayMemberPath="Name">
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="{x:Type ComboBox}">
-                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Categories, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Categories, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                         </Style>
                     </DataGridComboBoxColumn.ElementStyle>
                     <DataGridComboBoxColumn.EditingElementStyle>
                         <Style TargetType="{x:Type ComboBox}">
-                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Categories, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Categories, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                             <EventSetter Event="RequestBringIntoView" Handler="OnRequestBringIntoView"/>
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
@@ -97,17 +96,17 @@
                 <DataGridComboBoxColumn Header="Payment Method" SelectedValueBinding="{Binding PaymentMethod}" DisplayMemberPath="Name">
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="{x:Type ComboBox}">
-                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                         </Style>
                     </DataGridComboBoxColumn.ElementStyle>
                     <DataGridComboBoxColumn.EditingElementStyle>
                         <Style TargetType="{x:Type ComboBox}">
-                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
                 <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}"/>
             </DataGrid.Columns>
-        </DataGrid>-->
+        </DataGrid>
     </Grid>
 </UserControl>

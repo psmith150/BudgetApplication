@@ -134,20 +134,20 @@
       <StartDate>2017-12-23T00:00:00</StartDate>
       <EndDate>2018-01-25T00:00:00</EndDate>
       <CreditLimit>5300</CreditLimit>
-      <PaymentAmount>-277.59</PaymentAmount>
-      <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+      <PaymentAmount>2034.15</PaymentAmount>
+      <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
     </PaymentMethod>
     <PaymentMethod xsi:type="CreditCard">
       <Name>5/3 Credit Card</Name>
       <StartDate>0001-01-01T00:00:00</StartDate>
-      <EndDate>2018-01-01T00:00:00-06:00</EndDate>
+      <EndDate>2018-01-01T09:00:00+03:00</EndDate>
       <CreditLimit>20000</CreditLimit>
       <PaymentAmount>0</PaymentAmount>
     </PaymentMethod>
     <PaymentMethod xsi:type="CheckingAccount">
       <Name>Primary Checking</Name>
       <StartDate>0001-01-01T00:00:00</StartDate>
-      <EndDate>2018-01-01T00:00:00-06:00</EndDate>
+      <EndDate>2018-01-01T09:00:00+03:00</EndDate>
       <AccountNumber>0</AccountNumber>
       <Bank>Ally Bank</Bank>
     </PaymentMethod>
@@ -162,7 +162,7 @@
   </PaymentMethods>
   <Transactions>
     <Transaction>
-      <Date>2018-01-01T00:00:00-06:00</Date>
+      <Date>2018-01-01T09:00:00+03:00</Date>
       <Item>January Rent</Item>
       <Payee>Ryan DeBoer</Payee>
       <Amount>2400</Amount>
@@ -173,13 +173,13 @@
       <PaymentMethod xsi:type="CheckingAccount">
         <Name>Primary Checking</Name>
         <StartDate>0001-01-01T00:00:00</StartDate>
-        <EndDate>2018-01-01T00:00:00-06:00</EndDate>
+        <EndDate>2018-01-01T09:00:00+03:00</EndDate>
         <AccountNumber>0</AccountNumber>
         <Bank>Ally Bank</Bank>
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-01T00:00:00-06:00</Date>
+      <Date>2018-01-01T09:00:00+03:00</Date>
       <Item>Gym Membership</Item>
       <Payee>Chicago Athletic Clubs</Payee>
       <Amount>134</Amount>
@@ -192,12 +192,12 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-01T00:00:00-06:00</Date>
+      <Date>2018-01-01T09:00:00+03:00</Date>
       <Item>Pillowcases</Item>
       <Payee>Jet</Payee>
       <Amount>72.74</Amount>
@@ -210,12 +210,12 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-01T00:00:00-06:00</Date>
+      <Date>2018-01-01T09:00:00+03:00</Date>
       <Item>Router bits</Item>
       <Payee>Amazon</Payee>
       <Amount>49.91</Amount>
@@ -228,12 +228,12 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-01T00:00:00-06:00</Date>
+      <Date>2018-01-01T09:00:00+03:00</Date>
       <Item>Fabric</Item>
       <Payee>Joann Fabric</Payee>
       <Amount>30.313</Amount>
@@ -246,12 +246,12 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-01T00:00:00-06:00</Date>
+      <Date>2018-01-01T09:00:00+03:00</Date>
       <Item>Deodorant Return</Item>
       <Payee>Target</Payee>
       <Amount>-6.15</Amount>
@@ -264,12 +264,12 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-01T00:00:00-06:00</Date>
+      <Date>2018-01-01T09:00:00+03:00</Date>
       <Item>Heater and Legs</Item>
       <Payee>Menards</Payee>
       <Amount>51.40</Amount>
@@ -282,12 +282,12 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-01T00:00:00-06:00</Date>
+      <Date>2018-01-01T09:00:00+03:00</Date>
       <Item>Groceries</Item>
       <Payee>Fresh Thyme</Payee>
       <Amount>29.11</Amount>
@@ -300,8 +300,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -318,8 +318,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -336,8 +336,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -352,13 +352,13 @@
       <PaymentMethod xsi:type="CheckingAccount">
         <Name>Primary Checking</Name>
         <StartDate>0001-01-01T00:00:00</StartDate>
-        <EndDate>2018-01-01T00:00:00-06:00</EndDate>
+        <EndDate>2018-01-01T09:00:00+03:00</EndDate>
         <AccountNumber>0</AccountNumber>
         <Bank>Ally Bank</Bank>
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-06T00:00:00-06:00</Date>
+      <Date>2018-01-06T09:00:00+03:00</Date>
       <Item>U-Haul Rental</Item>
       <Payee>U-Haul</Payee>
       <Amount>102.75</Amount>
@@ -371,12 +371,12 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-06T00:00:00-06:00</Date>
+      <Date>2018-01-06T09:00:00+03:00</Date>
       <Item>Book</Item>
       <Payee>Amazon</Payee>
       <Amount>2.99</Amount>
@@ -389,12 +389,12 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-06T00:00:00-06:00</Date>
+      <Date>2018-01-06T09:00:00+03:00</Date>
       <Item>Dining Table</Item>
       <Payee>Great Spirit Hardwoods</Payee>
       <Amount>1012.14</Amount>
@@ -407,12 +407,12 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-14T00:00:00-06:00</Date>
+      <Date>2018-01-14T09:00:00+03:00</Date>
       <Item>Groceries</Item>
       <Payee>Mariano's</Payee>
       <Amount>26.10</Amount>
@@ -425,8 +425,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -443,8 +443,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -461,8 +461,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -479,8 +479,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -497,8 +497,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -515,8 +515,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -533,8 +533,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -551,8 +551,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -569,8 +569,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -587,8 +587,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -628,24 +628,6 @@
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-14T00:00:00-06:00</Date>
-      <Item>Cat Food</Item>
-      <Payee>Pet Supplies Plus</Payee>
-      <Amount>40.46</Amount>
-      <Category>
-        <Name>Pets</Name>
-      </Category>
-      <Comment />
-      <PaymentMethod xsi:type="CreditCard">
-        <Name>Capital One QuicksilverOne</Name>
-        <StartDate>2017-12-23T00:00:00</StartDate>
-        <EndDate>2018-01-25T00:00:00</EndDate>
-        <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
-      </PaymentMethod>
-    </Transaction>
-    <Transaction>
       <Date>2018-01-04T00:00:00</Date>
       <Item>Ornament Holder</Item>
       <Payee>Amazon</Payee>
@@ -659,8 +641,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -682,7 +664,7 @@
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-14T00:00:00-06:00</Date>
+      <Date>2018-01-14T09:00:00+03:00</Date>
       <Item>Survey Check</Item>
       <Payee>Opinions Ltd.</Payee>
       <Amount>10</Amount>
@@ -693,13 +675,13 @@
       <PaymentMethod xsi:type="CheckingAccount">
         <Name>Primary Checking</Name>
         <StartDate>0001-01-01T00:00:00</StartDate>
-        <EndDate>2018-01-01T00:00:00-06:00</EndDate>
+        <EndDate>2018-01-01T09:00:00+03:00</EndDate>
         <AccountNumber>0</AccountNumber>
         <Bank>Ally Bank</Bank>
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-14T00:00:00-06:00</Date>
+      <Date>2018-01-14T09:00:00+03:00</Date>
       <Item>Birthday Check</Item>
       <Payee>Judy Bedard</Payee>
       <Amount>10</Amount>
@@ -710,13 +692,13 @@
       <PaymentMethod xsi:type="CheckingAccount">
         <Name>Primary Checking</Name>
         <StartDate>0001-01-01T00:00:00</StartDate>
-        <EndDate>2018-01-01T00:00:00-06:00</EndDate>
+        <EndDate>2018-01-01T09:00:00+03:00</EndDate>
         <AccountNumber>0</AccountNumber>
         <Bank>Ally Bank</Bank>
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-14T00:00:00-06:00</Date>
+      <Date>2018-01-14T09:00:00+03:00</Date>
       <Item>Rewards Check</Item>
       <Payee>Capital One</Payee>
       <Amount>25</Amount>
@@ -727,7 +709,7 @@
       <PaymentMethod xsi:type="CheckingAccount">
         <Name>Primary Checking</Name>
         <StartDate>0001-01-01T00:00:00</StartDate>
-        <EndDate>2018-01-01T00:00:00-06:00</EndDate>
+        <EndDate>2018-01-01T09:00:00+03:00</EndDate>
         <AccountNumber>0</AccountNumber>
         <Bank>Ally Bank</Bank>
       </PaymentMethod>
@@ -746,8 +728,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -764,8 +746,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -782,8 +764,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -800,8 +782,8 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
@@ -818,12 +800,12 @@
         <StartDate>2017-12-23T00:00:00</StartDate>
         <EndDate>2018-01-25T00:00:00</EndDate>
         <CreditLimit>5300</CreditLimit>
-        <PaymentAmount>-277.59</PaymentAmount>
-        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97</PaymentExpression>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
       </PaymentMethod>
     </Transaction>
     <Transaction>
-      <Date>2018-01-16T00:00:00-06:00</Date>
+      <Date>2018-01-16T09:00:00+03:00</Date>
       <Item>Paycheck</Item>
       <Payee>DMC</Payee>
       <Amount>2383.85</Amount>
@@ -834,7 +816,130 @@
       <PaymentMethod xsi:type="CheckingAccount">
         <Name>Primary Checking</Name>
         <StartDate>0001-01-01T00:00:00</StartDate>
-        <EndDate>2018-01-01T00:00:00-06:00</EndDate>
+        <EndDate>2018-01-01T09:00:00+03:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2018-01-16T00:00:00</Date>
+      <Item>Dinner</Item>
+      <Payee>Plum Market</Payee>
+      <Amount>12.92</Amount>
+      <Category>
+        <Name>DMC Expenses</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-12-23T00:00:00</StartDate>
+        <EndDate>2018-01-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2018-01-17T00:00:00</Date>
+      <Item>Nairobi Hotel</Item>
+      <Payee>Eka Hotel</Payee>
+      <Amount>1960</Amount>
+      <Category>
+        <Name>DMC Expenses</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-12-23T00:00:00</StartDate>
+        <EndDate>2018-01-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2018-01-16T00:00:00</Date>
+      <Item>Uber to Airport</Item>
+      <Payee>Uber</Payee>
+      <Amount>32.99</Amount>
+      <Category>
+        <Name>DMC Expenses</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-12-23T00:00:00</StartDate>
+        <EndDate>2018-01-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2018-01-19T00:00:00</Date>
+      <Item>Groceries</Item>
+      <Payee>Mariano's</Payee>
+      <Amount>11.17</Amount>
+      <Category>
+        <Name>Food</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CreditCard">
+        <Name>Capital One QuicksilverOne</Name>
+        <StartDate>2017-12-23T00:00:00</StartDate>
+        <EndDate>2018-01-25T00:00:00</EndDate>
+        <CreditLimit>5300</CreditLimit>
+        <PaymentAmount>2034.15</PaymentAmount>
+        <PaymentExpression>-.5-14.18-23.65-.5-46.55-20-21.19-7.21-36.06-21-44.24-17.54-24.97+2311.74</PaymentExpression>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2018-01-20T00:00:00+03:00</Date>
+      <Item>January Gas</Item>
+      <Payee>People's Gas</Payee>
+      <Amount>162.80</Amount>
+      <Category>
+        <Name>Gas Bill</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2018-01-01T09:00:00+03:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2018-01-20T00:00:00+03:00</Date>
+      <Item>January Power</Item>
+      <Payee>Comed</Payee>
+      <Amount>93.32</Amount>
+      <Category>
+        <Name>Electricity Bill</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2018-01-01T09:00:00+03:00</EndDate>
+        <AccountNumber>0</AccountNumber>
+        <Bank>Ally Bank</Bank>
+      </PaymentMethod>
+    </Transaction>
+    <Transaction>
+      <Date>2018-01-19T00:00:00</Date>
+      <Item>January Internet</Item>
+      <Payee>RCN</Payee>
+      <Amount>37.98</Amount>
+      <Category>
+        <Name>Internet Bill</Name>
+      </Category>
+      <Comment />
+      <PaymentMethod xsi:type="CheckingAccount">
+        <Name>Primary Checking</Name>
+        <StartDate>0001-01-01T00:00:00</StartDate>
+        <EndDate>2018-01-01T09:00:00+03:00</EndDate>
         <AccountNumber>0</AccountNumber>
         <Bank>Ally Bank</Bank>
       </PaymentMethod>

@@ -24,6 +24,7 @@ namespace BudgetApplication.Screens
             this.ComparisonValues = session.ComparisonValues;
             this.ComparisonTotals = session.ComparisonTotals;
             this.ComparisonBudgetAndSum = new TotalObservableCollection(this.ComparisonTotals);
+            this.ComparisonBudgetAndSum.IsComparison = true;
             this.ComparisonRows = new ListCollectionView(this.ComparisonValues);
             this.ComparisonRows.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
         }

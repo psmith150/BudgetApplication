@@ -225,6 +225,42 @@ namespace BudgetApplication.Services
         #endregion
         #endregion
         #region Public Methods
+
+        /// <summary>
+        /// Moves a row of values on all tabs
+        /// </summary>
+        /// <param name="start">Start index</param>
+        /// <param name="end">End index</param>
+        public void MoveValueRows(int start, int end)
+        {
+            _budgetValues.Move(start, end);
+            _spendingValues.Move(start, end);
+            _comparisonValues.Move(start, end);
+        }
+
+        /// <summary>
+        /// Moves a row of totals on all tabs
+        /// </summary>
+        /// <param name="start">Start index</param>
+        /// <param name="end">End index</param>
+        public void MoveTotalRows(int start, int end)
+        {
+            _budgetTotals.Move(start, end);
+            _spendingTotals.Move(start, end);
+            _comparisonTotals.Move(start, end);
+        }
+
+        /// <summary>
+        /// Refresh the ListCollectionViews. Used to update grouping.
+        /// </summary>
+        public void RefreshListViews()
+        {
+            //_budgetValueView.Refresh();
+            //_spendingValueView.Refresh();
+            //_comparisonValueView.Refresh();
+            //TODO
+        }
+
         public void LoadDataFromFile(string filePath)
         {
             //Debug.WriteLine("Loading data");
@@ -384,17 +420,6 @@ namespace BudgetApplication.Services
         private void GroupChanged(Object sender, PropertyChangedEventArgs e)
         {
             RefreshListViews();
-        }
-
-        /// <summary>
-        /// Refresh the ListCollectionViews. Used to update grouping.
-        /// </summary>
-        private void RefreshListViews()
-        {
-            //_budgetValueView.Refresh();
-            //_spendingValueView.Refresh();
-            //_comparisonValueView.Refresh();
-            //TODO
         }
 
         /// <summary>

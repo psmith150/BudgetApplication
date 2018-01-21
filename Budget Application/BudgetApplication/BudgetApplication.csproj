@@ -154,9 +154,17 @@
     <Compile Include="Model\ValueToBrushConverter.cs" />
     <Compile Include="Popups\PopupEventArgs.cs" />
     <Compile Include="Popups\PopupViewModel.cs" />
+    <Compile Include="Popups\PaymentMethodsPopup.xaml.cs">
+      <DependentUpon>PaymentMethodsPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popups\GroupAndCategoriesPopup.xaml.cs">
+      <DependentUpon>GroupAndCategoriesPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Popups\SettingsPopup.xaml.cs">
       <DependentUpon>SettingsPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Popups\PaymentMethodsViewModel.cs" />
+    <Compile Include="Popups\GroupAndCategoriesViewModel.cs" />
     <Compile Include="Popups\SettingsViewModel.cs" />
     <Compile Include="Screens\SpendingScreen.xaml.cs">
       <DependentUpon>SpendingScreen.xaml</DependentUpon>
@@ -226,6 +234,14 @@
     </Compile>
     <Compile Include="Windows\MainWindowViewModel.cs" />
     <Page Include="CustomControls\MoneyGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popups\PaymentMethodsPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popups\GroupAndCategoriesPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

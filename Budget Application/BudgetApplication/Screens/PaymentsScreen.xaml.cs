@@ -25,5 +25,18 @@ namespace BudgetApplication.Screens
             this.DataContext = viewModel;
             InitializeComponent();
         }
+        /// <summary>
+        /// Handles the RequestBringIntoView event of the category combobox. Prevents annoying autoscroll.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnRequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
+        {
+            //Allows the keyboard to bring the items into view as expected:
+            if (Keyboard.IsKeyDown(Key.Down) || Keyboard.IsKeyDown(Key.Up))
+                return;
+
+            e.Handled = true;
+        }
     }
 }

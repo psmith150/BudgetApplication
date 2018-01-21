@@ -254,6 +254,8 @@ C:\Training\BudgetApplication\Budget Application\BudgetApplication\bin\Debug\ru\
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\CustomControls\MoneyGrid.g.cs
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\PaymentMethodsPopup.g.cs
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\GroupAndCategoriesPopup.g.cs
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\SettingsPopup.g.cs
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\SpendingScreen.g.cs
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\ComparisonScreen.g.cs
@@ -278,6 +280,8 @@ C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Bud
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication_MarkupCompile.lref
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\App.baml
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\CustomControls\MoneyGrid.baml
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\PaymentMethodsPopup.baml
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\GroupAndCategoriesPopup.baml
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\SettingsPopup.baml
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\SpendingScreen.baml
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\ComparisonScreen.baml
@@ -301,3 +305,4 @@ C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Bud
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csproj.GenerateResource.Cache
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.exe
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.pdb
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csprojResolveAssemblyReference.cache

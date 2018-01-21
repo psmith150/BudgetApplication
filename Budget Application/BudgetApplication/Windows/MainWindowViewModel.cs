@@ -12,6 +12,7 @@ using BudgetApplication.Model;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using BudgetApplication.Popups;
 
 namespace BudgetApplication.Windows
 {
@@ -22,17 +23,20 @@ namespace BudgetApplication.Windows
         public ICommand ToggleEventLogVisibiliyCommand { get; set; }
         public ICommand SaveDataCommand { get; set; }
         public ICommand LoadDataCommand { get; set; }
+        public ICommand OpenGroupsAndCategoriesCommand { get; set; }
+        public ICommand OpenPaymentMethodsCommand { get; set; }
         #endregion
 
         #region Constructor
         public MainWindowViewModel(NavigationService navigationService, SessionService session) : base(session)
         {
             this.NavigationService = navigationService;
-
             this.NavigateToScreenCommand = new RelayCommand<Type>((viewModel) => this.NavigateToScreen(viewModel));
+            this.OpenGroupsAndCategoriesCommand = new RelayCommand(() => this.OpenGroupsAndCategories());
+            this.OpenPaymentMethodsCommand = new RelayCommand(() => this.OpenPaymentMethods());
             this.ToggleEventLogVisibiliyCommand = new RelayCommand(this.ShowDebugWindow);
-            this.SaveDataCommand = new RelayCommand(() => SaveData());
-            this.LoadDataCommand = new RelayCommand(() => LoadData());
+            this.SaveDataCommand = new RelayCommand(() => this.SaveData());
+            this.LoadDataCommand = new RelayCommand(() => this.LoadData());
 
             // Set the starting page
             this.NavigationService.NavigateTo<BudgetViewModel>();
@@ -66,6 +70,16 @@ namespace BudgetApplication.Windows
             {
                 this.NavigationService.NavigateTo(viewModelType);
             }
+        }
+
+        private async void OpenGroupsAndCategories()
+        {
+            await this.NavigationService.OpenPopup<GroupAndCategoriesViewModel>();
+        }
+
+        private async void OpenPaymentMethods()
+        {
+            await this.NavigationService.OpenPopup<PaymentMethodsViewModel>();
         }
 
         private void ShowDebugWindow()

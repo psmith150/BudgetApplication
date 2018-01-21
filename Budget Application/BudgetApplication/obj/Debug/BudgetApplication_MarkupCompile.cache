@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\App.xaml
-191229785644
+211906580334
 
-631102409802
+67-695756491
 82-210826506
-CustomControls\MoneyGrid.xaml;Popups\SettingsPopup.xaml;Screens\SpendingScreen.xaml;Screens\ComparisonScreen.xaml;Screens\BudgetScreen.xaml;Screens\MonthDetailScreen.xaml;Screens\PaymentsScreen.xaml;Screens\TransactionsScreen.xaml;Screens\TemplateScreen.xaml;View\LoadYearPopup.xaml;View\AddYearPopup.xaml;View\GroupsAndCategoriesWindow.xaml;View\MoneyGrid.xaml;View\MainWindow.xaml;StyleDictionary.xaml;View\AddPaymentPopup.xaml;View\MonthDetailView.xaml;View\PaymentMethodsWindow.xaml;Windows\MainWindow.xaml;
+CustomControls\MoneyGrid.xaml;Popups\PaymentMethodsPopup.xaml;Popups\GroupAndCategoriesPopup.xaml;Popups\SettingsPopup.xaml;Screens\SpendingScreen.xaml;Screens\ComparisonScreen.xaml;Screens\BudgetScreen.xaml;Screens\MonthDetailScreen.xaml;Screens\PaymentsScreen.xaml;Screens\TransactionsScreen.xaml;Screens\TemplateScreen.xaml;View\LoadYearPopup.xaml;View\AddYearPopup.xaml;View\GroupsAndCategoriesWindow.xaml;View\MoneyGrid.xaml;View\MainWindow.xaml;StyleDictionary.xaml;View\AddPaymentPopup.xaml;View\MonthDetailView.xaml;View\PaymentMethodsWindow.xaml;Windows\MainWindow.xaml;
 
 False
 

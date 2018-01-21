@@ -44,8 +44,8 @@
                     <MenuItem Header="_New"/>
                 </MenuItem>
                 <MenuItem Header="Setup">
-                    <MenuItem Header="Groups/Categories"/>
-                    <MenuItem Header="Payment Methods"/>
+                    <MenuItem Header="Groups/Categories" Command="{Binding OpenGroupsAndCategoriesCommand}"/>
+                    <MenuItem Header="Payment Methods" Command="{Binding OpenPaymentMethodsCommand}"/>
                 </MenuItem>
             </Menu>
             <DockPanel DockPanel.Dock="Top"
