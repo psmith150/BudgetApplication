@@ -4,15 +4,38 @@ using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace BudgetApplication.Services
 {
     public class SessionService : ObservableObject
     {
+        public SessionService()
+        {
+            //Sets event handlers to make sure all data is updated
+            this.Categories.CollectionChanged += CategoryCollectionChanged;  //Used to add/remove rows
+            this.Groups.CollectionChanged += GroupsCollectionChanged;  //Used to add/remove rows
+            this.Groups.MemberChanged += GroupChanged;  //Used to update grouping
+            this.BudgetValues.MemberChanged += UpdateBudgetTotals;  //Update respective totals
+            this.Transactions.MemberChanged += UpdateSpendingValues;    //Update spending if transaction has been modified
+            //TODO this.Transactions.MemberChanged += OnTransactionModified;   //Trigger event for view to handle
+            this.Transactions.CollectionChanged += AddOrRemoveSpendingValues;   //Update spending if transaction has been added or removed
+            //TODO this.Transactions.CollectionChanged += OnTransactionsChanged;   //Trigger event for view to handle
+            //_spendingTotals.MemberChanged += UpdateComparisonValues;    //Update comparison values if a spending values was changed. Totals used to allow bulk modification.
+            //_budgetTotals.MemberChanged += UpdateComparisonValues;  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
+
+        }
+        #region Private Fields
+        //Groups for income and expenditures in the Totals grids.
+        private Group columnIncomeTotalsGroup = new Group(true, "Income Totals");
+        private Group columnExpendituresTotalsGroup = new Group(false, "Expenditure totals");
+        #endregion
         #region Public Properties
         private bool _IsBusy;
         public bool IsBusy
@@ -220,10 +243,10 @@ namespace BudgetApplication.Services
             Group testGroup = new Model.Group();
             Category testCategory = new Category();
             MoneyGridRow testRow = new MoneyGridRow(testGroup, testCategory);
-            this.Groups.Add(testGroup);
-            this.Categories.Add(testCategory);
-            this.BudgetValues.Add(testRow);
-            return;
+            //this.Groups.Add(testGroup);
+            //this.Categories.Add(testCategory);
+            //this.BudgetValues.Add(testRow);
+            //return;
 
             //Retrieves the data using the serialize attributes
             DataWrapper data = new DataWrapper();
@@ -250,7 +273,7 @@ namespace BudgetApplication.Services
             List<Category> tempCategories = new List<Category>();
             Stopwatch runTimer;
             runTimer = Stopwatch.StartNew();
-            // TODO BudgetValues.MemberChanged -= UpdateBudgetTotals;
+            BudgetValues.MemberChanged -= UpdateBudgetTotals;
             //Debug.WriteLine("Placeholder");
             foreach (Group group in data.Groups)
             {
@@ -265,8 +288,8 @@ namespace BudgetApplication.Services
                     index++;
                 }
             }
-            // TODO_budgetValues.MemberChanged += UpdateBudgetTotals;
-            // TODO RefreshBudgetTotals();
+            BudgetValues.MemberChanged += UpdateBudgetTotals;
+            RefreshBudgetTotals();
             runTimer.Stop();
             //Debug.WriteLine("Reading groups and categories: " + runTimer.ElapsedTicks);
             runTimer = Stopwatch.StartNew();
@@ -309,6 +332,464 @@ namespace BudgetApplication.Services
             runTimer.Stop();
             //Debug.WriteLine("Reading transactions: " + runTimer.ElapsedTicks);
             //Debug.WriteLine(_budgetValues.Count);
+        }
+
+        public async Task SaveDataToFile(string filePath)
+        {
+            try
+            {
+                using (FileStream file = new FileStream(filePath, FileMode.Open))
+                {
+                    using (StreamWriter stream = new StreamWriter(file))
+                    {
+                        //Create the DataWrapper object and add the apprpriate data
+                        XmlSerializer dataSerializer = new XmlSerializer(typeof(DataWrapper));
+                        DataWrapper data = new DataWrapper();
+                        data.Groups = this.Groups;
+                        data.PaymentMethods = this.PaymentMethods;
+                        data.Transactions = this.Transactions;
+                        List<decimal[]> budgetData = new List<decimal[]>(); //Easiest to just store values in order
+                        foreach (MoneyGridRow row in this.BudgetValues)
+                        {
+                            budgetData.Add(row.Values.Values);
+                        }
+                        data.BudgetValues = budgetData;
+
+                        await Task.Run(() => dataSerializer.Serialize(stream, data)); //Saves the data using the attributes defined in each class
+                    }
+                }
+            }
+            catch (IOException ex)
+            {
+                Debug.WriteLine($"Error saving to file {filePath}\n" + ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                Debug.WriteLine($"Error writing XML to file {filePath}\n" + ex.Message);
+            }
+        }
+        #endregion
+
+        #region Private Methods
+        private void CategoryChanged(Object sender, PropertyChangedEventArgs e)
+        {
+            //RefreshListViews();
+        }
+
+        /// <summary>
+        /// Called when a group has its properties modified. Used to update the groupings.
+        /// </summary>
+        /// <param name="sender">The modified object</param>
+        /// <param name="e">The arguments</param>
+        private void GroupChanged(Object sender, PropertyChangedEventArgs e)
+        {
+            RefreshListViews();
+        }
+
+        /// <summary>
+        /// Refresh the ListCollectionViews. Used to update grouping.
+        /// </summary>
+        private void RefreshListViews()
+        {
+            //_budgetValueView.Refresh();
+            //_spendingValueView.Refresh();
+            //_comparisonValueView.Refresh();
+            //TODO
+        }
+
+        /// <summary>
+        /// Called when the category collection is changed. Used to add/remove Values rows.
+        /// </summary>
+        /// <param name="sender">The modified collection</param>
+        /// <param name="e">The arguments</param>
+        private void CategoryCollectionChanged(Object sender, NotifyCollectionChangedEventArgs e)
+        {
+            //Debug.WriteLine("Adding category");
+            //Adds Values rows
+            if (e.NewItems != null && e.Action != NotifyCollectionChangedAction.Move)
+            {
+                foreach (Category newCategory in e.NewItems)
+                {
+                    //MessageBox.Show(newCategory.Group.Name);
+                    Group group = GetCategoryGroup(newCategory);
+                    if (group == null)
+                    {
+                        throw new ArgumentException("Could not match group to category " + newCategory.Name);
+                    }
+                    _budgetValues.Add(new MoneyGridRow(group, newCategory));
+                    _spendingValues.Add(new MoneyGridRow(group, newCategory));
+                    _comparisonValues.Add(new MoneyGridRow(group, newCategory));
+
+                    //Debug.WriteLine(_spendingValues.Count);
+                    //Debug.WriteLine("Current group " + group.Name);
+                    //Debug.WriteLine("Could not match group to category " + newCategory.Name + ", " + group.Name);
+                    //throw new ArgumentException("Could not match group to category " + newCategory.Name, ex);
+                }
+            }
+            //Removes Values rows. Order is important to avoid triggering data that doesn't exist. (1/4/2017: May be fixed now)
+            if (e.OldItems != null && e.Action != NotifyCollectionChangedAction.Move)
+            {
+                foreach (Category oldCategory in e.OldItems)
+                {
+                    MoneyGridRow oldRow = _comparisonValues.Where(row => row.Category == oldCategory).ElementAt(0);
+                    if (oldRow == null)
+                        throw new ArgumentException("Cannot locate deleted row");
+                    _comparisonValues.Remove(oldRow);
+
+                    oldRow = _spendingValues.Where(row => row.Category == oldCategory).ElementAt(0);
+                    if (oldRow == null)
+                        throw new ArgumentException("Cannot locate deleted row");
+                    _spendingValues.Remove(oldRow);
+
+                    oldRow = _budgetValues.Where(row => row.Category == oldCategory).ElementAt(0);
+                    if (oldRow == null)
+                        throw new ArgumentException("Cannot locate deleted row");
+                    _budgetValues.Remove(oldRow);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called when the group collection is changed. Used to add/remove Totals rows.
+        /// </summary>
+        /// <param name="sender">The modified collection</param>
+        /// <param name="e">The arguments</param>
+        private void GroupsCollectionChanged(Object sender, NotifyCollectionChangedEventArgs e)
+        {
+            //Adds Totals rows
+            if (e.NewItems != null && e.Action != NotifyCollectionChangedAction.Move)
+            {
+                foreach (Group newGroup in e.NewItems)
+                {
+                    Category newCategory = new Category(newGroup.Name);
+                    try
+                    {
+                        Group totalGroup;
+                        //Gets the income state
+                        if (newGroup.IsIncome)
+                        {
+                            totalGroup = columnIncomeTotalsGroup;
+                        }
+                        else
+                        {
+                            totalGroup = columnExpendituresTotalsGroup;
+                        }
+                        _budgetTotals.Add(new MoneyGridRow(totalGroup, newCategory));
+                        _spendingTotals.Add(new MoneyGridRow(totalGroup, newCategory));
+                        _comparisonTotals.Add(new MoneyGridRow(totalGroup, newCategory));
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Debug.WriteLine("Could not match group to category " + newCategory.Name);
+                        throw new ArgumentException("Could not match group to category " + newGroup.Name, ex);
+                    }
+                }
+            }
+
+            //Removes totals rows
+            if (e.OldItems != null && e.Action != NotifyCollectionChangedAction.Move)
+            {
+                foreach (Group oldGroup in e.OldItems)
+                {
+                    //Debug.WriteLine("Group to be deleted: " + oldGroup.Name);
+                    foreach (MoneyGridRow row in _budgetValues)
+                    {
+                        //Debug.WriteLine("Budget row: " + row.Category);
+                    }
+                    MoneyGridRow oldRow = _budgetTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
+                    if (oldRow == null)
+                        throw new ArgumentException("Cannot locate deleted row");
+                    _budgetTotals.Remove(oldRow);
+
+                    oldRow = _spendingTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
+                    if (oldRow == null)
+                        throw new ArgumentException("Cannot locate deleted row");
+                    _spendingTotals.Remove(oldRow);
+
+                    oldRow = _comparisonTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
+                    if (oldRow == null)
+                        throw new ArgumentException("Cannot locate deleted row");
+                    _comparisonTotals.Remove(oldRow);
+                }
+            }
+        }
+        /// <summary>
+        /// Finds the group corresponding to the specified category
+        /// </summary>
+        /// <param name="category">The category to locate</param>
+        /// <returns>The mathching group</returns>
+        private Group GetCategoryGroup(Category category)
+        {
+            foreach (Group group in _groups)
+            {
+                if (group.Categories.Contains(category))
+                {
+                    return group;
+                }
+            }
+            return null;
+        }
+        private void CalculateColumnTotals(ObservableCollection<MoneyGridRow> columnValues, ObservableCollection<MoneyGridRow> columnTotals, String propertyName)
+        {
+            //Don't do anything if not all the rows have been loaded yet
+            if (columnValues.Count < _categories.Count || columnTotals.Count < _groups.Count)
+                return;
+            double totalGridIncomeTotal = 0.0;
+            double totalGridExpenditureTotal = 0.0;
+            foreach (Group group in _groups) //For each group, find its total row and then sum all the category rows that are part of the group
+            {
+                double groupTotal = 0.0;
+                decimal[] groupSum = new decimal[12];
+                MoneyGridRow total;
+                try
+                {
+                    total = columnTotals.Single(x => x.Category.Name.Equals(group.Name));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Could not find corresponding total row: " + group.Name);
+                    continue;
+                    //throw new ArgumentException("Could not find corresponding total row: " + group.Name, ex);
+                }
+                foreach (Category category in group.Categories)
+                {
+                    try
+                    {
+                        MoneyGridRow row = columnValues.Single(x => x.Group == group && x.Category == category);
+                        for (int i = 0; i < row.Values.Count; i++)
+                        {
+                            groupSum[i] += row.Values[i];
+                        }
+                        groupTotal += (double)row.Sum;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(propertyName + " does not contain row for group " + group + " and category " + category);
+                        continue;
+                        //Debug.WriteLine(columnValues.ElementAt(0).Group + " " + columnValues.ElementAt(0).Category);
+                        throw new ArgumentException("Could not find corresponding row", ex);
+                    }
+                }
+                total.Values.Values = groupSum;
+                groupTotal = (double)total.Sum;
+                if (group.IsIncome)
+                    totalGridIncomeTotal += (double)total.Sum;
+                else
+                    totalGridExpenditureTotal += (double)total.Sum;
+                foreach (Category category in group.Categories)
+                {
+                    try
+                    {
+                        MoneyGridRow row = columnValues.Single(x => x.Group == group && x.Category == category);
+                        row.Percentage = (double)row.Sum / groupTotal;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(propertyName + " does not contain row for group " + group + " and category " + category);
+                        continue;
+                        //Debug.WriteLine(columnValues.ElementAt(0).Group + " " + columnValues.ElementAt(0).Category);
+                        throw new ArgumentException("Could not find corresponding row", ex);
+                    }
+                }
+                //RaisePropertyChanged(propertyName);
+            }
+            foreach (MoneyGridRow row in columnTotals)
+            {
+                if (row.Group.IsIncome)
+                    row.Percentage = (double)row.Sum / totalGridIncomeTotal;
+                else
+                    row.Percentage = (double)row.Sum / totalGridExpenditureTotal;
+            }
+        }
+
+        /// <summary>
+        /// Updates the values in the budget tab's Totals grid
+        /// </summary>
+        /// <param name="sender">The Values grid row property that was modified</param>
+        /// <param name="e">The arguments</param>
+        private void UpdateBudgetTotals(Object sender, PropertyChangedEventArgs e)
+        {
+            //Debug.WriteLine("Updating budget totals");
+            if (e.PropertyName.Equals("Values"))
+            {
+                CalculateColumnTotals(_budgetValues, _budgetTotals, "BudgetTotals");
+                UpdateComparisonValues();
+                //TODO UpdateMonthDetails();
+            }
+        }
+
+        /// <summary>
+        /// This function is used to force a refresh of the budget totals
+        /// </summary>
+        private void RefreshBudgetTotals()
+        {
+            CalculateColumnTotals(_budgetValues, _budgetTotals, "BudgetTotals");
+            UpdateComparisonValues();
+            //TODO UpdateMonthDetails();
+        }
+
+
+        //Possible update: add oldValue to transaction, find transaction being modified, and update the appropriate fields
+        /// <summary>
+        /// Updates the values in the Spending tab when a transaction is modified. Resets the values and recalculates from the transactions.
+        /// Note: not very efficient and should be updated.
+        /// </summary>
+        /// <param name="sender">The changed Transaction property</param>
+        /// <param name="e">The arguments</param>
+        private void UpdateSpendingValues(Object sender, PropertyChangedEventArgs e)
+        {
+            Debug.WriteLine("Transaction modified!");
+            //Only category, date, and amount will change the spending data
+            if (!e.PropertyName.Equals("Category") && !e.PropertyName.Equals("Amount") && !e.PropertyName.Equals("Date"))
+                return;
+            //Reset values
+            foreach (MoneyGridRow row in _spendingValues)
+            {
+                row.Values.Values = new decimal[12];
+            }
+            //Loop through each transaction and add the values
+            foreach (Transaction transaction in _transactions)
+            {
+                if (transaction.Category != null)
+                {
+                    MoneyGridRow row;
+                    try
+                    {
+                        row = _spendingValues.Single(x => x.Category == transaction.Category);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ArgumentException("Cannot find category for transaction category " + transaction.Category, ex);
+                    }
+                    //TODO: check year
+                    int month = transaction.Date.Month - 1;
+                    row.Values[month] += transaction.Amount;
+                }
+            }
+            //Debug.WriteLine("Spending Values Updated");
+            UpdateSpendingTotals(); //Called here so that it is only updated once all the values are recalculated
+        }
+
+        /// <summary>
+        /// Updates the values in the Spending tab when a transaction is added or removed. Adds or subtracts the appropriate amount.
+        /// </summary>
+        /// <param name="sender">The collection that was changed</param>
+        /// <param name="e">The arguments</param>
+        private void AddOrRemoveSpendingValues(Object sender, NotifyCollectionChangedEventArgs e)
+        {
+            //Add a new value
+            if (e.NewItems != null && e.Action != NotifyCollectionChangedAction.Move)
+            {
+                foreach (Transaction transaction in e.NewItems)
+                {
+                    if (transaction.Category != null)
+                    {
+                        MoneyGridRow row;
+                        try
+                        {
+                            row = _spendingValues.Single(x => x.Category == transaction.Category);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new ArgumentException("Cannot find category for transaction category " + transaction.Category, ex);
+                        }
+                        //TODO: check year
+                        int month = transaction.Date.Month - 1;
+                        row.Values[month] += transaction.Amount;
+                    }
+                }
+                UpdateSpendingTotals();
+            }
+            //Remove an old value
+            if (e.OldItems != null && e.Action != NotifyCollectionChangedAction.Move)
+            {
+                foreach (Transaction transaction in e.OldItems)
+                {
+                    MoneyGridRow row;
+                    try
+                    {
+                        row = _spendingValues.Single(x => x.Category == transaction.Category);
+                    }
+                    catch (Exception ex)    //Category doesn't exist, so no need to remove amount from total
+                    {
+                        return;
+                        throw new ArgumentException("Cannot find category for transaction category " + transaction.Category, ex);
+                    }
+                    //TODO: check year
+                    int month = transaction.Date.Month - 1;
+                    row.Values[month] -= transaction.Amount;
+                }
+                UpdateSpendingTotals();
+            }
+            //Recalculate all values due to reset
+            if (e.Action == NotifyCollectionChangedAction.Reset)
+            {
+                foreach (Transaction transaction in _transactions)
+                {
+                    if (transaction.Category != null)
+                    {
+                        MoneyGridRow row;
+                        try
+                        {
+                            row = _spendingValues.Single(x => x.Category == transaction.Category);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new ArgumentException("Cannot find category for transaction category " + transaction.Category, ex);
+                        }
+                        //TODO: check year
+                        int month = transaction.Date.Month - 1;
+                        row.Values[month] += transaction.Amount;
+                    }
+                }
+                UpdateSpendingTotals();
+            }
+        }
+
+        /// <summary>
+        /// Updates the values in the spending tab's Totals grid
+        /// </summary>
+        private void UpdateSpendingTotals()
+        {
+            //Debug.WriteLine("Updating spending totals");
+            CalculateColumnTotals(_spendingValues, _spendingTotals, "SpendingTotals");
+            //Debug.WriteLine("Spending Total Updated");
+            UpdateComparisonValues();
+            //TODO UpdateMonthDetails();
+        }
+
+        private void UpdateComparisonValues()
+        {
+            //Debug.WriteLine("Number of categories: " + _categories.Count + "Number of rows: " + _budgetValues.Count + " " + _spendingValues.Count + " " + _comparisonValues.Count);
+            for (int i = 0; i < _comparisonValues.Count; i++)
+            {
+                for (int j = 0; j < 12; j++)
+                {
+                    //Checks if value needs to be updated - reduces redraw time
+                    //Sign adjusted for expenditure categories
+                    if (_comparisonValues.ElementAt(i).Group.IsIncome)
+                    {
+                        if (_comparisonValues.ElementAt(i).Values[j] == _spendingValues.ElementAt(i).Values[j] - _budgetValues.ElementAt(i).Values[j])
+                            continue;
+                        _comparisonValues.ElementAt(i).Values[j] = _spendingValues.ElementAt(i).Values[j] - _budgetValues.ElementAt(i).Values[j];
+                    }
+                    else
+                    {
+                        if (_comparisonValues.ElementAt(i).Values[j] == _budgetValues.ElementAt(i).Values[j] - _spendingValues.ElementAt(i).Values[j])
+                            continue;
+                        _comparisonValues.ElementAt(i).Values[j] = _budgetValues.ElementAt(i).Values[j] - _spendingValues.ElementAt(i).Values[j];
+                    }
+
+                    if (_spendingValues.ElementAt(i).Values[j] > 0)
+                    {
+                        //MessageBox.Show(i + " " + j);
+                    }
+                }
+            }
+            //Update the Totals grid if it has all the groups
+            if (_comparisonTotals.Count == _groups.Count)
+                CalculateColumnTotals(_comparisonValues, _comparisonTotals, "Comparison Totals");
+            //_comparisonValues.MemberPropertyChanged(null, null);
         }
         #endregion
     }

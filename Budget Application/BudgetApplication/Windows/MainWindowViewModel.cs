@@ -112,38 +112,12 @@ namespace BudgetApplication.Windows
         /// <summary>
         /// Saves the current data in the current filepath
         /// </summary>
-        private void SaveData()
+        private async void SaveData()
         {
-            try
-            {
-                using (FileStream file = new FileStream(this.currentFilePath, FileMode.Open))
-                {
-                    using (StreamWriter stream = new StreamWriter(file))
-                    {
-                        //Create the DataWrapper object and add the apprpriate data
-                        XmlSerializer dataSerializer = new XmlSerializer(typeof(DataWrapper));
-                        DataWrapper data = new DataWrapper();
-                        data.Groups = this.Session.Groups;
-                        data.PaymentMethods = this.Session.PaymentMethods;
-                        data.Transactions = this.Session.Transactions;
-                        List<decimal[]> budgetData = new List<decimal[]>(); //Easiest to just store values in order
-                        foreach (MoneyGridRow row in this.Session.BudgetValues)
-                        {
-                            budgetData.Add(row.Values.Values);
-                        }
-                        data.BudgetValues = budgetData;
 
-                        dataSerializer.Serialize(stream, data); //Saves the data using the attributes defined in each class
-                    }
-                }
-            }
-            catch (IOException ex)
+            if (string.IsNullOrEmpty(this.currentFilePath) == false)
             {
-                Debug.WriteLine($"Error saving to file {this.currentFilePath}\n" + ex.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                Debug.WriteLine($"Error writing XML to file {this.currentFilePath}\n" + ex.Message);
+                await this.Session.SaveDataToFile(this.currentFilePath);
             }
         }
 
@@ -155,7 +129,7 @@ namespace BudgetApplication.Windows
             try
             {
                 var fileSearch = new OpenFileDialog();
-                fileSearch.InitialDirectory = @"C:\";
+                fileSearch.InitialDirectory = Properties.Settings.Default.DefaultDirectory;
                 fileSearch.Filter = "XML File (*.xml) | *.xml";
                 fileSearch.FilterIndex = 2;
                 fileSearch.RestoreDirectory = true;

@@ -174,10 +174,18 @@
     <Compile Include="Screens\MonthDetailScreen.xaml.cs">
       <DependentUpon>MonthDetailScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Screens\PaymentsScreen.xaml.cs">
+      <DependentUpon>PaymentsScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\TransactionsScreen.xaml.cs">
+      <DependentUpon>TransactionsScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Screens\TemplateScreen.xaml.cs">
       <DependentUpon>TemplateScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Screens\MonthDetailViewModel.cs" />
+    <Compile Include="Screens\PaymentsViewModel.cs" />
+    <Compile Include="Screens\TransactionsViewModel.cs" />
     <Compile Include="Screens\TemplateViewModel.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\SessionService.cs" />
@@ -238,6 +246,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Screens\MonthDetailScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\PaymentsScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\TransactionsScreen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

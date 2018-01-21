@@ -34,5 +34,17 @@ namespace BudgetApplication.Properties {
                 this["SampleSetting"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Training\\BudgetApplication\\Data")]
+        public string DefaultDirectory {
+            get {
+                return ((string)(this["DefaultDirectory"]));
+            }
+            set {
+                this["DefaultDirectory"] = value;
+            }
+        }
     }
 }

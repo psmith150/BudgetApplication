@@ -81,7 +81,15 @@
                                             CommandParameter="{x:Type screens:MonthDetailViewModel}"
                                             Command="{Binding NavigateToScreenCommand}"
                                             IsEnabled="{Binding NavigationService.ActiveViewModel, Converter={StaticResource TypeToBoolConverter}, ConverterParameter={x:Type screens:MonthDetailViewModel}}"/>
-                    
+                    <customControls:HoverButton Content="Transactions" 
+                                            CommandParameter="{x:Type screens:TransactionsViewModel}"
+                                            Command="{Binding NavigateToScreenCommand}"
+                                            IsEnabled="{Binding NavigationService.ActiveViewModel, Converter={StaticResource TypeToBoolConverter}, ConverterParameter={x:Type screens:TransactionsViewModel}}"/>
+                    <customControls:HoverButton Content="Payment Methods" 
+                                            CommandParameter="{x:Type screens:PaymentsViewModel}"
+                                            Command="{Binding NavigateToScreenCommand}"
+                                            IsEnabled="{Binding NavigationService.ActiveViewModel, Converter={StaticResource TypeToBoolConverter}, ConverterParameter={x:Type screens:PaymentsViewModel}}"/>
+
                 </UniformGrid>
                 <Grid Background="White">
                     <!--<Image HorizontalAlignment="Left" 
