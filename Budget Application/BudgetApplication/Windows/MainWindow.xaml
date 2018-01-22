@@ -47,6 +47,7 @@
                     <MenuItem Header="Groups/Categories" Command="{Binding OpenGroupsAndCategoriesCommand}"/>
                     <MenuItem Header="Payment Methods" Command="{Binding OpenPaymentMethodsCommand}"/>
                 </MenuItem>
+                <MenuItem Header="Settings" Command="{Binding OpenSettingsCommand}"/>
             </Menu>
             <DockPanel DockPanel.Dock="Top"
                    Height="50"

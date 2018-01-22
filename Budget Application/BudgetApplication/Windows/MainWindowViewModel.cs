@@ -25,6 +25,7 @@ namespace BudgetApplication.Windows
         public ICommand LoadDataCommand { get; set; }
         public ICommand OpenGroupsAndCategoriesCommand { get; set; }
         public ICommand OpenPaymentMethodsCommand { get; set; }
+        public ICommand OpenSettingsCommand { get; private set; }
         #endregion
 
         #region Constructor
@@ -37,6 +38,7 @@ namespace BudgetApplication.Windows
             this.ToggleEventLogVisibiliyCommand = new RelayCommand(this.ShowDebugWindow);
             this.SaveDataCommand = new RelayCommand(() => this.SaveData());
             this.LoadDataCommand = new RelayCommand(() => this.LoadData());
+            this.OpenSettingsCommand = new RelayCommand(() => this.OpenSettings());
 
             // Set the starting page
             this.NavigationService.NavigateTo<BudgetViewModel>();
@@ -80,6 +82,11 @@ namespace BudgetApplication.Windows
         private async void OpenPaymentMethods()
         {
             await this.NavigationService.OpenPopup<PaymentMethodsViewModel>();
+        }
+
+        private async void OpenSettings()
+        {
+            await this.NavigationService.OpenPopup<SettingsViewModel>();
         }
 
         private void ShowDebugWindow()

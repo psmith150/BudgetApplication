@@ -9,18 +9,22 @@
              d:DataContext="{d:DesignInstance Type=local:SettingsViewModel}">
     <Grid Background="White" Width="300" Height="300">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
+        <TextBox Text="Settings" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Sample Setting" />
-                <TextBox Text="{Binding SampleSetting}" />
+                <TextBlock Text="Default Directory" />
+                <TextBox Text="{Binding DefaultDirectory}" Width="100" Name="DirectoryBox"/>
+                <Button Content="..." Command="{Binding SelectDirectoryCommand}" Width="{Binding Source={x:Reference DirectoryBox}, Path=ActualHeight}"/>
             </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Button Content="Close" Command="{Binding ClosePopupCommand}" />
-            <Button Content="Save" Command="{Binding SaveCommand}" />
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Close" Command="{Binding ExitPopupCommand}" Width="50"/>
+            <Separator Width="25"/>
+            <Button Content="Save" Command="{Binding SaveCommand}" Width="50"/>
         </StackPanel>
     </Grid>
 </UserControl>
