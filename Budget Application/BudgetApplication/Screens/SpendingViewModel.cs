@@ -26,6 +26,8 @@ namespace BudgetApplication.Screens
             this.SpendingBudgetAndSum = new TotalObservableCollection(this.SpendingTotals);
             this.SpendingRows = new ListCollectionView(this.SpendingValues);
             this.SpendingRows.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
+
+            this.Session.RequestListViewUpdate += ((o, e) => this.SpendingRows.Refresh());
         }
         #endregion
 

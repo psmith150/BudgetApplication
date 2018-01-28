@@ -27,6 +27,8 @@ namespace BudgetApplication.Screens
             this.ComparisonBudgetAndSum.IsComparison = true;
             this.ComparisonRows = new ListCollectionView(this.ComparisonValues);
             this.ComparisonRows.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
+
+            this.Session.RequestListViewUpdate += ((o, e) => this.ComparisonRows.Refresh());
         }
         #endregion
 

@@ -14,6 +14,7 @@ namespace BudgetApplication.Model
     [XmlRoot("Data")]
     public class DataWrapper
     {
+        public int Year { get; set; }
         public MyObservableCollection<Group> Groups { get; set; }   //Collection of groups
         public MyObservableCollection<PaymentMethod> PaymentMethods { get; set; }   //Collection of payment methods
         public MyObservableCollection<Transaction> Transactions { get; set; }   //Collection of transactions

@@ -8,7 +8,7 @@ using System.Diagnostics;
 using BudgetApplication.Model;
 using GalaSoft.MvvmLight.CommandWpf;
 
-namespace BudgetApplication.CustomControls
+namespace BudgetApplication.View
 {
     /// <summary>
     /// User control used to display a year's worth of budgeting or spending data.
@@ -22,11 +22,17 @@ namespace BudgetApplication.CustomControls
         {
             InitializeComponent();
             this.Loaded += SetColumnMinWidth;
+            FitColumnsCommand = new RelayCommand(() => FitColumns());
+        }
+
+        public RelayCommand FitColumnsCommand
+        {
+            get; set;
         }
 
         public void FitColumns()
         {
-            MainGrid.Width = ScrollViewer.ActualWidth - SystemParameters.VerticalScrollBarWidth;
+            MainGrid.Width = ScrollViewer.ActualWidth;
             //Debug.WriteLine("Gets here");
         }
 
@@ -164,11 +170,6 @@ namespace BudgetApplication.CustomControls
                 }
                 row.Values.Values = values;
             }
-        }
-
-        private void FitColumnsToWindow_Click(object sender, RoutedEventArgs e)
-        {
-            FitColumns();
         }
     }
 }

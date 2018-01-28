@@ -85,6 +85,7 @@
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -160,11 +161,15 @@
     <Compile Include="Popups\GroupAndCategoriesPopup.xaml.cs">
       <DependentUpon>GroupAndCategoriesPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Popups\ChangeYearPopup.xaml.cs">
+      <DependentUpon>ChangeYearPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Popups\SettingsPopup.xaml.cs">
       <DependentUpon>SettingsPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Popups\PaymentMethodsViewModel.cs" />
     <Compile Include="Popups\GroupAndCategoriesViewModel.cs" />
+    <Compile Include="Popups\ChangeYearViewModel.cs" />
     <Compile Include="Popups\SettingsViewModel.cs" />
     <Compile Include="Screens\SpendingScreen.xaml.cs">
       <DependentUpon>SpendingScreen.xaml</DependentUpon>
@@ -205,28 +210,28 @@
     <Compile Include="Model\TotalObservableCollection.cs" />
     <Compile Include="ValueConverters\TypeToBoolConverter.cs" />
     <Compile Include="ValueConverters\ViewModelToViewConverter.cs" />
-    <Compile Include="View\LoadYearPopup.xaml.cs">
+    <Compile Include="_Archive - View\LoadYearPopup.xaml.cs">
       <DependentUpon>LoadYearPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\AddYearPopup.xaml.cs">
+    <Compile Include="_Archive - View\AddYearPopup.xaml.cs">
       <DependentUpon>AddYearPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\GroupsAndCategoriesWindow.xaml.cs">
+    <Compile Include="_Archive - View\GroupsAndCategoriesWindow.xaml.cs">
       <DependentUpon>GroupsAndCategoriesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\MyObservableCollection.cs" />
-    <Compile Include="View\MoneyGrid.xaml.cs">
+    <Compile Include="_Archive - View\MoneyGrid.xaml.cs">
       <DependentUpon>MoneyGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="View\AddPaymentPopup.xaml.cs">
+    <Compile Include="_Archive - ViewModel\MainViewModel.cs" />
+    <Compile Include="_Archive - ViewModel\ViewModelLocator.cs" />
+    <Compile Include="_Archive - View\AddPaymentPopup.xaml.cs">
       <DependentUpon>AddPaymentPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MonthDetailView.xaml.cs">
+    <Compile Include="_Archive - View\MonthDetailView.xaml.cs">
       <DependentUpon>MonthDetailView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PaymentMethodsWindow.xaml.cs">
+    <Compile Include="_Archive - View\PaymentMethodsWindow.xaml.cs">
       <DependentUpon>PaymentMethodsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindow.xaml.cs">
@@ -242,6 +247,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Popups\GroupAndCategoriesPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popups\ChangeYearPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -277,23 +286,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\LoadYearPopup.xaml">
+    <Page Include="_Archive - View\LoadYearPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\AddYearPopup.xaml">
+    <Page Include="_Archive - View\AddYearPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\GroupsAndCategoriesWindow.xaml">
+    <Page Include="_Archive - View\GroupsAndCategoriesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MoneyGrid.xaml">
+    <Page Include="_Archive - View\MoneyGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MainWindow.xaml">
+    <Page Include="_Archive - View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -301,7 +310,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\MainWindow.xaml.cs">
+    <Compile Include="_Archive - View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -309,15 +318,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\AddPaymentPopup.xaml">
+    <Page Include="_Archive - View\AddPaymentPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MonthDetailView.xaml">
+    <Page Include="_Archive - View\MonthDetailView.xaml">
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\PaymentMethodsWindow.xaml">
+    <Page Include="_Archive - View\PaymentMethodsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

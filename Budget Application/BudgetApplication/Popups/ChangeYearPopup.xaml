@@ -1,24 +1,23 @@
-﻿<UserControl x:Class="BudgetApplication.Popups.SettingsPopup"
+﻿<UserControl x:Class="BudgetApplication.Popups.ChangeYearPopup"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BudgetApplication.Popups"
              mc:Ignorable="d" 
-             d:DataContext="{d:DesignInstance Type=local:SettingsViewModel}">
-    <Grid Background="{StaticResource MainBackgroundColor}" Width="500" Height="300">
+             d:DataContext="{d:DesignInstance Type=local:ChangeYearViewModel}">
+    <Grid Background="{StaticResource MainBackgroundColor}" Width="300" Height="150">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Settings" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+        <TextBlock Text="Change Year" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="Default Directory" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Budget Year" />
                 <Separator Width="15" Background="Transparent"/>
-                <TextBox Text="{Binding DefaultDirectory}" Width="200" Name="DirectoryBox"/>
-                <Button Content="..." Command="{Binding SelectDirectoryCommand}" Width="{Binding Source={x:Reference DirectoryBox}, Path=ActualHeight}"/>
+                <TextBox Text="{Binding CurrentYear}" Width="100"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">

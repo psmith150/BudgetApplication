@@ -264,15 +264,7 @@ C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Scr
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\PaymentsScreen.g.cs
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\TransactionsScreen.g.cs
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\TemplateScreen.g.cs
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\LoadYearPopup.g.cs
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\AddYearPopup.g.cs
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\GroupsAndCategoriesWindow.g.cs
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\MoneyGrid.g.cs
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\MainWindow.g.cs
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\StyleDictionary.g.cs
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\AddPaymentPopup.g.cs
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\MonthDetailView.g.cs
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\PaymentMethodsWindow.g.cs
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Windows\MainWindow.g.cs
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\App.g.cs
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\GeneratedInternalTypeHelper.g.cs
@@ -290,19 +282,29 @@ C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Scr
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\PaymentsScreen.baml
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\TransactionsScreen.baml
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\TemplateScreen.baml
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\LoadYearPopup.baml
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\AddYearPopup.baml
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\GroupsAndCategoriesWindow.baml
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\MoneyGrid.baml
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\MainWindow.baml
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\StyleDictionary.baml
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\AddPaymentPopup.baml
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\MonthDetailView.baml
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\PaymentMethodsWindow.baml
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Windows\MainWindow.baml
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.g.resources
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.Properties.Resources.resources
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csproj.GenerateResource.Cache
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.exe
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.pdb
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\ChangeYearPopup.g.cs
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\ChangeYearPopup.baml
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csprojResolveAssemblyReference.cache
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\LoadYearPopup.g.cs
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\AddYearPopup.g.cs
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\GroupsAndCategoriesWindow.g.cs
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\MoneyGrid.g.cs
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\MainWindow.g.cs
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\AddPaymentPopup.g.cs
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\MonthDetailView.g.cs
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\PaymentMethodsWindow.g.cs
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\LoadYearPopup.baml
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\AddYearPopup.baml
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\GroupsAndCategoriesWindow.baml
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\MoneyGrid.baml
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\MainWindow.baml
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\AddPaymentPopup.baml
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\MonthDetailView.baml
+C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\PaymentMethodsWindow.baml

@@ -6,9 +6,8 @@
              xmlns:local="clr-namespace:BudgetApplication.Popups"
              mc:Ignorable="d" 
              Height="400" Width="450"
-             d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=local:GroupAndCategoriesViewModel}">
-    <Grid Background="White">
+    <Grid Background="{StaticResource MainBackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>

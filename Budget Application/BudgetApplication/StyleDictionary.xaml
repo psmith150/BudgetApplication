@@ -2,7 +2,102 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:BudgetApplication"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
-                    x:Class="BudgetApplication.StyleDictionary">
+                    xmlns:customControls="clr-namespace:BudgetApplication.CustomControls"
+                    x:Class="BudgetApplication.StyleDictionary"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--Colors-->
+    <SolidColorBrush x:Key="MainBackgroundColor" Color="WhiteSmoke"/>
+
+    <!-- Default Button Style -->
+    <!--<Style TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource OpenLibraryButton.Static.Background}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource OpenLibraryButton.Static.Border}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="Center" Margin="1" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource OpenLibraryButton.MouseOver.Background}"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource OpenLibraryButton.MouseOver.Border}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource OpenLibraryButton.Pressed.Background}"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource OpenLibraryButton.Pressed.Border}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource OpenLibraryButton.Disabled.Background}"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource OpenLibraryButton.Disabled.Border}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource OpenLibraryButton.Disabled.Foreground}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>-->
+
+    <!-- Hover Button Style -->
+    <Style TargetType="customControls:HoverButton">
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="{StaticResource LargeFontSize}"/>
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type customControls:HoverButton}">
+                    <DockPanel Background="{TemplateBinding Background}">
+                        <ContentPresenter DockPanel.Dock="Left" 
+                                          Width="{TemplateBinding ButtonImageWidth}"
+                                          Content="{TemplateBinding ButtonImage}"
+                                          Margin="{TemplateBinding ButtonImageMargin}">
+                            <ContentPresenter.Style>
+                                <Style TargetType="ContentPresenter">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ContentPresenter.Style>
+                        </ContentPresenter>
+                        <ContentPresenter Content="{TemplateBinding Content}"
+							              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+							              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=HoverBackgroundBrush}"/>
+                <Setter Property="ButtonImage" Value="{Binding RelativeSource={RelativeSource Self}, Path=ButtonHoverImage}"/>
+                <Setter Property="Foreground"  Value="WhiteSmoke" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=DisabledBackgroundBrush}"/>
+                <Setter Property="ButtonImage" Value="{Binding RelativeSource={RelativeSource Self}, Path=ButtonDisabledImage}"/>
+                <Setter Property="Foreground"  Value="{Binding RelativeSource={RelativeSource Self}, Path=DisabledForegroundBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--Font Sizes-->
+    <system:Double x:Key="MaxFontSize">16</system:Double>
+    <system:Double x:Key="ExtraLargeFontSize">16</system:Double>
+    <system:Double x:Key="LargeFontSize">14</system:Double>
+    <system:Double x:Key="SmallFontSize">12</system:Double>
+
+
     <Style x:Key="TabHeader" TargetType="{x:Type TabItem}">
         <Setter Property="Template">
             <Setter.Value>

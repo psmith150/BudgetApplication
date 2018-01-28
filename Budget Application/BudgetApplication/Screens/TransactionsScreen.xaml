@@ -96,7 +96,7 @@
                             </Style>
                         </DataGridComboBoxColumn.EditingElementStyle>
                     </DataGridComboBoxColumn>
-                    <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}"/>
+                    <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>

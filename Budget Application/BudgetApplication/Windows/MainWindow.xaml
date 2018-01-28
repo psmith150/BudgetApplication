@@ -10,13 +10,13 @@
         mc:Ignorable="d"
         Background="White"
         Icon="/Resources/Dollar_sign.png" 
-        Height="350" Width="525" WindowState="Maximized" 
+        Height="400" Width="900" WindowState="Maximized" 
         Style="{StaticResource MainWindowStyle}"
         ResizeMode="CanResizeWithGrip"
-        MinWidth="350"
-        Title="BudgetApplication"
-        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}">
-    <!-- TODO Title="{Binding CurrentYear, StringFormat=Budget Manager: {0}}"-->
+        MinWidth="780"
+        Title="{Binding Session.CurrentYear, StringFormat=Budget Manager: {0}}"
+        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
+        TextElement.Foreground="Black">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <valueConverters:TypeToBoolConverter x:Key="TypeToBoolConverter" />
@@ -34,36 +34,60 @@
     <Window.InputBindings>
         <KeyBinding Key="D" Modifiers="Control+Shift" Command="{Binding ToggleEventLogVisibiliyCommand}"/>
         <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SaveDataCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding LoadDataCommand}"/>
+        <KeyBinding Modifiers="Ctrl" Key="N" Command="{Binding NewFileCommand}"/>
     </Window.InputBindings>
-    <Grid>
+    <Grid Background="{StaticResource MainBackgroundColor}">
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
                     <MenuItem Header="_Save" Command="{Binding SaveDataCommand}"/>
-                    <MenuItem Header="_Load" Command="{Binding LoadDataCommand}"/>
-                    <MenuItem Header="_New"/>
+                    <MenuItem Header="SaveAs" Command="{Binding SaveDataAsCommand}"/>
+                    <MenuItem Header="_Open" Command="{Binding LoadDataCommand}"/>
+                    <MenuItem Header="_New" Command="{Binding NewFileCommand}"/>
+                    <MenuItem Header="_Recent" ItemsSource="{Binding LastFiles}">
+                        <MenuItem.ItemContainerStyle>
+                            <Style TargetType="{x:Type MenuItem}">
+                                <Setter Property="Command" Value="{Binding DataContext.OpenRecentFileCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type MenuItem}, AncestorLevel=1}}" />
+                                <Setter Property="CommandParameter" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Header}" />
+                            </Style>
+                        </MenuItem.ItemContainerStyle>
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Setup">
                     <MenuItem Header="Groups/Categories" Command="{Binding OpenGroupsAndCategoriesCommand}"/>
                     <MenuItem Header="Payment Methods" Command="{Binding OpenPaymentMethodsCommand}"/>
+                    <MenuItem Header="Change Year" Command="{Binding ChangeYearCommand}"/>
                 </MenuItem>
                 <MenuItem Header="Settings" Command="{Binding OpenSettingsCommand}"/>
             </Menu>
-            <DockPanel DockPanel.Dock="Top"
-                   Height="50"
+            <Grid DockPanel.Dock="Top"
+                   Height="40"
                    Background="Transparent">
-                <DockPanel.Resources>
-                </DockPanel.Resources>
-                <UniformGrid DockPanel.Dock="Right" Rows="1">
+                <UniformGrid Rows="1" HorizontalAlignment="Left">
                     <UniformGrid.Resources>
                         <!--<Image Source="/Images/DMC Wheel Transparent Background.ico" x:Key="ButtonImage"/>-->
-                        <Style TargetType="customControls:HoverButton">
-                            <Setter Property="Background" Value="White"/>
-                            <Setter Property="HoverBackgroundBrush" Value="Gray"/>
-                            <Setter Property="DisabledBackgroundBrush" Value="Gray"/>
+                        <Style TargetType="customControls:HoverButton" BasedOn="{StaticResource {x:Type customControls:HoverButton}}">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <RadialGradientBrush>
+                                        <GradientStop Color="#D8ADE8E3" Offset="0"/>
+                                        <GradientStop Color="#B2D2F7E7" Offset="0.987"/>
+                                    </RadialGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="HoverBackgroundBrush" Value="LightBlue"/>
+                            <Setter Property="DisabledBackgroundBrush">
+                                <Setter.Value>
+                                    <RadialGradientBrush>
+                                        <GradientStop Color="#FF64B9B2" Offset="0.01"/>
+                                        <GradientStop Color="#FF5EA687" Offset="0.987"/>
+                                    </RadialGradientBrush>
+                                </Setter.Value>
+                            </Setter>
                             <Setter Property="DisabledForegroundBrush" Value="White" />
-                            <Setter Property="Width" Value="100"/>
-                            <Setter Property="Margin" Value="2 0 0 0"/>
+                            <Setter Property="Margin" Value="1 0 1 0"/>
+                            <Setter Property="Width" Value="130"/>
                         </Style>
                     </UniformGrid.Resources>
                     <customControls:HoverButton Content="Budget" 
@@ -92,15 +116,17 @@
                                             IsEnabled="{Binding NavigationService.ActiveViewModel, Converter={StaticResource TypeToBoolConverter}, ConverterParameter={x:Type screens:PaymentsViewModel}}"/>
 
                 </UniformGrid>
-                <Grid Background="White">
-                    <!--<Image HorizontalAlignment="Left" 
+                <!--<Grid Background="White">
+                    -->
+                <!--<Image HorizontalAlignment="Left" 
                        Source="/Images/DMC-Logo.png" 
                        Margin="20 0" 
                        Height="48" />-->
-                </Grid>
-            </DockPanel>
-            <Rectangle DockPanel.Dock="Top" Fill="DarkGray" Height="2" Width="Auto" HorizontalAlignment="Stretch"/>
-            <DockPanel DockPanel.Dock="Bottom"
+                <!--
+                </Grid>-->
+            </Grid>
+            <Separator DockPanel.Dock="Top" Background="DarkGray" Height="2" Width="Auto" HorizontalAlignment="Stretch"/>
+            <!--<DockPanel DockPanel.Dock="Bottom"
                    Height="26"
                    Background="Gray">
                 <DockPanel.Resources>
@@ -123,7 +149,7 @@
                 <TextBlock DockPanel.Dock="Left" Text="User: Anonymous"/>
                 <TextBlock DockPanel.Dock="Right" Text="{Binding AppVersion, StringFormat=Version: {0}}" />
                 <Grid/>
-            </DockPanel>
+            </DockPanel>-->
             <ContentPresenter Content="{Binding NavigationService.ActiveViewModel, Converter={StaticResource ViewModelToViewConverter}}" />
         </DockPanel>
 

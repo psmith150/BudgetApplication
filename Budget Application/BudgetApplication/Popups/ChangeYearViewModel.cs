@@ -12,24 +12,22 @@ using MessageBox = System.Windows.MessageBox;
 
 namespace BudgetApplication.Popups
 {
-    public class SettingsViewModel : PopupViewModel
+    public class ChangeYearViewModel : PopupViewModel
     {
         #region Commands
         public ICommand SaveCommand { get; private set; }
         public ICommand ExitPopupCommand {get; private set;}
-        public ICommand SelectDirectoryCommand { get; private set; }
         #endregion
 
-        public SettingsViewModel(SessionService session) : base(session)
+        public ChangeYearViewModel(SessionService session) : base(session)
         {
             this.SaveCommand = new RelayCommand(() => this.Save());
             this.ExitPopupCommand = new RelayCommand(() => this.Exit());
-            this.SelectDirectoryCommand = new RelayCommand(() => this.SelectDirectory());
         }
 
         public override void Initialize(object param)
         {
-            this.DefaultDirectory = Properties.Settings.Default.DefaultDirectory;
+            this.CurrentYear = this.Session.CurrentYear.ToString();
             this.savingNeeded = false;
         }
 
@@ -38,16 +36,16 @@ namespace BudgetApplication.Popups
         }
 
         #region Public Properties
-        private string _defaultDirectory;
-        public string DefaultDirectory
+        private string _currentYear;
+        public string CurrentYear
         {
             get
             {
-                return this._defaultDirectory;
+                return this._currentYear;
             }
             set
             {
-                this.Set(ref this._defaultDirectory, value);
+                this.Set(ref this._currentYear, value);
                 this.savingNeeded = true;
             }
         }
@@ -58,18 +56,6 @@ namespace BudgetApplication.Popups
         #endregion
 
         #region Private Methods
-        private void SelectDirectory()
-        {
-            FolderBrowserDialog dirDialog = new FolderBrowserDialog();
-            dirDialog.RootFolder = Environment.SpecialFolder.MyComputer;
-            dirDialog.ShowNewFolderButton = true;
-            dirDialog.Description = "Select a folder";
-            DialogResult result = dirDialog.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                this.DefaultDirectory = dirDialog.SelectedPath;
-            }
-        }
         private void Exit()
         {
             if (this.savingNeeded)
@@ -86,9 +72,17 @@ namespace BudgetApplication.Popups
 
         private void Save()
         {
-            Properties.Settings.Default.DefaultDirectory = this.DefaultDirectory;
-            Properties.Settings.Default.Save();
-            this.ClosePopup(null);
+            int testYear = 0;
+            bool result = Int32.TryParse(this.CurrentYear, out testYear);
+            if (result && testYear > 1950 && testYear < 2100)
+            {
+                this.Session.CurrentYear = testYear;
+                this.ClosePopup(null);
+            }
+            else
+            {
+                MessageBox.Show("Error: please enter a valid year!", "Invalid Year", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
         #endregion
     }

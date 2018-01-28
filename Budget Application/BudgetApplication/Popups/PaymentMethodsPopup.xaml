@@ -22,7 +22,7 @@
             <Setter Property="Opacity" Value="0.5" />
         </Style>
     </UserControl.Resources>
-    <Grid Background="White">
+    <Grid Background="{StaticResource MainBackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>

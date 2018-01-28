@@ -16,6 +16,7 @@ namespace BudgetApplication.Services
 {
     public class SessionService : ObservableObject
     {
+        #region Constructor
         public SessionService()
         {
             //Sets event handlers to make sure all data is updated
@@ -27,15 +28,18 @@ namespace BudgetApplication.Services
             //TODO this.Transactions.MemberChanged += OnTransactionModified;   //Trigger event for view to handle
             this.Transactions.CollectionChanged += AddOrRemoveSpendingValues;   //Update spending if transaction has been added or removed
             //TODO this.Transactions.CollectionChanged += OnTransactionsChanged;   //Trigger event for view to handle
-            //_spendingTotals.MemberChanged += UpdateComparisonValues;    //Update comparison values if a spending values was changed. Totals used to allow bulk modification.
-            //_budgetTotals.MemberChanged += UpdateComparisonValues;  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
+            this.SpendingTotals.MemberChanged += ((o, a) => UpdateComparisonValues());    //Update comparison values if a spending values was changed. Totals used to allow bulk modification.
+            this.BudgetTotals.MemberChanged += ((o, a) => UpdateComparisonValues());  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
 
         }
+        #endregion
+
         #region Private Fields
         //Groups for income and expenditures in the Totals grids.
         private Group columnIncomeTotalsGroup = new Group(true, "Income Totals");
         private Group columnExpendituresTotalsGroup = new Group(false, "Expenditure totals");
         #endregion
+
         #region Public Properties
         private bool _IsBusy;
         public bool IsBusy
@@ -47,6 +51,19 @@ namespace BudgetApplication.Services
             set
             {
                 this.Set(ref this._IsBusy, value);
+            }
+        }
+
+        private int _currentYear = DateTime.Now.Year;
+        public int CurrentYear
+        {
+            get
+            {
+                return this._currentYear;
+            }
+            set
+            {
+                this.Set(ref this._currentYear, value);
             }
         }
         #region Budget Data
@@ -222,6 +239,14 @@ namespace BudgetApplication.Services
                 this.Set(ref this._monthDetails, value);
             }
         }
+
+        #region Events
+        public delegate void UpdateMonthDetailsEventHandler(object source, EventArgs e);
+        public UpdateMonthDetailsEventHandler RequestMonthDetailsUpdate;
+
+        public delegate void RefreshListViewsEventHandler(object source, EventArgs e);
+        public RefreshListViewsEventHandler RequestListViewUpdate;
+        #endregion
         #endregion
         #endregion
         #region Public Methods
@@ -233,9 +258,9 @@ namespace BudgetApplication.Services
         /// <param name="end">End index</param>
         public void MoveValueRows(int start, int end)
         {
-            _budgetValues.Move(start, end);
-            _spendingValues.Move(start, end);
-            _comparisonValues.Move(start, end);
+            this.BudgetValues.Move(start, end);
+            this.SpendingValues.Move(start, end);
+            this.ComparisonValues.Move(start, end);
         }
 
         /// <summary>
@@ -245,9 +270,9 @@ namespace BudgetApplication.Services
         /// <param name="end">End index</param>
         public void MoveTotalRows(int start, int end)
         {
-            _budgetTotals.Move(start, end);
-            _spendingTotals.Move(start, end);
-            _comparisonTotals.Move(start, end);
+            this.BudgetTotals.Move(start, end);
+            this.SpendingTotals.Move(start, end);
+            this.ComparisonTotals.Move(start, end);
         }
 
         /// <summary>
@@ -255,13 +280,13 @@ namespace BudgetApplication.Services
         /// </summary>
         public void RefreshListViews()
         {
-            //_budgetValueView.Refresh();
-            //_spendingValueView.Refresh();
-            //_comparisonValueView.Refresh();
-            //TODO
+            if (this.RequestListViewUpdate != null)
+            {
+                this.RequestListViewUpdate(this, null);
+            }
         }
-
-        public void LoadDataFromFile(string filePath)
+        #region File Handling
+        public async Task LoadDataFromFile(string filePath)
         {
             //Debug.WriteLine("Loading data");
             //Clears all existing data
@@ -296,20 +321,21 @@ namespace BudgetApplication.Services
             }
             catch (IOException ex) //File does not exist; set everything to defaults
             {
-                //TODO: InitNewFile();
+                await CreateNewFile(Properties.Settings.Default.DefaultDirectory + "\\data_new.xml");
             }
             catch (InvalidOperationException ex)
             {
                 Debug.WriteLine($"Error reading XML from file {filePath}\n" + ex.Message);
             }
             //Process the data
+            this.CurrentYear = data.Year;
             int index = 0;
             //Add groups, categories, and budget values
             List<Group> tempGroups = new List<Group>();
             List<Category> tempCategories = new List<Category>();
             Stopwatch runTimer;
             runTimer = Stopwatch.StartNew();
-            BudgetValues.MemberChanged -= UpdateBudgetTotals;
+            this.BudgetValues.MemberChanged -= UpdateBudgetTotals;
             //Debug.WriteLine("Placeholder");
             foreach (Group group in data.Groups)
             {
@@ -324,7 +350,7 @@ namespace BudgetApplication.Services
                     index++;
                 }
             }
-            BudgetValues.MemberChanged += UpdateBudgetTotals;
+            this.BudgetValues.MemberChanged += UpdateBudgetTotals;
             RefreshBudgetTotals();
             runTimer.Stop();
             //Debug.WriteLine("Reading groups and categories: " + runTimer.ElapsedTicks);
@@ -381,6 +407,7 @@ namespace BudgetApplication.Services
                         //Create the DataWrapper object and add the apprpriate data
                         XmlSerializer dataSerializer = new XmlSerializer(typeof(DataWrapper));
                         DataWrapper data = new DataWrapper();
+                        data.Year = this.CurrentYear;
                         data.Groups = this.Groups;
                         data.PaymentMethods = this.PaymentMethods;
                         data.Transactions = this.Transactions;
@@ -404,12 +431,42 @@ namespace BudgetApplication.Services
                 Debug.WriteLine($"Error writing XML to file {filePath}\n" + ex.Message);
             }
         }
+
+        /// <summary>
+        /// Creates a new data file with no data in the default directory
+        /// </summary>
+        public async Task CreateNewFile(string filePath)
+        {
+            //Debug.WriteLine("Creating new file at " + completeFilePath);
+            using (FileStream file = new FileStream(filePath, FileMode.Create))
+            {
+                using (StreamWriter stream = new StreamWriter(file))
+                {
+                    //Create the DataWrapper object and add the apprpriate data
+                    XmlSerializer dataSerializer = new XmlSerializer(typeof(DataWrapper));
+                    DataWrapper data = new DataWrapper();
+                    data.Year = DateTime.Now.Year;
+                    data.Groups = new MyObservableCollection<Group>();
+                    data.PaymentMethods = new MyObservableCollection<PaymentMethod>();
+                    data.Transactions = new MyObservableCollection<Transaction>();
+                    List<decimal[]> budgetData = new List<decimal[]>(); //Easiest to just store values in order
+                    foreach (MoneyGridRow row in this.BudgetValues)
+                    {
+                        budgetData.Add(new decimal[12]);
+                    }
+                    data.BudgetValues = budgetData;
+
+                    await Task.Run(() => dataSerializer.Serialize(stream, data)); //Saves the data using the attributes defined in each class
+                }
+            }
+        }
+        #endregion
         #endregion
 
         #region Private Methods
         private void CategoryChanged(Object sender, PropertyChangedEventArgs e)
         {
-            //RefreshListViews();
+            RefreshListViews();
         }
 
         /// <summary>
@@ -441,9 +498,9 @@ namespace BudgetApplication.Services
                     {
                         throw new ArgumentException("Could not match group to category " + newCategory.Name);
                     }
-                    _budgetValues.Add(new MoneyGridRow(group, newCategory));
-                    _spendingValues.Add(new MoneyGridRow(group, newCategory));
-                    _comparisonValues.Add(new MoneyGridRow(group, newCategory));
+                    this.BudgetValues.Add(new MoneyGridRow(group, newCategory));
+                    this.SpendingValues.Add(new MoneyGridRow(group, newCategory));
+                    this.ComparisonValues.Add(new MoneyGridRow(group, newCategory));
 
                     //Debug.WriteLine(_spendingValues.Count);
                     //Debug.WriteLine("Current group " + group.Name);
@@ -456,20 +513,20 @@ namespace BudgetApplication.Services
             {
                 foreach (Category oldCategory in e.OldItems)
                 {
-                    MoneyGridRow oldRow = _comparisonValues.Where(row => row.Category == oldCategory).ElementAt(0);
+                    MoneyGridRow oldRow = this.ComparisonValues.Where(row => row.Category == oldCategory).ElementAt(0);
                     if (oldRow == null)
                         throw new ArgumentException("Cannot locate deleted row");
-                    _comparisonValues.Remove(oldRow);
+                    this.ComparisonValues.Remove(oldRow);
 
-                    oldRow = _spendingValues.Where(row => row.Category == oldCategory).ElementAt(0);
+                    oldRow = this.SpendingValues.Where(row => row.Category == oldCategory).ElementAt(0);
                     if (oldRow == null)
                         throw new ArgumentException("Cannot locate deleted row");
-                    _spendingValues.Remove(oldRow);
+                    this.SpendingValues.Remove(oldRow);
 
-                    oldRow = _budgetValues.Where(row => row.Category == oldCategory).ElementAt(0);
+                    oldRow = this.BudgetValues.Where(row => row.Category == oldCategory).ElementAt(0);
                     if (oldRow == null)
                         throw new ArgumentException("Cannot locate deleted row");
-                    _budgetValues.Remove(oldRow);
+                    this.BudgetValues.Remove(oldRow);
                 }
             }
         }
@@ -499,9 +556,9 @@ namespace BudgetApplication.Services
                         {
                             totalGroup = columnExpendituresTotalsGroup;
                         }
-                        _budgetTotals.Add(new MoneyGridRow(totalGroup, newCategory));
-                        _spendingTotals.Add(new MoneyGridRow(totalGroup, newCategory));
-                        _comparisonTotals.Add(new MoneyGridRow(totalGroup, newCategory));
+                        this.BudgetTotals.Add(new MoneyGridRow(totalGroup, newCategory));
+                        this.SpendingTotals.Add(new MoneyGridRow(totalGroup, newCategory));
+                        this.ComparisonTotals.Add(new MoneyGridRow(totalGroup, newCategory));
                     }
                     catch (ArgumentException ex)
                     {
@@ -517,24 +574,24 @@ namespace BudgetApplication.Services
                 foreach (Group oldGroup in e.OldItems)
                 {
                     //Debug.WriteLine("Group to be deleted: " + oldGroup.Name);
-                    foreach (MoneyGridRow row in _budgetValues)
+                    foreach (MoneyGridRow row in this.BudgetValues)
                     {
                         //Debug.WriteLine("Budget row: " + row.Category);
                     }
-                    MoneyGridRow oldRow = _budgetTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
+                    MoneyGridRow oldRow = this.BudgetTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
                     if (oldRow == null)
                         throw new ArgumentException("Cannot locate deleted row");
-                    _budgetTotals.Remove(oldRow);
+                    this.BudgetTotals.Remove(oldRow);
 
-                    oldRow = _spendingTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
+                    oldRow = this.SpendingTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
                     if (oldRow == null)
                         throw new ArgumentException("Cannot locate deleted row");
-                    _spendingTotals.Remove(oldRow);
+                    this.SpendingTotals.Remove(oldRow);
 
-                    oldRow = _comparisonTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
+                    oldRow = this.ComparisonTotals.Where(row => row.Category.Name.Equals(oldGroup.Name)).ElementAt(0);
                     if (oldRow == null)
                         throw new ArgumentException("Cannot locate deleted row");
-                    _comparisonTotals.Remove(oldRow);
+                    this.ComparisonTotals.Remove(oldRow);
                 }
             }
         }
@@ -545,7 +602,7 @@ namespace BudgetApplication.Services
         /// <returns>The mathching group</returns>
         private Group GetCategoryGroup(Category category)
         {
-            foreach (Group group in _groups)
+            foreach (Group group in this.Groups)
             {
                 if (group.Categories.Contains(category))
                 {
@@ -557,11 +614,11 @@ namespace BudgetApplication.Services
         private void CalculateColumnTotals(ObservableCollection<MoneyGridRow> columnValues, ObservableCollection<MoneyGridRow> columnTotals, String propertyName)
         {
             //Don't do anything if not all the rows have been loaded yet
-            if (columnValues.Count < _categories.Count || columnTotals.Count < _groups.Count)
+            if (columnValues.Count < this.Categories.Count || columnTotals.Count < this.Groups.Count)
                 return;
             double totalGridIncomeTotal = 0.0;
             double totalGridExpenditureTotal = 0.0;
-            foreach (Group group in _groups) //For each group, find its total row and then sum all the category rows that are part of the group
+            foreach (Group group in this.Groups) //For each group, find its total row and then sum all the category rows that are part of the group
             {
                 double groupTotal = 0.0;
                 decimal[] groupSum = new decimal[12];
@@ -637,9 +694,9 @@ namespace BudgetApplication.Services
             //Debug.WriteLine("Updating budget totals");
             if (e.PropertyName.Equals("Values"))
             {
-                CalculateColumnTotals(_budgetValues, _budgetTotals, "BudgetTotals");
+                CalculateColumnTotals(this.BudgetValues, this.BudgetTotals, "BudgetTotals");
                 UpdateComparisonValues();
-                //TODO UpdateMonthDetails();
+                UpdateMonthDetails();
             }
         }
 
@@ -648,9 +705,9 @@ namespace BudgetApplication.Services
         /// </summary>
         private void RefreshBudgetTotals()
         {
-            CalculateColumnTotals(_budgetValues, _budgetTotals, "BudgetTotals");
+            CalculateColumnTotals(this.BudgetValues, this.BudgetTotals, "BudgetTotals");
             UpdateComparisonValues();
-            //TODO UpdateMonthDetails();
+            UpdateMonthDetails();
         }
 
 
@@ -668,19 +725,19 @@ namespace BudgetApplication.Services
             if (!e.PropertyName.Equals("Category") && !e.PropertyName.Equals("Amount") && !e.PropertyName.Equals("Date"))
                 return;
             //Reset values
-            foreach (MoneyGridRow row in _spendingValues)
+            foreach (MoneyGridRow row in this.SpendingValues)
             {
                 row.Values.Values = new decimal[12];
             }
             //Loop through each transaction and add the values
-            foreach (Transaction transaction in _transactions)
+            foreach (Transaction transaction in this.Transactions)
             {
                 if (transaction.Category != null)
                 {
                     MoneyGridRow row;
                     try
                     {
-                        row = _spendingValues.Single(x => x.Category == transaction.Category);
+                        row = this.SpendingValues.Single(x => x.Category == transaction.Category);
                     }
                     catch (Exception ex)
                     {
@@ -712,7 +769,7 @@ namespace BudgetApplication.Services
                         MoneyGridRow row;
                         try
                         {
-                            row = _spendingValues.Single(x => x.Category == transaction.Category);
+                            row = this.SpendingValues.Single(x => x.Category == transaction.Category);
                         }
                         catch (Exception ex)
                         {
@@ -733,7 +790,7 @@ namespace BudgetApplication.Services
                     MoneyGridRow row;
                     try
                     {
-                        row = _spendingValues.Single(x => x.Category == transaction.Category);
+                        row = this.SpendingValues.Single(x => x.Category == transaction.Category);
                     }
                     catch (Exception ex)    //Category doesn't exist, so no need to remove amount from total
                     {
@@ -749,14 +806,14 @@ namespace BudgetApplication.Services
             //Recalculate all values due to reset
             if (e.Action == NotifyCollectionChangedAction.Reset)
             {
-                foreach (Transaction transaction in _transactions)
+                foreach (Transaction transaction in this.Transactions)
                 {
                     if (transaction.Category != null)
                     {
                         MoneyGridRow row;
                         try
                         {
-                            row = _spendingValues.Single(x => x.Category == transaction.Category);
+                            row = this.SpendingValues.Single(x => x.Category == transaction.Category);
                         }
                         catch (Exception ex)
                         {
@@ -777,44 +834,52 @@ namespace BudgetApplication.Services
         private void UpdateSpendingTotals()
         {
             //Debug.WriteLine("Updating spending totals");
-            CalculateColumnTotals(_spendingValues, _spendingTotals, "SpendingTotals");
+            CalculateColumnTotals(this.SpendingValues, this.SpendingTotals, "SpendingTotals");
             //Debug.WriteLine("Spending Total Updated");
             UpdateComparisonValues();
-            //TODO UpdateMonthDetails();
+            UpdateMonthDetails();
         }
 
         private void UpdateComparisonValues()
         {
             //Debug.WriteLine("Number of categories: " + _categories.Count + "Number of rows: " + _budgetValues.Count + " " + _spendingValues.Count + " " + _comparisonValues.Count);
-            for (int i = 0; i < _comparisonValues.Count; i++)
+            for (int i = 0; i < this.ComparisonValues.Count; i++)
             {
                 for (int j = 0; j < 12; j++)
                 {
                     //Checks if value needs to be updated - reduces redraw time
                     //Sign adjusted for expenditure categories
-                    if (_comparisonValues.ElementAt(i).Group.IsIncome)
+                    if (this.ComparisonValues.ElementAt(i).Group.IsIncome)
                     {
-                        if (_comparisonValues.ElementAt(i).Values[j] == _spendingValues.ElementAt(i).Values[j] - _budgetValues.ElementAt(i).Values[j])
+                        if (this.ComparisonValues.ElementAt(i).Values[j] == this.SpendingValues.ElementAt(i).Values[j] - this.BudgetValues.ElementAt(i).Values[j])
                             continue;
-                        _comparisonValues.ElementAt(i).Values[j] = _spendingValues.ElementAt(i).Values[j] - _budgetValues.ElementAt(i).Values[j];
+                        this.ComparisonValues.ElementAt(i).Values[j] = this.SpendingValues.ElementAt(i).Values[j] - this.BudgetValues.ElementAt(i).Values[j];
                     }
                     else
                     {
-                        if (_comparisonValues.ElementAt(i).Values[j] == _budgetValues.ElementAt(i).Values[j] - _spendingValues.ElementAt(i).Values[j])
+                        if (this.ComparisonValues.ElementAt(i).Values[j] == this.BudgetValues.ElementAt(i).Values[j] - this.SpendingValues.ElementAt(i).Values[j])
                             continue;
-                        _comparisonValues.ElementAt(i).Values[j] = _budgetValues.ElementAt(i).Values[j] - _spendingValues.ElementAt(i).Values[j];
+                        this.ComparisonValues.ElementAt(i).Values[j] = this.BudgetValues.ElementAt(i).Values[j] - this.SpendingValues.ElementAt(i).Values[j];
                     }
 
-                    if (_spendingValues.ElementAt(i).Values[j] > 0)
+                    if (this.SpendingValues.ElementAt(i).Values[j] > 0)
                     {
                         //MessageBox.Show(i + " " + j);
                     }
                 }
             }
             //Update the Totals grid if it has all the groups
-            if (_comparisonTotals.Count == _groups.Count)
-                CalculateColumnTotals(_comparisonValues, _comparisonTotals, "Comparison Totals");
+            if (this.ComparisonTotals.Count == this.Groups.Count)
+                CalculateColumnTotals(this.ComparisonValues, this.ComparisonTotals, "Comparison Totals");
             //_comparisonValues.MemberPropertyChanged(null, null);
+        }
+
+        private void UpdateMonthDetails()
+        {
+            if (this.RequestMonthDetailsUpdate != null)
+            {
+                this.RequestMonthDetailsUpdate(this, null);
+            }
         }
         #endregion
     }

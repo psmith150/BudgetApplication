@@ -20,7 +20,7 @@
             <ComboBox x:Name="PaymentSelector" Width="Auto" SelectedIndex="0" DisplayMemberPath="Name" SelectedItem="{Binding SelectedPaymentMethod}">
                 <ComboBox.Resources>
                     <CollectionViewSource x:Key="PaymentSelectorSource" Source="{Binding PaymentMethods}"/>
-                    <CollectionViewSource x:Key="AllPaymentsSource" Source="{Binding AllPaymentsCOllection}"/>
+                    <CollectionViewSource x:Key="AllPaymentsSource" Source="{Binding AllPaymentsCollection}"/>
                 </ComboBox.Resources>
                 <ComboBox.ItemsSource>
                     <CompositeCollection>
@@ -105,7 +105,7 @@
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
-                <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}"/>
+                <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

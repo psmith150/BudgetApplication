@@ -18,35 +18,42 @@
     </UserControl.Resources>
     <UserControl.ContextMenu>
         <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-            <MenuItem Header="Fit columns to window." Command="{Binding FitColumnsCommand}">
+            <MenuItem Header="Fit columns to window." Click="FitColumnsToWindow_Click">
             </MenuItem>
         </ContextMenu>
     </UserControl.ContextMenu>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" HorizontalAlignment="Stretch" MinWidth="100" Name="ScrollViewer">
-        <Grid Background="#FFE5E5E5" Name="MainGrid">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <!--Values Grid-->
-                <DataGrid Grid.Row="0" Width="{Binding Source={x:Reference TotalsGrid}, Path=ActualWidth}" x:Name="ValuesGrid" ItemsSource="{Binding Path=ValuesDataSource, RelativeSource={RelativeSource FindAncestor, 
+    <Grid Background="#FFE5E5E5" Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--Values Grid-->
+        <DataGrid Grid.Row="0" Width="{Binding Source={x:Reference TotalsGrid}, Path=ActualWidth}" x:Name="ValuesGrid" ItemsSource="{Binding Path=ValuesDataSource, RelativeSource={RelativeSource FindAncestor, 
                 AncestorType=local:MoneyGrid, AncestorLevel=1}}" Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="Column" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                 IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType=local:MoneyGrid, AncestorLevel=1}}" CanUserSortColumns="False" 
                 CellEditEnding="ValuesGrid_CellEditEnding" HorizontalAlignment="Stretch">
-                    <i:Interaction.Triggers>
-                        <!--<i:EventTrigger EventName="CellEditEnding">
+            <i:Interaction.Triggers>
+                <!--<i:EventTrigger EventName="CellEditEnding">
                         <i:InvokeCommandAction Command="{Binding Path=OnEdit, RelativeSource={RelativeSource FindAncestor, 
                                              AncestorType=local:MoneyGrid, 
                                              AncestorLevel=1}}"/>
                     </i:EventTrigger>-->
-                    </i:Interaction.Triggers>
-                    <DataGrid.GroupStyle>
-                        <!--Style for groups at top level.-->
-                        <GroupStyle ContainerStyle="{StaticResource GroupedStyle}"/>
-                    </DataGrid.GroupStyle>
-                    <!--<DataGrid.CellStyle>
+            </i:Interaction.Triggers>
+            <DataGrid.GroupStyle>
+                <!--Style for groups at top level.-->
+                <GroupStyle ContainerStyle="{StaticResource GroupedStyle}">
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <DataGridRowsPresenter/>
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+
+            </DataGrid.GroupStyle>
+            <!--<DataGrid.CellStyle>
                     <Style>
                         <Setter Property="DataGridCell.ToolTip">
                             <Setter.Value>
@@ -55,74 +62,74 @@
                         </Setter>
                     </Style>
                 </DataGrid.CellStyle>-->
-                    <DataGrid.Columns>
-                        <DataGridTextColumn x:Name="BudgetCategory" Header="Category" Binding="{Binding Category, Mode=OneWay}" Width="Auto" IsReadOnly="True"/>
-                        <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>
-                        <DataGridTextColumn x:Name="BudgetJanuary" Header="January" Binding="{Binding Path=Values[0], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
-                        <DataGridTextColumn x:Name="BudgetFebruary" Header="February" Binding="{Binding Path=Values[1], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
-                        <DataGridTextColumn x:Name="BudgetMarch" Header="March" Binding="{Binding Path=Values[2], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
-                        <DataGridTextColumn x:Name="BudgetApril" Header="April" Binding="{Binding Path=Values[3], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
-                        <DataGridTextColumn x:Name="BudgetMay" Header="May" Binding="{Binding Path=Values[4], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
-                        <DataGridTextColumn x:Name="BudgetJune" Header="June" Binding="{Binding Path=Values[5], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
-                        <DataGridTextColumn x:Name="BudgetJuly" Header="July" Binding="{Binding Path=Values[6], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
-                        <DataGridTextColumn x:Name="BudgetAugust" Header="August" Binding="{Binding Path=Values[7], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
-                        <DataGridTextColumn x:Name="BudgetSeptember" Header="September" Binding="{Binding Path=Values[8], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
-                        <DataGridTextColumn x:Name="BudgetOctober" Header="October" Binding="{Binding Path=Values[9], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
-                        <DataGridTextColumn x:Name="BudgetNovember" Header="November" Binding="{Binding Path=Values[10], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
-                        <DataGridTextColumn x:Name="BudgetDecember" Header="December" Binding="{Binding Path=Values[11], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
-                        <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>
-                        <DataGridTextColumn x:Name="BudgetTotal" Header="Total" Binding="{Binding Path=Sum, StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn x:Name="BudgetPercentage" Header="Percentage" Binding="{Binding Path=Percentage, StringFormat=\{0:P2\}, UpdateSourceTrigger=LostFocus}" Width="*" IsReadOnly="True"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <!--Totals Grid-->
-                <DataGrid Grid.Row="1" x:Name="TotalsGrid" ItemsSource="{Binding Path=TotalsDataSource, RelativeSource={RelativeSource FindAncestor, 
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="BudgetCategory" Header="Category" Binding="{Binding Category, Mode=OneWay}" Width="Auto" IsReadOnly="True"/>
+                <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>
+                <DataGridTextColumn x:Name="BudgetJanuary" Header="January" Binding="{Binding Path=Values[0], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
+                <DataGridTextColumn x:Name="BudgetFebruary" Header="February" Binding="{Binding Path=Values[1], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
+                <DataGridTextColumn x:Name="BudgetMarch" Header="March" Binding="{Binding Path=Values[2], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
+                <DataGridTextColumn x:Name="BudgetApril" Header="April" Binding="{Binding Path=Values[3], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
+                <DataGridTextColumn x:Name="BudgetMay" Header="May" Binding="{Binding Path=Values[4], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
+                <DataGridTextColumn x:Name="BudgetJune" Header="June" Binding="{Binding Path=Values[5], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
+                <DataGridTextColumn x:Name="BudgetJuly" Header="July" Binding="{Binding Path=Values[6], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
+                <DataGridTextColumn x:Name="BudgetAugust" Header="August" Binding="{Binding Path=Values[7], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
+                <DataGridTextColumn x:Name="BudgetSeptember" Header="September" Binding="{Binding Path=Values[8], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
+                <DataGridTextColumn x:Name="BudgetOctober" Header="October" Binding="{Binding Path=Values[9], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
+                <DataGridTextColumn x:Name="BudgetNovember" Header="November" Binding="{Binding Path=Values[10], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
+                <DataGridTextColumn x:Name="BudgetDecember" Header="December" Binding="{Binding Path=Values[11], StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*"/>
+                <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>
+                <DataGridTextColumn x:Name="BudgetTotal" Header="Total" Binding="{Binding Path=Sum, StringFormat=\{0:C\}, UpdateSourceTrigger=LostFocus}" Width="*" IsReadOnly="True"/>
+                <DataGridTextColumn x:Name="BudgetPercentage" Header="Percentage" Binding="{Binding Path=Percentage, StringFormat=\{0:P2\}, UpdateSourceTrigger=LostFocus}" Width="*" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <!--Totals Grid-->
+        <DataGrid Grid.Row="1" x:Name="TotalsGrid" ItemsSource="{Binding Path=TotalsDataSource, RelativeSource={RelativeSource FindAncestor, 
                 AncestorType=local:MoneyGrid, AncestorLevel=1}}" Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="None" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Category" Binding="{Binding Category, Mode=OneWay}" Width="{Binding Source={x:Reference BudgetCategory}, Path=ActualWidth}"/>
-                        <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="January" Binding="{Binding Path=Values[0], StringFormat=\{0:C\}}" 
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Category" Binding="{Binding Category, Mode=OneWay}" Width="{Binding Source={x:Reference BudgetCategory}, Path=ActualWidth}"/>
+                <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>
+                <DataGridTextColumn Header="January" Binding="{Binding Path=Values[0], StringFormat=\{0:C\}}" 
                                         Width="{Binding Source={x:Reference BudgetJanuary}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="February" Binding="{Binding Path=Values[1], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetFebruary}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="March" Binding="{Binding Path=Values[2], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetMarch}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="April" Binding="{Binding Path=Values[3], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetApril}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="May" Binding="{Binding Path=Values[4], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetMay}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="June" Binding="{Binding Path=Values[5], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetJune}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="July" Binding="{Binding Path=Values[6], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetJuly}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="August" Binding="{Binding Path=Values[7], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetAugust}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="September" Binding="{Binding Path=Values[8], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetSeptember}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="October" Binding="{Binding Path=Values[9], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetOctober}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="November" Binding="{Binding Path=Values[10], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetNovember}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="December" Binding="{Binding Path=Values[11], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetDecember}, Path=ActualWidth}"/>
-                        <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Total" Binding="{Binding Path=Sum, StringFormat=\{0:C\}}" IsReadOnly="True" Width="{Binding Source={x:Reference BudgetTotal}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="Percentage" Binding="{Binding Path=Percentage, StringFormat=\{0:P2\}}" IsReadOnly="True" Width="{Binding Source={x:Reference BudgetPercentage}, Path=ActualWidth}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <!--Budget and Sum Grid-->
-                <DataGrid Grid.Row="2" x:Name="BudgetAndSumGrid" ItemsSource="{Binding Path=BudgetAndSumDataSource, RelativeSource={RelativeSource FindAncestor, 
-                AncestorType=local:MoneyGrid, AncestorLevel=1}}" Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="None" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Category" Binding="{Binding Category, Mode=OneWay}" Width="{Binding Source={x:Reference BudgetCategory}, Path=ActualWidth}"/>
-                        <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="January" Binding="{Binding Path=Values[0], StringFormat=\{0:C\}}" 
+                <DataGridTextColumn Header="February" Binding="{Binding Path=Values[1], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetFebruary}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="March" Binding="{Binding Path=Values[2], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetMarch}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="April" Binding="{Binding Path=Values[3], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetApril}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="May" Binding="{Binding Path=Values[4], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetMay}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="June" Binding="{Binding Path=Values[5], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetJune}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="July" Binding="{Binding Path=Values[6], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetJuly}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="August" Binding="{Binding Path=Values[7], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetAugust}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="September" Binding="{Binding Path=Values[8], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetSeptember}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="October" Binding="{Binding Path=Values[9], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetOctober}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="November" Binding="{Binding Path=Values[10], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetNovember}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="December" Binding="{Binding Path=Values[11], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetDecember}, Path=ActualWidth}"/>
+                <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Total" Binding="{Binding Path=Sum, StringFormat=\{0:C\}}" IsReadOnly="True" Width="{Binding Source={x:Reference BudgetTotal}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="Percentage" Binding="{Binding Path=Percentage, StringFormat=\{0:P2\}}" IsReadOnly="True" Width="{Binding Source={x:Reference BudgetPercentage}, Path=ActualWidth}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <!--Budget and Sum Grid-->
+        <DataGrid Grid.Row="2" x:Name="BudgetAndSumGrid" ItemsSource="{Binding Path=BudgetAndSumDataSource, RelativeSource={RelativeSource FindAncestor, 
+                AncestorType=local:MoneyGrid, AncestorLevel=1}}" HorizontalAlignment="Stretch" Foreground="Black" AutoGenerateColumns="False" HeadersVisibility="None" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Category" Binding="{Binding Category, Mode=OneWay}" Width="{Binding Source={x:Reference BudgetCategory}, Path=ActualWidth}"/>
+                <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>
+                <DataGridTextColumn Header="January" Binding="{Binding Path=Values[0], StringFormat=\{0:C\}}" 
                                         Width="{Binding Source={x:Reference BudgetJanuary}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="February" Binding="{Binding Path=Values[1], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetFebruary}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="March" Binding="{Binding Path=Values[2], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetMarch}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="April" Binding="{Binding Path=Values[3], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetApril}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="May" Binding="{Binding Path=Values[4], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetMay}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="June" Binding="{Binding Path=Values[5], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetJune}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="July" Binding="{Binding Path=Values[6], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetJuly}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="August" Binding="{Binding Path=Values[7], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetAugust}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="September" Binding="{Binding Path=Values[8], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetSeptember}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="October" Binding="{Binding Path=Values[9], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetOctober}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="November" Binding="{Binding Path=Values[10], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetNovember}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="December" Binding="{Binding Path=Values[11], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetDecember}, Path=ActualWidth}"/>
-                        <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Total" Binding="{Binding Path=Sum, StringFormat=\{0:C\}}" IsReadOnly="True" Width="{Binding Source={x:Reference BudgetTotal}, Path=ActualWidth}"/>
-                        <DataGridTextColumn Header="Percentage" Binding="{Binding Path=Percentage, StringFormat=\{0:P2\}}" IsReadOnly="True" Width="{Binding Source={x:Reference BudgetPercentage}, Path=ActualWidth}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
+                <DataGridTextColumn Header="February" Binding="{Binding Path=Values[1], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetFebruary}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="March" Binding="{Binding Path=Values[2], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetMarch}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="April" Binding="{Binding Path=Values[3], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetApril}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="May" Binding="{Binding Path=Values[4], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetMay}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="June" Binding="{Binding Path=Values[5], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetJune}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="July" Binding="{Binding Path=Values[6], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetJuly}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="August" Binding="{Binding Path=Values[7], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetAugust}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="September" Binding="{Binding Path=Values[8], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetSeptember}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="October" Binding="{Binding Path=Values[9], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetOctober}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="November" Binding="{Binding Path=Values[10], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetNovember}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="December" Binding="{Binding Path=Values[11], StringFormat=\{0:C\}}" Width="{Binding Source={x:Reference BudgetDecember}, Path=ActualWidth}"/>
+                <DataGridTemplateColumn MinWidth="2" Width="2" CellStyle="{StaticResource DataGridColumnSeparatorStyle}" CanUserResize="False" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Total" Binding="{Binding Path=Sum, StringFormat=\{0:C\}}" IsReadOnly="True" Width="{Binding Source={x:Reference BudgetTotal}, Path=ActualWidth}"/>
+                <DataGridTextColumn Header="Percentage" Binding="{Binding Path=Percentage, StringFormat=\{0:P2\}}" IsReadOnly="True" Width="{Binding Source={x:Reference BudgetPercentage}, Path=ActualWidth}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
     </ScrollViewer>
 </UserControl>
