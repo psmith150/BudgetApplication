@@ -52,6 +52,10 @@ namespace BudgetApplication.Windows
 
             //Load list of recent files
             this.LastFiles = new ObservableCollection<string>();
+            if (Properties.Settings.Default.LastFiles == null)
+            {
+                Properties.Settings.Default.LastFiles = new StringCollection();
+            }
             foreach (string file in Properties.Settings.Default.LastFiles)
             {
                 this.LastFiles.Add(file);
