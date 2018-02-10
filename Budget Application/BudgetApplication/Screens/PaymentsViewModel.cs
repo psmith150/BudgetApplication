@@ -53,6 +53,7 @@ namespace BudgetApplication.Screens
             set
             {
                 this.Set(ref this._selectedPaymentMethod, value);
+                this._selectedPaymentMethod.PropertyChanged += ((o,a) => RecalculateCreditValues());
                 //Debug.Write(PaymentStartDate.ToString());
                 this.SelectedStartDate = this.SelectedPaymentMethod.StartDate;
                 this.SelectedEndDate = this.SelectedPaymentMethod.EndDate;

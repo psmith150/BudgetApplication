@@ -39,7 +39,7 @@ namespace BudgetApplication.Screens
 
         #region Public Properties
 
-        private int _selectedMonth = 0;
+        private int _selectedMonth = DateTime.Now.Month-1;
 
         /// <summary>
         /// Sets and gets the SelectedMonth property.

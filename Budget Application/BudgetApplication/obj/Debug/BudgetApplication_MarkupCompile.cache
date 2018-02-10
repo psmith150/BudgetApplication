@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\
 BudgetApplication
 none
 false
 DEBUG;TRACE
-C:\Training\BudgetApplication\Budget Application\BudgetApplication\App.xaml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\App.xaml
 22-303417868
 
 69797681288
-831558035816
+83-1724868658
 CustomControls\MoneyGrid.xaml;Popups\PaymentMethodsPopup.xaml;Popups\GroupAndCategoriesPopup.xaml;Popups\ChangeYearPopup.xaml;Popups\SettingsPopup.xaml;Screens\SpendingScreen.xaml;Screens\ComparisonScreen.xaml;Screens\BudgetScreen.xaml;Screens\MonthDetailScreen.xaml;Screens\PaymentsScreen.xaml;Screens\TransactionsScreen.xaml;Screens\TemplateScreen.xaml;_Archive - View\LoadYearPopup.xaml;_Archive - View\AddYearPopup.xaml;_Archive - View\GroupsAndCategoriesWindow.xaml;_Archive - View\MoneyGrid.xaml;_Archive - View\MainWindow.xaml;StyleDictionary.xaml;_Archive - View\AddPaymentPopup.xaml;_Archive - View\MonthDetailView.xaml;_Archive - View\PaymentMethodsWindow.xaml;Windows\MainWindow.xaml;
 
 False

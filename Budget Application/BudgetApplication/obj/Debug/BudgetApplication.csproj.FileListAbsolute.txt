@@ -189,35 +189,18 @@ D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\bin\Debug\ro\Xc
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\LoadYearPopup.g.cs
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\AddYearPopup.g.cs
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\GroupsAndCategoriesWindow.g.cs
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\MoneyGrid.g.cs
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\MainWindow.g.cs
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\StyleDictionary.g.cs
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\AddPaymentPopup.g.cs
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\MonthDetailView.g.cs
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\PaymentMethodsWindow.g.cs
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\App.g.cs
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication_MarkupCompile.cache
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication_MarkupCompile.lref
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\App.baml
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\LoadYearPopup.baml
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\AddYearPopup.baml
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\GroupsAndCategoriesWindow.baml
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\MoneyGrid.baml
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\MainWindow.baml
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\StyleDictionary.baml
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\AddPaymentPopup.baml
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\MonthDetailView.baml
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\View\PaymentMethodsWindow.baml
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.g.resources
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.Properties.Resources.resources
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csproj.GenerateResource.Cache
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.exe
 D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.pdb
-D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csprojResolveAssemblyReference.cache
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\bin\Debug\BudgetApplication.exe.config
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\bin\Debug\BudgetApplication.exe
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\bin\Debug\BudgetApplication.pdb
@@ -308,3 +291,48 @@ C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Ar
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\AddPaymentPopup.baml
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\MonthDetailView.baml
 C:\Training\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\PaymentMethodsWindow.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\bin\Debug\Autofac.dll
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\bin\Debug\Autofac.xml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\CustomControls\MoneyGrid.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\PaymentMethodsPopup.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\GroupAndCategoriesPopup.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\ChangeYearPopup.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\SettingsPopup.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\SpendingScreen.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\ComparisonScreen.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\BudgetScreen.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\MonthDetailScreen.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\PaymentsScreen.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\TransactionsScreen.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\TemplateScreen.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\LoadYearPopup.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\AddYearPopup.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\GroupsAndCategoriesWindow.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\MoneyGrid.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\MainWindow.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\AddPaymentPopup.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\MonthDetailView.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\PaymentMethodsWindow.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Windows\MainWindow.g.cs
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\CustomControls\MoneyGrid.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\PaymentMethodsPopup.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\GroupAndCategoriesPopup.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\ChangeYearPopup.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Popups\SettingsPopup.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\SpendingScreen.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\ComparisonScreen.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\BudgetScreen.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\MonthDetailScreen.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\PaymentsScreen.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\TransactionsScreen.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Screens\TemplateScreen.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\LoadYearPopup.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\AddYearPopup.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\GroupsAndCategoriesWindow.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\MoneyGrid.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\MainWindow.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\AddPaymentPopup.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\MonthDetailView.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\_Archive - View\PaymentMethodsWindow.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\Windows\MainWindow.baml
+D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\obj\Debug\BudgetApplication.csprojResolveAssemblyReference.cache
