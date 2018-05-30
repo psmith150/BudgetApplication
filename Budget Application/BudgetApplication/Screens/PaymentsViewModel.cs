@@ -8,6 +8,9 @@ using BudgetApplication.Model;
 using System;
 using System.Windows;
 using System.Diagnostics;
+using System.Collections.Specialized;
+using System.Linq;
+using System.ComponentModel;
 
 namespace BudgetApplication.Screens
 {
@@ -25,6 +28,8 @@ namespace BudgetApplication.Screens
             this.PaymentTransactionsView.SortDescriptions.Add(new System.ComponentModel.SortDescription("Date", System.ComponentModel.ListSortDirection.Ascending));
             this.PaymentTransactionsView.Filter = ((transaction) => PaymentTransactions_Filter(transaction as Transaction));
 
+            this.Session.Transactions.MemberChanged += TransactionPropertyChanged;
+
             //Default to showing all transactions in the last month
             CheckingAccount _allPayments = new CheckingAccount("All");
             _allPayments.StartDate = DateTime.Now.AddMonths(-1);
@@ -32,7 +37,6 @@ namespace BudgetApplication.Screens
             _allPaymentsCollection = new ObservableCollection<PaymentMethod>();
             _allPaymentsCollection.Add(_allPayments);
         }
-
         public override void Initialize()
         {
         }
@@ -252,6 +256,15 @@ namespace BudgetApplication.Screens
             else
             {
                 this.CreditRowHeight = new GridLength(0); //Hides the detail row
+            }
+        }
+
+        private void TransactionPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (this.PaymentTransactions_Filter(sender as Transaction))
+            {
+                this.RecalculateCreditValues();
+                this.PaymentTransactionsView.Refresh();
             }
         }
         #endregion
