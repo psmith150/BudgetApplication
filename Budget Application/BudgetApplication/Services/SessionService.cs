@@ -28,8 +28,8 @@ namespace BudgetApplication.Services
             //TODO this.Transactions.MemberChanged += OnTransactionModified;   //Trigger event for view to handle
             this.Transactions.CollectionChanged += AddOrRemoveSpendingValues;   //Update spending if transaction has been added or removed
             //TODO this.Transactions.CollectionChanged += OnTransactionsChanged;   //Trigger event for view to handle
-            this.SpendingTotals.MemberChanged += ((o, a) => UpdateComparisonValues());    //Update comparison values if a spending values was changed. Totals used to allow bulk modification.
-            this.BudgetTotals.MemberChanged += ((o, a) => UpdateComparisonValues());  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
+            //this.SpendingTotals.MemberChanged += ((o, a) => { Debug.WriteLine("Spending totals auto update"); UpdateComparisonValues(); });    //Update comparison values if a spending values was changed. Totals used to allow bulk modification.
+            //this.BudgetTotals.MemberChanged += ((o, a) => { Debug.WriteLine("Budget totals auto update"); UpdateComparisonValues(); });  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
 
         }
         #endregion
@@ -369,6 +369,7 @@ namespace BudgetApplication.Services
             List<Transaction> tempTransactions = new List<Transaction>();
             foreach (Transaction transaction in data.Transactions)
             {
+                Debug.WriteLine(transaction.Item + " " + transaction.Date);
                 string categoryName = transaction.Category.Name;
                 //Debug.WriteLine(transaction.Item + " " + transaction.PaymentMethod.Name);
                 string paymentName = transaction.PaymentMethod.Name;
@@ -613,6 +614,7 @@ namespace BudgetApplication.Services
         }
         private void CalculateColumnTotals(ObservableCollection<MoneyGridRow> columnValues, ObservableCollection<MoneyGridRow> columnTotals, String propertyName)
         {
+            Debug.WriteLine("Calculating column totals for " + propertyName);
             //Don't do anything if not all the rows have been loaded yet
             if (columnValues.Count < this.Categories.Count || columnTotals.Count < this.Groups.Count)
                 return;
@@ -695,6 +697,7 @@ namespace BudgetApplication.Services
             if (e.PropertyName.Equals("Values"))
             {
                 CalculateColumnTotals(this.BudgetValues, this.BudgetTotals, "BudgetTotals");
+                Debug.WriteLine("Updated budget totals");
                 UpdateComparisonValues();
                 UpdateMonthDetails();
             }
@@ -706,6 +709,7 @@ namespace BudgetApplication.Services
         private void RefreshBudgetTotals()
         {
             CalculateColumnTotals(this.BudgetValues, this.BudgetTotals, "BudgetTotals");
+            Debug.WriteLine("Refreshed budget totals");
             UpdateComparisonValues();
             UpdateMonthDetails();
         }
@@ -835,13 +839,14 @@ namespace BudgetApplication.Services
         {
             //Debug.WriteLine("Updating spending totals");
             CalculateColumnTotals(this.SpendingValues, this.SpendingTotals, "SpendingTotals");
-            //Debug.WriteLine("Spending Total Updated");
+            Debug.WriteLine("Spending Total Updated");
             UpdateComparisonValues();
             UpdateMonthDetails();
         }
 
         private void UpdateComparisonValues()
         {
+            Debug.WriteLine("Updating comparison values");
             //Debug.WriteLine("Number of categories: " + _categories.Count + "Number of rows: " + _budgetValues.Count + " " + _spendingValues.Count + " " + _comparisonValues.Count);
             for (int i = 0; i < this.ComparisonValues.Count; i++)
             {
