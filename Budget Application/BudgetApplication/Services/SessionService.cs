@@ -54,6 +54,19 @@ namespace BudgetApplication.Services
             }
         }
 
+        private string _BusyMessage;
+        public string BusyMessage
+        {
+            get
+            {
+                return this._BusyMessage;
+            }
+            set
+            {
+                this.Set(ref this._BusyMessage, value);
+            }
+        }
+
         private int _currentYear = DateTime.Now.Year;
         public int CurrentYear
         {
@@ -326,6 +339,10 @@ namespace BudgetApplication.Services
             catch (InvalidOperationException ex)
             {
                 Debug.WriteLine($"Error reading XML from file {filePath}\n" + ex.Message);
+            }
+            catch (System.Xml.XmlException ex)
+            {
+                Debug.WriteLine($"Error with XML\n" + ex);
             }
             //Process the data
             this.CurrentYear = data.Year;

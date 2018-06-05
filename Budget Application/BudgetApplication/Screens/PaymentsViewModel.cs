@@ -261,11 +261,8 @@ namespace BudgetApplication.Screens
 
         private void TransactionPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (this.PaymentTransactions_Filter(sender as Transaction))
-            {
                 this.RecalculateCreditValues();
-                this.PaymentTransactionsView.Refresh();
-            }
+                //this.PaymentTransactionsView.Refresh();
         }
         #endregion
     }

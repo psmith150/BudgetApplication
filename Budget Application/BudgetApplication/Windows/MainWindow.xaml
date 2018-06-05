@@ -126,7 +126,7 @@
                 </Grid>-->
             </Grid>
             <Separator DockPanel.Dock="Top" Background="DarkGray" Height="2" Width="Auto" HorizontalAlignment="Stretch"/>
-            <!--<DockPanel DockPanel.Dock="Bottom"
+            <DockPanel DockPanel.Dock="Bottom"
                    Height="26"
                    Background="Gray">
                 <DockPanel.Resources>
@@ -136,20 +136,11 @@
                         <Setter Property="VerticalAlignment" Value="Center"/>
                     </Style>
                 </DockPanel.Resources>
-                <TextBlock DockPanel.Dock="Left" Text="Status: Online"/>
-                <Separator Width="14" 
-                       Height="1" 
-                       RenderTransformOrigin="0.5,0.5"
-                       VerticalAlignment="Center"
-                       Background="White">
-                    <Separator.RenderTransform>
-                        <RotateTransform Angle="90"/>
-                    </Separator.RenderTransform>
-                </Separator>
-                <TextBlock DockPanel.Dock="Left" Text="User: Anonymous"/>
+                <Button DockPanel.Dock="Right" ToolTip="Open the help menu." Width="25" Height="25" Margin="0" Background="LightGray" Foreground="Black" Command="{Binding OpenHelpCommand}">
+                    <Image Source="/Images\Question_16x.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                </Button>
                 <TextBlock DockPanel.Dock="Right" Text="{Binding AppVersion, StringFormat=Version: {0}}" />
-                <Grid/>
-            </DockPanel>-->
+            </DockPanel>
             <ContentPresenter Content="{Binding NavigationService.ActiveViewModel, Converter={StaticResource ViewModelToViewConverter}}" />
         </DockPanel>
 

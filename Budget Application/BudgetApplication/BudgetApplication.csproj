@@ -136,7 +136,8 @@
     <Compile Include="CustomControls\MoneyGrid.xaml.cs">
       <DependentUpon>MoneyGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IOC\IOCContainer.cs" />
+    <Compile Include="IoC\ErrorHandler.cs" />
+    <Compile Include="IoC\IoCContainer.cs" />
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\CheckedListItem.cs" />
     <Compile Include="Model\CheckingAccount.cs" />
@@ -152,6 +153,14 @@
     <Compile Include="Model\PaymentTypeToStringConverter.cs" />
     <Compile Include="Model\Transaction.cs" />
     <Compile Include="Model\ValueToBrushConverter.cs" />
+    <Compile Include="Popups\ErrorPopup.xaml.cs">
+      <DependentUpon>ErrorPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popups\ErrorViewModel.cs" />
+    <Compile Include="Popups\HelpPopup.xaml.cs">
+      <DependentUpon>HelpPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popups\HelpViewModel.cs" />
     <Compile Include="Popups\PopupEventArgs.cs" />
     <Compile Include="Popups\PopupViewModel.cs" />
     <Compile Include="Popups\PaymentMethodsPopup.xaml.cs">
@@ -238,6 +247,14 @@
     </Compile>
     <Compile Include="Windows\MainWindowViewModel.cs" />
     <Page Include="CustomControls\MoneyGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popups\ErrorPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popups\HelpPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -394,6 +411,32 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Dollar_sign.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BudgetApplication.Base\BudgetApplication.Base.csproj">
+      <Project>{02bddbe1-7267-4b3f-8f4c-b122914da6ed}</Project>
+      <Name>BudgetApplication.Base</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Question_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Close_16x.png" />
+    <Resource Include="Images\DMC Wheel Transparent Background.ico" />
+    <Resource Include="Images\DMC-Icon-White.ico" />
+    <Resource Include="Images\DMC-Logo.png" />
+    <Resource Include="Images\Import_Icon.png" />
+    <Resource Include="Images\NewFile_16x.png" />
+    <Resource Include="Images\Open_grey_16x.png" />
+    <Resource Include="Images\Refresh_grey_16x.png" />
+    <Resource Include="Images\Refresh_Icon.png" />
+    <Resource Include="Images\Save_grey_16x.png" />
+    <Resource Include="Images\Settings_16x.png" />
+    <Resource Include="Images\StatusCriticalError_16x.png" />
+    <Resource Include="Images\StatusNotStarted_16x.png" />
+    <Resource Include="Images\StatusOK_16x.png" />
+    <Resource Include="Images\StatusWarning_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
