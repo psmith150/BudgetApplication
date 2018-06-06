@@ -32,6 +32,7 @@ namespace BudgetApplication.Windows
         public ICommand OpenSettingsCommand { get; private set; }
         public ICommand ChangeYearCommand { get; private set; }
         public ICommand OpenRecentFileCommand { get; private set; }
+        public ICommand OpenHelpCommand { get; private set; }
         #endregion
 
         #region Constructor
@@ -49,6 +50,7 @@ namespace BudgetApplication.Windows
             this.OpenSettingsCommand = new RelayCommand(() => this.OpenSettings());
             this.ChangeYearCommand = new RelayCommand(() => this.ChangeYear());
             this.OpenRecentFileCommand = new RelayCommand<string>((s) => this.OpenRecentFile(s));
+            this.OpenHelpCommand = new RelayCommand(() => this.ShowHelp());
 
             //Load list of recent files
             this.LastFiles = new ObservableCollection<string>();
@@ -127,6 +129,10 @@ namespace BudgetApplication.Windows
             await this.NavigationService.OpenPopup<ChangeYearViewModel>();
         }
 
+        private async void ShowHelp()
+        {
+            await this.NavigationService.OpenPopup<HelpViewModel>(this.NavigationService.ActiveViewModel);
+        }
         private void ShowDebugWindow()
         {
             //if (Application.Current.Windows.OfType<DebugWindow>().Any())

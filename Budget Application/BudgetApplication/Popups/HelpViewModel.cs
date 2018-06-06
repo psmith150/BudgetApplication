@@ -14,9 +14,25 @@ namespace BudgetApplication.Popups
         public override void Initialize(object param)
         {
             Type paramType = param.GetType();
-            if(false)
+            if(paramType == typeof(BudgetViewModel))
             {
-                this.HelpMessage = portalManagementHelpMessage;
+                this.HelpMessage = budgetHelpMessage;
+            }
+            else if (paramType == typeof(SpendingViewModel))
+            {
+                this.HelpMessage = spendingHelpMessage;
+            }
+            else if (paramType == typeof(ComparisonViewModel))
+            {
+                this.HelpMessage = comparisonHelpMessage;
+            }
+            else if (paramType == typeof(TransactionsViewModel))
+            {
+                this.HelpMessage = transactionsHelpMessage;
+            }
+            else if (paramType == typeof(PaymentsViewModel))
+            {
+                this.HelpMessage = paymentsHelpMessage;
             }
             else
             {
@@ -44,21 +60,27 @@ namespace BudgetApplication.Popups
         #endregion
 
         #region Help Messages
-        private const string portalManagementHelpMessage = "1. A new instance of Portal can be opened with the Open Portal button. Portal can be run either with or without the Portal GUI visible.\n\n" +
-            "2. If an instance of Portal is already running, use the Connect to Portal button to select the instance and connect to it. Connecting to a new instance will close the current instance.\n\n" +
-            "3. Once an instance of Portal is connected, a project needs to be loaded. An existing project can be loaded with the Open button, or a new project can be created with the New button. The currently active project will be displayed.\n\n" +
-            "4. Once a project has been loaded, the active device needs to be selected. Use the gear icon to open the device manager. The current devices in the project will be displayed. An existing device can be selected, or a new one can be added with the Add Device button. A valid catalog number and firmware version are required to add a device\n\n" +
-            "5. If a PLC device is active, the PLC blocks, data types, and tag tables can be displayed with the Show/Hide PLC Data button. Use the buttons to import an XML file and refresh the list, or right click on an object to export it as an XML file.\n\n" +
-            "6. Once a PLC device is active, the Excel data has been loaded, and the XML templates have been loaded, use the Generate Project Data button to begin adding objects to the Portal project. You will first be prompted to choose a folder to save the XML files in. The XML files will then be created. Next, you will be prompted to locate the CPG library file. This should have been provided with this application. The library items will then be added to the PLC. Finally, the XML files will be imported to the PLC.\n\n" +
-            "7. If any errors occur during this process, details will be displayed at the top of the screen. More detail can be seen in the debug window (Ctrl+Shift+D). For any assistance, please contact DMC.";
-        private const string excelHelpMessage = "1. Load a PackML Excel file using the load file button.\n\n" +
-            "2. Once the file is loaded, verify that the data shown is accurate. If not, correct the Excel file and reload.\n\n" +
-            "3. If the file cannot be loaded, an error will be displayed at the top of the screen. More detail can be seen in the debug window (Ctrl+Shift+D). Correct these errors and reload the file.";
-        private const string xmlHelpMessage = "1. Certain pre-defined XML templates must be loaded before project configuration can begin. These templates are shown in the list, and should have been included with this application. Once a template has been loaded, it will turn green and the checkbox will be checked.\n\n" +
-            "2. Files can be loaded one at a time by using the Load XML File button.\n\n" +
-            "3. Files can also be loaded from a folder by using the Load XML Files button. This operation will recursively load all XML files in the selected folder and all subfolders.\n\n" +
-            "4. If a file cannot be loaded, an error will be displayed at the top of the screen. More detail can be seen in the debug window (Ctrl+Shift+D). Correct these errors and reload the file.";
-        private const string defaultHelpMessage = "Help not defined for this screen. Contact DMC for assistance.";
+        private const string budgetHelpMessage = "This screen is where you can create your budget. Simply enter the budget amount into the box for the appropriate category and month. Use Ctrl+Enter when entering " +
+            "a value to apply it to all months of that category.\n" +
+            "The totals for each group are shown at the bottom. The Net Budget row will show the over/under of income vs expenditures for that month. The Net Sum row is cumulative across all months. The final " +
+            "total of the Net Sum will be the over/under for the entire year. This number should be as close to $0 as possible.\n" +
+            "Remember to keep your budget up to date througout the year!";
+        private const string spendingHelpMessage = "This screen shows a summary of all the money you have spent. Each transaction updates the approriate category and month. Each month, category, and group is " +
+            "summed for reference";
+        private const string comparisonHelpMessage = "This screen shows the difference between what you budgeted and what you actually spent. Each box is color coded to show how you did for that category and month. " +
+            "Ideally, all these numbers will be $0, indicating that you stuck perfectly to your budget. In reality, keep a close eye on your Net Budget and Net Sum; these are your best indicators of how well you " +
+            "are sticking to your budget.\n" +
+            "If there are certain categories that you are constantly over or under on, you should take a look at your budgeted values and your actual spending and see if you need to adjust your budget or your " +
+            "spending habits.";
+        private const string monthDetailsHelpMessage = "This screen shows the progress you've made on spending categories over one month (default is the current month). Each category will have a progress bar " +
+            "comparing how much you've spent to how much you've budgeted for the month. The yellow line is today's date. Categories are colored by what percent has been spent compared to the current day of the month; " +
+            "red indicates that you are spending faster than you should, and may be at risk of exceeding your budget.";
+        private const string transactionsHelpMessage = "This screen is where all your transactions are recorded. Each transaction has a date, a note of what was purchased, the person or business purchased from, " +
+            "the amount, an appropriate category for tracking, how it was paid for, and any additional comments. Transactions can be sorted based on any of these criteria.";
+        private const string paymentsHelpMessage = "This screen filters all the transactions by payment method. You can choose a payment method as well as a start and end date. Transactions can also be added, " +
+            "deleted, and modified from this screen.\n" +
+            "Selecting a credit card as the payment method will show additional details to break down a billing cycle. This can be useful to quickly see if your credit card statements match up to your spending.";
+        private const string defaultHelpMessage = "Help not defined for this screen. Please check https://github.com/psmith150/BudgetApplication for information";
         #endregion
     }
 }
