@@ -423,15 +423,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Close_16x.png" />
-    <Resource Include="Images\DMC Wheel Transparent Background.ico" />
-    <Resource Include="Images\DMC-Icon-White.ico" />
-    <Resource Include="Images\DMC-Logo.png" />
     <Resource Include="Images\Import_Icon.png" />
     <Resource Include="Images\NewFile_16x.png" />
     <Resource Include="Images\Open_grey_16x.png" />
-    <Resource Include="Images\Refresh_grey_16x.png" />
-    <Resource Include="Images\Refresh_Icon.png" />
-    <Resource Include="Images\Save_grey_16x.png" />
     <Resource Include="Images\Settings_16x.png" />
     <Resource Include="Images\StatusCriticalError_16x.png" />
     <Resource Include="Images\StatusNotStarted_16x.png" />

@@ -1,5 +1,4 @@
-﻿
-using BudgetApplication.Model;
+﻿using BudgetApplication.Model;
 using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
@@ -11,13 +10,14 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using BudgetApplication.Base.Interfaces;
 
 namespace BudgetApplication.Services
 {
     public class SessionService : ObservableObject
     {
         #region Constructor
-        public SessionService()
+        public SessionService(IErrorHandler errorhandler)
         {
             //Sets event handlers to make sure all data is updated
             this.Categories.CollectionChanged += CategoryCollectionChanged;  //Used to add/remove rows
@@ -31,10 +31,12 @@ namespace BudgetApplication.Services
             //this.SpendingTotals.MemberChanged += ((o, a) => { Debug.WriteLine("Spending totals auto update"); UpdateComparisonValues(); });    //Update comparison values if a spending values was changed. Totals used to allow bulk modification.
             //this.BudgetTotals.MemberChanged += ((o, a) => { Debug.WriteLine("Budget totals auto update"); UpdateComparisonValues(); });  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
 
+            this._errorhandler = errorhandler;
         }
         #endregion
 
         #region Private Fields
+        IErrorHandler _errorhandler;
         //Groups for income and expenditures in the Totals grids.
         private Group columnIncomeTotalsGroup = new Group(true, "Income Totals");
         private Group columnExpendituresTotalsGroup = new Group(false, "Expenditure totals");
@@ -338,10 +340,12 @@ namespace BudgetApplication.Services
             }
             catch (InvalidOperationException ex)
             {
+                this._errorhandler.DisplayError($"Error reading XML from file {filePath}\n{ex.Message}").Wait();
                 Debug.WriteLine($"Error reading XML from file {filePath}\n" + ex.Message);
             }
             catch (System.Xml.XmlException ex)
             {
+                this._errorhandler.DisplayError($"Error in XML file\n{ex.Message}").Wait();
                 Debug.WriteLine($"Error with XML\n" + ex);
             }
             //Process the data
@@ -386,7 +390,7 @@ namespace BudgetApplication.Services
             List<Transaction> tempTransactions = new List<Transaction>();
             foreach (Transaction transaction in data.Transactions)
             {
-                Debug.WriteLine(transaction.Item + " " + transaction.Date);
+                //Debug.WriteLine(transaction.Item + " " + transaction.Date);
                 string categoryName = transaction.Category.Name;
                 //Debug.WriteLine(transaction.Item + " " + transaction.PaymentMethod.Name);
                 string paymentName = transaction.PaymentMethod.Name;
@@ -442,10 +446,12 @@ namespace BudgetApplication.Services
             }
             catch (IOException ex)
             {
+                this._errorhandler.DisplayError($"Error saving to file {filePath}\n{ex.Message}").Wait();
                 Debug.WriteLine($"Error saving to file {filePath}\n" + ex.Message);
             }
             catch (InvalidOperationException ex)
             {
+                this._errorhandler.DisplayError($"Error writing XML to file {filePath}\n{ex.Message}").Wait();
                 Debug.WriteLine($"Error writing XML to file {filePath}\n" + ex.Message);
             }
         }
@@ -580,6 +586,7 @@ namespace BudgetApplication.Services
                     }
                     catch (ArgumentException ex)
                     {
+                        this._errorhandler.DisplayError($"Could not match group to category {newCategory.Name}").Wait();
                         Debug.WriteLine("Could not match group to category " + newCategory.Name);
                         throw new ArgumentException("Could not match group to category " + newGroup.Name, ex);
                     }
@@ -631,7 +638,7 @@ namespace BudgetApplication.Services
         }
         private void CalculateColumnTotals(ObservableCollection<MoneyGridRow> columnValues, ObservableCollection<MoneyGridRow> columnTotals, String propertyName)
         {
-            Debug.WriteLine("Calculating column totals for " + propertyName);
+            //Debug.WriteLine("Calculating column totals for " + propertyName);
             //Don't do anything if not all the rows have been loaded yet
             if (columnValues.Count < this.Categories.Count || columnTotals.Count < this.Groups.Count)
                 return;
@@ -648,6 +655,7 @@ namespace BudgetApplication.Services
                 }
                 catch (Exception ex)
                 {
+                    this._errorhandler.DisplayError($"Could not find corresponding total row: {group.Name}").Wait();
                     Debug.WriteLine("Could not find corresponding total row: " + group.Name);
                     continue;
                     //throw new ArgumentException("Could not find corresponding total row: " + group.Name, ex);
@@ -665,6 +673,7 @@ namespace BudgetApplication.Services
                     }
                     catch (Exception ex)
                     {
+                        this._errorhandler.DisplayError($"{propertyName} does not contain row for group {group} and category {category}").Wait();
                         Debug.WriteLine(propertyName + " does not contain row for group " + group + " and category " + category);
                         continue;
                         //Debug.WriteLine(columnValues.ElementAt(0).Group + " " + columnValues.ElementAt(0).Category);
@@ -686,6 +695,7 @@ namespace BudgetApplication.Services
                     }
                     catch (Exception ex)
                     {
+                        this._errorhandler.DisplayError($"{propertyName} does not contain row for group {group} and category {category}").Wait();
                         Debug.WriteLine(propertyName + " does not contain row for group " + group + " and category " + category);
                         continue;
                         //Debug.WriteLine(columnValues.ElementAt(0).Group + " " + columnValues.ElementAt(0).Category);
@@ -714,7 +724,7 @@ namespace BudgetApplication.Services
             if (e.PropertyName.Equals("Values"))
             {
                 CalculateColumnTotals(this.BudgetValues, this.BudgetTotals, "BudgetTotals");
-                Debug.WriteLine("Updated budget totals");
+                //Debug.WriteLine("Updated budget totals");
                 UpdateComparisonValues();
                 UpdateMonthDetails();
             }
@@ -726,7 +736,7 @@ namespace BudgetApplication.Services
         private void RefreshBudgetTotals()
         {
             CalculateColumnTotals(this.BudgetValues, this.BudgetTotals, "BudgetTotals");
-            Debug.WriteLine("Refreshed budget totals");
+            //Debug.WriteLine("Refreshed budget totals");
             UpdateComparisonValues();
             UpdateMonthDetails();
         }
@@ -741,7 +751,7 @@ namespace BudgetApplication.Services
         /// <param name="e">The arguments</param>
         private void UpdateSpendingValues(Object sender, PropertyChangedEventArgs e)
         {
-            Debug.WriteLine("Transaction modified!");
+            //Debug.WriteLine("Transaction modified!");
             //Only category, date, and amount will change the spending data
             if (!e.PropertyName.Equals("Category") && !e.PropertyName.Equals("Amount") && !e.PropertyName.Equals("Date"))
                 return;
@@ -856,14 +866,14 @@ namespace BudgetApplication.Services
         {
             //Debug.WriteLine("Updating spending totals");
             CalculateColumnTotals(this.SpendingValues, this.SpendingTotals, "SpendingTotals");
-            Debug.WriteLine("Spending Total Updated");
+            //Debug.WriteLine("Spending Total Updated");
             UpdateComparisonValues();
             UpdateMonthDetails();
         }
 
         private void UpdateComparisonValues()
         {
-            Debug.WriteLine("Updating comparison values");
+            //Debug.WriteLine("Updating comparison values");
             //Debug.WriteLine("Number of categories: " + _categories.Count + "Number of rows: " + _budgetValues.Count + " " + _spendingValues.Count + " " + _comparisonValues.Count);
             for (int i = 0; i < this.ComparisonValues.Count; i++)
             {
