@@ -27,7 +27,6 @@ namespace BudgetApplication.CustomControls
         public void FitColumns()
         {
             MainGrid.Width = ScrollViewer.ActualWidth - SystemParameters.VerticalScrollBarWidth;
-            //Debug.WriteLine("Gets here");
         }
 
         /// <summary>
@@ -55,7 +54,6 @@ namespace BudgetApplication.CustomControls
                     (TotalsGrid.Columns[i] as DataGridTextColumn).ElementStyle = this.FindResource("ColorCodeStyle") as Style;
                 }
                 //Budget and sum rows are always color coded.
-                //Debug.WriteLine("Column number: " + i);
                 (BudgetAndSumGrid.Columns[i] as DataGridTextColumn).ElementStyle = this.FindResource("ColorCodeStyle") as Style;
             }
         }

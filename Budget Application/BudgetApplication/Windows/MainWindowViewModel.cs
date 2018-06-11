@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using BudgetApplication.Popups;
 using System.Collections.Specialized;
 using System.Collections.ObjectModel;
+using BudgetApplication.Base.Interfaces;
 
 namespace BudgetApplication.Windows
 {
@@ -33,12 +34,14 @@ namespace BudgetApplication.Windows
         public ICommand ChangeYearCommand { get; private set; }
         public ICommand OpenRecentFileCommand { get; private set; }
         public ICommand OpenHelpCommand { get; private set; }
+        public ICommand CloseMessageCommand { get; private set; }
         #endregion
 
         #region Constructor
-        public MainWindowViewModel(NavigationService navigationService, SessionService session) : base(session)
+        public MainWindowViewModel(NavigationService navigationService, SessionService session, IErrorHandler errorHandler) : base(session)
         {
             this.NavigationService = navigationService;
+            this._errorHandler = errorHandler;
             this.NavigateToScreenCommand = new RelayCommand<Type>((viewModel) => this.NavigateToScreen(viewModel));
             this.OpenGroupsAndCategoriesCommand = new RelayCommand(() => this.OpenGroupsAndCategories());
             this.OpenPaymentMethodsCommand = new RelayCommand(() => this.OpenPaymentMethods());
@@ -51,6 +54,7 @@ namespace BudgetApplication.Windows
             this.ChangeYearCommand = new RelayCommand(() => this.ChangeYear());
             this.OpenRecentFileCommand = new RelayCommand<string>((s) => this.OpenRecentFile(s));
             this.OpenHelpCommand = new RelayCommand(() => this.ShowHelp());
+            this.CloseMessageCommand = new RelayCommand(() => this.CloseMessage());
 
             //Load list of recent files
             this.LastFiles = new ObservableCollection<string>();
@@ -97,6 +101,7 @@ namespace BudgetApplication.Windows
 
         #region Private Fields
         private string currentFilePath;
+        private IErrorHandler _errorHandler;
         #endregion
 
         #region Private Methods
@@ -132,6 +137,11 @@ namespace BudgetApplication.Windows
         private async void ShowHelp()
         {
             await this.NavigationService.OpenPopup<HelpViewModel>(this.NavigationService.ActiveViewModel);
+        }
+        private void CloseMessage()
+        {
+            this.Session.IsMessageActive = false;
+            this.Session.ActiveMessage = "";
         }
         private void ShowDebugWindow()
         {
@@ -179,7 +189,7 @@ namespace BudgetApplication.Windows
             }
             catch (IOException ex)
             {
-                Debug.WriteLine($"Error loading from file {this.currentFilePath}\n" + ex.Message);
+                this._errorHandler.DisplayError($"Error loading from file {this.currentFilePath}\n" + ex.Message).Wait();
             }
         }
 
@@ -206,7 +216,7 @@ namespace BudgetApplication.Windows
             }
             catch (IOException ex)
             {
-                Debug.WriteLine($"Error loading from file {this.currentFilePath}\n" + ex.Message);
+                this._errorHandler.DisplayError($"Error loading from file {this.currentFilePath}\n" + ex.Message).Wait();
             }
         }
 
@@ -230,7 +240,7 @@ namespace BudgetApplication.Windows
             }
             catch (IOException ex)
             {
-                Debug.WriteLine($"Error loading from file {this.currentFilePath}\n" + ex.Message);
+                this._errorHandler.DisplayError($"Error loading from file {this.currentFilePath}\n" + ex.Message).Wait();
             }
         }
 
@@ -246,7 +256,6 @@ namespace BudgetApplication.Windows
 
         private async void OpenRecentFile(string filePath)
         {
-            Debug.WriteLine("Opening file " + filePath);
             try
             {
                 if (File.Exists(filePath))
@@ -267,7 +276,7 @@ namespace BudgetApplication.Windows
             }
             catch (IOException ex)
             {
-                Debug.WriteLine($"Error loading from file {this.currentFilePath}\n" + ex.Message);
+                this._errorHandler.DisplayError($"Error loading from file {this.currentFilePath}\n" + ex.Message).Wait();
             }
         }
 

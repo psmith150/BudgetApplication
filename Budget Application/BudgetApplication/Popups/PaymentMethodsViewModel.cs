@@ -155,7 +155,6 @@ namespace BudgetApplication.Popups
         private void Save()
         {
             PaymentMethod payment;
-            //Debug.WriteLine("Added payment " + name + " of type " + popup.PaymentType.ToString());
             switch (this.PaymentType)   //Determines which type of payment to produce.
             {
                 case PaymentMethod.Type.CreditCard:
@@ -163,10 +162,8 @@ namespace BudgetApplication.Popups
                     break;
                 case PaymentMethod.Type.CheckingAccount:
                     payment = new CheckingAccount(this.PaymentName);
-                    //Debug.WriteLine((payment as CheckingAccount).AccountNumber);
                     break;
                 default:
-                    //Debug.WriteLine("Invalid payment method: " + popup.PaymentType);
                     payment = null;
                     break;
             }

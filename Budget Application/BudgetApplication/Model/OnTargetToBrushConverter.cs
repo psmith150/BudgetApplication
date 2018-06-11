@@ -22,7 +22,6 @@ namespace BudgetApplication.Model
         {
             if (value == null)
                 return Brushes.White;
-            //Debug.WriteLine(value as string);
             bool result = System.Convert.ToBoolean(value);
             if (result)
             {
