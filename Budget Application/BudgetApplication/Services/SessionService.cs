@@ -11,13 +11,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using BudgetApplication.Base.Interfaces;
+using BudgetApplication.Base.AbstractClasses;
 
 namespace BudgetApplication.Services
 {
     public class SessionService : ObservableObject
     {
         #region Constructor
-        public SessionService(IErrorHandler errorhandler)
+        public SessionService(IErrorHandler errorhandler, MessageViewerBase messageViewer)
         {
             //Sets event handlers to make sure all data is updated
             this.Categories.CollectionChanged += CategoryCollectionChanged;  //Used to add/remove rows
@@ -32,11 +33,13 @@ namespace BudgetApplication.Services
             //this.BudgetTotals.MemberChanged += ((o, a) => { Debug.WriteLine("Budget totals auto update"); UpdateComparisonValues(); });  //Update comparison values if a budget value was changed. Totals used to allow bulk modification.
 
             this._errorhandler = errorhandler;
+            this._messageViewer = messageViewer;
         }
         #endregion
 
         #region Private Fields
         IErrorHandler _errorhandler;
+        MessageViewerBase _messageViewer;
         //Groups for income and expenditures in the Totals grids.
         private Group columnIncomeTotalsGroup = new Group(true, "Income Totals");
         private Group columnExpendituresTotalsGroup = new Group(false, "Expenditure totals");
@@ -68,33 +71,6 @@ namespace BudgetApplication.Services
                 this.Set(ref this._BusyMessage, value);
             }
         }
-
-        private bool _IsMessageActive;
-        public bool IsMessageActive
-        {
-            get
-            {
-                return this._IsMessageActive;
-            }
-            set
-            {
-                this.Set(ref this._IsMessageActive, value);
-            }
-        }
-
-        private string _ActiveMessage;
-        public string ActiveMessage
-        {
-            get
-            {
-                return this._ActiveMessage;
-            }
-            set
-            {
-                this.Set(ref this._ActiveMessage, value);
-            }
-        }
-
         private int _currentYear = DateTime.Now.Year;
         public int CurrentYear
         {
@@ -291,13 +267,6 @@ namespace BudgetApplication.Services
         #endregion
         #endregion
         #region Public Methods
-
-        public void ShowMessage(string message = "")
-        {
-            this.ActiveMessage = message;
-            this.IsMessageActive = true;
-        }
-
         /// <summary>
         /// Moves a row of values on all tabs
         /// </summary>
@@ -431,7 +400,7 @@ namespace BudgetApplication.Services
                 tempTransactions.Add(transaction);
             }
             this.Transactions.InsertRange(tempTransactions);
-            this.ShowMessage("Data loaded");
+            await this._messageViewer.DisplayMessage("Data loaded");
         }
 
         public async Task SaveDataToFile(string filePath)

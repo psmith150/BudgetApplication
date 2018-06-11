@@ -154,7 +154,7 @@
         </Grid>
 
         <!-- Message Window -->
-        <Grid Background="Transparent" Visibility="{Binding Session.IsMessageActive, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Grid Background="Transparent" Visibility="{Binding MessageViewer.IsMessageActive, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
@@ -175,10 +175,11 @@
                 </Grid.RowDefinitions>
                 <Label Content="Message Box" Background="WhiteSmoke" HorizontalAlignment="Stretch"/>
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                    <TextBlock Text="{Binding Session.ActiveMessage}" TextWrapping="Wrap" HorizontalAlignment="Stretch" TextAlignment="Center" VerticalAlignment="Stretch"/>
+                    <TextBlock Text="{Binding MessageViewer.ActiveMessage}" TextWrapping="Wrap" HorizontalAlignment="Stretch" TextAlignment="Center" VerticalAlignment="Stretch"/>
                 </ScrollViewer>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="Close" Command="{Binding CloseMessageCommand}" />
+                    <Button Content="Ok" Command="{Binding MessageViewer.CloseOkCommand}"/>
+                    <Button Content="Cancel" Command="{Binding MessageViewer.CloseCancelCommand}" />
                 </StackPanel>
             </Grid>
         </Grid>

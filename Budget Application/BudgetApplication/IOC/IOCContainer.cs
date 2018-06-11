@@ -8,6 +8,7 @@ using Autofac;
 using BudgetApplication.Services;
 using BudgetApplication.Windows;
 using BudgetApplication.Base.Interfaces;
+using BudgetApplication.Base.AbstractClasses;
 
 namespace BudgetApplication.IoC
 {
@@ -26,6 +27,7 @@ namespace BudgetApplication.IoC
                 builder.RegisterType<SessionService>().SingleInstance();
                 builder.RegisterType<NavigationService>().SingleInstance();
                 builder.RegisterType<ErrorHandler>().As<IErrorHandler>().SingleInstance();
+                builder.RegisterType<MessageViewer>().As<MessageViewerBase>().SingleInstance();
 
                 // Register windows explicitly
                 builder.RegisterType<MainWindow>().SingleInstance();

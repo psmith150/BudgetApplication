@@ -138,6 +138,7 @@
     </Compile>
     <Compile Include="IoC\ErrorHandler.cs" />
     <Compile Include="IoC\IoCContainer.cs" />
+    <Compile Include="IoC\MessageViewer.cs" />
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\CheckedListItem.cs" />
     <Compile Include="Model\CheckingAccount.cs" />

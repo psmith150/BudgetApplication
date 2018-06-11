@@ -16,6 +16,7 @@ using BudgetApplication.Popups;
 using System.Collections.Specialized;
 using System.Collections.ObjectModel;
 using BudgetApplication.Base.Interfaces;
+using BudgetApplication.Base.AbstractClasses;
 
 namespace BudgetApplication.Windows
 {
@@ -34,14 +35,14 @@ namespace BudgetApplication.Windows
         public ICommand ChangeYearCommand { get; private set; }
         public ICommand OpenRecentFileCommand { get; private set; }
         public ICommand OpenHelpCommand { get; private set; }
-        public ICommand CloseMessageCommand { get; private set; }
         #endregion
 
         #region Constructor
-        public MainWindowViewModel(NavigationService navigationService, SessionService session, IErrorHandler errorHandler) : base(session)
+        public MainWindowViewModel(NavigationService navigationService, SessionService session, IErrorHandler errorHandler, MessageViewerBase messageViewer) : base(session)
         {
             this.NavigationService = navigationService;
             this._errorHandler = errorHandler;
+            this.MessageViewer = messageViewer;
             this.NavigateToScreenCommand = new RelayCommand<Type>((viewModel) => this.NavigateToScreen(viewModel));
             this.OpenGroupsAndCategoriesCommand = new RelayCommand(() => this.OpenGroupsAndCategories());
             this.OpenPaymentMethodsCommand = new RelayCommand(() => this.OpenPaymentMethods());
@@ -54,7 +55,6 @@ namespace BudgetApplication.Windows
             this.ChangeYearCommand = new RelayCommand(() => this.ChangeYear());
             this.OpenRecentFileCommand = new RelayCommand<string>((s) => this.OpenRecentFile(s));
             this.OpenHelpCommand = new RelayCommand(() => this.ShowHelp());
-            this.CloseMessageCommand = new RelayCommand(() => this.CloseMessage());
 
             //Load list of recent files
             this.LastFiles = new ObservableCollection<string>();
@@ -83,6 +83,19 @@ namespace BudgetApplication.Windows
             private set
             {
                 this.Set(ref this._NavigationService, value);
+            }
+        }
+
+        private MessageViewerBase _MessageViewer;
+        public MessageViewerBase MessageViewer
+        {
+            get
+            {
+                return this._MessageViewer;
+            }
+            set
+            {
+                this.Set(ref this._MessageViewer, value);
             }
         }
         private ObservableCollection<string> _lastFiles;
@@ -137,11 +150,6 @@ namespace BudgetApplication.Windows
         private async void ShowHelp()
         {
             await this.NavigationService.OpenPopup<HelpViewModel>(this.NavigationService.ActiveViewModel);
-        }
-        private void CloseMessage()
-        {
-            this.Session.IsMessageActive = false;
-            this.Session.ActiveMessage = "";
         }
         private void ShowDebugWindow()
         {
