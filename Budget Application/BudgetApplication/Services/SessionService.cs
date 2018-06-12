@@ -266,6 +266,7 @@ namespace BudgetApplication.Services
         #endregion
         #endregion
         #endregion
+
         #region Public Methods
         /// <summary>
         /// Moves a row of values on all tabs
@@ -400,7 +401,7 @@ namespace BudgetApplication.Services
                 tempTransactions.Add(transaction);
             }
             this.Transactions.InsertRange(tempTransactions);
-            await this._messageViewer.DisplayMessage("Data loaded");
+            await this._messageViewer.DisplayMessage("Data loaded", Base.Enums.MessageViewerButton.Ok, Base.Enums.MessageViewerIcon.Information);
         }
 
         public async Task SaveDataToFile(string filePath)

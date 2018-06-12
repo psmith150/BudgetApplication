@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace BudgetApplication.IoC
 {
@@ -55,6 +56,37 @@ namespace BudgetApplication.IoC
         public override Task<MessageViewerEventArgs> DisplayMessage(string message, MessageViewerButton button, MessageViewerIcon icon)
         {
             this.ActiveMessage = message;
+            this.Icon = new BitmapImage();
+            switch (icon)
+            {
+                case MessageViewerIcon.Information:
+                    this.Icon = new BitmapImage(new Uri(@"/Images\StatusInformation_16x.png", UriKind.Relative));
+                    break;
+                case MessageViewerIcon.Warning:
+                    this.Icon = new BitmapImage(new Uri(@"/Images\StatusWarning_16x.png", UriKind.Relative));
+                    break;
+                case MessageViewerIcon.Error:
+                    this.Icon = new BitmapImage(new Uri(@"/Images\StatusCriticalError_16x.png", UriKind.Relative));
+                    break;
+                default:
+                    this.Icon = new BitmapImage(new Uri(@"/Images\StatusInformation_16x.png", UriKind.Relative));
+                    break;
+            }
+            this.UseOkButton = false;
+            this.UseCancelButton = false;
+            switch (button)
+            {
+                case MessageViewerButton.Ok:
+                    this.UseOkButton = true;
+                    break;
+                case MessageViewerButton.OkCancel:
+                    this.UseOkButton = true;
+                    this.UseCancelButton = true;
+                    break;
+                default:
+                    this.UseOkButton = true;
+                    break;
+            }
             this.IsMessageActive = true;
             this.messageTaskCompletionSource = new TaskCompletionSource<MessageViewerEventArgs>();
             return this.messageTaskCompletionSource.Task;

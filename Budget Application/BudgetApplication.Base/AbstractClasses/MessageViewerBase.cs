@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using System.Windows.Media.Imaging;
 
 namespace BudgetApplication.Base.AbstractClasses
 {
@@ -41,6 +42,45 @@ namespace BudgetApplication.Base.AbstractClasses
             set
             {
                 this.Set(ref this._ActiveMessage, value);
+            }
+        }
+
+        private bool _UseOkButton;
+        public bool UseOkButton
+        {
+            get
+            {
+                return this._UseOkButton;
+            }
+            set
+            {
+                this.Set(ref this._UseOkButton, value);
+            }
+        }
+
+        private bool _UseCancelButton;
+        public bool UseCancelButton
+        {
+            get
+            {
+                return this._UseCancelButton;
+            }
+            set
+            {
+                this.Set(ref this._UseCancelButton, value);
+            }
+        }
+
+        private BitmapImage _Icon;
+        public BitmapImage Icon
+        {
+            get
+            {
+                return this._Icon;
+            }
+            set
+            {
+                this.Set(ref this._Icon, value);
             }
         }
         #endregion
