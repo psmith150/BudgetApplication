@@ -402,7 +402,6 @@ namespace BudgetApplication.Services
                 tempTransactions.Add(transaction);
             }
             this.Transactions.InsertRange(tempTransactions);
-            await this._messageViewer.DisplayMessage("Data was successfully loaded.", "Data loaded", Base.Enums.MessageViewerButton.Ok, Base.Enums.MessageViewerIcon.Information);
         }
 
         public async Task SaveDataToFile(string filePath)
@@ -499,7 +498,6 @@ namespace BudgetApplication.Services
             {
                 foreach (Category newCategory in e.NewItems)
                 {
-                    //MessageBox.Show(newCategory.Group.Name);
                     Group group = GetCategoryGroup(newCategory);
                     if (group == null)
                     {
@@ -849,11 +847,6 @@ namespace BudgetApplication.Services
                         if (this.ComparisonValues.ElementAt(i).Values[j] == this.BudgetValues.ElementAt(i).Values[j] - this.SpendingValues.ElementAt(i).Values[j])
                             continue;
                         this.ComparisonValues.ElementAt(i).Values[j] = this.BudgetValues.ElementAt(i).Values[j] - this.SpendingValues.ElementAt(i).Values[j];
-                    }
-
-                    if (this.SpendingValues.ElementAt(i).Values[j] > 0)
-                    {
-                        //MessageBox.Show(i + " " + j);
                     }
                 }
             }

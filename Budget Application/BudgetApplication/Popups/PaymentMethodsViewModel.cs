@@ -1,4 +1,5 @@
-﻿using BudgetApplication.Model;
+﻿using BudgetApplication.Base.AbstractClasses;
+using BudgetApplication.Model;
 using BudgetApplication.Services;
 using GalaSoft.MvvmLight.CommandWpf;
 using System;
@@ -20,7 +21,7 @@ namespace BudgetApplication.Popups
         public ICommand CancelCommand { get; private set; }
         #endregion
 
-        public PaymentMethodsViewModel(NavigationService navigation, SessionService session) : base(session)
+        public PaymentMethodsViewModel(NavigationService navigation, SessionService session, MessageViewerBase messageViewer) : base(session)
         {
             this.navigationService = navigation;
             this.PaymentMethods = session.PaymentMethods;
@@ -28,6 +29,8 @@ namespace BudgetApplication.Popups
             this.RemovePaymentMethodCommand = new RelayCommand(() => RemovePaymentMethod());
             this.SaveCommand = new RelayCommand(() => Save());
             this.CancelCommand = new RelayCommand(() => { this.ShowPopup = false; });
+
+            this._messageViewer = messageViewer;
         }
 
         public override void Initialize(object param)
@@ -132,6 +135,7 @@ namespace BudgetApplication.Popups
 
         #region Private Fields
         private readonly NavigationService navigationService;
+        MessageViewerBase _messageViewer;
         #endregion
 
         #region Private Methods
@@ -152,7 +156,7 @@ namespace BudgetApplication.Popups
             }
         }
 
-        private void Save()
+        private async void Save()
         {
             PaymentMethod payment;
             switch (this.PaymentType)   //Determines which type of payment to produce.
@@ -170,7 +174,7 @@ namespace BudgetApplication.Popups
             PaymentMethod checkMethod = this.PaymentMethods.FirstOrDefault(x => x.Name.Equals(payment.Name));
             if (checkMethod != null)
             {
-                MessageBox.Show("Payment method of the same name already exists; please choose another.");
+                await this._messageViewer.DisplayMessage("Payment method of the same name already exists; please choose another.", "Duplicate payment method");
             }
             else
                 this.PaymentMethods.Add(payment);

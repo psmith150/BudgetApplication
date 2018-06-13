@@ -274,7 +274,7 @@ namespace BudgetApplication.Windows
                 }
                 else
                 {
-                    MessageBox.Show("File no longer exists; removing from list.", "File not found", MessageBoxButton.OK);
+                    await this._MessageViewer.DisplayMessage("File no longer exists; removing from list.", "File not found");
                     for (int i=0; i< this.LastFiles.Count; i++)
                     {
                         if (this.LastFiles[i].Equals(filePath))
