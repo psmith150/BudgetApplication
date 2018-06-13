@@ -45,17 +45,23 @@ namespace BudgetApplication.IoC
 
         public override Task<MessageViewerEventArgs> DisplayMessage(string message)
         {
-            return this.DisplayMessage(message, MessageViewerButton.Ok);
+            return this.DisplayMessage(message, "Message");
         }
 
-        public override Task<MessageViewerEventArgs> DisplayMessage(string message, MessageViewerButton button)
+        public override Task<MessageViewerEventArgs> DisplayMessage(string message, string title)
         {
-            return this.DisplayMessage(message, button, MessageViewerIcon.Information);
+            return this.DisplayMessage(message, title, MessageViewerButton.Ok);
         }
 
-        public override Task<MessageViewerEventArgs> DisplayMessage(string message, MessageViewerButton button, MessageViewerIcon icon)
+        public override Task<MessageViewerEventArgs> DisplayMessage(string message, string title, MessageViewerButton button)
+        {
+            return this.DisplayMessage(message, title, button, MessageViewerIcon.Information);
+        }
+
+        public override Task<MessageViewerEventArgs> DisplayMessage(string message, string title, MessageViewerButton button, MessageViewerIcon icon)
         {
             this.ActiveMessage = message;
+            this.Title = title;
             this.Icon = new BitmapImage();
             switch (icon)
             {

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using BudgetApplication.Base.Interfaces;
 using BudgetApplication.Base.AbstractClasses;
+using BudgetApplication.Base.EventArgs;
 
 namespace BudgetApplication.Services
 {
@@ -401,7 +402,7 @@ namespace BudgetApplication.Services
                 tempTransactions.Add(transaction);
             }
             this.Transactions.InsertRange(tempTransactions);
-            await this._messageViewer.DisplayMessage("Data loaded", Base.Enums.MessageViewerButton.Ok, Base.Enums.MessageViewerIcon.Information);
+            await this._messageViewer.DisplayMessage("Data was successfully loaded.", "Data loaded", Base.Enums.MessageViewerButton.Ok, Base.Enums.MessageViewerIcon.Information);
         }
 
         public async Task SaveDataToFile(string filePath)

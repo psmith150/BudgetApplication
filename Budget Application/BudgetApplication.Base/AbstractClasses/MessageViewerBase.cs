@@ -32,6 +32,19 @@ namespace BudgetApplication.Base.AbstractClasses
             }
         }
 
+        private string _Title;
+        public string Title
+        {
+            get
+            {
+                return this._Title;
+            }
+            set
+            {
+                this.Set(ref this._Title, value);
+            }
+        }
+
         private string _ActiveMessage;
         public string ActiveMessage
         {
@@ -87,8 +100,9 @@ namespace BudgetApplication.Base.AbstractClasses
 
         #region Public Methods
         public abstract Task<MessageViewerEventArgs> DisplayMessage(string message);
-        public abstract Task<MessageViewerEventArgs> DisplayMessage(string message, MessageViewerButton button);
-        public abstract Task<MessageViewerEventArgs> DisplayMessage(string message, MessageViewerButton button, MessageViewerIcon icon);
+        public abstract Task<MessageViewerEventArgs> DisplayMessage(string message, string title);
+        public abstract Task<MessageViewerEventArgs> DisplayMessage(string message, string title, MessageViewerButton button);
+        public abstract Task<MessageViewerEventArgs> DisplayMessage(string message, string title, MessageViewerButton button, MessageViewerIcon icon);
         #endregion
     }
 }
