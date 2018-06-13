@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 using BudgetApplication.Popups;
 using System.Collections.Specialized;
 using System.Collections.ObjectModel;
+using BudgetApplication.Base.Interfaces;
+using BudgetApplication.Base.AbstractClasses;
 
 namespace BudgetApplication.Windows
 {
@@ -32,12 +34,15 @@ namespace BudgetApplication.Windows
         public ICommand OpenSettingsCommand { get; private set; }
         public ICommand ChangeYearCommand { get; private set; }
         public ICommand OpenRecentFileCommand { get; private set; }
+        public ICommand OpenHelpCommand { get; private set; }
         #endregion
 
         #region Constructor
-        public MainWindowViewModel(NavigationService navigationService, SessionService session) : base(session)
+        public MainWindowViewModel(NavigationService navigationService, SessionService session, IErrorHandler errorHandler, MessageViewerBase messageViewer) : base(session)
         {
             this.NavigationService = navigationService;
+            this._errorHandler = errorHandler;
+            this.MessageViewer = messageViewer;
             this.NavigateToScreenCommand = new RelayCommand<Type>((viewModel) => this.NavigateToScreen(viewModel));
             this.OpenGroupsAndCategoriesCommand = new RelayCommand(() => this.OpenGroupsAndCategories());
             this.OpenPaymentMethodsCommand = new RelayCommand(() => this.OpenPaymentMethods());
@@ -49,6 +54,7 @@ namespace BudgetApplication.Windows
             this.OpenSettingsCommand = new RelayCommand(() => this.OpenSettings());
             this.ChangeYearCommand = new RelayCommand(() => this.ChangeYear());
             this.OpenRecentFileCommand = new RelayCommand<string>((s) => this.OpenRecentFile(s));
+            this.OpenHelpCommand = new RelayCommand(() => this.ShowHelp());
 
             //Load list of recent files
             this.LastFiles = new ObservableCollection<string>();
@@ -79,6 +85,19 @@ namespace BudgetApplication.Windows
                 this.Set(ref this._NavigationService, value);
             }
         }
+
+        private MessageViewerBase _MessageViewer;
+        public MessageViewerBase MessageViewer
+        {
+            get
+            {
+                return this._MessageViewer;
+            }
+            set
+            {
+                this.Set(ref this._MessageViewer, value);
+            }
+        }
         private ObservableCollection<string> _lastFiles;
         public ObservableCollection<string> LastFiles
         {
@@ -95,6 +114,7 @@ namespace BudgetApplication.Windows
 
         #region Private Fields
         private string currentFilePath;
+        private IErrorHandler _errorHandler;
         #endregion
 
         #region Private Methods
@@ -127,6 +147,10 @@ namespace BudgetApplication.Windows
             await this.NavigationService.OpenPopup<ChangeYearViewModel>();
         }
 
+        private async void ShowHelp()
+        {
+            await this.NavigationService.OpenPopup<HelpViewModel>(this.NavigationService.ActiveViewModel);
+        }
         private void ShowDebugWindow()
         {
             //if (Application.Current.Windows.OfType<DebugWindow>().Any())
@@ -173,7 +197,7 @@ namespace BudgetApplication.Windows
             }
             catch (IOException ex)
             {
-                Debug.WriteLine($"Error loading from file {this.currentFilePath}\n" + ex.Message);
+                this._errorHandler.DisplayError($"Error loading from file {this.currentFilePath}\n" + ex.Message).Wait();
             }
         }
 
@@ -200,7 +224,7 @@ namespace BudgetApplication.Windows
             }
             catch (IOException ex)
             {
-                Debug.WriteLine($"Error loading from file {this.currentFilePath}\n" + ex.Message);
+                this._errorHandler.DisplayError($"Error loading from file {this.currentFilePath}\n" + ex.Message).Wait();
             }
         }
 
@@ -224,7 +248,7 @@ namespace BudgetApplication.Windows
             }
             catch (IOException ex)
             {
-                Debug.WriteLine($"Error loading from file {this.currentFilePath}\n" + ex.Message);
+                this._errorHandler.DisplayError($"Error loading from file {this.currentFilePath}\n" + ex.Message).Wait();
             }
         }
 
@@ -240,7 +264,6 @@ namespace BudgetApplication.Windows
 
         private async void OpenRecentFile(string filePath)
         {
-            Debug.WriteLine("Opening file " + filePath);
             try
             {
                 if (File.Exists(filePath))
@@ -251,7 +274,7 @@ namespace BudgetApplication.Windows
                 }
                 else
                 {
-                    MessageBox.Show("File no longer exists; removing from list.", "File not found", MessageBoxButton.OK);
+                    await this._MessageViewer.DisplayMessage("File no longer exists; removing from list.", "File not found");
                     for (int i=0; i< this.LastFiles.Count; i++)
                     {
                         if (this.LastFiles[i].Equals(filePath))
@@ -261,7 +284,7 @@ namespace BudgetApplication.Windows
             }
             catch (IOException ex)
             {
-                Debug.WriteLine($"Error loading from file {this.currentFilePath}\n" + ex.Message);
+                this._errorHandler.DisplayError($"Error loading from file {this.currentFilePath}\n" + ex.Message).Wait();
             }
         }
 

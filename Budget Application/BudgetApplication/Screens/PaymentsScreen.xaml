@@ -63,7 +63,7 @@
             <Label>Remaining Credit:</Label>
             <Label Name="RemainingCreditLabel" Content="{Binding RemainingCredit}"/>
         </StackPanel>
-        <DataGrid Grid.Row="2"  x:Name="PaymentTransactions" ItemsSource="{Binding PaymentTransactionsView}" Background="DarkGray" AutoGenerateColumns="False">
+        <DataGrid Grid.Row="2"  x:Name="PaymentTransactions" ItemsSource="{Binding PaymentTransactionsView, UpdateSourceTrigger=PropertyChanged}" Background="DarkGray" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Date" SortMemberPath="Date">
                     <DataGridTemplateColumn.CellEditingTemplate>

@@ -171,7 +171,6 @@ namespace BudgetApplication.Model
         {
             NotifyPropertyChanged("Values");
             NotifyPropertyChanged("Sum");
-            //Debug.WriteLine("A value changed for row " + Category.Name);
         }
         /// <summary>
         /// Helper function to simplify raising the PropertyChanged event

@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Forms;
-using MessageBox = System.Windows.MessageBox;
+using BudgetApplication.Base.AbstractClasses;
+using BudgetApplication.Base.Enums;
+using BudgetApplication.Base.EventArgs;
 
 namespace BudgetApplication.Popups
 {
@@ -19,10 +21,12 @@ namespace BudgetApplication.Popups
         public ICommand ExitPopupCommand {get; private set;}
         #endregion
 
-        public ChangeYearViewModel(SessionService session) : base(session)
+        public ChangeYearViewModel(SessionService session, MessageViewerBase messageViewer) : base(session)
         {
             this.SaveCommand = new RelayCommand(() => this.Save());
             this.ExitPopupCommand = new RelayCommand(() => this.Exit());
+
+            this._messageViewer = messageViewer;
         }
 
         public override void Initialize(object param)
@@ -53,15 +57,16 @@ namespace BudgetApplication.Popups
 
         #region Private Fields
         private bool savingNeeded = false;
+        private MessageViewerBase _messageViewer;
         #endregion
 
         #region Private Methods
-        private void Exit()
+        private async void Exit()
         {
             if (this.savingNeeded)
             {
-                MessageBoxResult result = MessageBox.Show("Settings have not been saved, are you sure you want to exit?", "Discard Changes?", MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.Yes)
+                MessageViewerEventArgs result = await this._messageViewer.DisplayMessage("Settings have not been saved, are you sure you want to exit?", "Discard Changes?", MessageViewerButton.OkCancel);
+                if (result.Result == MessageViewerResult.Ok)
                     this.ClosePopup(null);
             }
             else
@@ -70,7 +75,7 @@ namespace BudgetApplication.Popups
             }
         }
 
-        private void Save()
+        private async void Save()
         {
             int testYear = 0;
             bool result = Int32.TryParse(this.CurrentYear, out testYear);
@@ -81,7 +86,7 @@ namespace BudgetApplication.Popups
             }
             else
             {
-                MessageBox.Show("Error: please enter a valid year!", "Invalid Year", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await this._messageViewer.DisplayMessage("Error: please enter a valid year!", "Invalid Year", MessageViewerButton.Ok, MessageViewerIcon.Warning);
             }
         }
         #endregion

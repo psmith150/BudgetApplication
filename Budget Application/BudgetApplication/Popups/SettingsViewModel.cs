@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Forms;
-using MessageBox = System.Windows.MessageBox;
+using BudgetApplication.Base.AbstractClasses;
+using BudgetApplication.Base.EventArgs;
+using BudgetApplication.Base.Enums;
 
 namespace BudgetApplication.Popups
 {
@@ -20,11 +22,13 @@ namespace BudgetApplication.Popups
         public ICommand SelectDirectoryCommand { get; private set; }
         #endregion
 
-        public SettingsViewModel(SessionService session) : base(session)
+        public SettingsViewModel(SessionService session, MessageViewerBase messageViewer) : base(session)
         {
             this.SaveCommand = new RelayCommand(() => this.Save());
             this.ExitPopupCommand = new RelayCommand(() => this.Exit());
             this.SelectDirectoryCommand = new RelayCommand(() => this.SelectDirectory());
+
+            this._messageViewer = messageViewer;
         }
 
         public override void Initialize(object param)
@@ -55,6 +59,7 @@ namespace BudgetApplication.Popups
 
         #region Private Fields
         private bool savingNeeded = false;
+        private MessageViewerBase _messageViewer;
         #endregion
 
         #region Private Methods
@@ -70,12 +75,12 @@ namespace BudgetApplication.Popups
                 this.DefaultDirectory = dirDialog.SelectedPath;
             }
         }
-        private void Exit()
+        private async void Exit()
         {
             if (this.savingNeeded)
             {
-                MessageBoxResult result = MessageBox.Show("Settings have not been saved, are you sure you want to exit?", "Discard Changes?", MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.Yes)
+                MessageViewerEventArgs result = await this._messageViewer.DisplayMessage("Settings have not been saved, are you sure you want to exit?", "Discard Changes?", MessageViewerButton.OkCancel);
+                if (result.Result == MessageViewerResult.Ok)
                     this.ClosePopup(null);
             }
             else

@@ -23,7 +23,6 @@ namespace BudgetApplication.Model
         {
             if (values[0] == null || values[1] == null)
                 return 0;
-            //Debug.WriteLine(value as string);
             int categoryWidth = System.Convert.ToInt32(values[0]);
             int progressWidth = System.Convert.ToInt32(values[1]);
             double percentage = System.Convert.ToDouble(values[2]);

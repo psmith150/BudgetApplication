@@ -56,7 +56,6 @@ namespace BudgetApplication.Screens
             private set
             {
                 _categories = value;
-                Debug.WriteLine($"Number of categories: {_categories.Count}");
             }
         }
         private MyObservableCollection<PaymentMethod> _paymentMethods;

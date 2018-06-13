@@ -56,7 +56,6 @@ namespace BudgetApplication.Screens
                 Set(ref _selectedMonth, value);
                 this.UpdateMonthDetails();
                 this.RaisePropertyChanged("PercentMonth");
-                //Debug.WriteLine("Updating month to " + _selectedMonth);
                 //RaisePropertyChanged("MonthDetails");
                 //RaisePropertyChanged("PercentMonth");
             }
@@ -142,7 +141,6 @@ namespace BudgetApplication.Screens
             //    monthDetails.Add(currentDetail);
             //}
             this.MonthDetails.InsertRange(monthDetails);
-            //Debug.WriteLine("Days so far: " + DateTime.Now.Day + "; total in month: " + DateTime.DaysInMonth(Int32.Parse(_currentYear), _selectedMonth + 1));
         }
         #endregion
     }

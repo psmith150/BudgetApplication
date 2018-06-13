@@ -191,13 +191,9 @@ namespace BudgetApplication.Popups
             {
                 throw new ArgumentException("Group " + group.Name + " does not exist");
             }
-            //Debug.WriteLine("Removed group " + group.Name);
-
             //Remove the group's categories
             foreach (Category category in group.Categories)
             {
-                //Debug.WriteLine("Removed category " + category.Name);
-
                 _categories.Remove(category);
             }
         }
@@ -221,15 +217,12 @@ namespace BudgetApplication.Popups
                 int targetIndex = this.sessionService.BudgetValues.IndexOf(this.sessionService.BudgetValues.First(x => x.Group == _groups.ElementAt(index - 1)));
                 int endIndex = this.sessionService.BudgetValues.IndexOf(this.sessionService.BudgetValues.Last(x => x.Group == group));
                 _groups.Move(index, index - 1);
-                //Debug.WriteLine("Moved group " + group.Name + " one row up");
                 this.sessionService.MoveTotalRows(index, index - 1);
                 int offset = targetIndex - startIndex;
-                //Debug.WriteLine("Offset is " + offset);
                 //Move each row in the Values grids
                 for (int i = 0; i <= endIndex - startIndex; i++)
                 {
                     this.sessionService.MoveValueRows(startIndex + i, startIndex + i + offset);
-                    //Debug.WriteLine("Row moved from " + (startIndex+i) + " to " + (startIndex + i + offset));
                 }
                 this.sessionService.RefreshListViews(); //Refresh grouping
                 this.SelectedGroupItem = group;
@@ -261,7 +254,6 @@ namespace BudgetApplication.Popups
                 for (int i = 0; i <= endIndex - startIndex; i++)
                 {
                     this.sessionService.MoveValueRows(startIndex, startIndex + offset);
-                    //Debug.WriteLine("Row moved from " + startIndex + " to " + (i + offset));
                 }
                 this.sessionService.RefreshListViews(); //Refresh grouping
                 this.SelectedGroupItem = group;
@@ -347,8 +339,6 @@ namespace BudgetApplication.Popups
             {
                 throw new ArgumentException("Category " + category.Name + " does not exist");
             }
-            //Debug.WriteLine("Removed category " + category.Name);
-
         }
 
         /// <summary>
@@ -375,9 +365,7 @@ namespace BudgetApplication.Popups
                 group.Categories.Move(index, index - 1);
                 MoneyGridRow budgetRow = this.sessionService.BudgetValues.Single(x => x.Category == category);
                 int rowIndex = this.sessionService.BudgetValues.IndexOf(budgetRow);
-                //Debug.WriteLine("index is " + rowIndex);
                 this.sessionService.MoveValueRows(rowIndex, rowIndex - 1);
-                //Debug.WriteLine("new index is " + _budgetValues.IndexOf(budgetRow));
             }
         }
 

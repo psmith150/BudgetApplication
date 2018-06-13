@@ -1,5 +1,6 @@
 ﻿using BudgetApplication.Services;
 using GalaSoft.MvvmLight;
+using System.Reflection;
 
 namespace BudgetApplication
 {
@@ -21,6 +22,14 @@ namespace BudgetApplication
         protected BaseViewModel(SessionService session)
         {
             this.Session = session;
+        }
+
+        public string AppVersion
+        {
+            get
+            {
+                return Assembly.GetEntryAssembly().GetName().Version.ToString();
+            }
         }
     }
 }

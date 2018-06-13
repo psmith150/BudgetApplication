@@ -8,6 +8,9 @@ using BudgetApplication.Model;
 using System;
 using System.Windows;
 using System.Diagnostics;
+using System.Collections.Specialized;
+using System.Linq;
+using System.ComponentModel;
 
 namespace BudgetApplication.Screens
 {
@@ -25,6 +28,8 @@ namespace BudgetApplication.Screens
             this.PaymentTransactionsView.SortDescriptions.Add(new System.ComponentModel.SortDescription("Date", System.ComponentModel.ListSortDirection.Ascending));
             this.PaymentTransactionsView.Filter = ((transaction) => PaymentTransactions_Filter(transaction as Transaction));
 
+            this.Session.Transactions.MemberChanged += TransactionPropertyChanged;
+
             //Default to showing all transactions in the last month
             CheckingAccount _allPayments = new CheckingAccount("All");
             _allPayments.StartDate = DateTime.Now.AddMonths(-1);
@@ -32,7 +37,6 @@ namespace BudgetApplication.Screens
             _allPaymentsCollection = new ObservableCollection<PaymentMethod>();
             _allPaymentsCollection.Add(_allPayments);
         }
-
         public override void Initialize()
         {
         }
@@ -54,10 +58,8 @@ namespace BudgetApplication.Screens
             {
                 this.Set(ref this._selectedPaymentMethod, value);
                 this._selectedPaymentMethod.PropertyChanged += ((o,a) => RecalculateCreditValues());
-                //Debug.Write(PaymentStartDate.ToString());
                 this.SelectedStartDate = this.SelectedPaymentMethod.StartDate;
                 this.SelectedEndDate = this.SelectedPaymentMethod.EndDate;
-                //Debug.WriteLine($"Payment method has start date {this.SelectedStartDate} and end date {this.SelectedEndDate}");
                 this.PaymentTransactionsView.Refresh();
                 RecalculateCreditValues();
             }
@@ -217,8 +219,6 @@ namespace BudgetApplication.Screens
         {
             if (transaction != null && transaction.PaymentMethod != null && this.SelectedPaymentMethod != null)
             {
-                //Debug.WriteLine(this.PaymentSelector.SelectedIndex);
-                //Debug.WriteLine((PaymentSelector.SelectedItem).ToString());
                 if ((this.SelectedPaymentMethod.Name.Equals(transaction.PaymentMethod.Name) || this.SelectedPaymentMethod == this.AllPaymentsCollection[0])
                     && this.SelectedStartDate <= transaction.Date && this.SelectedEndDate > transaction.Date)
                 {
@@ -238,8 +238,6 @@ namespace BudgetApplication.Screens
                 this.CreditRowHeight = new GridLength(1, GridUnitType.Auto);  //Shows the detail row
                 this.CreditLimit = card.CreditLimit.ToString("C");    //Shows the card's credit limit
                 decimal sum = 0;
-                //Debug.WriteLine(view.Count);
-                //Debug.WriteLine((view.GetItemAt(0) as Transaction).Amount);
                 for (int i = 0; i < this.PaymentTransactionsView.Count - 1; i++)
                 {
                     Transaction transaction = this.PaymentTransactionsView.GetItemAt(i) as Transaction;
@@ -253,6 +251,12 @@ namespace BudgetApplication.Screens
             {
                 this.CreditRowHeight = new GridLength(0); //Hides the detail row
             }
+        }
+
+        private void TransactionPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+                this.RecalculateCreditValues();
+                //this.PaymentTransactionsView.Refresh();
         }
         #endregion
     }

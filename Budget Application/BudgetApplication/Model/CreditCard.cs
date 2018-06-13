@@ -89,7 +89,6 @@ namespace BudgetApplication.Model
             set
             {
                 _paymentExpression = value;
-                //Debug.WriteLine("payment expression set");
                 if (EvaluateExpression(_paymentExpression, out _paymentAmount))
                 {
                     NotifyPropertyChanged("PaymentAmount");
@@ -100,7 +99,6 @@ namespace BudgetApplication.Model
 
         private bool EvaluateExpression(String expression, out decimal result)
         {
-            //Debug.WriteLine("Evaluating expression");
             if (expression.Length <= 0)
             {
                 result = 0;

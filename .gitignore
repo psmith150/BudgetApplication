@@ -220,7 +220,6 @@ Budget Application/.vs/BudgetApplication/v14/.suo
 Budget Application/BudgetApplication/obj/Debug/BudgetApplication_MarkupCompile.i.cache
 *.suo
 Budget Application/BudgetApplication/bin/Debug/BudgetApplication.exe
-*.csproj
 *.Cache
 Budget Application/BudgetApplication/obj/Debug/BudgetApplication.csprojResolveAssemblyReference.cache
 *.lref

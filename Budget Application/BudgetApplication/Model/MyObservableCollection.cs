@@ -92,12 +92,9 @@ namespace BudgetApplication
             PropertyChangedEventHandler handler = MemberChanged;
             if (handler != null)
             {
-                //Debug.WriteLine(this);
-                //Debug.WriteLine(e.PropertyName);
+
                 MemberChanged(sender, e);
-                //Debug.WriteLine("A collection member was changed: " + e.PropertyName);
             }
-            //Debug.WriteLine("A collection member was changed: " + e.PropertyName);
         }
 
         public void InsertRange(IEnumerable<T> items)
