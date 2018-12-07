@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Collections.Specialized;
 using System.Linq;
 using System.ComponentModel;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace BudgetApplication.Screens
 {
@@ -23,9 +24,11 @@ namespace BudgetApplication.Screens
             this.navigationService = navigationService;
             this.PaymentMethods = session.PaymentMethods;
             this.Categories = session.Categories;
+            this.Transactions = session.Transactions;
+            this.Transactions.CollectionChanged += ((s, a) => this.PaymentTransactionsView.Refresh());
 
             this.PaymentTransactionsView = new ListCollectionView(session.Transactions);
-            this.PaymentTransactionsView.SortDescriptions.Add(new System.ComponentModel.SortDescription("Date", System.ComponentModel.ListSortDirection.Ascending));
+            this.PaymentTransactionsView.SortDescriptions.Add(new System.ComponentModel.SortDescription("Date", System.ComponentModel.ListSortDirection.Descending));
             this.PaymentTransactionsView.Filter = ((transaction) => PaymentTransactions_Filter(transaction as Transaction));
 
             this.Session.Transactions.MemberChanged += TransactionPropertyChanged;
@@ -36,6 +39,11 @@ namespace BudgetApplication.Screens
             _allPayments.EndDate = DateTime.Now;
             _allPaymentsCollection = new ObservableCollection<PaymentMethod>();
             _allPaymentsCollection.Add(_allPayments);
+
+            //Set Commands
+            this.AddTransactionCommand = new RelayCommand(() => this.AddTransaction());
+            this.DeleteTransactionCommand = new RelayCommand(() => this.DeleteTransaction());
+            this.DuplicateTransactionCommand = new RelayCommand(() => this.DuplicateTransaction());
         }
         public override void Initialize()
         {
@@ -46,6 +54,11 @@ namespace BudgetApplication.Screens
         }
 
         #region Public Properties
+        #region Commands
+        public ICommand AddTransactionCommand { get; private set; }
+        public ICommand DeleteTransactionCommand { get; private set; }
+        public ICommand DuplicateTransactionCommand { get; private set; }
+        #endregion
 
         private PaymentMethod _selectedPaymentMethod;
         public PaymentMethod SelectedPaymentMethod
@@ -136,6 +149,30 @@ namespace BudgetApplication.Screens
                 _paymentTransactionsView = value;
             }
         }
+        private MyObservableCollection<Transaction> _Transactions;
+        public MyObservableCollection<Transaction> Transactions
+        {
+            get
+            {
+                return this._Transactions;
+            }
+            private set
+            {
+                this.Set(ref this._Transactions, value);
+            }
+        }
+        private Transaction _SelectedTransaction;
+        public Transaction SelectedTransaction
+        {
+            get
+            {
+                return this._SelectedTransaction;
+            }
+            set
+            {
+                this.Set(ref this._SelectedTransaction, value);
+            }
+        }
 
         //The collection that contains the All Payments payment method
         private ObservableCollection<PaymentMethod> _allPaymentsCollection;
@@ -214,7 +251,29 @@ namespace BudgetApplication.Screens
         #endregion
 
         #region Private Methods
-
+        private void AddTransaction()
+        {
+            Transaction newTransaction = new Transaction();
+            if (this.SelectedPaymentMethod != null && this.SelectedPaymentMethod != this.AllPaymentsCollection[0])
+                newTransaction.PaymentMethod = this.SelectedPaymentMethod;
+            this.Transactions.Add(newTransaction);
+            //Messenger.Default.Send(new TransactionMessage(newTransaction));
+        }
+        private void DeleteTransaction()
+        {
+            if (this.SelectedTransaction != null)
+                this.Transactions.Remove(SelectedTransaction);
+        }
+        private void DuplicateTransaction()
+        {
+            if (this.SelectedTransaction != null)
+            {
+                Transaction newTransaction = this.SelectedTransaction.Copy();
+                newTransaction.Item += " - Copy";
+                this.Transactions.Add(newTransaction);
+                //Messenger.Default.Send(new TransactionMessage(newTransaction));
+            }
+        }
         private bool PaymentTransactions_Filter(Transaction transaction)
         {
             if (transaction != null && transaction.PaymentMethod != null && this.SelectedPaymentMethod != null)

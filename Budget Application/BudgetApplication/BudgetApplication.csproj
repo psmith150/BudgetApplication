@@ -153,6 +153,7 @@
     <Compile Include="Model\PaymentMethod.cs" />
     <Compile Include="Model\PaymentTypeToStringConverter.cs" />
     <Compile Include="Model\Transaction.cs" />
+    <Compile Include="Model\TransactionMessage.cs" />
     <Compile Include="Model\ValueToBrushConverter.cs" />
     <Compile Include="Popups\ErrorPopup.xaml.cs">
       <DependentUpon>ErrorPopup.xaml</DependentUpon>
@@ -211,7 +212,7 @@
     <Compile Include="Screens\TemplateViewModel.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\SessionService.cs" />
-    <Compile Include="StyleDictionary.xaml.cs">
+    <Compile Include="Resources\StyleDictionary.xaml.cs">
       <DependentUpon>StyleDictionary.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\MonthValues.cs" />
@@ -284,7 +285,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="StyleDictionary.xaml">
+    <Page Include="Resources\StyleDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -310,6 +311,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -322,22 +324,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Up_arrow.png" />
+    <Resource Include="Images\Up_arrow.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Down_arrow.png" />
+    <Resource Include="Images\Down_arrow.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Filter.png" />
+    <Resource Include="Images\Filter.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\minus_sign.png" />
+    <Resource Include="Images\minus_sign.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\plus_sign.png" />
+    <Resource Include="Images\plus_sign.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Dollar_sign.png" />
+    <Resource Include="Images\Dollar_sign.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -376,6 +378,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\StatusInformation_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Add_15xMD_white.png" />
+    <Resource Include="Images\Copy_16x.png" />
+    <Resource Include="Images\Remove_15xMD.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

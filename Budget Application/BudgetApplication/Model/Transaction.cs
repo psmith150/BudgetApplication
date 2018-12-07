@@ -21,15 +21,19 @@ namespace BudgetApplication.Model
         /// Instantiates a new transaction object. Null parameter constructor allows use of insertion row in datagrid.
         /// Generates default values for all fields.
         /// </summary>
-        public Transaction()
+        public Transaction() : this(DateTime.Today)
         {
-            _date = DateTime.Today;
-            _item = "";
-            _payee = "";
-            _amount = 0;
-            _category = null;
-            _comment = "";
-            _paymentMethod = null;
+        }
+
+        public Transaction(DateTime? date = null, string item = "New item", string payee = "New payee", decimal amount = 0.0M, Category category = null, string comment = "", PaymentMethod paymentMethod = null)
+        {
+            this.Date = date ?? DateTime.Today;
+            this.Item = item;
+            this.Payee = payee;
+            this.Amount = amount;
+            this.Category = category;
+            this.Comment = comment;
+            this.PaymentMethod = paymentMethod;
         }
 
         #region Getters and setters
@@ -159,6 +163,23 @@ namespace BudgetApplication.Model
             }
         }
 
+        #endregion
+
+        #region Public Methods
+        public Transaction Copy()
+        {
+            Transaction newTransaction = new Transaction()
+            {
+                Date = this.Date,
+                Item = this.Item,
+                Payee = this.Payee,
+                Amount = this.Amount,
+                Category = this.Category,
+                Comment = this.Comment,
+                PaymentMethod = this.PaymentMethod
+            };
+            return newTransaction;
+        }
         #endregion
 
         /// <summary>

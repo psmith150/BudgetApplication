@@ -149,7 +149,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent">
-                        <Image Source="/Resources/plus_sign.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Image Source="/Images/plus_sign.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -168,7 +168,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent">
-                        <Image Source="/Resources/minus_sign.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Image Source="/Images/minus_sign.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -187,7 +187,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent">
-                        <Image Source="/Resources/Up_arrow.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Image Source="/Images/Up_arrow.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -206,7 +206,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent">
-                        <Image Source="/Resources/Down_arrow.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Image Source="/Images/Down_arrow.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -3022,6 +3022,74 @@
             </Canvas>
         </Viewbox>
     </ControlTemplate>
-    
+
+    <Style x:Key="AddButtonStyle" TargetType="Button">
+        <Setter Property="Width" Value="50"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Margin" Value="5,10,5,10"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Stroke="Black"
+                         StrokeThickness="0">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="MediumSeaGreen"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Image Source="/Images/Add_15xMD_white.png" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="RemoveButtonStyle" TargetType="Button">
+        <Setter Property="Width" Value="50"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Margin" Value="5,10,5,10"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Stroke="Black"
+                         StrokeThickness="0">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="Firebrick"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Image Source="/Images/Remove_15xMD.png" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="DuplicateButtonStyle" TargetType="Button">
+        <Setter Property="Width" Value="50"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Margin" Value="5,10,5,10"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Stroke="Black"
+                         StrokeThickness="0">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="DodgerBlue"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Image Source="/Images/Copy_16x.png" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
 
 </ResourceDictionary>

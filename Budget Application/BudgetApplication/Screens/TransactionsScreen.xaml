@@ -51,9 +51,18 @@
                 </Border>
             </Popup>-->
         </Border>
-        <Border Grid.Row="1">
-            <DataGrid x:Name="Transactions" ItemsSource="{Binding TransactionsView}" AutoGenerateColumns="False"
-                            >
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Top" Width="Auto">
+                <Button Command="{Binding AddTransactionCommand}" Style="{StaticResource AddButtonStyle}"/>
+                <Button Command="{Binding DeleteTransactionCommand}" Style="{StaticResource RemoveButtonStyle}" Width="50" Height="50"  Margin="5,10,5,10"/>
+                <Button Command="{Binding DuplicateTransactionCommand}" Style="{StaticResource DuplicateButtonStyle}" Width="50" Height="50"  Margin="5,10,5,10"/>
+            </StackPanel>
+            <DataGrid Grid.Column="1" x:Name="Transactions" ItemsSource="{Binding TransactionsView}" AutoGenerateColumns="False" BorderThickness="0"
+                      SelectedItem="{Binding SelectedTransaction}" CanUserAddRows="False" CanUserDeleteRows="False" RowHeaderWidth="0">
                 <!-- TODO ColumnHeaderStyle="{StaticResource FilteredHeaderStyle}"-->
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Date" SortMemberPath="Date">
@@ -99,6 +108,6 @@
                     <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
-        </Border>
+        </Grid>
     </Grid>
 </UserControl>

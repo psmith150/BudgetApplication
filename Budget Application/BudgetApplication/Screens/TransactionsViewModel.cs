@@ -6,6 +6,7 @@ using System.Windows.Data;
 using BudgetApplication.Model;
 using System.ComponentModel;
 using System.Diagnostics;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace BudgetApplication.Screens
 {
@@ -20,8 +21,13 @@ namespace BudgetApplication.Screens
             this.PaymentMethods = session.PaymentMethods;
             this.Transactions = session.Transactions;
             this.TransactionsView = new ListCollectionView(this.Transactions);
-            this.TransactionsView.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Ascending));
+            this.TransactionsView.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
             this.TransactionsView.Filter = ((transaction) => TransactionsView_Filter(transaction as Transaction));
+
+            //Set Commands
+            this.AddTransactionCommand = new RelayCommand(() => this.AddTransaction());
+            this.DeleteTransactionCommand = new RelayCommand(() => this.DeleteTransaction());
+            this.DuplicateTransactionCommand = new RelayCommand(() => this.DuplicateTransaction());
         }
 
         public override void Initialize()
@@ -33,6 +39,11 @@ namespace BudgetApplication.Screens
         }
 
         #region Public Properties
+        #region Commands
+        public ICommand AddTransactionCommand { get; private set; }
+        public ICommand DeleteTransactionCommand { get; private set; }
+        public ICommand DuplicateTransactionCommand { get; private set; }
+        #endregion
         private ListCollectionView _transactionsView;
         public ListCollectionView TransactionsView
         {
@@ -84,6 +95,18 @@ namespace BudgetApplication.Screens
                 _transactions = value;
             }
         }
+        private Transaction _SelectedTransaction;
+        public Transaction SelectedTransaction
+        {
+            get
+            {
+                return this._SelectedTransaction;
+            }
+            set
+            {
+                this.Set(ref this._SelectedTransaction, value);
+            }
+        }
         #endregion
 
         #region Public Methods
@@ -110,6 +133,29 @@ namespace BudgetApplication.Screens
             //    }
             //    e.Accepted = true;
             //}
+        }
+        #endregion
+        #region Private Methods
+        private void AddTransaction()
+        {
+            Transaction newTransaction = new Transaction();
+            this.Transactions.Add(newTransaction);
+            Messenger.Default.Send(new TransactionMessage(newTransaction));
+        }
+        private void DeleteTransaction()
+        {
+            if (this.SelectedTransaction != null)
+                this.Transactions.Remove(SelectedTransaction);
+        }
+        private void DuplicateTransaction()
+        {
+            if (this.SelectedTransaction != null)
+            {
+                Transaction newTransaction = this.SelectedTransaction.Copy();
+                newTransaction.Item += " - Copy";
+                this.Transactions.Add(newTransaction);
+                Messenger.Default.Send(new TransactionMessage(newTransaction));
+            }
         }
         #endregion
     }

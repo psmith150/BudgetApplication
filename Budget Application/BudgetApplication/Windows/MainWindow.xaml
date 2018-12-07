@@ -9,7 +9,7 @@
         xmlns:screens="clr-namespace:BudgetApplication.Screens"
         mc:Ignorable="d"
         Background="White"
-        Icon="/Resources/Dollar_sign.png" 
+        Icon="/Images/Dollar_sign.png" 
         Height="400" Width="900" WindowState="Maximized" 
         Style="{StaticResource MainWindowStyle}"
         ResizeMode="CanResizeWithGrip"

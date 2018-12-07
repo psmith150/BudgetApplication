@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BudgetApplication.Model;
+using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +26,7 @@ namespace BudgetApplication.Screens
         {
             this.DataContext = viewModel;
             InitializeComponent();
+            Messenger.Default.Register<TransactionMessage>(this, HandleTransactionMessage);
         }
         /// <summary>
         /// Handles the RequestBringIntoView event of the category combobox. Prevents annoying autoscroll.
@@ -37,6 +40,11 @@ namespace BudgetApplication.Screens
                 return;
 
             e.Handled = true;
+        }
+        private void HandleTransactionMessage(TransactionMessage msg)
+        {
+            this.Transactions.SelectedItem = msg.Transaction;
+            this.Transactions.ScrollIntoView(msg.Transaction);
         }
     }
 }
