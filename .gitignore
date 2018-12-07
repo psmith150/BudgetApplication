@@ -214,7 +214,7 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
-Budget Application/.vs/BudgetApplication/v14/.suo
+Budget Application/.vs/*
 *.cache
 *.suo
 Budget Application/BudgetApplication/obj/Debug/BudgetApplication_MarkupCompile.i.cache
