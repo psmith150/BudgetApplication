@@ -7,6 +7,8 @@ using BudgetApplication.Model;
 using System.ComponentModel;
 using System.Diagnostics;
 using GalaSoft.MvvmLight.Messaging;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BudgetApplication.Screens
 {
@@ -23,6 +25,9 @@ namespace BudgetApplication.Screens
             this.TransactionsView = new ListCollectionView(this.Transactions);
             this.TransactionsView.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
             this.TransactionsView.Filter = ((transaction) => TransactionsView_Filter(transaction as Transaction));
+
+            this.Transactions.CollectionChanged += ((s, a) => this.TransactionsView.Refresh());
+            this.Transactions.CollectionChanged += ((s, a) => this.UpdateItemsList());
 
             //Set Commands
             this.AddTransactionCommand = new RelayCommand(() => this.AddTransaction());
@@ -81,6 +86,19 @@ namespace BudgetApplication.Screens
                 _paymentMethods = value;
             }
         }
+        private List<string> _Items;
+        public List<string> Items
+        {
+            get
+            {
+                return this._Items;
+            }
+            private set
+            {
+                this.Set(ref this._Items, value);
+            }
+        }
+        //public List<CheckedListItem<T>> FilterItems;
         #endregion
         #region Private Properties
         private MyObservableCollection<Transaction> _transactions;
@@ -156,6 +174,10 @@ namespace BudgetApplication.Screens
                 this.Transactions.Add(newTransaction);
                 Messenger.Default.Send(new TransactionMessage(newTransaction));
             }
+        }
+        private void UpdateItemsList()
+        {
+            this.Items = new List<string>(this.Transactions.Select(x => x.Item).Distinct());
         }
         #endregion
     }

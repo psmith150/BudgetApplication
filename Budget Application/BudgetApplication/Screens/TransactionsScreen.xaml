@@ -7,9 +7,17 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=local:TransactionsViewModel}">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="ItemsView" Source="{Binding Items}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="." Direction="Ascending"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -78,6 +86,26 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Item" Binding="{Binding Path=Item, Mode=TwoWay}"/>
+                    <DataGridTemplateColumn Header="Item - Test">
+                        <DataGridTemplateColumn.CellStyle>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Setter Property="IsTabStop" Value="False"/>
+                            </Style>
+                        </DataGridTemplateColumn.CellStyle>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <xctk:AutoSelectTextBox AutoSelectBehavior="OnFocus" Text="{Binding Item, UpdateSourceTrigger=PropertyChanged}"/>
+                                <!--behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding Path=DataContext.Items, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+		                            behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"/>-->
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <!--<DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <xctk:AutoSelectTextBox Text="{Binding Item, UpdateSourceTrigger=PropertyChanged}" behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding Path=DataContext.Items, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+		                            behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>-->
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Payee" Binding="{Binding Path=Payee}"/>
                     <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat=\{0:C\}}"/>
                     <DataGridComboBoxColumn Header="Category" SelectedValueBinding="{Binding Category}" DisplayMemberPath="Name" SortMemberPath="Category.Name">
