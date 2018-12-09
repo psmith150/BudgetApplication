@@ -9,6 +9,8 @@ using System.Diagnostics;
 using GalaSoft.MvvmLight.Messaging;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using System.Collections.Specialized;
 
 namespace BudgetApplication.Screens
 {
@@ -26,8 +28,8 @@ namespace BudgetApplication.Screens
             this.TransactionsView.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
             this.TransactionsView.Filter = ((transaction) => TransactionsView_Filter(transaction as Transaction));
 
-            this.Transactions.CollectionChanged += ((s, a) => this.TransactionsView.Refresh());
-            this.Transactions.CollectionChanged += ((s, a) => this.UpdateItemsList());
+            this.Transactions.CollectionChanged += this.Transactions_CollectionChanged;
+            this.Transactions.MemberChanged += this.Transaction_PropertyChanged;
 
             //Set Commands
             this.AddTransactionCommand = new RelayCommand(() => this.AddTransaction());
@@ -98,6 +100,18 @@ namespace BudgetApplication.Screens
                 this.Set(ref this._Items, value);
             }
         }
+        private List<string> _Payees;
+        public List<string> Payees
+        {
+            get
+            {
+                return this._Payees;
+            }
+            private set
+            {
+                this.Set(ref this._Payees, value);
+            }
+        }
         //public List<CheckedListItem<T>> FilterItems;
         #endregion
         #region Private Properties
@@ -134,7 +148,7 @@ namespace BudgetApplication.Screens
         /// <param name="sender">The object requesting filtering</param>
         /// <param name="e">The arguments</param>
         private bool TransactionsView_Filter(Transaction transaction)
-        { 
+        {
             return true;
             //Transaction transaction = e.Item as Transaction;
             //if (transaction != null && checkedItems != null)
@@ -175,9 +189,29 @@ namespace BudgetApplication.Screens
                 Messenger.Default.Send(new TransactionMessage(newTransaction));
             }
         }
+        private void Transactions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+
+            this.UpdateItemsList();
+            this.UpdatePayeesList();
+            this.TransactionsView.Refresh();
+        }
+
+        private void Transaction_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("Item"))
+                this.UpdateItemsList();
+            else if (e.PropertyName.Equals("Payee"))
+                this.UpdatePayeesList();
+        }
+
         private void UpdateItemsList()
         {
             this.Items = new List<string>(this.Transactions.Select(x => x.Item).Distinct());
+        }
+        private void UpdatePayeesList()
+        {
+            this.Payees = new List<string>(this.Transactions.Select(x => x.Payee).Distinct());
         }
         #endregion
     }

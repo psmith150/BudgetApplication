@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:BudgetApplication.Popups"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=local:SettingsViewModel}">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="ThemesCollection" Source="{Binding Themes}"/>
+    </UserControl.Resources>
     <Grid Background="{StaticResource MainBackgroundColor}" Width="500" Height="300">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -13,12 +16,17 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Text="Settings" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="Default Directory" />
                 <Separator Width="15" Background="Transparent"/>
                 <TextBox Text="{Binding DefaultDirectory}" Width="200" Name="DirectoryBox"/>
                 <Button Content="..." Command="{Binding SelectDirectoryCommand}" Width="{Binding Source={x:Reference DirectoryBox}, Path=ActualHeight}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Application Theme" />
+                <Separator Width="15" Background="Transparent"/>
+                <ComboBox SelectedItem="{Binding ApplicationTheme}" ItemsSource="{Binding Themes}" Width="200"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">

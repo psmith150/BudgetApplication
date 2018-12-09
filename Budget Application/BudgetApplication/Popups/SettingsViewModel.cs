@@ -34,6 +34,7 @@ namespace BudgetApplication.Popups
         public override void Initialize(object param)
         {
             this.DefaultDirectory = Properties.Settings.Default.DefaultDirectory;
+            this.ApplicationTheme = Properties.Settings.Default.Theme;
             this.savingNeeded = false;
         }
 
@@ -55,6 +56,28 @@ namespace BudgetApplication.Popups
                 this.savingNeeded = true;
             }
         }
+        private string _ApplicationTheme;
+        public string ApplicationTheme
+        {
+            get
+            {
+                return this._ApplicationTheme;
+            }
+            set
+            {
+                this.Set(ref this._ApplicationTheme, value);
+                this.savingNeeded = true;
+                this.ChangeSkin();
+            }
+        }
+        public string[] Themes
+        {
+            get
+            {
+                string[] themes = { "Light", "Dark" };
+                return themes;
+            }
+        }
         #endregion
 
         #region Private Fields
@@ -73,6 +96,18 @@ namespace BudgetApplication.Popups
             if (result == DialogResult.OK)
             {
                 this.DefaultDirectory = dirDialog.SelectedPath;
+            }
+        }
+        private void ChangeSkin()
+        {
+            switch (this.ApplicationTheme)
+            {
+                case "Light":
+                    break;
+                case "Dark":
+                    break;
+                default:
+                    break;
             }
         }
         private async void Exit()

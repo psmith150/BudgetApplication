@@ -73,8 +73,8 @@
                 <Button Command="{Binding DeleteTransactionCommand}" Style="{StaticResource RemoveButtonStyle}" Width="50" Height="50"  Margin="5,10,5,10"/>
                 <Button Command="{Binding DuplicateTransactionCommand}" Style="{StaticResource DuplicateButtonStyle}" Width="50" Height="50"  Margin="5,10,5,10"/>
             </StackPanel>
-            <DataGrid Grid.Column="1"  x:Name="PaymentTransactions" ItemsSource="{Binding PaymentTransactionsView, UpdateSourceTrigger=PropertyChanged}" Background="DarkGray"
-                  AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" RowHeaderWidth="0" SelectedItem="{Binding SelectedTransaction}">
+            <DataGrid Grid.Column="1"  x:Name="PaymentTransactions" ItemsSource="{Binding PaymentTransactionsView, UpdateSourceTrigger=PropertyChanged}"
+                  AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" SelectedItem="{Binding SelectedTransaction}" Style="{DynamicResource TransactionDataGridStyle}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Date" SortMemberPath="Date">
                         <DataGridTemplateColumn.CellEditingTemplate>

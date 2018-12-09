@@ -261,10 +261,31 @@
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="#BF0080FF" />
                 <Setter Property="BorderBrush" Value="Black"/>
-                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Foreground" Value="White"/>
             </Trigger>
         </Style.Triggers>
+    </Style>
+    <Style x:Key="TransactionDataGridStyle" TargetType="{x:Type DataGrid}">
+        <Setter Property="ColumnHeaderStyle" Value="{DynamicResource TransactionDataGridColumnHeaderStyle}"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="RowHeaderWidth" Value="0"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="CellStyle" Value="{DynamicResource TransactionDataGridCellStyle}"/>
+        <Setter Property="RowBackground" Value="Transparent"/>
+    </Style>
+    <Style x:Key="TransactionDataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Background" Value="DarkGray" />
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="Padding" Value="2,0,0,0"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+    </Style>
+    <Style x:Key="TransactionDataGridCellStyle" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource SelectedCellStyle}">
+        <Setter Property="Background" Value="White"/>
     </Style>
     <!--Reference-->
     <ControlTemplate x:Key="FilterImage">

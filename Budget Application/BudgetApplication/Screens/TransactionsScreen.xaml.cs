@@ -46,5 +46,10 @@ namespace BudgetApplication.Screens
             this.Transactions.SelectedItem = msg.Transaction;
             this.Transactions.ScrollIntoView(msg.Transaction);
         }
+
+        private void TextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            ((TextBox)sender).SelectAll();
+        }
     }
 }
