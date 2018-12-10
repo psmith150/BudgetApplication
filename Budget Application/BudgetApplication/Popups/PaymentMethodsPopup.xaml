@@ -39,8 +39,8 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal" Width="Auto">
-                <Button Name="AddPaymentButton" Style="{StaticResource AddGroupButton}"  Command="{Binding AddPaymentMethodCommand}"/>
-                <Button Name="RemovePaymentButton" Style="{StaticResource RemoveGroupButton}" Command="{Binding RemovePaymentMethodCommand}"/>
+                <Button Name="AddPaymentButton" Style="{DynamicResource AddButtonSquareStyle}"  Command="{Binding AddPaymentMethodCommand}"/>
+                <Button Name="RemovePaymentButton" Style="{DynamicResource RemoveButtonSquareStyle}" Command="{Binding RemovePaymentMethodCommand}"/>
             </StackPanel>
         </Grid>
         <DataGrid Name="PaymentList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding PaymentMethods}" 

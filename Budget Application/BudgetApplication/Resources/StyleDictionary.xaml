@@ -5,8 +5,6 @@
                     xmlns:customControls="clr-namespace:BudgetApplication.CustomControls"
                     x:Class="BudgetApplication.StyleDictionary"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
-    <!--Colors-->
-    <SolidColorBrush x:Key="MainBackgroundColor" Color="WhiteSmoke"/>
 
     <!-- Default Button Style -->
     <!--<Style TargetType="{x:Type Button}">
@@ -98,77 +96,42 @@
     <system:Double x:Key="SmallFontSize">12</system:Double>
 
 
-    <Style x:Key="TabHeader" TargetType="{x:Type TabItem}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TabItem}">
-                    <Grid>
-                        <Border 
-                            x:Name="Border"
-                            Margin="0,0,-4,0" 
-                            Background="Green"
-                            BorderBrush="Black" 
-                            BorderThickness="1,1,1,1" 
-                            CornerRadius="2,12,0,0" >
-                            <ContentPresenter x:Name="ContentSite"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                ContentSource="Header"
-                                Margin="12,2,12,2"
-                                RecognizesAccessKey="True"/>
-                        </Border>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="LightGreen" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="Red"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
     <Style x:Key="MainWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
         <Setter Property="AllowsTransparency" Value="False"/>
         <Setter Property="MinWidth" Value="100"/>
         <Setter Property="MinHeight" Value="46"/>
         <!--CaptionHeight + ResizeBorderThickness * 2-->
-        <Setter Property="Background" Value="Green"/>
         <Setter Property="BorderBrush" Value="Gray"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="Orange"/>
     </Style>
     <!--Add, remove, move button styles-->
-    <Style x:Key="AddGroupButton" TargetType="{x:Type Button}">
+    <Style x:Key="AddButtonSquareStyle" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="25"/>
-        <Setter Property="Background" Value="Orange"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent">
+                    <Border x:Name="border" BorderBrush="{DynamicResource AddButtonSquareBorderColor}" BorderThickness="1" Background="{DynamicResource AddButtonSquareBackgroundColor}">
                         <Image Source="/Images/plus_sign.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="Black" />
-                            <Setter TargetName="border" Property="Background" Value="LightGray" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource AddButtonSquareMouseoverBorderColor}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AddButtonSquareMouseoverBackgroundColor}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="RemoveGroupButton" TargetType="{x:Type Button}">
+    <Style x:Key="RemoveButtonSquareStyle" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="25"/>
         <Setter Property="Background" Value="Orange"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent">
-                        <Image Source="/Images/minus_sign.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Image Source="/Images/minus_sign.png" Height="15" Width="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -180,13 +143,13 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="MoveUpButton" TargetType="{x:Type Button}">
+    <Style x:Key="MoveUpButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="25"/>
         <Setter Property="Background" Value="Orange"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent">
+                    <Border x:Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent" Padding="1">
                         <Image Source="/Images/Up_arrow.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -199,13 +162,13 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="MoveDownButton" TargetType="{x:Type Button}">
+    <Style x:Key="MoveDownButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="25"/>
         <Setter Property="Background" Value="Orange"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent">
+                    <Border x:Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent" Padding="1">
                         <Image Source="/Images/Down_arrow.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -268,7 +231,7 @@
     </Style>
     <Style x:Key="TransactionDataGridStyle" TargetType="{x:Type DataGrid}">
         <Setter Property="ColumnHeaderStyle" Value="{DynamicResource TransactionDataGridColumnHeaderStyle}"/>
-        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource DataGridBorderColor}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="RowHeaderWidth" Value="0"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -277,15 +240,16 @@
     </Style>
     <Style x:Key="TransactionDataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="Height" Value="30"/>
-        <Setter Property="Background" Value="DarkGray" />
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="{DynamicResource DataGridHeaderBackgroundColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForegroundColor}"/>
         <Setter Property="BorderThickness" Value="0,0,1,0"/>
-        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource DataGridBorderColor}"/>
         <Setter Property="Padding" Value="2,0,0,0"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
     </Style>
     <Style x:Key="TransactionDataGridCellStyle" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource SelectedCellStyle}">
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="{DynamicResource DataGridBackgroundColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
     </Style>
     <!--Reference-->
     <ControlTemplate x:Key="FilterImage">
@@ -3054,12 +3018,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid>
-                        <Ellipse Stroke="Black"
-                         StrokeThickness="0">
-                            <Ellipse.Fill>
-                                <SolidColorBrush Color="MediumSeaGreen"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
+                        <Ellipse Stroke="Black" StrokeThickness="0" Fill="{DynamicResource AddButtonBackgroundColor}"/>
                         <Image Source="/Images/Add_15xMD_white.png" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                     </Grid>
                 </ControlTemplate>
@@ -3076,12 +3035,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid>
-                        <Ellipse Stroke="Black"
-                         StrokeThickness="0">
-                            <Ellipse.Fill>
-                                <SolidColorBrush Color="Firebrick"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
+                        <Ellipse Stroke="Black" StrokeThickness="0" Fill="{DynamicResource DeleteButtonBackgroundColor}"/>
                         <Image Source="/Images/Remove_15xMD.png" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                     </Grid>
                 </ControlTemplate>
@@ -3098,12 +3052,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid>
-                        <Ellipse Stroke="Black"
-                         StrokeThickness="0">
-                            <Ellipse.Fill>
-                                <SolidColorBrush Color="DodgerBlue"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
+                        <Ellipse Stroke="Black" StrokeThickness="0" Fill="{DynamicResource DuplicateButtonBackgroundColor}"/>
                         <Image Source="/Images/Copy_16x.png" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                     </Grid>
                 </ControlTemplate>
