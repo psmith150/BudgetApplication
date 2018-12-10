@@ -12,9 +12,16 @@
     <SolidColorBrush x:Key="AddButtonBackgroundColor" Color="MediumSeaGreen"/>
     <SolidColorBrush x:Key="DeleteButtonBackgroundColor" Color="Firebrick"/>
     <SolidColorBrush x:Key="DuplicateButtonBackgroundColor" Color="DodgerBlue"/>
-    <SolidColorBrush x:Key="AddButtonSquareBackgroundColor" Color="WhiteSmoke"/>
-    <SolidColorBrush x:Key="AddButtonSquareBorderColor" Color="DarkGray"/>
-    <SolidColorBrush x:Key="AddButtonSquareMouseoverBackgroundColor" Color="LightGray"/>
-    <SolidColorBrush x:Key="AddButtonSquareMouseoverBorderColor" Color="Black"/>
+    <SolidColorBrush x:Key="ButtonSquareBackgroundColor" Color="WhiteSmoke"/>
+    <SolidColorBrush x:Key="ButtonSquareBorderColor" Color="DarkGray"/>
+    <SolidColorBrush x:Key="ButtonSquareMouseoverBackgroundColor" Color="LightGray"/>
+    <SolidColorBrush x:Key="ButtonSquareMouseoverBorderColor" Color="Black"/>
+    <SolidColorBrush x:Key="GroupItemBackgroundColor"  Color="#FF112255"/>
+    <SolidColorBrush x:Key="GroupItemBorderColor" Color="#FF002255"/>
+    <SolidColorBrush x:Key="GroupItemForegroundColor" Color="White"/>
+    <SolidColorBrush x:Key="DataGridColumnSeparatorColor" Color="Gray"/>
+    <SolidColorBrush x:Key="DataGridSelectedCellBackgroundColor" Color="#BF0080FF"/>
+    <SolidColorBrush x:Key="DataGridSelectedCellForegroundColor" Color="White"/>
+    <SolidColorBrush x:Key="DataGridSelectedCellBorderColor" Color="Black"/>
     <!--#endregion-->
 </ResourceDictionary>

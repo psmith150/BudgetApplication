@@ -44,6 +44,12 @@
         </Setter>
     </Style>-->
 
+    <!--Font Sizes-->
+    <system:Double x:Key="MaxFontSize">16</system:Double>
+    <system:Double x:Key="ExtraLargeFontSize">16</system:Double>
+    <system:Double x:Key="LargeFontSize">14</system:Double>
+    <system:Double x:Key="SmallFontSize">12</system:Double>
+
     <!-- Hover Button Style -->
     <Style TargetType="customControls:HoverButton">
         <Setter Property="FontWeight" Value="Bold"/>
@@ -89,12 +95,6 @@
         </Style.Triggers>
     </Style>
 
-    <!--Font Sizes-->
-    <system:Double x:Key="MaxFontSize">16</system:Double>
-    <system:Double x:Key="ExtraLargeFontSize">16</system:Double>
-    <system:Double x:Key="LargeFontSize">14</system:Double>
-    <system:Double x:Key="SmallFontSize">12</system:Double>
-
 
     <Style x:Key="MainWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
@@ -111,13 +111,13 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" BorderBrush="{DynamicResource AddButtonSquareBorderColor}" BorderThickness="1" Background="{DynamicResource AddButtonSquareBackgroundColor}">
+                    <Border x:Name="border" BorderBrush="{DynamicResource ButtonSquareBorderColor}" BorderThickness="1" Background="{DynamicResource ButtonSquareBackgroundColor}">
                         <Image Source="/Images/plus_sign.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource AddButtonSquareMouseoverBorderColor}" />
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AddButtonSquareMouseoverBackgroundColor}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ButtonSquareMouseoverBorderColor}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonSquareMouseoverBackgroundColor}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -130,13 +130,13 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent">
+                    <Border x:Name="border" BorderBrush="{DynamicResource ButtonSquareBorderColor}" BorderThickness="1" Background="{DynamicResource ButtonSquareBackgroundColor}">
                         <Image Source="/Images/minus_sign.png" Height="15" Width="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="Black" />
-                            <Setter TargetName="border" Property="Background" Value="LightGray" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ButtonSquareMouseoverBorderColor}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonSquareMouseoverBackgroundColor}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -149,13 +149,13 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent" Padding="1">
+                    <Border x:Name="border" BorderBrush="{DynamicResource ButtonSquareBorderColor}" BorderThickness="1" Background="{DynamicResource ButtonSquareBackgroundColor}" Padding="1">
                         <Image Source="/Images/Up_arrow.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="Black" />
-                            <Setter TargetName="border" Property="Background" Value="LightGray" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ButtonSquareMouseoverBorderColor}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonSquareMouseoverBackgroundColor}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -168,13 +168,13 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" BorderBrush="DarkGray" BorderThickness="1" Background="Transparent" Padding="1">
+                    <Border x:Name="border" BorderBrush="{DynamicResource ButtonSquareBorderColor}" BorderThickness="1" Background="{DynamicResource ButtonSquareBackgroundColor}" Padding="1">
                         <Image Source="/Images/Down_arrow.png" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="Black" />
-                            <Setter TargetName="border" Property="Background" Value="LightGray" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ButtonSquareMouseoverBorderColor}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonSquareMouseoverBackgroundColor}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -188,10 +188,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GroupItem}">
-                    <Expander IsExpanded="True" Background="#FF112255" BorderBrush="#FF002255" BorderThickness="1,1,1,5" ExpandDirection="Down" ClipToBounds="True">
+                    <Expander IsExpanded="True" Background="{DynamicResource GroupItemBackgroundColor}" BorderBrush="{DynamicResource GroupItemBorderColor}" BorderThickness="1,1,1,5"
+                              ExpandDirection="Down" ClipToBounds="True">
                         <Expander.Header>
                             <DockPanel>
-                                <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="5,0,0,0" Width="150" Foreground="White"/>
+                                <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="5,0,0,0" Width="150" Foreground="{DynamicResource GroupItemForegroundColor}"/>
                                 <!--<TextBlock FontWeight="Bold" Text="{Binding ItemCount}" Foreground="White"/>-->
                             </DockPanel>
                         </Expander.Header>
@@ -205,7 +206,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="Gray"/>
+                    <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="{DynamicResource DataGridColumnSeparatorColor}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -222,10 +223,10 @@
     <Style x:Key="SelectedCellStyle" TargetType="{x:Type DataGridCell}">
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="#BF0080FF" />
-                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="Background" Value="{DynamicResource DataGridSelectedCellBackground}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource DataGridSelectedCellBorderColor}"/>
                 <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Foreground" Value="{DynamicResource DataGridSelectedCellForegroundColor}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -3059,7 +3060,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-
-
 </ResourceDictionary>
