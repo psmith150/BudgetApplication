@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              Height="400" Width="450"
              d:DataContext="{d:DesignInstance Type=local:GroupAndCategoriesViewModel}">
-    <Grid Background="{StaticResource MainBackgroundColor}">
+    <Grid Background="{DynamicResource MainBackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>

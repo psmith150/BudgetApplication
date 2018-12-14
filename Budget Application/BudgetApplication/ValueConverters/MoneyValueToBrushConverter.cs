@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace BudgetApplication.Model
+namespace BudgetApplication.ValueConverters
 {
     /// <summary>
     /// Converter used to color code cells depending on value. Only converts one way
@@ -21,21 +22,21 @@ namespace BudgetApplication.Model
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null || String.IsNullOrEmpty(value as String))
-                return Brushes.White;
+                return Application.Current.Resources["NeutralMoneyBackgroundColor"];
             decimal num = 0;
             bool succeeded = true;
             succeeded = Decimal.TryParse(value as String, NumberStyles.Currency, CultureInfo.CurrentCulture, out num);
             if(!succeeded)
             {
-                return Brushes.White;
+                return Application.Current.Resources["NeutralMoneyBackgroundColor"];
             }
             if (num >= 0)
             {
-                return Brushes.Green;
+                return Application.Current.Resources["PositiveMoneyBackgroundColor"];
             }
             else
             {
-                return Brushes.Red;
+                return Application.Current.Resources["NegativeMoneyBackgroundColor"];
             }
         }
 

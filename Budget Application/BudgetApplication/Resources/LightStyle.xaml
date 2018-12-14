@@ -23,5 +23,18 @@
     <SolidColorBrush x:Key="DataGridSelectedCellBackgroundColor" Color="#BF0080FF"/>
     <SolidColorBrush x:Key="DataGridSelectedCellForegroundColor" Color="White"/>
     <SolidColorBrush x:Key="DataGridSelectedCellBorderColor" Color="Black"/>
+    <SolidColorBrush x:Key="PopupBorderColor" Color="#AFB4BE"/>
+    <SolidColorBrush x:Key="OverlayGridColor" Color="Black"/>
+    <SolidColorBrush x:Key="BottomBarBackgroundColor" Color="Gray"/>
+    <SolidColorBrush x:Key="BottomBarForegroundColor" Color="White"/>
+    <SolidColorBrush x:Key="HelpButtonBackgroundColor" Color="LightGray"/>
+    <SolidColorBrush x:Key="HelpButtonForegroundColor" Color="Black"/>
+    <SolidColorBrush x:Key="BusyWindowBackgroundColor" Color="LightGray"/>
+    <SolidColorBrush x:Key="PositiveMoneyBackgroundColor" Color="Green"/>
+    <SolidColorBrush x:Key="NegativeMoneyBackgroundColor" Color="Red"/>
+    <SolidColorBrush x:Key="NeutralMoneyBackgroundColor" Color="White"/>
+    <SolidColorBrush x:Key="MoneyGridBackgroundColor" Color="#FFE5E5E5"/>
+    <SolidColorBrush x:Key="MoneyGridForegroundColor" Color="Black"/>
+    <SolidColorBrush x:Key="MonthDetailProgressIndicatorColor" Color="Chocolate"/>
     <!--#endregion-->
 </ResourceDictionary>

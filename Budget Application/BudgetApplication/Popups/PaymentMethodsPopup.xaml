@@ -13,14 +13,6 @@
     <UserControl.Resources>
         <model:PaymentTypeToStringConverter x:Key="conv"/>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <Style TargetType="Border" x:Key="PopupBorderStyle">
-            <Setter Property="BorderThickness" Value="5" />
-            <Setter Property="BorderBrush" Value="#AFB4BE" />
-        </Style>
-        <Style TargetType="Grid" x:Key="OverlayGridStyle">
-            <Setter Property="Background" Value="Black" />
-            <Setter Property="Opacity" Value="0.5" />
-        </Style>
     </UserControl.Resources>
     <Grid Background="{StaticResource MainBackgroundColor}">
         <Grid.RowDefinitions>
@@ -56,7 +48,7 @@
                            ShowSortOptions="False" ShowSummary="False" ShowTitle="False" SelectedObject="{Binding SelectedPaymentMethod}">
         </xctk:PropertyGrid>
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Vertical">
-            <Button Content="Close" Command="{Binding ClosePopupCommand}" Width="100"/>
+            <Button Content="Close" Style="{StaticResource PopupOkCloseButtonStyle}" Command="{Binding ClosePopupCommand}" Width="100"/>
         </StackPanel>
         <!--Add Payment Method Popup-->
         <Grid Background="Transparent" Visibility="{Binding ShowPopup, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.RowSpan="3" Grid.ColumnSpan="2">
@@ -83,10 +75,10 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <Viewbox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
-                        <Label Content="Payment Method Name"/>
+                        <Label Content="Payment Method Name" FontSize="{StaticResource LargeFontSize}" FontWeight="DemiBold"/>
                     </Viewbox>
                     <Viewbox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">
-                        <Label Content="Payment Method Type"/>
+                        <Label Content="Payment Method Type" FontSize="{StaticResource LargeFontSize}" FontWeight="DemiBold"/>
                     </Viewbox>
                     <TextBox Grid.Row="1" Grid.Column="0" Name="PaymentNameBox" Text="{Binding PaymentName}"/>
                     <ComboBox Grid.Row="1" Grid.Column="1" Name="PaymentTypeSelector" HorizontalAlignment="Stretch" ItemsSource="{Binding PaymentTypes}" SelectedItem="{Binding PaymentType}">
@@ -97,8 +89,8 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" Width="Auto" HorizontalAlignment="Center">
-                        <Button Content="Ok" Name="OkButton" Height="25" Width="50" Margin="0,0,5,0" Command="{Binding SaveCommand}"/>
-                        <Button Content="Cancel" Name="CancelButton" Height="25" Width="50" Margin="5,0,0,0" Command="{Binding CancelCommand}"/>
+                        <Button Content="Ok" Style="{StaticResource PopupOkCloseButtonStyle}" Name="OkButton" Height="25" Width="50" Margin="0,0,5,0" Command="{Binding SaveCommand}"/>
+                        <Button Content="Cancel" Style="{StaticResource PopupOkCloseButtonStyle}" Name="CancelButton" Height="25" Width="50" Margin="5,0,0,0" Command="{Binding CancelCommand}"/>
                     </StackPanel>
                 </Grid>
             </Border>

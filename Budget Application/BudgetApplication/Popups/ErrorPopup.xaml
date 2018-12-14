@@ -7,10 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="700"
              d:DataContext="{d:DesignInstance Type=local:ErrorViewModel}">
-    <Border Background="White" BorderBrush="Black" BorderThickness="2" CornerRadius="10" Grid.Column="1" Grid.Row="1"
+    <Border Background="{DynamicResource MainBackgroundColor}" BorderBrush="Black" BorderThickness="2" CornerRadius="10" Grid.Column="1" Grid.Row="1"
                     VerticalAlignment="Center" Height="200" Padding="5">
         <DockPanel>
-            <Button DockPanel.Dock="Bottom" Width="150" Height="40" Command="{Binding AcknowledgeErrorCommand}" Margin="10" Content="Acknowledge" />
+            <Button DockPanel.Dock="Bottom" Style="{DynamicResource PopupOkCloseButtonStyle}" Width="150" Height="40" Command="{Binding AcknowledgeErrorCommand}" Margin="10" Content="Acknowledge" />
             <TextBlock Text="{Binding ErrorMessage}" TextWrapping="Wrap" />
         </DockPanel>
     </Border>

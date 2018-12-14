@@ -157,7 +157,7 @@
     <Compile Include="Model\PaymentTypeToStringConverter.cs" />
     <Compile Include="Model\Transaction.cs" />
     <Compile Include="Model\TransactionMessage.cs" />
-    <Compile Include="Model\ValueToBrushConverter.cs" />
+    <Compile Include="ValueConverters\MoneyValueToBrushConverter.cs" />
     <Compile Include="Popups\ErrorPopup.xaml.cs">
       <DependentUpon>ErrorPopup.xaml</DependentUpon>
     </Compile>
@@ -206,13 +206,9 @@
     <Compile Include="Screens\TransactionsScreen.xaml.cs">
       <DependentUpon>TransactionsScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Screens\TemplateScreen.xaml.cs">
-      <DependentUpon>TemplateScreen.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Screens\MonthDetailViewModel.cs" />
     <Compile Include="Screens\PaymentsViewModel.cs" />
     <Compile Include="Screens\TransactionsViewModel.cs" />
-    <Compile Include="Screens\TemplateViewModel.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\SessionService.cs" />
     <Compile Include="Resources\StyleDictionary.xaml.cs">
@@ -283,10 +279,6 @@
     <Page Include="Screens\TransactionsScreen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Screens\TemplateScreen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

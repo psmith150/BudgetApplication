@@ -59,7 +59,7 @@
                 </Border>
             </Popup>-->
         </Border>
-        <Grid Grid.Row="1" Background="White">
+        <Grid Grid.Row="1" Background="{DynamicResource MainBackgroundColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>

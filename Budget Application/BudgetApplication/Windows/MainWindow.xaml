@@ -21,15 +21,6 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <valueConverters:TypeToBoolConverter x:Key="TypeToBoolConverter" />
         <valueConverters:ViewModelToViewConverter x:Key="ViewModelToViewConverter" />
-
-        <Style TargetType="Border" x:Key="PopupBorderStyle">
-            <Setter Property="BorderThickness" Value="5" />
-            <Setter Property="BorderBrush" Value="#AFB4BE" />
-        </Style>
-        <Style TargetType="Grid" x:Key="OverlayGridStyle">
-            <Setter Property="Background" Value="Black" />
-            <Setter Property="Opacity" Value="0.5" />
-        </Style>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="D" Modifiers="Control+Shift" Command="{Binding ToggleEventLogVisibiliyCommand}"/>
@@ -65,69 +56,30 @@
                    Height="40"
                    Background="Transparent">
                 <UniformGrid Rows="1" HorizontalAlignment="Left">
-                    <UniformGrid.Resources>
-                        <Style TargetType="customControls:HoverButton" BasedOn="{StaticResource {x:Type customControls:HoverButton}}">
-                            <Setter Property="Background">
-                                <Setter.Value>
-                                    <RadialGradientBrush>
-                                        <GradientStop Color="#D8ADE8E3" Offset="0"/>
-                                        <GradientStop Color="#B2D2F7E7" Offset="0.987"/>
-                                    </RadialGradientBrush>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="HoverBackgroundBrush" Value="LightBlue"/>
-                            <Setter Property="DisabledBackgroundBrush">
-                                <Setter.Value>
-                                    <RadialGradientBrush>
-                                        <GradientStop Color="#FF64B9B2" Offset="0.01"/>
-                                        <GradientStop Color="#FF5EA687" Offset="0.987"/>
-                                    </RadialGradientBrush>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="DisabledForegroundBrush" Value="White" />
-                            <Setter Property="Margin" Value="1 0 1 0"/>
-                            <Setter Property="Width" Value="130"/>
-                        </Style>
-                    </UniformGrid.Resources>
-                    <customControls:HoverButton Content="Budget" 
-                                            CommandParameter="{x:Type screens:BudgetViewModel}"
-                                            Command="{Binding NavigateToScreenCommand}"
-                                            IsEnabled="{Binding NavigationService.ActiveViewModel, Converter={StaticResource TypeToBoolConverter}, ConverterParameter={x:Type screens:BudgetViewModel}}"/>
-                    <customControls:HoverButton Content="Spending" 
-                                            CommandParameter="{x:Type screens:SpendingViewModel}"
+                    <customControls:HoverButton Content="Budget" Style="{DynamicResource NavigationHoverButtonStyle}" CommandParameter="{x:Type screens:BudgetViewModel}"
+                                                Command="{Binding NavigateToScreenCommand}"
+                                                IsEnabled="{Binding NavigationService.ActiveViewModel, Converter={StaticResource TypeToBoolConverter}, ConverterParameter={x:Type screens:BudgetViewModel}}"/>
+                    <customControls:HoverButton Content="Spending" Style="{DynamicResource NavigationHoverButtonStyle}" CommandParameter="{x:Type screens:SpendingViewModel}"
                                             Command="{Binding NavigateToScreenCommand}"
                                             IsEnabled="{Binding NavigationService.ActiveViewModel, Converter={StaticResource TypeToBoolConverter}, ConverterParameter={x:Type screens:SpendingViewModel}}"/>
-                    <customControls:HoverButton Content="Comparison" 
-                                            CommandParameter="{x:Type screens:ComparisonViewModel}"
+                    <customControls:HoverButton Content="Comparison" Style="{DynamicResource NavigationHoverButtonStyle}" CommandParameter="{x:Type screens:ComparisonViewModel}"
                                             Command="{Binding NavigateToScreenCommand}"
                                             IsEnabled="{Binding NavigationService.ActiveViewModel, Converter={StaticResource TypeToBoolConverter}, ConverterParameter={x:Type screens:ComparisonViewModel}}"/>
-                    <customControls:HoverButton Content="Month Details" 
-                                            CommandParameter="{x:Type screens:MonthDetailViewModel}"
+                    <customControls:HoverButton Content="Month Details" Style="{DynamicResource NavigationHoverButtonStyle}" CommandParameter="{x:Type screens:MonthDetailViewModel}"
                                             Command="{Binding NavigateToScreenCommand}"
                                             IsEnabled="{Binding NavigationService.ActiveViewModel, Converter={StaticResource TypeToBoolConverter}, ConverterParameter={x:Type screens:MonthDetailViewModel}}"/>
-                    <customControls:HoverButton Content="Transactions" 
-                                            CommandParameter="{x:Type screens:TransactionsViewModel}"
+                    <customControls:HoverButton Content="Transactions" Style="{DynamicResource NavigationHoverButtonStyle}" CommandParameter="{x:Type screens:TransactionsViewModel}"
                                             Command="{Binding NavigateToScreenCommand}"
                                             IsEnabled="{Binding NavigationService.ActiveViewModel, Converter={StaticResource TypeToBoolConverter}, ConverterParameter={x:Type screens:TransactionsViewModel}}"/>
-                    <customControls:HoverButton Content="Payment Methods" 
-                                            CommandParameter="{x:Type screens:PaymentsViewModel}"
+                    <customControls:HoverButton Content="Payment Methods" Style="{DynamicResource NavigationHoverButtonStyle}" CommandParameter="{x:Type screens:PaymentsViewModel}"
                                             Command="{Binding NavigateToScreenCommand}"
                                             IsEnabled="{Binding NavigationService.ActiveViewModel, Converter={StaticResource TypeToBoolConverter}, ConverterParameter={x:Type screens:PaymentsViewModel}}"/>
 
                 </UniformGrid>
             </Grid>
-            <Separator DockPanel.Dock="Top" Background="DarkGray" Height="2" Width="Auto" HorizontalAlignment="Stretch"/>
-            <DockPanel DockPanel.Dock="Bottom"
-                   Height="26"
-                   Background="Gray">
-                <DockPanel.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="Margin" Value="5 0"/>
-                        <Setter Property="VerticalAlignment" Value="Center"/>
-                    </Style>
-                </DockPanel.Resources>
-                <Button DockPanel.Dock="Right" ToolTip="Open the help menu." Width="25" Height="25" Margin="0" Background="LightGray" Foreground="Black" Command="{Binding OpenHelpCommand}">
+            <Separator DockPanel.Dock="Top" Style="{DynamicResource SeparatorStyle}"/>
+            <DockPanel DockPanel.Dock="Bottom" Style="{DynamicResource BottomBarStyle}">
+                <Button DockPanel.Dock="Right" ToolTip="Open the help menu." Style="{DynamicResource HelpButtonStyle}" Command="{Binding OpenHelpCommand}">
                     <Image Source="/Images\Question_16x.png" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button>
                 <TextBlock DockPanel.Dock="Right" Text="{Binding AppVersion, StringFormat=Version: {0}}" />
@@ -148,7 +100,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" 
-                  Style="{StaticResource OverlayGridStyle}" />
+                  Style="{DynamicResource OverlayGridStyle}" />
             <ContentPresenter Grid.Row="1" Grid.Column="1" Content="{Binding NavigationService.ActivePopupViewModel, Converter={StaticResource ViewModelToViewConverter}}" />
         </Grid>
 
@@ -165,15 +117,15 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" 
-                  Style="{StaticResource OverlayGridStyle}" />
+                  Style="{DynamicResource OverlayGridStyle}" />
             <Border Grid.Row="1" Grid.Column="1" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" BorderThickness="2">
-                <Grid Background="WhiteSmoke" Width="300" Height="200">
+                <Grid Background="{DynamicResource MainBackgroundColor}" Width="300" Height="200">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" Background="WhiteSmoke" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <StackPanel Grid.Row="0" Background="{DynamicResource MainBackgroundColor}" Orientation="Horizontal" HorizontalAlignment="Stretch">
                         <Image Source="{Binding MessageViewer.Icon}" Height="16"/>
                         <TextBlock Text="{Binding MessageViewer.Title}"/>
                     </StackPanel>
@@ -187,19 +139,10 @@
                             <TextBlock Grid.Column="1" Text="{Binding MessageViewer.ActiveMessage}" TextWrapping="Wrap" HorizontalAlignment="Stretch" TextAlignment="Left" VerticalAlignment="Stretch" Margin="15,15,5,5"/>
                         </Grid>
                     </ScrollViewer>
-                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Background="WhiteSmoke">
-                        <StackPanel.Resources>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="#FF62B4F7"/>
-                                <Setter Property="Margin" Value="5 8 5 8"/>
-                                <Setter Property="Width" Value="50"/>
-                                <Setter Property="BorderBrush" Value="LightGray"/>
-                                <Setter Property="BorderThickness" Value="1"/>
-                            </Style>
-                        </StackPanel.Resources>
-                        <Button Content="OK" Command="{Binding MessageViewer.CloseOkCommand}" Visibility="{Binding MessageViewer.UseOkButton, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Background="{DynamicResource MainBackgroundColor}">
+                        <Button Content="OK" Style="{DynamicResource PopupOkCloseButtonStyle}" Command="{Binding MessageViewer.CloseOkCommand}" Visibility="{Binding MessageViewer.UseOkButton, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                         <Separator Width="15" Background="Transparent" Visibility="{Binding MessageViewer.UseCancelButton, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                        <Button Content="Cancel" Command="{Binding MessageViewer.CloseCancelCommand}" Visibility="{Binding MessageViewer.UseCancelButton, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <Button Content="Cancel" Style="{DynamicResource PopupOkCloseButtonStyle}" Command="{Binding MessageViewer.CloseCancelCommand}" Visibility="{Binding MessageViewer.UseCancelButton, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     </StackPanel>
                 </Grid>
             </Border>
@@ -219,7 +162,7 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" Style="{StaticResource OverlayGridStyle}" />
             <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource PopupBorderStyle}">
-                <Grid Width="300" Height="200" Background="LightGray">
+                <Grid Width="300" Height="200" Background="{DynamicResource BusyWindowBackgroundColor}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />

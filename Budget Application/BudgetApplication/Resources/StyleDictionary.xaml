@@ -45,7 +45,7 @@
     </Style>-->
 
     <!--Font Sizes-->
-    <system:Double x:Key="MaxFontSize">16</system:Double>
+    <system:Double x:Key="MaxFontSize">18</system:Double>
     <system:Double x:Key="ExtraLargeFontSize">16</system:Double>
     <system:Double x:Key="LargeFontSize">14</system:Double>
     <system:Double x:Key="SmallFontSize">12</system:Double>
@@ -94,7 +94,28 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
+    <Style x:Key="NavigationHoverButtonStyle" TargetType="customControls:HoverButton" BasedOn="{StaticResource {x:Type customControls:HoverButton}}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <RadialGradientBrush>
+                    <GradientStop Color="#D8ADE8E3" Offset="0"/>
+                    <GradientStop Color="#B2D2F7E7" Offset="0.987"/>
+                </RadialGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="HoverBackgroundBrush" Value="LightBlue"/>
+        <Setter Property="DisabledBackgroundBrush">
+            <Setter.Value>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FF64B9B2" Offset="0.01"/>
+                    <GradientStop Color="#FF5EA687" Offset="0.987"/>
+                </RadialGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="DisabledForegroundBrush" Value="White" />
+        <Setter Property="Margin" Value="1 0 1 0"/>
+        <Setter Property="Width" Value="130"/>
+    </Style>
 
     <Style x:Key="MainWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
@@ -104,6 +125,31 @@
         <!--CaptionHeight + ResizeBorderThickness * 2-->
         <Setter Property="BorderBrush" Value="Gray"/>
         <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    <Style TargetType="Border" x:Key="PopupBorderStyle">
+        <Setter Property="BorderThickness" Value="5" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PopupBorderColor}" />
+    </Style>
+    <Style TargetType="Grid" x:Key="OverlayGridStyle">
+        <Setter Property="Background" Value="{DynamicResource OverlayGridColor}" />
+        <Setter Property="Opacity" Value="0.5" />
+    </Style>
+    <Style TargetType="DockPanel" x:Key="BottomBarStyle">
+        <Setter Property="Height" Value="26"/>
+        <Setter Property="Background" Value="{DynamicResource BottomBarBackgroundColor}"/>
+        <Style.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{DynamicResource BottomBarForegroundColor}"/>
+                <Setter Property="Margin" Value="5 0"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+    <Style TargetType="Separator" x:Key="SeparatorStyle">
+        <Setter Property="Height" Value="2"/>
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Background" Value="DarkGray"/>
     </Style>
     <!--Add, remove, move button styles-->
     <Style x:Key="AddButtonSquareStyle" TargetType="{x:Type Button}">
@@ -181,6 +227,21 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="HelpButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="25"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Background" Value="{DynamicResource HelpButtonBackgroundColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource HelpButtonForegroundColor}"/>
+    </Style>
+    <Style x:Key="PopupOkCloseButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="#FF62B4F7"/>
+        <Setter Property="Margin" Value="5 8 5 8"/>
+        <Setter Property="Width" Value="50"/>
+        <Setter Property="BorderBrush" Value="LightGray"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+    </Style>
     <!--Datagrid elements-->
     <Style x:Key="GroupedStyle" TargetType="{x:Type GroupItem}">
         <Setter Property="Margin" Value="0,0,0,5"/>
@@ -223,7 +284,7 @@
     <Style x:Key="SelectedCellStyle" TargetType="{x:Type DataGridCell}">
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="{DynamicResource DataGridSelectedCellBackground}" />
+                <Setter Property="Background" Value="{DynamicResource DataGridSelectedCellBackgroundColor}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource DataGridSelectedCellBorderColor}"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Foreground" Value="{DynamicResource DataGridSelectedCellForegroundColor}"/>

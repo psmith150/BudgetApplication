@@ -12,7 +12,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Change Year" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+        <TextBlock Text="Change Year" FontSize="{StaticResource ExtraLargeFontSize}" FontWeight="Bold" HorizontalAlignment="Center"/>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Budget Year" />

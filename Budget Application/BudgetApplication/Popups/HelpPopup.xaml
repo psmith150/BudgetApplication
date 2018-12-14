@@ -16,7 +16,7 @@
             <TextBlock Text="{Binding HelpMessage}" TextWrapping="Wrap" HorizontalAlignment="Stretch"/>
         </ScrollViewer>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Close" Command="{Binding ClosePopupCommand}" />
+            <Button Content="Close" Style="{DynamicResource PopupOkCloseButtonStyle}" Command="{Binding ClosePopupCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>
