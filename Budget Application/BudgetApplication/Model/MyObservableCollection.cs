@@ -108,5 +108,21 @@ namespace BudgetApplication
             }
             this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
+
+        public void DisableMemberChanged()
+        {
+            foreach(INotifyPropertyChanged item in this.Items)
+            {
+                item.PropertyChanged -= MemberPropertyChanged;
+            }
+        }
+
+        public void EnableMemberChanged()
+        {
+            foreach (INotifyPropertyChanged item in this.Items)
+            {
+                item.PropertyChanged += MemberPropertyChanged;
+            }
+        }
     }
 }

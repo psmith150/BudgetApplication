@@ -7,7 +7,7 @@ namespace BudgetApplication.Model
     /// Class to represent a spending category.
     /// </summary>
     [Serializable]
-    public class Category : INotifyPropertyChanged
+    public class Category : INotifyPropertyChanged, IComparable
     {
         private String _name;   //Category name
 
@@ -76,6 +76,11 @@ namespace BudgetApplication.Model
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public int CompareTo(object obj)
+        {
+            return this.Name.CompareTo((obj as Category).Name);
         }
 
         #endregion

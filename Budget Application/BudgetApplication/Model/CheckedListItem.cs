@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using GalaSoft.MvvmLight;
+using System.ComponentModel;
 
 namespace BudgetApplication.Model
 {
@@ -6,7 +7,7 @@ namespace BudgetApplication.Model
     /// Class to store items to be checked
     /// </summary>
     /// <typeparam name="T">Can be of any type</typeparam>
-    public class CheckedListItem<T> : INotifyPropertyChanged
+    public class CheckedListItem<T> : ObservableObject
     {
 
         private bool _isChecked;    //If the item has been checked
@@ -40,8 +41,7 @@ namespace BudgetApplication.Model
             get { return _item; }
             set
             {
-                _item = value;
-                NotifyPropertyChanged("Item");
+                this.Set(ref this._item, value);
             }
         }
 
@@ -53,8 +53,7 @@ namespace BudgetApplication.Model
             get { return _isChecked; }
             set
             {
-                _isChecked = value;
-                NotifyPropertyChanged("IsChecked");
+                this.Set(ref this._isChecked, value);
             }
         }
 
@@ -69,33 +68,8 @@ namespace BudgetApplication.Model
             }
             set
             {
-                _isHidden = value;
-                NotifyPropertyChanged("IsHidden");
+                this.Set(ref this._isHidden, value);
             }
         }
-
-        /// <summary>
-        /// Implementation of INotifyPropertyChanged
-        /// </summary>
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Private Helpers
-        /// <summary>
-        /// Helper function to simplify raising the PropertyChanged event
-        /// </summary>
-        /// <param name="propertyName">The property that has been changed</param>
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        #endregion
     }
 }

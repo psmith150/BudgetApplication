@@ -10,7 +10,7 @@ namespace BudgetApplication.Model
     [XmlInclude(typeof(CreditCard))]
     [XmlInclude(typeof(CheckingAccount))]
     [Serializable]
-    public abstract class PaymentMethod : INotifyPropertyChanged
+    public abstract class PaymentMethod : INotifyPropertyChanged, IComparable
     {
         private String _name;   //The name of the payment method
         private DateTime _startDate;    //The start date of the date filter. Used to store data used on the Payments tab.
@@ -138,6 +138,11 @@ namespace BudgetApplication.Model
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public int CompareTo(object obj)
+        {
+            return this.Name.CompareTo((obj as PaymentMethod).Name);
         }
 
         #endregion

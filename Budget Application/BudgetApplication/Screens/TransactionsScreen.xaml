@@ -25,12 +25,12 @@
         </Grid.RowDefinitions>
         <Border Grid.Row="0">
             <!--Add the popup that appears when the filter is clicked-->
-            <!--<Popup Name="filterPopup" Placement="Bottom" StaysOpen="False" Width="200" Opened="filterPopup_Opened">
+            <!--<Popup Name="filterPopup" Placement="Bottom" StaysOpen="False" Width="200" Opened="filterPopup_Opened">-->
                 <Border Background="White" BorderBrush="Gray" BorderThickness="1,1,1,1">
                     <StackPanel Margin="5,5,5,15">
-                        <xctk:WatermarkTextBox Name="SearchBox" Watermark="Search" TextChanged="SearchBox_TextChanged"/>
+                        <xctk:WatermarkTextBox Name="SearchBox" Watermark="Search"/>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
-                            <Button Margin="0,0,0,0" Name="btnSelectAll" Click="btnSelectAll_Click">
+                            <Button Margin="0,0,0,0" Name="btnSelectAll" Command="{Binding SelectAllFiltersCommand}">
                                 <Button.Template>
                                     <ControlTemplate>
                                         <TextBlock Text="Select All" Foreground="Blue" Cursor="Hand" />
@@ -38,7 +38,7 @@
                                 </Button.Template>
                             </Button>
 
-                            <Button Margin="10,0,0,0" Name="btnUnselectAll" Click="btnUnselectAll_Click">
+                            <Button Margin="10,0,0,0" Name="btnUnselectAll" Command="{Binding DeselectAllFiltersCommand}">
                                 <Button.Template>
                                     <ControlTemplate>
                                         <TextBlock Text="Select None" Foreground="Blue" Cursor="Hand" />
@@ -47,17 +47,17 @@
                             </Button>
                         </StackPanel>
                         <Border Background="White" BorderBrush="Gray" BorderThickness="1,1,1,1">
-                            <ListBox x:Name="FilterBox" BorderThickness="0" MaxHeight="200">
+                            <ListBox x:Name="FilterBox" BorderThickness="0" MaxHeight="200" ItemsSource="{Binding FilterView}">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Item}" Checked="RefreshTransactionFilters" Unchecked="RefreshTransactionFilters" />
+                                        <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Item}" Command="{Binding DataContext.UpdateFilterCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </Border>
                     </StackPanel>
                 </Border>
-            </Popup>-->
+            <!--</Popup>-->
         </Border>
         <Grid Grid.Row="1" Background="{DynamicResource MainBackgroundColor}">
             <Grid.ColumnDefinitions>
@@ -72,6 +72,32 @@
             <DataGrid Grid.Column="1" x:Name="Transactions" ItemsSource="{Binding TransactionsView}" AutoGenerateColumns="False"
                       SelectedItem="{Binding SelectedTransaction}" CanUserAddRows="False" CanUserDeleteRows="False" KeyboardNavigation.TabNavigation="Continue"
                 Style="{StaticResource TransactionDataGridStyle}">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource TransactionDataGridColumnHeaderStyle}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                                    <Grid Background="{TemplateBinding Background}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="20"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"/>
+                                        <Button Grid.Column="1" Command="{Binding DataContext.OpenFilterPopupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" CommandParameter="{TemplateBinding Content}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border>
+                                                        <Image Source="/Images/plus_sign.png" Height="15" Width="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.Resources>
                 <!-- TODO ColumnHeaderStyle="{StaticResource FilteredHeaderStyle}"-->
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Date" SortMemberPath="Date">

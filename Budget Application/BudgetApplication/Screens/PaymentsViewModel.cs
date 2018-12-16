@@ -25,11 +25,12 @@ namespace BudgetApplication.Screens
             this.PaymentMethods = session.PaymentMethods;
             this.Categories = session.Categories;
             this.Transactions = session.Transactions;
-            this.Transactions.CollectionChanged += ((s, a) => this.PaymentTransactionsView.Refresh());
+            this.Transactions.CollectionChanged += TransactionCollectionChanged;
 
             this.PaymentTransactionsView = new ListCollectionView(session.Transactions);
             this.PaymentTransactionsView.SortDescriptions.Add(new System.ComponentModel.SortDescription("Date", System.ComponentModel.ListSortDirection.Descending));
             this.PaymentTransactionsView.Filter = ((transaction) => PaymentTransactions_Filter(transaction as Transaction));
+
 
             this.Session.Transactions.MemberChanged += TransactionPropertyChanged;
 
@@ -45,6 +46,7 @@ namespace BudgetApplication.Screens
             this.DeleteTransactionCommand = new RelayCommand(() => this.DeleteTransaction());
             this.DuplicateTransactionCommand = new RelayCommand(() => this.DuplicateTransaction());
         }
+
         public override void Initialize()
         {
         }
@@ -312,10 +314,16 @@ namespace BudgetApplication.Screens
             }
         }
 
+        private void TransactionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            this.PaymentTransactionsView.Refresh();
+            this.RecalculateCreditValues();
+        }
+
         private void TransactionPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
                 this.RecalculateCreditValues();
-                //this.PaymentTransactionsView.Refresh();
+                this.PaymentTransactionsView.Refresh();
         }
         #endregion
     }
