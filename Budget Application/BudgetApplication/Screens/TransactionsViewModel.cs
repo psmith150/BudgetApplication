@@ -176,6 +176,18 @@ namespace BudgetApplication.Screens
                 this.FilterView.Refresh();
             }
         }
+        private bool _FilterPopupOpen;
+        public bool FilterPopupOpen
+        {
+            get
+            {
+                return this._FilterPopupOpen;
+            }
+            set
+            {
+                this.Set(ref this._FilterPopupOpen, value);
+            }
+        }
         private MyObservableCollection<CheckedListItem<DateTime>> _FilterDates;
         public MyObservableCollection<CheckedListItem<DateTime>> FilterDates
         {
@@ -560,6 +572,7 @@ namespace BudgetApplication.Screens
                     break;
             }
             this.activeColumnName = columnName;
+            this.FilterPopupOpen = true;
         }
         private void SelectFilters()
         {

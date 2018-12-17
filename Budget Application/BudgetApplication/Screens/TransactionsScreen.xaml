@@ -20,46 +20,9 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border Grid.Row="0">
-            <!--Add the popup that appears when the filter is clicked-->
-            <!--<Popup Name="filterPopup" Placement="Bottom" StaysOpen="False" Width="200" Opened="filterPopup_Opened">-->
-                <Border Background="White" BorderBrush="Gray" BorderThickness="1,1,1,1">
-                    <StackPanel Margin="5,5,5,15">
-                        <xctk:WatermarkTextBox Name="SearchBox" Watermark="Search"/>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
-                            <Button Margin="0,0,0,0" Name="btnSelectAll" Command="{Binding SelectAllFiltersCommand}">
-                                <Button.Template>
-                                    <ControlTemplate>
-                                        <TextBlock Text="Select All" Foreground="Blue" Cursor="Hand" />
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-
-                            <Button Margin="10,0,0,0" Name="btnUnselectAll" Command="{Binding DeselectAllFiltersCommand}">
-                                <Button.Template>
-                                    <ControlTemplate>
-                                        <TextBlock Text="Select None" Foreground="Blue" Cursor="Hand" />
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-                        </StackPanel>
-                        <Border Background="White" BorderBrush="Gray" BorderThickness="1,1,1,1">
-                            <ListBox x:Name="FilterBox" BorderThickness="0" MaxHeight="200" ItemsSource="{Binding FilterView}">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Item}" Command="{Binding DataContext.UpdateFilterCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </Border>
-                    </StackPanel>
-                </Border>
-            <!--</Popup>-->
-        </Border>
-        <Grid Grid.Row="1" Background="{DynamicResource MainBackgroundColor}">
+        <Grid Grid.Row="0" Background="{DynamicResource MainBackgroundColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -83,7 +46,8 @@
                                             <ColumnDefinition Width="20"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"/>
-                                        <Button Grid.Column="1" Command="{Binding DataContext.OpenFilterPopupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" CommandParameter="{TemplateBinding Content}">
+                                        <Button Grid.Column="1" Command="{Binding DataContext.OpenFilterPopupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                                CommandParameter="{TemplateBinding Content}" Click="Button_Click">
                                             <Button.Template>
                                                 <ControlTemplate TargetType="{x:Type Button}">
                                                     <Border>
@@ -92,6 +56,39 @@
                                                 </ControlTemplate>
                                             </Button.Template>
                                         </Button>
+                                        <Popup x:Name="filterPopup" StaysOpen="False" Width="200" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Placement="Bottom">
+                                            <Border Background="White" BorderBrush="Gray" BorderThickness="1,1,1,1">
+                                                <StackPanel Margin="5,5,5,15">
+                                                    <xctk:WatermarkTextBox Name="SearchBox" Watermark="Search" Text="{Binding DataContext.FilterSearchText, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                                                        <Button Margin="0,0,0,0" Name="btnSelectAll" Command="{Binding DataContext.SelectAllFiltersCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
+                                                            <Button.Template>
+                                                                <ControlTemplate>
+                                                                    <TextBlock Text="Select All" Foreground="Blue" Cursor="Hand" />
+                                                                </ControlTemplate>
+                                                            </Button.Template>
+                                                        </Button>
+
+                                                        <Button Margin="10,0,0,0" Name="btnUnselectAll" Command="{Binding DataContext.DeselectAllFiltersCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
+                                                            <Button.Template>
+                                                                <ControlTemplate>
+                                                                    <TextBlock Text="Select None" Foreground="Blue" Cursor="Hand" />
+                                                                </ControlTemplate>
+                                                            </Button.Template>
+                                                        </Button>
+                                                    </StackPanel>
+                                                    <Border Background="White" BorderBrush="Gray" BorderThickness="1,1,1,1">
+                                                        <ListBox x:Name="FilterBox" BorderThickness="0" MaxHeight="200" ItemsSource="{Binding DataContext.FilterView, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
+                                                            <ListBox.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Item}" Command="{Binding DataContext.UpdateFilterCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                                                                </DataTemplate>
+                                                            </ListBox.ItemTemplate>
+                                                        </ListBox>
+                                                    </Border>
+                                                </StackPanel>
+                                            </Border>
+                                        </Popup>
                                     </Grid>
                                 </ControlTemplate>
                             </Setter.Value>
