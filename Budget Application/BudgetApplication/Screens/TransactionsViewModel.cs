@@ -332,6 +332,8 @@ namespace BudgetApplication.Screens
                 return false;
             if (this.FilterItems.Where(x => x.IsChecked).Count(x => x.Item.Equals(transaction.Item)) == 0)
                 return false;
+            if (this.FilterPayees.Where(x => x.IsChecked).Count(x => x.Item.Equals(transaction.Payee)) == 0)
+                return false;
             if (this.FilterAmounts.Where(x => x.IsChecked).Count(x => x.Item.Equals(transaction.Amount)) == 0)
                 return false;
             if (transaction.Category != null && this.FilterCategories.Where(x => x.IsChecked).Count(x => x.Item.Equals(transaction.Category)) == 0)
@@ -487,7 +489,7 @@ namespace BudgetApplication.Screens
             {
                 if (this.FilterDates.Where(x => x.Item.Equals(transaction.Date)).Count() == 0)
                     this.FilterDates.Add(new CheckedListItem<DateTime>(transaction.Date, true));
-                var itemsToRemove = this.FilterDates.Where(y => (this.FilterDates.Select(x => x.Item).Except(this.Transactions.Select(x => x.Date).Distinct())).Contains(y.Item));
+                var itemsToRemove = this.FilterDates.Where(y => (this.FilterDates.Select(x => x.Item).Except(this.Transactions.Select(x => x.Date).Distinct())).Contains(y.Item)).ToList();
                 foreach (var itemToRemove in itemsToRemove)
                     this.FilterDates.Remove(itemToRemove);
             }
@@ -495,7 +497,7 @@ namespace BudgetApplication.Screens
             {
                 if (this.FilterItems.Where(x => x.Item.Equals(transaction.Item)).Count() == 0)
                     this.FilterItems.Add(new CheckedListItem<string>(transaction.Item, true));
-                var itemsToRemove = this.FilterItems.Where(y => (this.FilterItems.Select(x => x.Item).Except(this.Transactions.Select(x => x.Item).Distinct())).Contains(y.Item));
+                var itemsToRemove = this.FilterItems.Where(y => (this.FilterItems.Select(x => x.Item).Except(this.Transactions.Select(x => x.Item).Distinct())).Contains(y.Item)).ToList();
                 foreach (var itemToRemove in itemsToRemove)
                     this.FilterItems.Remove(itemToRemove);
                 this.UpdateItemsList();
@@ -504,7 +506,7 @@ namespace BudgetApplication.Screens
             {
                 if (this.FilterPayees.Where(x => x.Item.Equals(transaction.Payee)).Count() == 0)
                     this.FilterPayees.Add(new CheckedListItem<string>(transaction.Payee, true));
-                var itemsToRemove = this.FilterPayees.Where(y => (this.FilterPayees.Select(x => x.Item).Except(this.Transactions.Select(x => x.Payee).Distinct())).Contains(y.Item));
+                var itemsToRemove = this.FilterPayees.Where(y => (this.FilterPayees.Select(x => x.Item).Except(this.Transactions.Select(x => x.Payee).Distinct())).Contains(y.Item)).ToList();
                 foreach (var itemToRemove in itemsToRemove)
                     this.FilterPayees.Remove(itemToRemove);
                 this.UpdatePayeesList();
@@ -513,7 +515,7 @@ namespace BudgetApplication.Screens
             {
                 if (this.FilterAmounts.Where(x => x.Item.Equals(transaction.Amount)).Count() == 0)
                     this.FilterAmounts.Add(new CheckedListItem<decimal>(transaction.Amount, true));
-                var itemsToRemove = this.FilterAmounts.Where(y => (this.FilterAmounts.Select(x => x.Item).Except(this.Transactions.Select(x => x.Amount).Distinct())).Contains(y.Item));
+                var itemsToRemove = this.FilterAmounts.Where(y => (this.FilterAmounts.Select(x => x.Item).Except(this.Transactions.Select(x => x.Amount).Distinct())).Contains(y.Item)).ToList();
                 foreach (var itemToRemove in itemsToRemove)
                     this.FilterAmounts.Remove(itemToRemove);
             }
@@ -521,7 +523,7 @@ namespace BudgetApplication.Screens
             {
                 if (this.FilterCategories.Where(x => x.Item.Equals(transaction.Category)).Count() == 0)
                     this.FilterCategories.Add(new CheckedListItem<Category>(transaction.Category, true));
-                var itemsToRemove = this.FilterCategories.Where(y => (this.FilterCategories.Select(x => x.Item).Except(this.Transactions.Select(x => x.Category).Distinct())).Contains(y.Item));
+                var itemsToRemove = this.FilterCategories.Where(y => (this.FilterCategories.Select(x => x.Item).Except(this.Transactions.Select(x => x.Category).Distinct())).Contains(y.Item)).ToList();
                 foreach (var itemToRemove in itemsToRemove)
                     this.FilterCategories.Remove(itemToRemove);
             }
@@ -529,7 +531,7 @@ namespace BudgetApplication.Screens
             {
                 if (this.FilterPaymentMethods.Where(x => x.Item.Equals(transaction.PaymentMethod)).Count() == 0)
                     this.FilterPaymentMethods.Add(new CheckedListItem<PaymentMethod>(transaction.PaymentMethod, true));
-                var itemsToRemove = this.FilterPaymentMethods.Where(y => (this.FilterPaymentMethods.Select(x => x.Item).Except(this.Transactions.Select(x => x.PaymentMethod).Distinct())).Contains(y.Item));
+                var itemsToRemove = this.FilterPaymentMethods.Where(y => (this.FilterPaymentMethods.Select(x => x.Item).Except(this.Transactions.Select(x => x.PaymentMethod).Distinct())).Contains(y.Item)).ToList();
                 foreach (var itemToRemove in itemsToRemove)
                     this.FilterPaymentMethods.Remove(itemToRemove);
             }
@@ -537,7 +539,7 @@ namespace BudgetApplication.Screens
             {
                 if (this.FilterComments.Where(x => x.Item.Equals(transaction.Comment)).Count() == 0)
                     this.FilterComments.Add(new CheckedListItem<string>(transaction.Comment, true));
-                var itemsToRemove = this.FilterComments.Where(y => (this.FilterComments.Select(x => x.Item).Except(this.Transactions.Select(x => x.Comment).Distinct())).Contains(y.Item));
+                var itemsToRemove = this.FilterComments.Where(y => (this.FilterComments.Select(x => x.Item).Except(this.Transactions.Select(x => x.Comment).Distinct())).Contains(y.Item)).ToList();
                 foreach (var itemToRemove in itemsToRemove)
                     this.FilterComments.Remove(itemToRemove);
             }
@@ -548,7 +550,8 @@ namespace BudgetApplication.Screens
         }
         private void FilterList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            this.TransactionsView.Refresh();
+            if (!this.TransactionsView.IsEditingItem)
+                this.TransactionsView.Refresh();
         }
         private void UpdateItemsList()
         {
