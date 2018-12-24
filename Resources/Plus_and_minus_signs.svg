@@ -27,14 +27,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="177.22141"
+     inkscape:cx="-68.245659"
      inkscape:cy="418.08792"
      inkscape:document-units="px"
-     inkscape:current-layer="g4163"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
-     inkscape:window-x="1912"
+     inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
@@ -56,7 +56,8 @@
     <g
        id="g4163"
        inkscape:export-xdpi="400"
-       inkscape:export-ydpi="400">
+       inkscape:export-ydpi="400"
+       inkscape:export-filename="D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\Images\plus_sign.png">
       <rect
          ry="5"
          rx="5"
@@ -65,7 +66,7 @@
          height="102.02542"
          width="23.233507"
          id="rect4135"
-         style="fill:#00ff00;fill-opacity:1;stroke:none" />
+         style="fill:#3cb371;fill-opacity:1;stroke:none" />
       <use
          height="100%"
          width="100%"
@@ -90,14 +91,17 @@
          style="fill:none;fill-opacity:1;stroke:none" />
       <rect
          transform="matrix(0,1,-1,0,0,0)"
-         style="fill:#ff0000;fill-opacity:1;stroke:none"
+         style="fill:#b22222;fill-opacity:1;stroke:none"
          id="use4137-0"
          width="23.233507"
          height="102.02542"
          x="476.07016"
          y="-424.76917"
          rx="5"
-         ry="5" />
+         ry="5"
+         inkscape:export-filename="D:\GitHub\BudgetApplication\Budget Application\BudgetApplication\Images\minus_sign.png"
+         inkscape:export-xdpi="400"
+         inkscape:export-ydpi="400" />
     </g>
   </g>
 </svg>

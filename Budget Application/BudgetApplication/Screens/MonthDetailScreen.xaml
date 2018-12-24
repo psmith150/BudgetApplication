@@ -33,7 +33,7 @@
                 <ComboBoxItem Content="November"/>
                 <ComboBoxItem Content="December"/>
             </ComboBox>
-            <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat=MM/dd/yyyy}" VerticalAlignment="Stretch" Width="75" TextAlignment="Center" Foreground="Goldenrod">
+            <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat=MM/dd/yyyy}" VerticalAlignment="Stretch" Width="75" TextAlignment="Center" Foreground="{DynamicResource MonthDetailProgressIndicatorColor}">
                 <TextBlock.Margin>
                     <MultiBinding Converter ="{StaticResource widthConv}">
                         <Binding ElementName="CategoryColumn" Path="ActualWidth"/>
@@ -76,7 +76,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Height="{Binding Source={x:Reference DetailGrid}, Path=ActualWidth}">
-            <Rectangle Name="DateIndicator" Fill="Goldenrod" Width="2" >
+            <Rectangle Name="DateIndicator" Fill="{DynamicResource MonthDetailProgressIndicatorColor}" Width="2" >
                 <Rectangle.Margin>
                     <MultiBinding Converter ="{StaticResource widthConv}">
                         <Binding ElementName="CategoryColumn" Path="ActualWidth"/>

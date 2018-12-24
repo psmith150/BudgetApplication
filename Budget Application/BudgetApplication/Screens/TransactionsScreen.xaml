@@ -7,30 +7,45 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="300" d:DesignWidth="700"
              d:DataContext="{d:DesignInstance Type=local:TransactionsViewModel}">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="ItemsView" Source="{Binding Items}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="." Direction="Ascending"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border Grid.Row="0">
-            <!--Add the popup that appears when the filter is clicked-->
-            <!--<Popup Name="filterPopup" Placement="Bottom" StaysOpen="False" Width="200" Opened="filterPopup_Opened">
+        <Grid Grid.Row="0" Background="{DynamicResource MainBackgroundColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Top" Width="Auto">
+                <Button Command="{Binding AddTransactionCommand}" Style="{StaticResource AddButtonStyle}"/>
+                <Button Command="{Binding DeleteTransactionCommand}" Style="{StaticResource RemoveButtonStyle}" Width="50" Height="50"  Margin="5,10,5,10"/>
+                <Button Command="{Binding DuplicateTransactionCommand}" Style="{StaticResource DuplicateButtonStyle}" Width="50" Height="50"  Margin="5,10,5,10"/>
+            </StackPanel>
+            <!--Filter Popup-->
+            <Popup Grid.Column="1" x:Name="filterPopup" StaysOpen="False" Width="200" IsOpen="{Binding FilterPopupOpen}" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Placement="Bottom">
                 <Border Background="White" BorderBrush="Gray" BorderThickness="1,1,1,1">
                     <StackPanel Margin="5,5,5,15">
-                        <xctk:WatermarkTextBox Name="SearchBox" Watermark="Search" TextChanged="SearchBox_TextChanged"/>
+                        <xctk:WatermarkTextBox Name="SearchBox" Watermark="Search" Text="{Binding DataContext.FilterSearchText, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"/>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
-                            <Button Margin="0,0,0,0" Name="btnSelectAll" Click="btnSelectAll_Click">
+                            <Button Margin="0,0,0,0" Name="btnSelectAll" Command="{Binding DataContext.SelectAllFiltersCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
                                 <Button.Template>
                                     <ControlTemplate>
                                         <TextBlock Text="Select All" Foreground="Blue" Cursor="Hand" />
                                     </ControlTemplate>
                                 </Button.Template>
                             </Button>
-
-                            <Button Margin="10,0,0,0" Name="btnUnselectAll" Click="btnUnselectAll_Click">
+                            <Button Margin="10,0,0,0" Name="btnUnselectAll" Command="{Binding DataContext.DeselectAllFiltersCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
                                 <Button.Template>
                                     <ControlTemplate>
                                         <TextBlock Text="Select None" Foreground="Blue" Cursor="Hand" />
@@ -39,24 +54,50 @@
                             </Button>
                         </StackPanel>
                         <Border Background="White" BorderBrush="Gray" BorderThickness="1,1,1,1">
-                            <ListBox x:Name="FilterBox" BorderThickness="0" MaxHeight="200">
+                            <ListBox x:Name="FilterBox" BorderThickness="0" MaxHeight="200" ItemsSource="{Binding DataContext.FilterView, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Item}" Checked="RefreshTransactionFilters" Unchecked="RefreshTransactionFilters" />
+                                        <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Item}" Command="{Binding DataContext.UpdateFilterCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </Border>
                     </StackPanel>
                 </Border>
-            </Popup>-->
-        </Border>
-        <Border Grid.Row="1">
-            <DataGrid x:Name="Transactions" ItemsSource="{Binding TransactionsView}" AutoGenerateColumns="False"
-                            >
-                <!-- TODO ColumnHeaderStyle="{StaticResource FilteredHeaderStyle}"-->
+            </Popup>
+            <DataGrid Grid.Column="1" x:Name="Transactions" ItemsSource="{Binding TransactionsView}" AutoGenerateColumns="False"
+                      SelectedItem="{Binding SelectedTransaction}" CanUserAddRows="False" CanUserDeleteRows="False" KeyboardNavigation.TabNavigation="Continue"
+                Style="{StaticResource TransactionDataGridStyle}">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource TransactionDataGridColumnHeaderStyle}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                                    <Grid Background="{TemplateBinding Background}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="20"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
+                                        <Button Grid.Column="1" Command="{Binding DataContext.OpenFilterPopupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                                CommandParameter="{TemplateBinding Content}" Click="Button_Click">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border>
+                                                        <Image Source="/Images/filter_16xMD.png" Height="16" Width="16" VerticalAlignment="Center" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                        
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Date" SortMemberPath="Date">
+                    <DataGridTemplateColumn Header="Date" SortMemberPath="Date" Width="7*">
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
                                 <DatePicker SelectedDate="{Binding Path=Date}"/>
@@ -68,10 +109,34 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Item" Binding="{Binding Path=Item, Mode=TwoWay}"/>
-                    <DataGridTextColumn Header="Payee" Binding="{Binding Path=Payee}"/>
-                    <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat=\{0:C\}}"/>
-                    <DataGridComboBoxColumn Header="Category" SelectedValueBinding="{Binding Category}" DisplayMemberPath="Name" SortMemberPath="Category.Name">
+                    <DataGridTemplateColumn Header="Item" SortMemberPath="Item" Width="10*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Item}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <xctk:AutoSelectTextBox AutoSelectBehavior="OnFocus" Text="{Binding Item}" behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding Path=DataContext.Items, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+		                            behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Payee" SortMemberPath="Payee" Width="10*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Payee}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <xctk:AutoSelectTextBox AutoSelectBehavior="OnFocus" Text="{Binding Payee}" behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding Path=DataContext.Payees, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+		                            behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat=\{0:C\}}" Width="10*"/>
+                    <DataGridComboBoxColumn Header="Category" SelectedValueBinding="{Binding Category}" DisplayMemberPath="Name" SortMemberPath="Category.Name" Width="15*">
                         <DataGridComboBoxColumn.ElementStyle>
                             <Style TargetType="{x:Type ComboBox}">
                                 <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Categories, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
@@ -84,7 +149,7 @@
                             </Style>
                         </DataGridComboBoxColumn.EditingElementStyle>
                     </DataGridComboBoxColumn>
-                    <DataGridComboBoxColumn Header="Payment Method" SelectedValueBinding="{Binding PaymentMethod}" DisplayMemberPath="Name">
+                    <DataGridComboBoxColumn Header="Payment Method" SelectedValueBinding="{Binding PaymentMethod}" DisplayMemberPath="Name" Width="13*">
                         <DataGridComboBoxColumn.ElementStyle>
                             <Style TargetType="{x:Type ComboBox}">
                                 <Setter Property="ItemsSource" Value="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
@@ -96,9 +161,9 @@
                             </Style>
                         </DataGridComboBoxColumn.EditingElementStyle>
                     </DataGridComboBoxColumn>
-                    <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}" Width="*"/>
+                    <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}" Width="35*"/>
                 </DataGrid.Columns>
             </DataGrid>
-        </Border>
+        </Grid>
     </Grid>
 </UserControl>

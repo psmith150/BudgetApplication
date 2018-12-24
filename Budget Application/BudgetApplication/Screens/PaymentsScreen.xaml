@@ -63,50 +63,62 @@
             <Label>Remaining Credit:</Label>
             <Label Name="RemainingCreditLabel" Content="{Binding RemainingCredit}"/>
         </StackPanel>
-        <DataGrid Grid.Row="2"  x:Name="PaymentTransactions" ItemsSource="{Binding PaymentTransactionsView, UpdateSourceTrigger=PropertyChanged}" Background="DarkGray" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Date" SortMemberPath="Date">
-                    <DataGridTemplateColumn.CellEditingTemplate>
-                        <DataTemplate>
-                            <DatePicker SelectedDate="{Binding Path=Date}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellEditingTemplate>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path=Date, StringFormat=\{0:MM/dd/yyyy\}}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Item" Binding="{Binding Path=Item, Mode=TwoWay}"/>
-                <DataGridTextColumn Header="Payee" Binding="{Binding Path=Payee}"/>
-                <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat=\{0:C\}}"/>
-                <DataGridComboBoxColumn Header="Category" SelectedValueBinding="{Binding Category}" DisplayMemberPath="Name">
-                    <DataGridComboBoxColumn.ElementStyle>
-                        <Style TargetType="{x:Type ComboBox}">
-                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Categories, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
-                        </Style>
-                    </DataGridComboBoxColumn.ElementStyle>
-                    <DataGridComboBoxColumn.EditingElementStyle>
-                        <Style TargetType="{x:Type ComboBox}">
-                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Categories, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
-                            <EventSetter Event="RequestBringIntoView" Handler="OnRequestBringIntoView"/>
-                        </Style>
-                    </DataGridComboBoxColumn.EditingElementStyle>
-                </DataGridComboBoxColumn>
-                <DataGridComboBoxColumn Header="Payment Method" SelectedValueBinding="{Binding PaymentMethod}" DisplayMemberPath="Name">
-                    <DataGridComboBoxColumn.ElementStyle>
-                        <Style TargetType="{x:Type ComboBox}">
-                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
-                        </Style>
-                    </DataGridComboBoxColumn.ElementStyle>
-                    <DataGridComboBoxColumn.EditingElementStyle>
-                        <Style TargetType="{x:Type ComboBox}">
-                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
-                        </Style>
-                    </DataGridComboBoxColumn.EditingElementStyle>
-                </DataGridComboBoxColumn>
-                <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Top" Width="Auto">
+                <Button Command="{Binding AddTransactionCommand}" Style="{StaticResource AddButtonStyle}"/>
+                <Button Command="{Binding DeleteTransactionCommand}" Style="{StaticResource RemoveButtonStyle}" Width="50" Height="50"  Margin="5,10,5,10"/>
+                <Button Command="{Binding DuplicateTransactionCommand}" Style="{StaticResource DuplicateButtonStyle}" Width="50" Height="50"  Margin="5,10,5,10"/>
+            </StackPanel>
+            <DataGrid Grid.Column="1"  x:Name="PaymentTransactions" ItemsSource="{Binding PaymentTransactionsView, UpdateSourceTrigger=PropertyChanged}"
+                  AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" SelectedItem="{Binding SelectedTransaction}" Style="{DynamicResource TransactionDataGridStyle}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Date" SortMemberPath="Date">
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding Path=Date}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=Date, StringFormat=\{0:MM/dd/yyyy\}}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Item" Binding="{Binding Path=Item, Mode=TwoWay}"/>
+                    <DataGridTextColumn Header="Payee" Binding="{Binding Path=Payee}"/>
+                    <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat=\{0:C\}}"/>
+                    <DataGridComboBoxColumn Header="Category" SelectedValueBinding="{Binding Category}" DisplayMemberPath="Name">
+                        <DataGridComboBoxColumn.ElementStyle>
+                            <Style TargetType="{x:Type ComboBox}">
+                                <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Categories, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                            </Style>
+                        </DataGridComboBoxColumn.ElementStyle>
+                        <DataGridComboBoxColumn.EditingElementStyle>
+                            <Style TargetType="{x:Type ComboBox}">
+                                <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Categories, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                                <EventSetter Event="RequestBringIntoView" Handler="OnRequestBringIntoView"/>
+                            </Style>
+                        </DataGridComboBoxColumn.EditingElementStyle>
+                    </DataGridComboBoxColumn>
+                    <DataGridComboBoxColumn Header="Payment Method" SelectedValueBinding="{Binding PaymentMethod}" DisplayMemberPath="Name">
+                        <DataGridComboBoxColumn.ElementStyle>
+                            <Style TargetType="{x:Type ComboBox}">
+                                <Setter Property="ItemsSource" Value="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                            </Style>
+                        </DataGridComboBoxColumn.ElementStyle>
+                        <DataGridComboBoxColumn.EditingElementStyle>
+                            <Style TargetType="{x:Type ComboBox}">
+                                <Setter Property="ItemsSource" Value="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                            </Style>
+                        </DataGridComboBoxColumn.EditingElementStyle>
+                    </DataGridComboBoxColumn>
+                    <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        </Grid>
 </UserControl>
