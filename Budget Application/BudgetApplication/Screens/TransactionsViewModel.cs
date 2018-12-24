@@ -161,6 +161,20 @@ namespace BudgetApplication.Screens
             {
                 this.Set(ref this._FilterView, value);
                 this.FilterView.SortDescriptions.Add(new SortDescription("Item", ListSortDirection.Ascending));
+                Type sourceType = this.FilterView.SourceCollection.GetType().GetGenericArguments().Single().GetGenericArguments().Single();
+                if (sourceType == typeof(string))
+                    this.FilterView.Filter = ((item) => FilterView_Filter(item as CheckedListItem<string>));
+                else if (sourceType == typeof(Category))
+                    this.FilterView.Filter = ((item) => FilterView_Filter(item as CheckedListItem<Category>));
+                else if (sourceType == typeof(PaymentMethod))
+                    this.FilterView.Filter = ((item) => FilterView_Filter(item as CheckedListItem<PaymentMethod>));
+                else if (sourceType == typeof(DateTime))
+                    this.FilterView.Filter = ((item) => FilterView_Filter(item as CheckedListItem<DateTime>));
+                else if (sourceType == typeof(decimal))
+                    this.FilterView.Filter = ((item) => FilterView_Filter(item as CheckedListItem<decimal>));
+                else
+                    this.FilterView.Filter = null;
+
             }
         }
         private string _FilterSearchText;
@@ -173,7 +187,7 @@ namespace BudgetApplication.Screens
             set
             {
                 this.Set(ref this._FilterSearchText, value);
-                this.FilterView.Refresh();
+               this.FilterView.Refresh();
             }
         }
         private bool _FilterPopupOpen;
@@ -304,6 +318,9 @@ namespace BudgetApplication.Screens
         #endregion
 
         #region Public Methods
+
+        #endregion
+        #region Private Methods
         /// <summary>
         /// Filter for the transactions tab. Filtering is based on which items are checked
         /// </summary>
@@ -325,8 +342,6 @@ namespace BudgetApplication.Screens
                 return false;
             return true;
         }
-        #endregion
-        #region Private Methods
         private void AddTransaction()
         {
             Transaction newTransaction = new Transaction();
@@ -376,49 +391,49 @@ namespace BudgetApplication.Screens
                 {
                     int count = 0;
                     count = this.Transactions.Count(x => x.Date.Equals(transaction.Date));
-                    if (count <= 1)
+                    if (count < 1)
                     {
                         var itemsToRemove = this.FilterDates.Where(x => x.Item.Equals(transaction.Date)).ToList();
                         foreach (var itemToRemove in itemsToRemove)
                             this.FilterDates.Remove(itemToRemove);
                     }
                     count = this.Transactions.Count(x => x.Item.Equals(transaction.Item));
-                    if (count <= 1)
+                    if (count < 1)
                     {
                         var itemsToRemove = this.FilterItems.Where(x => x.Item.Equals(transaction.Item)).ToList();
                         foreach (var itemToRemove in itemsToRemove)
                             this.FilterItems.Remove(itemToRemove);
                     }
                     count = this.Transactions.Count(x => x.Payee.Equals(transaction.Payee));
-                    if (count <= 1)
+                    if (count < 1)
                     {
                         var itemsToRemove = this.FilterPayees.Where(x => x.Item.Equals(transaction.Payee)).ToList();
                         foreach (var itemToRemove in itemsToRemove)
                             this.FilterPayees.Remove(itemToRemove);
                     }
-                    count = this.Transactions.Count(x => x.Date.Equals(transaction.Amount));
-                    if (count <= 1)
+                    count = this.Transactions.Count(x => x.Amount.Equals(transaction.Amount));
+                    if (count < 1)
                     {
                         var itemsToRemove = this.FilterAmounts.Where(x => x.Item.Equals(transaction.Amount)).ToList();
                         foreach (var itemToRemove in itemsToRemove)
                             this.FilterAmounts.Remove(itemToRemove);
                     }
-                    count = this.Transactions.Count(x => x.Date.Equals(transaction.Category));
-                    if (count <= 1)
+                    count = this.Transactions.Count(x => x.Category.Equals(transaction.Category));
+                    if (count < 1)
                     {
                         var itemsToRemove = this.FilterCategories.Where(x => x.Item.Equals(transaction.Category)).ToList();
                         foreach (var itemToRemove in itemsToRemove)
                             this.FilterCategories.Remove(itemToRemove);
                     }
-                    count = this.Transactions.Count(x => x.Date.Equals(transaction.PaymentMethod));
-                    if (count <= 1)
+                    count = this.Transactions.Count(x => x.PaymentMethod.Equals(transaction.PaymentMethod));
+                    if (count < 1)
                     {
                         var itemsToRemove = this.FilterPaymentMethods.Where(x => x.Item.Equals(transaction.PaymentMethod)).ToList();
                         foreach (var itemToRemove in itemsToRemove)
                             this.FilterPaymentMethods.Remove(itemToRemove);
                     }
-                    count = this.Transactions.Count(x => x.Date.Equals(transaction.Comment));
-                    if (count <= 1)
+                    count = this.Transactions.Count(x => x.Comment.Equals(transaction.Comment));
+                    if (count < 1)
                     {
                         var itemsToRemove = this.FilterComments.Where(x => x.Item.Equals(transaction.Comment)).ToList();
                         foreach (var itemToRemove in itemsToRemove)
@@ -573,6 +588,7 @@ namespace BudgetApplication.Screens
             }
             this.activeColumnName = columnName;
             this.FilterPopupOpen = true;
+            this.FilterSearchText = "";
         }
         private void SelectFilters()
         {
@@ -677,6 +693,12 @@ namespace BudgetApplication.Screens
             }
             this.FilterView.Refresh();
             this.TransactionsView.Refresh();
+        }
+        private bool FilterView_Filter<T>(CheckedListItem<T> item)
+        {
+            if (this.FilterSearchText == null || this.FilterSearchText.Equals(""))
+                return true;
+            return item.Item.ToString().ToLower().Contains(this.FilterSearchText.ToLower());
         }
         #endregion
     }

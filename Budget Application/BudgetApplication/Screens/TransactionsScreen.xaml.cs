@@ -51,5 +51,10 @@ namespace BudgetApplication.Screens
         {
             ((TextBox)sender).SelectAll();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.filterPopup.PlacementTarget = sender as UIElement;
+        }
     }
 }

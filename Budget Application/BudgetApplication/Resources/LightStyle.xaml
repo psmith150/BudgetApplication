@@ -7,7 +7,7 @@
     <SolidColorBrush x:Key="MainBackgroundColor" Color="WhiteSmoke"/>
     <SolidColorBrush x:Key="DataGridBorderColor" Color="Black"/>
     <SolidColorBrush x:Key="DataGridBackgroundColor" Color="White"/>
-    <SolidColorBrush x:Key="DataGridHeaderBackgroundColor" Color="DarkGray"/>
+    <SolidColorBrush x:Key="DataGridHeaderBackgroundColor" Color="SlateGray"/>
     <SolidColorBrush x:Key="DataGridHeaderForegroundColor" Color="White"/>
     <SolidColorBrush x:Key="AddButtonBackgroundColor" Color="MediumSeaGreen"/>
     <SolidColorBrush x:Key="DeleteButtonBackgroundColor" Color="Firebrick"/>
