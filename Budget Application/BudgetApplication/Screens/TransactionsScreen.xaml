@@ -96,7 +96,6 @@
                         </Setter>
                     </Style>
                 </DataGrid.Resources>
-                <!-- TODO ColumnHeaderStyle="{StaticResource FilteredHeaderStyle}"-->
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Date" SortMemberPath="Date" Width="7*">
                         <DataGridTemplateColumn.CellEditingTemplate>
