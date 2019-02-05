@@ -74,6 +74,9 @@
                     <customControls:HoverButton Content="Payment Methods" Style="{DynamicResource NavigationHoverButtonStyle}" CommandParameter="{x:Type screens:PaymentsViewModel}"
                                             Command="{Binding NavigateToScreenCommand}"
                                             IsEnabled="{Binding NavigationService.ActiveViewModel, Converter={StaticResource TypeToBoolConverter}, ConverterParameter={x:Type screens:PaymentsViewModel}}"/>
+                    <customControls:HoverButton Content="Reports" Style="{DynamicResource NavigationHoverButtonStyle}" CommandParameter="{x:Type screens:GraphViewModel}"
+                                            Command="{Binding NavigateToScreenCommand}"
+                                            IsEnabled="{Binding NavigationService.ActiveViewModel, Converter={StaticResource TypeToBoolConverter}, ConverterParameter={x:Type screens:GraphViewModel}}"/>
 
                 </UniformGrid>
             </Grid>

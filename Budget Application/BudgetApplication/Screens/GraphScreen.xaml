@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="BudgetApplication.Screens.GraphScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BudgetApplication.Screens"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:model="clr-namespace:BudgetApplication.Model"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             mc:Ignorable="d" 
+             xmlns:custom="clr-namespace:BudgetApplication.CustomControls"
+             d:DesignHeight="300" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance Type=local:GraphViewModel}">
+    <UserControl.Resources>
+        <model:OnTargetToBrushConverter x:Key="valConv"/>
+        <model:ColumnWidthToDatePositionConverter x:Key="widthConv"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <lvc:PieChart Grid.Row="1" LegendLocation="Bottom" Hoverable="False" Series="{Binding Series}">
+            <lvc:PieChart.DataTooltip>
+                <custom:MoneyTooltip SelectionMode="OnlySender"/>
+            </lvc:PieChart.DataTooltip>
+        </lvc:PieChart>
+    </Grid>
+</UserControl>
