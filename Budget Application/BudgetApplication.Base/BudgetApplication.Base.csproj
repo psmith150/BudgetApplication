@@ -48,6 +48,7 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -61,6 +62,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\IncomeFilterOption.cs" />
+    <Compile Include="Enums\TransactionGraphGrouping.cs" />
+    <Compile Include="Enums\PieGraphType.cs" />
+    <Compile Include="Enums\LineGraphType.cs" />
+    <Compile Include="Enums\GraphType.cs" />
     <Compile Include="Enums\MessageViewerResult.cs" />
     <Compile Include="Enums\MessageViewerIcon.cs" />
     <Compile Include="Enums\MessageViewerButton.cs" />

@@ -5,21 +5,53 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BudgetApplication.Screens"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:model="clr-namespace:BudgetApplication.Model"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:converters="clr-namespace:BudgetApplication.ValueConverters"
              mc:Ignorable="d" 
              xmlns:custom="clr-namespace:BudgetApplication.CustomControls"
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=local:GraphViewModel}">
     <UserControl.Resources>
-        <model:OnTargetToBrushConverter x:Key="valConv"/>
-        <model:ColumnWidthToDatePositionConverter x:Key="widthConv"/>
+        <converters:OnTargetToBrushConverter x:Key="valConv"/>
+        <converters:ColumnWidthToDatePositionConverter x:Key="widthConv"/>
+        <CollectionViewSource x:Key="TransactionGraphGroupingsView" Source="{Binding TransactionGraphGroupings}"/>
+        <CollectionViewSource x:Key="CategoriesView" Source="{Binding Session.Categories}"/>
+        <CollectionViewSource x:Key="GroupsView" Source="{Binding Session.Groups}"/>
+        <CollectionViewSource x:Key="IncomeFilterView" Source="{Binding IncomeFilters}"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Grouping:"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource TransactionGraphGroupingsView}}" SelectedItem="{Binding TransactionGraphConfiguration.Grouping}" Width="100"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Date Filter:"/>
+                <CheckBox IsChecked="{Binding TransactionGraphConfiguration.DateFilterActive}"/>
+                <DatePicker SelectedDate="{Binding TransactionGraphConfiguration.StartDate}"/>
+                <DatePicker SelectedDate="{Binding TransactionGraphConfiguration.EndDate}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Category Filter:"/>
+                <CheckBox IsChecked="{Binding TransactionGraphConfiguration.CategoryFilterActive}"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource CategoriesView}}" SelectedItem="{Binding TransactionGraphConfiguration.CategoryFilter}" Width="100"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Group Filter:"/>
+                <CheckBox IsChecked="{Binding TransactionGraphConfiguration.GroupFilterActive}"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource GroupsView}}" SelectedItem="{Binding TransactionGraphConfiguration.GroupFilter}" Width="100"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Income Filter:"/>
+                <CheckBox IsChecked="{Binding TransactionGraphConfiguration.IncomeFilterActive}"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource IncomeFilterView}}" SelectedItem="{Binding TransactionGraphConfiguration.IncomeFilter}" Width="100"/>
+            </StackPanel>
+            <Button Content="Refresh" Command="{Binding RefreshChartCommand}" Width="50"/>
+        </StackPanel>
         <lvc:PieChart Grid.Row="1" LegendLocation="Bottom" Hoverable="False" Series="{Binding Series}">
             <lvc:PieChart.DataTooltip>
                 <custom:MoneyTooltip SelectionMode="OnlySender"/>

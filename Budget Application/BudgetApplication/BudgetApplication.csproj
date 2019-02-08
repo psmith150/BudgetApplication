@@ -154,17 +154,18 @@
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\CheckedListItem.cs" />
     <Compile Include="Model\CheckingAccount.cs" />
-    <Compile Include="Model\ColumnWidthToDatePositionConverter.cs" />
+    <Compile Include="ValueConverters\ColumnWidthToDatePositionConverter.cs" />
     <Compile Include="Model\MonthDetailRow.cs" />
-    <Compile Include="Model\OnTargetToBrushConverter.cs" />
+    <Compile Include="ValueConverters\OnTargetToBrushConverter.cs" />
     <Compile Include="Model\TextBoxEnterKeyUpdateBehavior.cs" />
     <Compile Include="Model\CreditCard.cs" />
     <Compile Include="Model\DataWrapper.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\MoneyGridRow.cs" />
     <Compile Include="Model\PaymentMethod.cs" />
-    <Compile Include="Model\PaymentTypeToStringConverter.cs" />
+    <Compile Include="ValueConverters\PaymentTypeToStringConverter.cs" />
     <Compile Include="Model\Transaction.cs" />
+    <Compile Include="Model\TransactionGraphConfiguration.cs" />
     <Compile Include="Model\TransactionMessage.cs" />
     <Compile Include="Screens\GraphScreen.xaml.cs">
       <DependentUpon>GraphScreen.xaml</DependentUpon>

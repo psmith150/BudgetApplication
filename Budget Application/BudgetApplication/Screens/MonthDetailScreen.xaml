@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BudgetApplication.Screens"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:model="clr-namespace:BudgetApplication.Model"
+             xmlns:converters="clr-namespace:BudgetApplication.ValueConverters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=local:MonthDetailViewModel}">
     <UserControl.Resources>
-        <model:OnTargetToBrushConverter x:Key="valConv"/>
-        <model:ColumnWidthToDatePositionConverter x:Key="widthConv"/>
+        <converters:OnTargetToBrushConverter x:Key="valConv"/>
+        <converters:ColumnWidthToDatePositionConverter x:Key="widthConv"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>

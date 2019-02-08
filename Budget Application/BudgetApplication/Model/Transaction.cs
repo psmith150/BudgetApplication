@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using BudgetApplication.Model;
 
 namespace BudgetApplication.Model
 {
