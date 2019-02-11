@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BudgetApplication.Screens"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:b="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:converters="clr-namespace:BudgetApplication.ValueConverters"
              mc:Ignorable="d" 
@@ -25,34 +26,100 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Grouping:"/>
-                <ComboBox ItemsSource="{Binding Source={StaticResource TransactionGraphGroupingsView}}" SelectedItem="{Binding TransactionGraphConfiguration.Grouping}" Width="100"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Date Filter:"/>
-                <CheckBox IsChecked="{Binding TransactionGraphConfiguration.DateFilterActive}"/>
-                <DatePicker SelectedDate="{Binding TransactionGraphConfiguration.StartDate}"/>
-                <DatePicker SelectedDate="{Binding TransactionGraphConfiguration.EndDate}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Category Filter:"/>
-                <CheckBox IsChecked="{Binding TransactionGraphConfiguration.CategoryFilterActive}"/>
-                <ComboBox ItemsSource="{Binding Source={StaticResource CategoriesView}}" SelectedItem="{Binding TransactionGraphConfiguration.CategoryFilter}" Width="100"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Group Filter:"/>
-                <CheckBox IsChecked="{Binding TransactionGraphConfiguration.GroupFilterActive}"/>
-                <ComboBox ItemsSource="{Binding Source={StaticResource GroupsView}}" SelectedItem="{Binding TransactionGraphConfiguration.GroupFilter}" Width="100"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Income Filter:"/>
-                <CheckBox IsChecked="{Binding TransactionGraphConfiguration.IncomeFilterActive}"/>
-                <ComboBox ItemsSource="{Binding Source={StaticResource IncomeFilterView}}" SelectedItem="{Binding TransactionGraphConfiguration.IncomeFilter}" Width="100"/>
-            </StackPanel>
+            <StackPanel.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="{DynamicResource GraphConfigurationBorderColor}"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                    <Setter Property="Margin" Value="2,0,2,0"/>
+                    <Setter Property="Padding" Value="1"/>
+                </Style>
+            </StackPanel.Resources>
+            <Border>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Grouping:" Margin="1"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource TransactionGraphGroupingsView}}" SelectedItem="{Binding TransactionGraphConfiguration.Grouping}" Width="100" Margin="1"/>
+                </StackPanel>
+            </Border>
+            <Border>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Date Filter:" Margin="1"/>
+                    <CheckBox IsChecked="{Binding TransactionGraphConfiguration.DateFilterActive}" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                    <DatePicker SelectedDate="{Binding TransactionGraphConfiguration.StartDate}" Margin="1"/>
+                    <DatePicker SelectedDate="{Binding TransactionGraphConfiguration.EndDate}" Margin="1"/>
+                </StackPanel>
+            </Border>
+            <Border>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Category Filter:" Margin="1"/>
+                    <CheckBox IsChecked="{Binding TransactionGraphConfiguration.CategoryFilterActive}" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                    <TextBlock x:Name="CategoryFilterBlock" VerticalAlignment="Center" Margin="1" FontWeight="DemiBold">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding ShowCategoryFilterPopupCommand}" MouseAction="LeftClick"/>
+                        </TextBlock.InputBindings>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} of {1} Selected">
+                                <Binding Path="TransactionGraphConfiguration.SelectedCategories"/>
+                                <Binding Path="TransactionGraphConfiguration.CategoryFilter.Count"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <Popup IsOpen="{Binding CategoryFilterPopupVisible}" Width="Auto" Height="Auto" Visibility="Visible" PlacementTarget="{Binding ElementName=CategoryFilterBlock}" Placement="Right" HorizontalOffset="-10">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="MouseLeave">
+                                <b:InvokeCommandAction  Command="{Binding HideCategoryFilterPopupCommand}"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                        <ListBox ItemsSource="{Binding TransactionGraphConfiguration.CategoryFilter}" Width="Auto" MaxHeight="300">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Item}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Popup>
+                </StackPanel>
+            </Border>
+            <Border>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Group Filter:" Margin="1"/>
+                    <CheckBox IsChecked="{Binding TransactionGraphConfiguration.GroupFilterActive}" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                    <TextBlock x:Name="GroupFilterBlock" VerticalAlignment="Center" Margin="1" FontWeight="DemiBold">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding ShowGroupFilterPopupCommand}" MouseAction="LeftClick"/>
+                        </TextBlock.InputBindings>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} of {1} Selected">
+                                <Binding Path="TransactionGraphConfiguration.SelectedGroups"/>
+                                <Binding Path="TransactionGraphConfiguration.GroupFilter.Count"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <Popup IsOpen="{Binding GroupFilterPopupVisible}" Width="Auto" Height="Auto" Visibility="Visible" PlacementTarget="{Binding ElementName=GroupFilterBlock}" Placement="Right" HorizontalOffset="-10">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="MouseLeave">
+                                <b:InvokeCommandAction  Command="{Binding HideGroupFilterPopupCommand}"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                        <ListBox ItemsSource="{Binding TransactionGraphConfiguration.GroupFilter}" Width="Auto" MaxHeight="300">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Item}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Popup>
+                </StackPanel>
+            </Border>
+            <Border>
+                <StackPanel Orientation="Horizontal" Margin="1">
+                    <Label Content="Income Filter:" Margin="1"/>
+                    <CheckBox IsChecked="{Binding TransactionGraphConfiguration.IncomeFilterActive}" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource IncomeFilterView}}" SelectedItem="{Binding TransactionGraphConfiguration.IncomeFilter}" Width="100" Margin="1"/>
+                </StackPanel>
+            </Border>
             <Button Content="Refresh" Command="{Binding RefreshChartCommand}" Width="50"/>
         </StackPanel>
-        <lvc:PieChart Grid.Row="1" LegendLocation="Bottom" Hoverable="False" Series="{Binding Series}">
+        <lvc:PieChart Grid.Row="1" LegendLocation="None"  Hoverable="False" Series="{Binding Series}" Margin="0,25,0,25">
             <lvc:PieChart.DataTooltip>
                 <custom:MoneyTooltip SelectionMode="OnlySender"/>
             </lvc:PieChart.DataTooltip>

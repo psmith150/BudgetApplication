@@ -1,6 +1,8 @@
 ﻿using BudgetApplication.Base.Enums;
 using GalaSoft.MvvmLight;
 using System;
+using System.Collections.Specialized;
+using System.Linq;
 
 namespace BudgetApplication.Model
 {
@@ -14,9 +16,9 @@ namespace BudgetApplication.Model
             this.StartDate = new DateTime(DateTime.Today.Year, 1, 1);
             this.EndDate = new DateTime(DateTime.Today.Year, 12, 31);
             this.CategoryFilterActive = false;
-            this.CategoryFilter = null;
+            this.CategoryFilter = new MyObservableCollection<CheckedListItem<Category>>();
             this.GroupFilterActive = false;
-            this.GroupFilter = null;
+            this.GroupFilter = new MyObservableCollection<CheckedListItem<Group>>();
             this.IncomeFilterActive = false;
             this.IncomeFilter = IncomeFilterOption.Expenditures;
         }
@@ -32,6 +34,7 @@ namespace BudgetApplication.Model
             set
             {
                 this.Set(ref this._Grouping, value);
+                this.RaiseGroupingChanged();
             }
         }
         #region Filters
@@ -45,6 +48,8 @@ namespace BudgetApplication.Model
             set
             {
                 this.Set(ref this._DateFilterActive, value);
+                this.RaiseFilterChanged();
+
             }
         }
         private DateTime _StartDate;
@@ -57,6 +62,8 @@ namespace BudgetApplication.Model
             set
             {
                 this.Set(ref this._StartDate, value);
+                if (this.DateFilterActive)
+                    this.RaiseFilterChanged();
             }
         }
         private DateTime _EndDate;
@@ -69,6 +76,8 @@ namespace BudgetApplication.Model
             set
             {
                 this.Set(ref this._EndDate, value);
+                if (this.DateFilterActive)
+                    this.RaiseFilterChanged();
             }
         }
         private bool _CategoryFilterActive;
@@ -81,10 +90,11 @@ namespace BudgetApplication.Model
             set
             {
                 this.Set(ref this._CategoryFilterActive, value);
+                this.RaiseFilterChanged();
             }
         }
-        private Category _CategoryFilter;
-        public Category CategoryFilter
+        private MyObservableCollection<CheckedListItem<Category>> _CategoryFilter;
+        public MyObservableCollection<CheckedListItem<Category>> CategoryFilter
         {
             get
             {
@@ -93,6 +103,7 @@ namespace BudgetApplication.Model
             set
             {
                 this.Set(ref this._CategoryFilter, value);
+                this.CategoryFilter.CollectionChanged += this.CategoryFilterCollectionChanged;
             }
         }
         private bool _GroupFilterActive;
@@ -105,10 +116,11 @@ namespace BudgetApplication.Model
             set
             {
                 this.Set(ref this._GroupFilterActive, value);
+                this.RaiseFilterChanged();
             }
         }
-        private Group _GroupFilter;
-        public Group GroupFilter
+        private MyObservableCollection<CheckedListItem<Group>> _GroupFilter;
+        public MyObservableCollection<CheckedListItem<Group>> GroupFilter
         {
             get
             {
@@ -117,6 +129,7 @@ namespace BudgetApplication.Model
             set
             {
                 this.Set(ref this._GroupFilter, value);
+                this.GroupFilter.CollectionChanged += this.GroupFilterCollectionChanged;
             }
         }
         private bool _IncomeFilterActive;
@@ -129,6 +142,7 @@ namespace BudgetApplication.Model
             set
             {
                 this.Set(ref this._IncomeFilterActive, value);
+                this.RaiseFilterChanged();
             }
         }
         private IncomeFilterOption _IncomeFilter;
@@ -141,9 +155,27 @@ namespace BudgetApplication.Model
             set
             {
                 this.Set(ref this._IncomeFilter, value);
+                if (this.IncomeFilterActive)
+                    this.RaiseFilterChanged();
             }
         }
         #endregion
+        public event EventHandler GroupingChanged;
+        public event EventHandler FilterChanged;
+        public int SelectedCategories
+        {
+            get
+            {
+                return this.CategoryFilter.Where(x => x.IsChecked).Count();
+            }
+        }
+        public int SelectedGroups
+        {
+            get
+            {
+                return this.GroupFilter.Where(x => x.IsChecked).Count();
+            }
+        }
         #endregion
         #region Public Methods
         public bool Filter(Transaction transaction, Group transactionGroup)
@@ -154,13 +186,17 @@ namespace BudgetApplication.Model
             {
                 result = false;
             }
-            if (this.CategoryFilterActive && !transaction.Category.Equals(this.CategoryFilter))
+            if (this.CategoryFilterActive)
             {
-                result = false;
+                CheckedListItem<Category> category = this.CategoryFilter.FirstOrDefault(x => (x.Item as Category).Equals(transaction.Category));
+                if (category == null || !category.IsChecked)
+                    result = false;
             }
-            if (this.GroupFilterActive && !transactionGroup.Equals(this.GroupFilter))
+            if (this.GroupFilterActive)
             {
-                result = false;
+                CheckedListItem<Group> group = this.GroupFilter.FirstOrDefault(x => (x.Item as Group).Equals(transactionGroup));
+                if (group == null || !group.IsChecked)
+                    result = false;
             }
             if (this.IncomeFilterActive)
             {
@@ -180,6 +216,70 @@ namespace BudgetApplication.Model
                 }
             }
             return result;
+        }
+        #endregion
+        #region Private Methods
+        private void RaiseGroupingChanged()
+        {
+            if (this.GroupingChanged != null)
+            {
+                this.GroupingChanged(this, new EventArgs());
+            }
+        }
+        private void RaiseFilterChanged()
+        {
+            if (this.FilterChanged != null)
+            {
+                this.FilterChanged(this, new EventArgs());
+            }
+        }
+        private void CategoryFilterCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (CheckedListItem<Category> item in e.NewItems)
+                {
+                    item.PropertyChanged += ((o, a) => this.UpdateCategoryListFilter());
+                }
+            }
+            if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (CheckedListItem<Category> item in e.OldItems)
+                {
+                    item.PropertyChanged -= ((o, a) => this.UpdateCategoryListFilter());
+                }
+            }
+            this.RaisePropertyChanged("SelectedCategories");
+        }
+        private void GroupFilterCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (CheckedListItem<Group> item in e.NewItems)
+                {
+                    item.PropertyChanged += ((o, a) => this.UpdateGroupListFilter());
+                }
+            }
+            if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (CheckedListItem<Group> item in e.OldItems)
+                {
+                    item.PropertyChanged -= ((o, a) => this.UpdateGroupListFilter());
+                }
+            }
+            this.RaisePropertyChanged("SelectedGroups");
+        }
+        private void UpdateCategoryListFilter()
+        {
+            if (this.CategoryFilterActive)
+                this.RaiseFilterChanged();
+            this.RaisePropertyChanged("SelectedCategories");
+        }
+        private void UpdateGroupListFilter()
+        {
+            if (this.GroupFilterActive)
+                this.RaiseFilterChanged();
+            this.RaisePropertyChanged("SelectedGroups");
         }
         #endregion
     }

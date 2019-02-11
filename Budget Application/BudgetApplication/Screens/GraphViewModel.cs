@@ -10,6 +10,8 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using System.Linq;
 using BudgetApplication.Base.Enums;
+using System.Drawing;
+using System.Collections.Specialized;
 
 namespace BudgetApplication.Screens
 {
@@ -19,6 +21,10 @@ namespace BudgetApplication.Screens
 
         #region Commands
         public ICommand RefreshChartCommand { get; private set; }
+        public ICommand ShowCategoryFilterPopupCommand { get; private set; }
+        public ICommand HideCategoryFilterPopupCommand { get; private set; }
+        public ICommand ShowGroupFilterPopupCommand { get; private set; }
+        public ICommand HideGroupFilterPopupCommand { get; private set; }
         #endregion
 
         #region Constructor
@@ -26,15 +32,27 @@ namespace BudgetApplication.Screens
         {
             this.navigationService = navigationService;
             this.Series = new SeriesCollection();
+            this.Session.Categories.CollectionChanged += this.Categories_CollectionChanged;
+            this.Session.Groups.CollectionChanged += this.Groups_CollectionChanged;
+            this.Session.Transactions.CollectionChanged += ((o, e) => this.RefreshChart());
+            this.Session.Transactions.MemberChanged += ((o, e) => this.RefreshChart());
 
             this.RefreshChartCommand = new RelayCommand(() => this.RefreshChart());
+            this.ShowCategoryFilterPopupCommand = new RelayCommand(() => this.ToggleCategoryFilterPopup(true));
+            this.HideCategoryFilterPopupCommand = new RelayCommand(() => this.ToggleCategoryFilterPopup(false));
+            this.ShowGroupFilterPopupCommand = new RelayCommand(() => this.ToggleGroupFilterPopup(true));
+            this.HideGroupFilterPopupCommand = new RelayCommand(() => this.ToggleGroupFilterPopup(false));
+
 
             this.TransactionGraphConfiguration = new TransactionGraphConfiguration();
+            this.TransactionGraphConfiguration.GroupingChanged += ((o, e) => this.RefreshChart());
+            this.TransactionGraphConfiguration.FilterChanged += ((o, e) => this.RefreshChart());
         }
         #endregion
 
         public override void Initialize()
         {
+            this.RefreshChart();
         }
 
         public override void Deinitialize()
@@ -82,6 +100,30 @@ namespace BudgetApplication.Screens
                 return Enum.GetValues(typeof(IncomeFilterOption));
             }
         }
+        private bool _CategoryFilterPopupVisible;
+        public bool CategoryFilterPopupVisible
+        {
+            get
+            {
+                return this._CategoryFilterPopupVisible;
+            }
+            set
+            {
+                this.Set(ref this._CategoryFilterPopupVisible, value);
+            }
+        }
+        private bool _GroupFilterPopupVisible;
+        public bool GroupFilterPopupVisible
+        {
+            get
+            {
+                return this._GroupFilterPopupVisible;
+            }
+            set
+            {
+                this.Set(ref this._GroupFilterPopupVisible, value);
+            }
+        }
         #endregion
 
         #region Private Properties
@@ -110,7 +152,7 @@ namespace BudgetApplication.Screens
                 }
             }
             this.Series.Clear();
-            this.PointLabel = chartpoint => string.Format("{0}", chartpoint.SeriesView.Title);
+            this.PointLabel = this.FormatPieChartLabel;
             decimal sum = 0.0M;
             switch (this.TransactionGraphConfiguration.Grouping)
             {
@@ -124,7 +166,8 @@ namespace BudgetApplication.Screens
                             Title = category.Name,
                             Values = new ChartValues<decimal> { sum },
                             DataLabels = true,
-                            LabelPoint = this.PointLabel
+                            LabelPoint = this.PointLabel,
+                            LabelPosition = PieLabelPosition.OutsideSlice,
                         });
                     }
                     break;
@@ -138,7 +181,8 @@ namespace BudgetApplication.Screens
                             Title = (new DateTime(1, i, 1)).ToString("MMMM"),
                             Values = new ChartValues<decimal> { sum },
                             DataLabels = true,
-                            LabelPoint = this.PointLabel
+                            LabelPoint = this.PointLabel,
+                            LabelPosition = PieLabelPosition.OutsideSlice
                         });
                     }
                     break;
@@ -152,7 +196,8 @@ namespace BudgetApplication.Screens
                             Title = group.Name,
                             Values = new ChartValues<decimal> { sum },
                             DataLabels = true,
-                            LabelPoint = this.PointLabel
+                            LabelPoint = this.PointLabel,
+                            LabelPosition = PieLabelPosition.OutsideSlice
                         });
                     }
                     break;
@@ -166,7 +211,8 @@ namespace BudgetApplication.Screens
                             Title = paymentMethod.Name,
                             Values = new ChartValues<decimal> { sum },
                             DataLabels = true,
-                            LabelPoint = this.PointLabel
+                            LabelPoint = this.PointLabel,
+                            LabelPosition = PieLabelPosition.OutsideSlice,
                         });
                     }
                     break;
@@ -181,7 +227,8 @@ namespace BudgetApplication.Screens
                         Title = "Income",
                         Values = new ChartValues<decimal> { sum },
                         DataLabels = true,
-                        LabelPoint = this.PointLabel
+                        LabelPoint = this.PointLabel,
+                        LabelPosition = PieLabelPosition.OutsideSlice
                     });
                     sum = 0.0M;
                     foreach (Group group in this.Session.Groups.Where(x => !x.IsIncome))
@@ -193,12 +240,90 @@ namespace BudgetApplication.Screens
                         Title = "Expenditures",
                         Values = new ChartValues<decimal> { sum },
                         DataLabels = true,
-                        LabelPoint = this.PointLabel
+                        LabelPoint = this.PointLabel,
+                        LabelPosition = PieLabelPosition.OutsideSlice
                     });
                     break;
                 default:
                     break;
             }
+        }
+        private string FormatPieChartLabel(ChartPoint chartpoint)
+        {
+            if (chartpoint.Y <= 0.0)
+            {
+                return "";
+            }
+            else
+            {
+                return string.Format("{0}", chartpoint.SeriesView.Title);
+            }
+        }
+        private void ToggleCategoryFilterPopup(bool state)
+        {
+            this.CategoryFilterPopupVisible = state;
+        }
+        private void ToggleGroupFilterPopup(bool state)
+        {
+            this.GroupFilterPopupVisible = state;
+        }
+        private void Categories_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (Category category in e.NewItems)
+                {
+                    this.TransactionGraphConfiguration.CategoryFilter.Add(new CheckedListItem<Category>(category, true));
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (Category category in e.OldItems)
+                {
+                    CheckedListItem<Category> item = this.TransactionGraphConfiguration.CategoryFilter.FirstOrDefault(x => x.Item.Equals(category));
+                    if (item != null)
+                        this.TransactionGraphConfiguration.CategoryFilter.Remove(item);
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Reset)
+            {
+                List<CheckedListItem<Category>> tempCategories = new List<CheckedListItem<Category>>();
+                foreach (Category category in this.Session.Categories)
+                {
+                    tempCategories.Add(new CheckedListItem<Category>(category, true));
+                }
+                this.TransactionGraphConfiguration.CategoryFilter.InsertRange(tempCategories);
+            }
+            this.RefreshChart();
+        }
+        private void Groups_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (Group group in e.NewItems)
+                {
+                    this.TransactionGraphConfiguration.GroupFilter.Add(new CheckedListItem<Group>(group, true));
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (Group group in e.OldItems)
+                {
+                    CheckedListItem<Group> item = this.TransactionGraphConfiguration.GroupFilter.FirstOrDefault(x => x.Item.Equals(group));
+                    if (item != null)
+                        this.TransactionGraphConfiguration.GroupFilter.Remove(item);
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Reset)
+            {
+                List<CheckedListItem<Group>> tempGroups = new List<CheckedListItem<Group>>();
+                foreach (Group group in this.Session.Groups)
+                {
+                    tempGroups.Add(new CheckedListItem<Group>(group, true));
+                }
+                this.TransactionGraphConfiguration.GroupFilter.InsertRange(tempGroups);
+            }
+            this.RefreshChart();
         }
         #endregion
     }
