@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\IncomeFilterOption.cs" />
+    <Compile Include="Enums\BudgetGraphGrouping.cs" />
     <Compile Include="Enums\TransactionGraphGrouping.cs" />
     <Compile Include="Enums\PieGraphType.cs" />
     <Compile Include="Enums\LineGraphType.cs" />

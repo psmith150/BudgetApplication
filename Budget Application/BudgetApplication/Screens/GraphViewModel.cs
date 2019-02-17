@@ -47,6 +47,10 @@ namespace BudgetApplication.Screens
             this.TransactionGraphConfiguration = new TransactionGraphConfiguration();
             this.TransactionGraphConfiguration.GroupingChanged += ((o, e) => this.RefreshChart());
             this.TransactionGraphConfiguration.FilterChanged += ((o, e) => this.RefreshChart());
+
+            this.BudgetGraphConfiguration = new BudgetGraphConfiguration();
+            this.BudgetGraphConfiguration.GroupingChanged += ((o, e) => this.RefreshChart());
+            this.BudgetGraphConfiguration.FilterChanged += ((o, e) => this.RefreshChart());
         }
         #endregion
 
@@ -86,6 +90,18 @@ namespace BudgetApplication.Screens
                 this.Set(ref this._TransactionGraphConfiguration, value);
             }
         }
+        private BudgetGraphConfiguration _BudgetGraphConfiguration;
+        public BudgetGraphConfiguration BudgetGraphConfiguration
+        {
+            get
+            {
+                return this._BudgetGraphConfiguration;
+            }
+            set
+            {
+                this.Set(ref this._BudgetGraphConfiguration, value);
+            }
+        }
         public Array TransactionGraphGroupings
         {
             get
@@ -93,11 +109,26 @@ namespace BudgetApplication.Screens
                 return Enum.GetValues(typeof(TransactionGraphGrouping));
             }
         }
+        public Array BudgetGraphGroupings
+        {
+            get
+            {
+                return Enum.GetValues(typeof(BudgetGraphGrouping));
+            }
+        }
         public Array IncomeFilters
         {
             get
             {
                 return Enum.GetValues(typeof(IncomeFilterOption));
+            }
+        }
+        private string[] _Months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+        public Array Months
+        {
+            get
+            {
+                return this._Months;
             }
         }
         private bool _CategoryFilterPopupVisible;
@@ -135,7 +166,8 @@ namespace BudgetApplication.Screens
         #region Private Methods
         private void RefreshChart()
         {
-            this.RefreshTransactionPieChart();
+            //this.RefreshTransactionPieChart();
+            this.RefreshBudgetPieChart();
         }
         private void RefreshTransactionPieChart()
         {
@@ -235,6 +267,93 @@ namespace BudgetApplication.Screens
                     {
                         sum += filteredTransactions.Where(x => group.Categories.Contains(x.Category)).Sum(x => x.Amount);
                     }
+                    this.Series.Add(new PieSeries
+                    {
+                        Title = "Expenditures",
+                        Values = new ChartValues<decimal> { sum },
+                        DataLabels = true,
+                        LabelPoint = this.PointLabel,
+                        LabelPosition = PieLabelPosition.OutsideSlice
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
+        private void RefreshBudgetPieChart()
+        {
+            List<MoneyGridRow> filteredRows = new List<MoneyGridRow>();
+            foreach (MoneyGridRow row in this.Session.BudgetValues)
+            {
+                MoneyGridRow tempRow = row.Copy();
+                if (this.BudgetGraphConfiguration.Filter(tempRow))
+                {
+                    filteredRows.Add(tempRow);
+                }
+            }
+            this.Series.Clear();
+            this.PointLabel = this.FormatPieChartLabel;
+            decimal sum = 0.0M;
+            switch (this.BudgetGraphConfiguration.Grouping)
+            {
+                case BudgetGraphGrouping.Category:
+                    foreach (Category category in this.Session.Categories)
+                    {
+                        sum = 0.0M;
+                        sum = filteredRows.Where(x => x.Category.Equals(category)).Sum(x => x.Sum);
+                        this.Series.Add(new PieSeries
+                        {
+                            Title = category.Name,
+                            Values = new ChartValues<decimal> { sum },
+                            DataLabels = true,
+                            LabelPoint = this.PointLabel,
+                            LabelPosition = PieLabelPosition.OutsideSlice,
+                        });
+                    }
+                    break;
+                case BudgetGraphGrouping.Month:
+                    for (int i = 0; i < 12; i++)
+                    {
+                        sum = 0.0M;
+                        sum = filteredRows.Select(x => x.Values[i]).Sum();
+                        this.Series.Add(new PieSeries
+                        {
+                            Title = (new DateTime(1, i+1, 1)).ToString("MMMM"),
+                            Values = new ChartValues<decimal> { sum },
+                            DataLabels = true,
+                            LabelPoint = this.PointLabel,
+                            LabelPosition = PieLabelPosition.OutsideSlice
+                        });
+                    }
+                    break;
+                case BudgetGraphGrouping.Group:
+                    foreach (Group group in this.Session.Groups)
+                    {
+                        sum = 0.0M;
+                        sum = filteredRows.Where(x => x.Group.Equals(group)).Sum(x => x.Sum);
+                        this.Series.Add(new PieSeries
+                        {
+                            Title = group.Name,
+                            Values = new ChartValues<decimal> { sum },
+                            DataLabels = true,
+                            LabelPoint = this.PointLabel,
+                            LabelPosition = PieLabelPosition.OutsideSlice
+                        });
+                    }
+                    break;
+                case BudgetGraphGrouping.IsIncome:
+                    sum = 0.0M;
+                    sum += filteredRows.Where(x => x.Group.IsIncome).Sum(x => x.Sum);
+                    this.Series.Add(new PieSeries
+                    {
+                        Title = "Income",
+                        Values = new ChartValues<decimal> { sum },
+                        DataLabels = true,
+                        LabelPoint = this.PointLabel,
+                        LabelPosition = PieLabelPosition.OutsideSlice
+                    });
+                    sum = 0.0M;
+                    sum += filteredRows.Where(x => !x.Group.IsIncome).Sum(x => x.Sum);
                     this.Series.Add(new PieSeries
                     {
                         Title = "Expenditures",

@@ -154,6 +154,7 @@
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\CheckedListItem.cs" />
     <Compile Include="Model\CheckingAccount.cs" />
+    <Compile Include="Model\BudgetGraphConfiguration.cs" />
     <Compile Include="ValueConverters\ColumnWidthToDatePositionConverter.cs" />
     <Compile Include="Model\MonthDetailRow.cs" />
     <Compile Include="ValueConverters\OnTargetToBrushConverter.cs" />

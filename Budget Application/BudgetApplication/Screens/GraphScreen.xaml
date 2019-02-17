@@ -16,16 +16,19 @@
         <converters:OnTargetToBrushConverter x:Key="valConv"/>
         <converters:ColumnWidthToDatePositionConverter x:Key="widthConv"/>
         <CollectionViewSource x:Key="TransactionGraphGroupingsView" Source="{Binding TransactionGraphGroupings}"/>
+        <CollectionViewSource x:Key="BudgetGraphGroupingsView" Source="{Binding BudgetGraphGroupings}"/>
         <CollectionViewSource x:Key="CategoriesView" Source="{Binding Session.Categories}"/>
         <CollectionViewSource x:Key="GroupsView" Source="{Binding Session.Groups}"/>
         <CollectionViewSource x:Key="IncomeFilterView" Source="{Binding IncomeFilters}"/>
+        <CollectionViewSource x:Key="StartMonthsView" Source="{Binding Months}"/>
+        <CollectionViewSource x:Key="EndMonthsView" Source="{Binding Months}"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <!--<StackPanel Grid.Row="0" x:Name="TransactionGraphConfiguration" Orientation="Horizontal" HorizontalAlignment="Center">
             <StackPanel.Resources>
                 <Style TargetType="Border">
                     <Setter Property="BorderBrush" Value="{DynamicResource GraphConfigurationBorderColor}"/>
@@ -115,6 +118,100 @@
                     <Label Content="Income Filter:" Margin="1"/>
                     <CheckBox IsChecked="{Binding TransactionGraphConfiguration.IncomeFilterActive}" VerticalAlignment="Center" Margin="0,0,2,0"/>
                     <ComboBox ItemsSource="{Binding Source={StaticResource IncomeFilterView}}" SelectedItem="{Binding TransactionGraphConfiguration.IncomeFilter}" Width="100" Margin="1"/>
+                </StackPanel>
+            </Border>
+            <Button Content="Refresh" Command="{Binding RefreshChartCommand}" Width="50"/>
+        </StackPanel>-->
+        <StackPanel Grid.Row="0" x:Name="BudgetGraphConfiguration" Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="{DynamicResource GraphConfigurationBorderColor}"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                    <Setter Property="Margin" Value="2,0,2,0"/>
+                    <Setter Property="Padding" Value="1"/>
+                </Style>
+            </StackPanel.Resources>
+            <Border>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Grouping:" Margin="1"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource BudgetGraphGroupingsView}}" SelectedItem="{Binding BudgetGraphConfiguration.Grouping}" Width="100" Margin="1"/>
+                </StackPanel>
+            </Border>
+            <Border>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Date Filter:" Margin="1"/>
+                    <CheckBox IsChecked="{Binding BudgetGraphConfiguration.MonthFilterActive}" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource StartMonthsView}}" SelectedIndex="{Binding BudgetGraphConfiguration.StartMonth}" Width="100" Margin="1"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource EndMonthsView}}" SelectedIndex="{Binding BudgetGraphConfiguration.EndMonth}" Width="100" Margin="1"/>
+                </StackPanel>
+            </Border>
+            <Border>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Category Filter:" Margin="1"/>
+                    <CheckBox IsChecked="{Binding BudgetGraphConfiguration.CategoryFilterActive}" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                    <TextBlock x:Name="BudgetCategoryFilterBlock" VerticalAlignment="Center" Margin="1" FontWeight="DemiBold">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding ShowCategoryFilterPopupCommand}" MouseAction="LeftClick"/>
+                        </TextBlock.InputBindings>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} of {1} Selected">
+                                <Binding Path="BudgetGraphConfiguration.SelectedCategories"/>
+                                <Binding Path="BudgetGraphConfiguration.CategoryFilter.Count"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <Popup IsOpen="{Binding CategoryFilterPopupVisible}" Width="Auto" Height="Auto" Visibility="Visible" PlacementTarget="{Binding ElementName=BudgetCategoryFilterBlock}" Placement="Right" HorizontalOffset="-10">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="MouseLeave">
+                                <b:InvokeCommandAction  Command="{Binding HideCategoryFilterPopupCommand}"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                        <ListBox ItemsSource="{Binding BudgetGraphConfiguration.CategoryFilter}" Width="Auto" MaxHeight="300">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Item}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Popup>
+                </StackPanel>
+            </Border>
+            <Border>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Group Filter:" Margin="1"/>
+                    <CheckBox IsChecked="{Binding BudgetGraphConfiguration.GroupFilterActive}" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                    <TextBlock x:Name="BudgetGroupFilterBlock" VerticalAlignment="Center" Margin="1" FontWeight="DemiBold">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding ShowGroupFilterPopupCommand}" MouseAction="LeftClick"/>
+                        </TextBlock.InputBindings>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} of {1} Selected">
+                                <Binding Path="BudgetGraphConfiguration.SelectedGroups"/>
+                                <Binding Path="BudgetGraphConfiguration.GroupFilter.Count"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <Popup IsOpen="{Binding GroupFilterPopupVisible}" Width="Auto" Height="Auto" Visibility="Visible" PlacementTarget="{Binding ElementName=BudgetGroupFilterBlock}" Placement="Right" HorizontalOffset="-10">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="MouseLeave">
+                                <b:InvokeCommandAction  Command="{Binding HideGroupFilterPopupCommand}"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                        <ListBox ItemsSource="{Binding BudgetGraphConfiguration.GroupFilter}" Width="Auto" MaxHeight="300">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Item}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Popup>
+                </StackPanel>
+            </Border>
+            <Border>
+                <StackPanel Orientation="Horizontal" Margin="1">
+                    <Label Content="Income Filter:" Margin="1"/>
+                    <CheckBox IsChecked="{Binding BudgetGraphConfiguration.IncomeFilterActive}" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource IncomeFilterView}}" SelectedItem="{Binding BudgetGraphConfiguration.IncomeFilter}" Width="100" Margin="1"/>
                 </StackPanel>
             </Border>
             <Button Content="Refresh" Command="{Binding RefreshChartCommand}" Width="50"/>

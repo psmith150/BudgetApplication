@@ -75,6 +75,11 @@ namespace BudgetApplication.Model
             {
                 return _values;
             }
+            private set
+            {
+                this._values = value;
+                NotifyPropertyChanged("Values");
+            }
         }
 
         /// <summary>
@@ -132,6 +137,16 @@ namespace BudgetApplication.Model
                 }
                 NotifyPropertyChanged("Percentage");
             }
+        }
+
+        public MoneyGridRow Copy()
+        {
+            MoneyGridRow copy = new MoneyGridRow(this.Group, this.Category);
+            copy.IsSum = this.IsSum;
+            copy.Values = this.Values.Copy();
+            copy.Percentage = this.Percentage;
+
+            return copy;
         }
 
         /// <summary>

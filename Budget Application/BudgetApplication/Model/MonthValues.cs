@@ -71,6 +71,13 @@ namespace BudgetApplication.Model
                 return _values.Length;
             }
         }
+
+        public MonthValues Copy()
+        {
+            MonthValues copy = new MonthValues();
+            this.Values.CopyTo(copy.Values, 0);
+            return copy;
+        }
         /// <summary>
         /// Implementation of INotifyPropertyChanged
         /// </summary>
