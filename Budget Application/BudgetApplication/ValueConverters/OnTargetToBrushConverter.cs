@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace BudgetApplication.Model
+namespace BudgetApplication.ValueConverters
 {
     /// <summary>
     /// Converter used to color code cells depending on value. Only converts one way

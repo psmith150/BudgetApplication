@@ -69,6 +69,12 @@
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -139,24 +145,33 @@
     <Compile Include="CustomControls\MoneyGrid.xaml.cs">
       <DependentUpon>MoneyGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\MoneyTooltip.xaml.cs">
+      <DependentUpon>MoneyTooltip.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IoC\ErrorHandler.cs" />
     <Compile Include="IoC\IoCContainer.cs" />
     <Compile Include="IoC\MessageViewer.cs" />
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\CheckedListItem.cs" />
     <Compile Include="Model\CheckingAccount.cs" />
-    <Compile Include="Model\ColumnWidthToDatePositionConverter.cs" />
+    <Compile Include="Model\BudgetGraphConfiguration.cs" />
+    <Compile Include="ValueConverters\ColumnWidthToDatePositionConverter.cs" />
     <Compile Include="Model\MonthDetailRow.cs" />
-    <Compile Include="Model\OnTargetToBrushConverter.cs" />
+    <Compile Include="ValueConverters\OnTargetToBrushConverter.cs" />
     <Compile Include="Model\TextBoxEnterKeyUpdateBehavior.cs" />
     <Compile Include="Model\CreditCard.cs" />
     <Compile Include="Model\DataWrapper.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\MoneyGridRow.cs" />
     <Compile Include="Model\PaymentMethod.cs" />
-    <Compile Include="Model\PaymentTypeToStringConverter.cs" />
+    <Compile Include="ValueConverters\PaymentTypeToStringConverter.cs" />
     <Compile Include="Model\Transaction.cs" />
+    <Compile Include="Model\TransactionGraphConfiguration.cs" />
     <Compile Include="Model\TransactionMessage.cs" />
+    <Compile Include="Screens\GraphScreen.xaml.cs">
+      <DependentUpon>GraphScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\GraphViewModel.cs" />
     <Compile Include="ValueConverters\MoneyValueToBrushConverter.cs" />
     <Compile Include="Popups\ErrorPopup.xaml.cs">
       <DependentUpon>ErrorPopup.xaml</DependentUpon>
@@ -228,6 +243,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="CustomControls\MoneyTooltip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Popups\ErrorPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -255,6 +274,10 @@
     <Page Include="Resources\LightStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\GraphScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Screens\SpendingScreen.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -299,7 +299,7 @@ namespace BudgetApplication.Screens
                 this.CreditRowHeight = new GridLength(1, GridUnitType.Auto);  //Shows the detail row
                 this.CreditLimit = card.CreditLimit.ToString("C");    //Shows the card's credit limit
                 decimal sum = 0;
-                for (int i = 0; i < this.PaymentTransactionsView.Count - 1; i++)
+                for (int i = 0; i < this.PaymentTransactionsView.Count; i++)
                 {
                     Transaction transaction = this.PaymentTransactionsView.GetItemAt(i) as Transaction;
                     sum += transaction.Amount;
@@ -316,14 +316,17 @@ namespace BudgetApplication.Screens
 
         private void TransactionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            this.PaymentTransactionsView.Refresh();
+            //this.PaymentTransactionsView.Refresh();
             this.RecalculateCreditValues();
         }
 
         private void TransactionPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-                this.RecalculateCreditValues();
+            this.RecalculateCreditValues();
+            if (!this.PaymentTransactionsView.IsEditingItem)
+            {
                 this.PaymentTransactionsView.Refresh();
+            }
         }
         #endregion
     }

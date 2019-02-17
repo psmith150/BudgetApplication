@@ -36,5 +36,6 @@
     <SolidColorBrush x:Key="MoneyGridBackgroundColor" Color="#FFE5E5E5"/>
     <SolidColorBrush x:Key="MoneyGridForegroundColor" Color="Black"/>
     <SolidColorBrush x:Key="MonthDetailProgressIndicatorColor" Color="Chocolate"/>
+    <SolidColorBrush x:Key="GraphConfigurationBorderColor" Color="Black"/>
     <!--#endregion-->
 </ResourceDictionary>

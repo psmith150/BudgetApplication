@@ -4,7 +4,8 @@
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
                     xmlns:customControls="clr-namespace:BudgetApplication.CustomControls"
                     x:Class="BudgetApplication.StyleDictionary"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf">
 
     <!-- Default Button Style -->
     <!--<Style TargetType="{x:Type Button}">
@@ -50,7 +51,7 @@
     <system:Double x:Key="LargeFontSize">14</system:Double>
     <system:Double x:Key="SmallFontSize">12</system:Double>
     <!--#endregion-->
-    
+
     <!--#region Hover Button Style -->
     <Style TargetType="customControls:HoverButton">
         <Setter Property="FontWeight" Value="Bold"/>
@@ -118,7 +119,7 @@
         <Setter Property="Width" Value="130"/>
     </Style>
     <!--#endregion-->
-    
+
     <!--#region Global Window Styles-->
     <Style x:Key="MainWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
@@ -155,7 +156,7 @@
         <Setter Property="Background" Value="DarkGray"/>
     </Style>
     <!--#endregion-->
-    
+
     <!--#region Add, remove, move button styles-->
     <Style x:Key="AddButtonStyle" TargetType="Button">
         <Setter Property="Width" Value="50"/>
@@ -299,7 +300,7 @@
         <Setter Property="FontWeight" Value="DemiBold"/>
     </Style>
     <!--#endregion-->
-    
+
     <!--#region Datagrid elements-->
     <Style x:Key="GroupedStyle" TargetType="{x:Type GroupItem}">
         <Setter Property="Margin" Value="0,0,0,5"/>
@@ -334,7 +335,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -369,6 +370,11 @@
     </Style>
     <Style x:Key="TransactionDataGridCellStyle" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource SelectedCellStyle}">
         <Setter Property="Background" Value="{DynamicResource DataGridBackgroundColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
+    </Style>
+    <!--#endregion-->
+    <!--#region Chart Styles-->
+    <Style TargetType="lvc:PieSeries">
         <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
     </Style>
     <!--#endregion-->

@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Windows.Data;
 
-namespace BudgetApplication.Model
+namespace BudgetApplication.ValueConverters
 {
     /// <summary>
     /// Class to convert a PaymentType enum to its string description. Only converts one way
