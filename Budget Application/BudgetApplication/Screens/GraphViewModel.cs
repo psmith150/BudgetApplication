@@ -57,6 +57,7 @@ namespace BudgetApplication.Screens
         public override void Initialize()
         {
             this.RefreshChart();
+            this.UpdateGraphVisiblity();
         }
 
         public override void Deinitialize()
@@ -131,28 +132,99 @@ namespace BudgetApplication.Screens
                 return this._Months;
             }
         }
-        private bool _CategoryFilterPopupVisible;
-        public bool CategoryFilterPopupVisible
+        private bool _TransactionCategoryFilterPopupVisible;
+        public bool TransactionCategoryFilterPopupVisible
         {
             get
             {
-                return this._CategoryFilterPopupVisible;
+                return this._TransactionCategoryFilterPopupVisible;
             }
             set
             {
-                this.Set(ref this._CategoryFilterPopupVisible, value);
+                this.Set(ref this._TransactionCategoryFilterPopupVisible, value);
             }
         }
-        private bool _GroupFilterPopupVisible;
-        public bool GroupFilterPopupVisible
+        private bool _TransactionGroupFilterPopupVisible;
+        public bool TransactionGroupFilterPopupVisible
         {
             get
             {
-                return this._GroupFilterPopupVisible;
+                return this._TransactionGroupFilterPopupVisible;
             }
             set
             {
-                this.Set(ref this._GroupFilterPopupVisible, value);
+                this.Set(ref this._TransactionGroupFilterPopupVisible, value);
+            }
+        }
+        private bool _BudgetCategoryFilterPopupVisible;
+        public bool BudgetCategoryFilterPopupVisible
+        {
+            get
+            {
+                return this._BudgetCategoryFilterPopupVisible;
+            }
+            set
+            {
+                this.Set(ref this._BudgetCategoryFilterPopupVisible, value);
+            }
+        }
+        private bool _BudgetGroupFilterPopupVisible;
+        public bool BudgetGroupFilterPopupVisible
+        {
+            get
+            {
+                return this._BudgetGroupFilterPopupVisible;
+            }
+            set
+            {
+                this.Set(ref this._BudgetGroupFilterPopupVisible, value);
+            }
+        }
+        public Array PieGraphTypes
+        {
+            get
+            {
+                return Enum.GetValues(typeof(PieGraphType));
+            }
+        }
+        private PieGraphType _SelectedPieGraph;
+        public PieGraphType SelectedPieGraph
+        {
+            get
+            {
+                return this._SelectedPieGraph;
+            }
+            set
+            {
+                this.Set(ref this._SelectedPieGraph, value);
+                this.RefreshChart();
+                this.UpdateGraphVisiblity();
+            }
+        }
+
+        private bool _ShowBudgetPieGraph;
+        public bool ShowBudgetPieGraph
+        {
+            get
+            {
+                return this._ShowBudgetPieGraph;
+            }
+            set
+            {
+                this.Set(ref this._ShowBudgetPieGraph, value);
+            }
+        }
+
+        private bool _ShowTransactionPieGraph;
+        public bool ShowTransactionPieGraph
+        {
+            get
+            {
+                return this._ShowTransactionPieGraph;
+            }
+            set
+            {
+                this.Set(ref this._ShowTransactionPieGraph, value);
             }
         }
         #endregion
@@ -166,8 +238,15 @@ namespace BudgetApplication.Screens
         #region Private Methods
         private void RefreshChart()
         {
-            //this.RefreshTransactionPieChart();
-            this.RefreshBudgetPieChart();
+            switch (this.SelectedPieGraph)
+            {
+                case PieGraphType.Budget:
+                    this.RefreshBudgetPieChart();
+                    break;
+                case PieGraphType.Transaction:
+                    this.RefreshTransactionPieChart();
+                    break;
+            }
         }
         private void RefreshTransactionPieChart()
         {
@@ -380,11 +459,31 @@ namespace BudgetApplication.Screens
         }
         private void ToggleCategoryFilterPopup(bool state)
         {
-            this.CategoryFilterPopupVisible = state;
+            switch(this.SelectedPieGraph)
+            {
+                case PieGraphType.Budget:
+                    this.BudgetCategoryFilterPopupVisible = state;
+                    this.TransactionCategoryFilterPopupVisible = false;
+                    break;
+                case PieGraphType.Transaction:
+                    this.BudgetCategoryFilterPopupVisible = false;
+                    this.TransactionCategoryFilterPopupVisible = state;
+                    break;
+            }
         }
         private void ToggleGroupFilterPopup(bool state)
         {
-            this.GroupFilterPopupVisible = state;
+            switch (this.SelectedPieGraph)
+            {
+                case PieGraphType.Budget:
+                    this.BudgetGroupFilterPopupVisible = state;
+                    this.TransactionGroupFilterPopupVisible = false;
+                    break;
+                case PieGraphType.Transaction:
+                    this.BudgetGroupFilterPopupVisible = false;
+                    this.TransactionGroupFilterPopupVisible = state;
+                    break;
+            }
         }
         private void Categories_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -393,6 +492,7 @@ namespace BudgetApplication.Screens
                 foreach (Category category in e.NewItems)
                 {
                     this.TransactionGraphConfiguration.CategoryFilter.Add(new CheckedListItem<Category>(category, true));
+                    this.BudgetGraphConfiguration.CategoryFilter.Add(new CheckedListItem<Category>(category, true));
                 }
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
@@ -401,7 +501,10 @@ namespace BudgetApplication.Screens
                 {
                     CheckedListItem<Category> item = this.TransactionGraphConfiguration.CategoryFilter.FirstOrDefault(x => x.Item.Equals(category));
                     if (item != null)
+                    {
                         this.TransactionGraphConfiguration.CategoryFilter.Remove(item);
+                        this.BudgetGraphConfiguration.CategoryFilter.Remove(item);
+                    }
                 }
             }
             else if (e.Action == NotifyCollectionChangedAction.Reset)
@@ -412,6 +515,7 @@ namespace BudgetApplication.Screens
                     tempCategories.Add(new CheckedListItem<Category>(category, true));
                 }
                 this.TransactionGraphConfiguration.CategoryFilter.InsertRange(tempCategories);
+                this.BudgetGraphConfiguration.CategoryFilter.InsertRange(tempCategories);
             }
             this.RefreshChart();
         }
@@ -422,6 +526,7 @@ namespace BudgetApplication.Screens
                 foreach (Group group in e.NewItems)
                 {
                     this.TransactionGraphConfiguration.GroupFilter.Add(new CheckedListItem<Group>(group, true));
+                    this.BudgetGraphConfiguration.GroupFilter.Add(new CheckedListItem<Group>(group, true));
                 }
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
@@ -430,7 +535,10 @@ namespace BudgetApplication.Screens
                 {
                     CheckedListItem<Group> item = this.TransactionGraphConfiguration.GroupFilter.FirstOrDefault(x => x.Item.Equals(group));
                     if (item != null)
+                    {
                         this.TransactionGraphConfiguration.GroupFilter.Remove(item);
+                        this.BudgetGraphConfiguration.GroupFilter.Remove(item);
+                    }
                 }
             }
             else if (e.Action == NotifyCollectionChangedAction.Reset)
@@ -441,8 +549,24 @@ namespace BudgetApplication.Screens
                     tempGroups.Add(new CheckedListItem<Group>(group, true));
                 }
                 this.TransactionGraphConfiguration.GroupFilter.InsertRange(tempGroups);
+                this.BudgetGraphConfiguration.GroupFilter.InsertRange(tempGroups);
+
             }
             this.RefreshChart();
+        }
+        private void UpdateGraphVisiblity()
+        {
+            switch (this.SelectedPieGraph)
+            {
+                case PieGraphType.Budget:
+                    this.ShowBudgetPieGraph = true;
+                    this.ShowTransactionPieGraph = false;
+                    break;
+                case PieGraphType.Transaction:
+                    this.ShowBudgetPieGraph = false;
+                    this.ShowTransactionPieGraph = true;
+                    break;
+            }
         }
         #endregion
     }

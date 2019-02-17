@@ -13,8 +13,7 @@
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=local:GraphViewModel}">
     <UserControl.Resources>
-        <converters:OnTargetToBrushConverter x:Key="valConv"/>
-        <converters:ColumnWidthToDatePositionConverter x:Key="widthConv"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <CollectionViewSource x:Key="TransactionGraphGroupingsView" Source="{Binding TransactionGraphGroupings}"/>
         <CollectionViewSource x:Key="BudgetGraphGroupingsView" Source="{Binding BudgetGraphGroupings}"/>
         <CollectionViewSource x:Key="CategoriesView" Source="{Binding Session.Categories}"/>
@@ -22,13 +21,19 @@
         <CollectionViewSource x:Key="IncomeFilterView" Source="{Binding IncomeFilters}"/>
         <CollectionViewSource x:Key="StartMonthsView" Source="{Binding Months}"/>
         <CollectionViewSource x:Key="EndMonthsView" Source="{Binding Months}"/>
+        <CollectionViewSource x:Key="PieGraphTypesView" Source="{Binding PieGraphTypes}"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <!--<StackPanel Grid.Row="0" x:Name="TransactionGraphConfiguration" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,0,0,0">
+            <Label Content="Select Graph Type:"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource PieGraphTypesView}}" SelectedItem="{Binding SelectedPieGraph}" Width="150"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" x:Name="TransactionGraphConfiguration" Visibility="{Binding ShowTransactionPieGraph, Converter={StaticResource BooleanToVisibilityConverter}}" Orientation="Horizontal" HorizontalAlignment="Center">
             <StackPanel.Resources>
                 <Style TargetType="Border">
                     <Setter Property="BorderBrush" Value="{DynamicResource GraphConfigurationBorderColor}"/>
@@ -66,7 +71,7 @@
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
-                    <Popup IsOpen="{Binding CategoryFilterPopupVisible}" Width="Auto" Height="Auto" Visibility="Visible" PlacementTarget="{Binding ElementName=CategoryFilterBlock}" Placement="Right" HorizontalOffset="-10">
+                    <Popup IsOpen="{Binding TransactionCategoryFilterPopupVisible}" Width="Auto" Height="Auto" Visibility="Visible" PlacementTarget="{Binding ElementName=CategoryFilterBlock}" Placement="Right" HorizontalOffset="-10">
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="MouseLeave">
                                 <b:InvokeCommandAction  Command="{Binding HideCategoryFilterPopupCommand}"/>
@@ -97,7 +102,7 @@
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
-                    <Popup IsOpen="{Binding GroupFilterPopupVisible}" Width="Auto" Height="Auto" Visibility="Visible" PlacementTarget="{Binding ElementName=GroupFilterBlock}" Placement="Right" HorizontalOffset="-10">
+                    <Popup IsOpen="{Binding TransactionGroupFilterPopupVisible}" Width="Auto" Height="Auto" Visibility="Visible" PlacementTarget="{Binding ElementName=GroupFilterBlock}" Placement="Right" HorizontalOffset="-10">
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="MouseLeave">
                                 <b:InvokeCommandAction  Command="{Binding HideGroupFilterPopupCommand}"/>
@@ -121,8 +126,8 @@
                 </StackPanel>
             </Border>
             <Button Content="Refresh" Command="{Binding RefreshChartCommand}" Width="50"/>
-        </StackPanel>-->
-        <StackPanel Grid.Row="0" x:Name="BudgetGraphConfiguration" Orientation="Horizontal" HorizontalAlignment="Center">
+        </StackPanel>
+        <StackPanel Grid.Row="1" x:Name="BudgetGraphConfiguration" Visibility="{Binding ShowBudgetPieGraph, Converter={StaticResource BooleanToVisibilityConverter}}" Orientation="Horizontal" HorizontalAlignment="Center">
             <StackPanel.Resources>
                 <Style TargetType="Border">
                     <Setter Property="BorderBrush" Value="{DynamicResource GraphConfigurationBorderColor}"/>
@@ -160,7 +165,7 @@
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
-                    <Popup IsOpen="{Binding CategoryFilterPopupVisible}" Width="Auto" Height="Auto" Visibility="Visible" PlacementTarget="{Binding ElementName=BudgetCategoryFilterBlock}" Placement="Right" HorizontalOffset="-10">
+                    <Popup IsOpen="{Binding BudgetCategoryFilterPopupVisible}" Width="Auto" Height="Auto" Visibility="Visible" PlacementTarget="{Binding ElementName=BudgetCategoryFilterBlock}" Placement="Right" HorizontalOffset="-10">
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="MouseLeave">
                                 <b:InvokeCommandAction  Command="{Binding HideCategoryFilterPopupCommand}"/>
@@ -191,7 +196,7 @@
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
-                    <Popup IsOpen="{Binding GroupFilterPopupVisible}" Width="Auto" Height="Auto" Visibility="Visible" PlacementTarget="{Binding ElementName=BudgetGroupFilterBlock}" Placement="Right" HorizontalOffset="-10">
+                    <Popup IsOpen="{Binding BudgetGroupFilterPopupVisible}" Width="Auto" Height="Auto" Visibility="Visible" PlacementTarget="{Binding ElementName=BudgetGroupFilterBlock}" Placement="Right" HorizontalOffset="-10">
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="MouseLeave">
                                 <b:InvokeCommandAction  Command="{Binding HideGroupFilterPopupCommand}"/>
@@ -216,7 +221,7 @@
             </Border>
             <Button Content="Refresh" Command="{Binding RefreshChartCommand}" Width="50"/>
         </StackPanel>
-        <lvc:PieChart Grid.Row="1" LegendLocation="None"  Hoverable="False" Series="{Binding Series}" Margin="0,25,0,25">
+        <lvc:PieChart Grid.Row="2" LegendLocation="None"  Hoverable="False" Series="{Binding Series}" Margin="0,25,0,25">
             <lvc:PieChart.DataTooltip>
                 <custom:MoneyTooltip SelectionMode="OnlySender"/>
             </lvc:PieChart.DataTooltip>
