@@ -9,16 +9,12 @@ namespace BudgetApplication.Model
     /// <typeparam name="T">Can be of any type</typeparam>
     public class CheckedListItem<T> : ObservableObject
     {
-
-        private bool _isChecked;    //If the item has been checked
-        private bool _isHidden; //If the item is hidden from view
-        private T _item;    //The item held by the object
-
         /// <summary>
         /// Null parameter constructor does nothing
         /// </summary>
         public CheckedListItem()
-        { }
+        {
+        }
 
         /// <summary>
         /// Instantiates a new CheckedListItem with the specified item
@@ -28,35 +24,43 @@ namespace BudgetApplication.Model
         /// <param name="isHidden">Optional. Whether or not the item is hidden.</param>
         public CheckedListItem(T item, bool isChecked = false, bool isHidden = false)
         {
-            _item = item;
-            _isChecked = isChecked;
-            _isHidden = isHidden;
+            this.Item = item;
+            this.IsChecked = isChecked;
+            this.IsHidden = isHidden;
         }
 
+        #region Public Properties
+        private T _Item;    //The item held by the object
         /// <summary>
         /// The item held by the object
         /// </summary>
         public T Item
         {
-            get { return _item; }
+            get
+            {
+                return this._Item;
+            }
             set
             {
-                this.Set(ref this._item, value);
+                this.Set(ref this._Item, value);
             }
         }
-
+        private bool _IsChecked;    //If the item has been checked
         /// <summary>
         /// If the item is checked
         /// </summary>
         public bool IsChecked
         {
-            get { return _isChecked; }
+            get
+            {
+                return this._IsChecked;
+            }
             set
             {
-                this.Set(ref this._isChecked, value);
+                this.Set(ref this._IsChecked, value);
             }
         }
-
+        private bool _IsHidden; //If the item is hidden from view
         /// <summary>
         /// If the item is hidden from the view
         /// </summary>
@@ -64,12 +68,25 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return _isHidden;
+                return this._IsHidden;
             }
             set
             {
-                this.Set(ref this._isHidden, value);
+                this.Set(ref this._IsHidden, value);
             }
         }
+        #endregion
+
+        #region Public Methods
+        public CheckedListItem<T> Copy()
+        {
+            CheckedListItem<T> copy = new CheckedListItem<T>();
+            copy.Item = this.Item;
+            copy.IsChecked = this.IsChecked;
+            copy.IsHidden = this.IsHidden;
+
+            return copy;
+        }
+        #endregion
     }
 }

@@ -10,16 +10,11 @@ namespace BudgetApplication.Model
     [Serializable]
     public class CreditCard : PaymentMethod
     {
-        private decimal _creditLimit;   //The line of credit associated with the card.
-        private decimal _paymentAmount;
-        private String _paymentExpression;  //The expression used to evaluate the payment amount
-
         /// <summary>
         /// Null parameter constructor for creating new instances automatically.
         /// </summary>
-        public CreditCard() : base()
+        public CreditCard() : this("New Card")
         {
-            _creditLimit = 300;
         }
 
         /// <summary>
@@ -27,15 +22,16 @@ namespace BudgetApplication.Model
         /// </summary>
         /// <param name="name"></param>
         /// <param name="creditLimit"></param>
-        public CreditCard(String name, decimal creditLimit = 300) : base(name)
+        public CreditCard(String name = "New Card", decimal creditLimit = 300) : base(name)
         {
             if (creditLimit <= 0)
             {
                 creditLimit = 0;
             }
-            _creditLimit = creditLimit;
+            this.CreditLimit = creditLimit;
         }
 
+        #region Public Properties
         /// <summary>
         /// Payment type
         /// </summary>
@@ -47,7 +43,7 @@ namespace BudgetApplication.Model
                 return Type.CreditCard;
             }
         }
-
+        private decimal _CreditLimit;   //The line of credit associated with the card.
         /// <summary>
         /// Credit limit
         /// </summary>
@@ -56,47 +52,47 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return _creditLimit;
+                return this._CreditLimit;
             }
             set
             {
-                _creditLimit = value;
-                NotifyPropertyChanged("CreditLimit");
+                this.Set(ref this._CreditLimit, value);
             }
         }
-
+        private decimal _PaymentAmount;
         [Browsable(false)]
         public decimal PaymentAmount
         {
             get
             {
-                return _paymentAmount;
+                return this._PaymentAmount;
             }
             set
             {
-                _paymentAmount = value;
-                NotifyPropertyChanged("PaymentAmount");
+                this.Set(ref this._PaymentAmount, value);
             }
         }
-
+        private String _PaymentExpression;  //The expression used to evaluate the payment amount
         [Browsable(false)]
         public String PaymentExpression
         {
             get
             {
-                return _paymentExpression;
+                return this._PaymentExpression;
             }
             set
             {
-                _paymentExpression = value;
-                if (EvaluateExpression(_paymentExpression, out _paymentAmount))
+                this.Set(ref this._PaymentExpression, value);
+                decimal amount = 0.0M;
+                if (EvaluateExpression(this.PaymentExpression, out amount))
                 {
-                    NotifyPropertyChanged("PaymentAmount");
+                    this.PaymentAmount = amount;
                 }
-                NotifyPropertyChanged("PaymentExpression");
             }
         }
+        #endregion
 
+        #region Private Methods
         private bool EvaluateExpression(String expression, out decimal result)
         {
             if (expression.Length <= 0)
@@ -125,5 +121,18 @@ namespace BudgetApplication.Model
             }
             return success;
         }
+        #endregion
+        #region Public Methods
+        public CreditCard Copy()
+        {
+            CreditCard copy = new CreditCard();
+            copy.Name = string.Copy(this.Name);
+            copy.StartDate = this.StartDate;
+            copy.EndDate = this.EndDate;
+            copy.CreditLimit = this.CreditLimit;
+            copy.PaymentExpression = this.PaymentExpression;
+            return copy;
+        }
+        #endregion
     }
 }

@@ -9,28 +9,24 @@ namespace BudgetApplication.Model
     [Serializable]
     public class CheckingAccount : PaymentMethod
     {
-        private int _accountNumber; //Bank account number
-        private string _bank;   //Name of the bank
 
         /// <summary>
         /// Null parameter constructor for creating new instances automatically.
         /// </summary>
-        public CheckingAccount() : base()
+        public CheckingAccount() : this("New Account")
         {
-            _accountNumber = 0;
-            _bank = "";
         }
 
         /// <summary>
         /// Instantiates a new CheckingAccount with the given name.
         /// </summary>
         /// <param name="name">The name of the account</param>
-        public CheckingAccount(String name) : base(name)
+        public CheckingAccount(String name = "New Account") : base(name)
         {
-            _accountNumber = 0;
-            _bank = "";
+            this.AccountNumber = 0;
+            this.Bank = "";
         }
-
+        #region Public Properties
         /// <summary>
         /// Payment type
         /// </summary>
@@ -42,7 +38,7 @@ namespace BudgetApplication.Model
                 return Type.CheckingAccount;
             }
         }
-
+        private int _AccountNumber; //Bank account number
         /// <summary>
         /// The account number of the account.
         /// </summary>
@@ -51,18 +47,17 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return _accountNumber;
+                return this._AccountNumber;
             }
             set
             {
                 if (value >= 0)
                 {
-                    _accountNumber = value;
-                    NotifyPropertyChanged("AccountNumber");
+                    this.Set(ref this._AccountNumber, value);
                 }
             }
         }
-
+        private string _Bank;   //Name of the bank
         /// <summary>
         /// The name of the bank the account is at.
         /// </summary>
@@ -71,12 +66,26 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return _bank;
+                return this._Bank;
             }
             set
             {
-                _bank = value;
+                this.Set(ref this._Bank, value);
             }
         }
+        #endregion
+        #region Public Methods
+        public CheckingAccount Copy()
+        {
+            CheckingAccount copy = new CheckingAccount();
+            copy.Name = string.Copy(this.Name);
+            copy.AccountNumber = this.AccountNumber;
+            copy.Bank = string.Copy(this.Bank);
+            copy.StartDate = this.StartDate;
+            copy.EndDate = this.EndDate;
+
+            return copy;
+        }
+        #endregion
     }
 }

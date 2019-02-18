@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using System;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
@@ -10,20 +11,13 @@ namespace BudgetApplication.Model
     [XmlInclude(typeof(CreditCard))]
     [XmlInclude(typeof(CheckingAccount))]
     [Serializable]
-    public abstract class PaymentMethod : INotifyPropertyChanged, IComparable
+    public abstract class PaymentMethod : ObservableObject, IComparable
     {
-        private String _name;   //The name of the payment method
-        private DateTime _startDate;    //The start date of the date filter. Used to store data used on the Payments tab.
-        private DateTime _endDate;  //The end date of the date filter. Used to store data used on the Payments tab
-
         /// <summary>
         /// Null parameter constructor for creating new instances automatically.
         /// </summary>
-        public PaymentMethod()
+        public PaymentMethod() : this("New Payment Method")
         {
-            _name = "New Payment Method";
-            _startDate = new DateTime();
-            _endDate = DateTime.Today;
         }
 
         /// <summary>
@@ -32,11 +26,11 @@ namespace BudgetApplication.Model
         /// <param name="name"></param>
         public PaymentMethod(String name)
         {
-            _name = name;
-            _startDate = new DateTime();
-            _endDate = DateTime.Today;
+            _Name = name;
+            _StartDate = new DateTime();
+            _EndDate = DateTime.Today;
         }
-
+        #region Public Properties
         /// <summary>
         /// Defines the enumerations for the type of payment.
         /// </summary>
@@ -47,7 +41,7 @@ namespace BudgetApplication.Model
             [Description("Checking Account")]
             CheckingAccount
         };
-        
+        private String _Name;   //The name of the payment method
         /// <summary>
         /// The name of the payment method.
         /// </summary>
@@ -56,18 +50,14 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return String.Copy(_name);
+                return this._Name;
             }
             set
             {
-                if (!String.IsNullOrEmpty(value))
-                {
-                    _name = String.Copy(value);
-                    NotifyPropertyChanged("Name");
-                }
+                this.Set(ref this._Name, value);
             }
         }
-
+        private DateTime _StartDate;    //The start date of the date filter. Used to store data used on the Payments tab.
         /// <summary>
         /// The start date of the payment filter.
         /// </summary>
@@ -76,14 +66,14 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return _startDate;
+                return this._StartDate;
             }
             set
             {
-                _startDate = value;
+                this.Set(ref this._StartDate, value);
             }
         }
-
+        private DateTime _EndDate;  //The end date of the date filter. Used to store data used on the Payments tab
         /// <summary>
         /// The end date of the payment filter.
         /// </summary>
@@ -92,11 +82,11 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return _endDate;
+                return this._EndDate;
             }
             set
             {
-                _endDate = value;
+                this.Set(ref this._EndDate, value);
             }
         }
 
@@ -108,7 +98,8 @@ namespace BudgetApplication.Model
         {
             get;
         }
-        
+        #endregion
+        #region Public Methods
         /// <summary>
         /// Overrides the ToString method
         /// </summary>
@@ -117,29 +108,8 @@ namespace BudgetApplication.Model
         {
             return (this.PaymentType + ", " + this.Name);
         }
-
-        /// <summary>
-        /// Implementation of INotifyPropertyChanged
-        /// </summary>
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         #endregion
-
-        #region Private Helpers
-        /// <summary>
-        /// Helper function to simplify raising the PropertyChanged event
-        /// </summary>
-        /// <param name="propertyName">The property that has been changed</param>
-        public void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
+        #region Private Methods
         public int CompareTo(object obj)
         {
             return this.Name.CompareTo((obj as PaymentMethod).Name);
