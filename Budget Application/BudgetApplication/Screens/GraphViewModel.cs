@@ -272,6 +272,8 @@ namespace BudgetApplication.Screens
                     {
                         sum = 0.0M;
                         sum = filteredTransactions.Where(x => x.Category.Equals(category)).Sum(x => x.Amount);
+                        if (sum < 0.0M)
+                            sum = 0.0M;
                         this.Series.Add(new PieSeries
                         {
                             Title = category.Name,
@@ -287,6 +289,8 @@ namespace BudgetApplication.Screens
                     {
                         sum = 0.0M;
                         sum = filteredTransactions.Where(x => (x.Date.Month == i)).Sum(x => x.Amount);
+                        if (sum < 0.0M)
+                            sum = 0.0M;
                         this.Series.Add(new PieSeries
                         {
                             Title = (new DateTime(1, i, 1)).ToString("MMMM"),
@@ -302,6 +306,8 @@ namespace BudgetApplication.Screens
                     {
                         sum = 0.0M;
                         sum = filteredTransactions.Where(x => group.Categories.Contains(x.Category)).Sum(x => x.Amount);
+                        if (sum < 0.0M)
+                            sum = 0.0M;
                         this.Series.Add(new PieSeries
                         {
                             Title = group.Name,
@@ -317,6 +323,8 @@ namespace BudgetApplication.Screens
                     {
                         sum = 0.0M;
                         sum = filteredTransactions.Where(x => x.PaymentMethod.Equals(paymentMethod)).Sum(x => x.Amount);
+                        if (sum < 0.0M)
+                            sum = 0.0M;
                         this.Series.Add(new PieSeries
                         {
                             Title = paymentMethod.Name,
@@ -333,6 +341,8 @@ namespace BudgetApplication.Screens
                     {
                         sum += filteredTransactions.Where(x => group.Categories.Contains(x.Category)).Sum(x => x.Amount);
                     }
+                    if (sum < 0.0M)
+                        sum = 0.0M;
                     this.Series.Add(new PieSeries
                     {
                         Title = "Income",
@@ -346,6 +356,8 @@ namespace BudgetApplication.Screens
                     {
                         sum += filteredTransactions.Where(x => group.Categories.Contains(x.Category)).Sum(x => x.Amount);
                     }
+                    if (sum < 0.0M)
+                        sum = 0.0M;
                     this.Series.Add(new PieSeries
                     {
                         Title = "Expenditures",
@@ -380,6 +392,8 @@ namespace BudgetApplication.Screens
                     {
                         sum = 0.0M;
                         sum = filteredRows.Where(x => x.Category.Equals(category)).Sum(x => x.Sum);
+                        if (sum < 0.0M)
+                            sum = 0.0M;
                         this.Series.Add(new PieSeries
                         {
                             Title = category.Name,
@@ -395,6 +409,8 @@ namespace BudgetApplication.Screens
                     {
                         sum = 0.0M;
                         sum = filteredRows.Select(x => x.Values[i]).Sum();
+                        if (sum < 0.0M)
+                            sum = 0.0M;
                         this.Series.Add(new PieSeries
                         {
                             Title = (new DateTime(1, i+1, 1)).ToString("MMMM"),
@@ -410,6 +426,8 @@ namespace BudgetApplication.Screens
                     {
                         sum = 0.0M;
                         sum = filteredRows.Where(x => x.Group.Equals(group)).Sum(x => x.Sum);
+                        if (sum < 0.0M)
+                            sum = 0.0M;
                         this.Series.Add(new PieSeries
                         {
                             Title = group.Name,
@@ -423,6 +441,8 @@ namespace BudgetApplication.Screens
                 case BudgetGraphGrouping.IsIncome:
                     sum = 0.0M;
                     sum += filteredRows.Where(x => x.Group.IsIncome).Sum(x => x.Sum);
+                    if (sum < 0.0M)
+                        sum = 0.0M;
                     this.Series.Add(new PieSeries
                     {
                         Title = "Income",
@@ -433,6 +453,8 @@ namespace BudgetApplication.Screens
                     });
                     sum = 0.0M;
                     sum += filteredRows.Where(x => !x.Group.IsIncome).Sum(x => x.Sum);
+                    if (sum < 0.0M)
+                        sum = 0.0M;
                     this.Series.Add(new PieSeries
                     {
                         Title = "Expenditures",

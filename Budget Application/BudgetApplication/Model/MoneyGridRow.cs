@@ -132,7 +132,6 @@ namespace BudgetApplication.Model
         }
         #endregion
         #region Private Methods
-        #region Private Helpers
         /// <summary>
         /// Helper function for a category being modified.
         /// </summary>
