@@ -7,16 +7,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="350"
              d:DataContext="{d:DesignInstance Type=local:HelpViewModel}">
-    <Grid Background="White" Width="350" Height="500">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
-            <TextBlock Text="{Binding HelpMessage}" TextWrapping="Wrap" HorizontalAlignment="Stretch"/>
-        </ScrollViewer>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Close" Style="{DynamicResource PopupOkCloseButtonStyle}" Command="{Binding ClosePopupCommand}" />
-        </StackPanel>
-    </Grid>
+    <Border Style="{DynamicResource PopupBorderStyle}">
+        <Grid Background="White" Width="350" Height="500">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                <TextBlock Text="{Binding HelpMessage}" TextWrapping="Wrap" HorizontalAlignment="Stretch"/>
+            </ScrollViewer>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Close" Style="{DynamicResource PopupOkCloseButtonStyle}" Command="{Binding ClosePopupCommand}" />
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>
