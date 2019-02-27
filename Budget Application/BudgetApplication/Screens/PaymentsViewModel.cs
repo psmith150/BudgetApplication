@@ -278,9 +278,9 @@ namespace BudgetApplication.Screens
         }
         private bool PaymentTransactions_Filter(Transaction transaction)
         {
-            if (transaction != null && transaction.PaymentMethod != null && this.SelectedPaymentMethod != null)
+            if (transaction != null && this.SelectedPaymentMethod != null)
             {
-                if ((this.SelectedPaymentMethod.Name.Equals(transaction.PaymentMethod.Name) || this.SelectedPaymentMethod == this.AllPaymentsCollection[0])
+                if ((this.SelectedPaymentMethod == this.AllPaymentsCollection[0] || (transaction.PaymentMethod != null && this.SelectedPaymentMethod.Name.Equals(transaction.PaymentMethod.Name)))
                     && this.SelectedStartDate <= transaction.Date && this.SelectedEndDate > transaction.Date)
                 {
                     return true;

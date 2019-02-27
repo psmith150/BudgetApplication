@@ -420,14 +420,14 @@ namespace BudgetApplication.Screens
                         foreach (var itemToRemove in itemsToRemove)
                             this.FilterAmounts.Remove(itemToRemove);
                     }
-                    count = this.Transactions.Count(x => x.Category.Equals(transaction.Category));
+                    count = this.Transactions.Count(x => x.Category != null && x.Category.Equals(transaction.Category));
                     if (count < 1)
                     {
                         var itemsToRemove = this.FilterCategories.Where(x => x.Item.Equals(transaction.Category)).ToList();
                         foreach (var itemToRemove in itemsToRemove)
                             this.FilterCategories.Remove(itemToRemove);
                     }
-                    count = this.Transactions.Count(x => x.PaymentMethod.Equals(transaction.PaymentMethod));
+                    count = this.Transactions.Count(x => x.PaymentMethod != null && x.PaymentMethod.Equals(transaction.PaymentMethod));
                     if (count < 1)
                     {
                         var itemsToRemove = this.FilterPaymentMethods.Where(x => x.Item.Equals(transaction.PaymentMethod)).ToList();
