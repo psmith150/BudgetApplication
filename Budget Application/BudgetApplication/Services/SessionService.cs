@@ -342,11 +342,11 @@ namespace BudgetApplication.Services
             }
             catch (InvalidOperationException ex)
             {
-                this._errorhandler.DisplayError($"Error reading XML from file {filePath}\n{ex.Message}").Wait();
+                await this._errorhandler.DisplayError($"Error reading XML from file {filePath}\n{ex.Message}");
             }
             catch (System.Xml.XmlException ex)
             {
-                this._errorhandler.DisplayError($"Error in XML file\n{ex.Message}").Wait();
+                await this._errorhandler.DisplayError($"Error in XML file\n{ex.Message}");
             }
             //Process the data
             this.CurrentYear = data.Year;

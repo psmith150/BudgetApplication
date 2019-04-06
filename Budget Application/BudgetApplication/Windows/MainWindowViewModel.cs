@@ -224,7 +224,7 @@ namespace BudgetApplication.Windows
             }
             catch (IOException ex)
             {
-                this._errorHandler.DisplayError($"Error loading from file {this.currentFilePath}\n" + ex.Message).Wait();
+                await this._errorHandler.DisplayError($"Error loading from file {this.currentFilePath}\n" + ex.Message);
             }
         }
 
@@ -282,9 +282,9 @@ namespace BudgetApplication.Windows
                     }
                 }
             }
-            catch (IOException ex)
+            catch (Exception ex)
             {
-                this._errorHandler.DisplayError($"Error loading from file {this.currentFilePath}\n" + ex.Message).Wait();
+                await this._errorHandler.DisplayError($"Error loading from file {this.currentFilePath}\n" + ex.Message);
             }
         }
 
