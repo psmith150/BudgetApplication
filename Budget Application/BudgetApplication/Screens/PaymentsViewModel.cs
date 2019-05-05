@@ -302,7 +302,11 @@ namespace BudgetApplication.Screens
                 for (int i = 0; i < this.PaymentTransactionsView.Count; i++)
                 {
                     Transaction transaction = this.PaymentTransactionsView.GetItemAt(i) as Transaction;
-                    sum += transaction.Amount;
+                    Group transactionGroup = this.Session.Groups.FirstOrDefault(x => x.Categories.Contains(transaction.Category));
+                    if (transactionGroup != null && transactionGroup.IsIncome)
+                        sum -= transaction.Amount;
+                    else
+                        sum += transaction.Amount;
                 }
                 this.TotalBill = sum.ToString("C");   //Shows the amount owed in the given data range.
                 this.NetBill = (sum - card.PaymentAmount).ToString("C");  //Shows the total amount owed, given existing payments
