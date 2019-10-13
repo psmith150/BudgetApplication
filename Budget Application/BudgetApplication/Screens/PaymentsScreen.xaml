@@ -76,7 +76,7 @@
             <DataGrid Grid.Column="1"  x:Name="PaymentTransactions" ItemsSource="{Binding PaymentTransactionsView, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" SelectedItem="{Binding SelectedTransaction}" Style="{DynamicResource TransactionDataGridStyle}">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Date" SortMemberPath="Date">
+                    <DataGridTemplateColumn Header="Date" SortMemberPath="Date" Width="7*">
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
                                 <DatePicker SelectedDate="{Binding Path=Date}"/>
@@ -88,10 +88,10 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Item" Binding="{Binding Path=Item, Mode=TwoWay}"/>
-                    <DataGridTextColumn Header="Payee" Binding="{Binding Path=Payee}"/>
-                    <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat=\{0:C\}}"/>
-                    <DataGridComboBoxColumn Header="Category" SelectedValueBinding="{Binding Category}" DisplayMemberPath="Name">
+                    <DataGridTextColumn Header="Item" Binding="{Binding Path=Item, Mode=TwoWay}" Width="10*"/>
+                    <DataGridTextColumn Header="Payee" Binding="{Binding Path=Payee}" Width="10*"/>
+                    <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat=\{0:C\}}" Width="10*"/>
+                    <DataGridComboBoxColumn Header="Category" SelectedValueBinding="{Binding Category}" DisplayMemberPath="Name" Width="15*">
                         <DataGridComboBoxColumn.ElementStyle>
                             <Style TargetType="{x:Type ComboBox}">
                                 <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Categories, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
@@ -104,7 +104,7 @@
                             </Style>
                         </DataGridComboBoxColumn.EditingElementStyle>
                     </DataGridComboBoxColumn>
-                    <DataGridComboBoxColumn Header="Payment Method" SelectedValueBinding="{Binding PaymentMethod}" DisplayMemberPath="Name">
+                    <DataGridComboBoxColumn Header="Payment Method" SelectedValueBinding="{Binding PaymentMethod}" DisplayMemberPath="Name" Width="13*">
                         <DataGridComboBoxColumn.ElementStyle>
                             <Style TargetType="{x:Type ComboBox}">
                                 <Setter Property="ItemsSource" Value="{Binding Path=DataContext.PaymentMethods, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
@@ -116,7 +116,7 @@
                             </Style>
                         </DataGridComboBoxColumn.EditingElementStyle>
                     </DataGridComboBoxColumn>
-                    <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}" Width="*"/>
+                    <DataGridTextColumn Header="Comment" Binding="{Binding Path=Comment}"  Width="35*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
