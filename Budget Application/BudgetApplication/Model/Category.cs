@@ -1,5 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+﻿using GalaSoft.MvvmLight;
+using System;
 
 namespace BudgetApplication.Model
 {
@@ -7,16 +7,14 @@ namespace BudgetApplication.Model
     /// Class to represent a spending category.
     /// </summary>
     [Serializable]
-    public class Category : INotifyPropertyChanged, IComparable
+    public class Category : ObservableObject, IComparable
     {
-        private String _name;   //Category name
 
         /// <summary>
         /// Null parameter constructor for creating new categories automatically
         /// </summary>
-        public Category()
+        public Category() : this("New Category")
         {
-            _name = "New Category";
         }
 
         /// <summary>
@@ -25,9 +23,10 @@ namespace BudgetApplication.Model
         /// <param name="name">The desired category name.</param>
         public Category(String name = "New Category")
         {
-            _name = String.Copy(name);
+            this.Name = String.Copy(name);
         }
-
+        #region Public Properties
+        private String _Name;   //Category name
         /// <summary>
         /// The name of the category
         /// </summary>
@@ -35,18 +34,16 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return String.Copy(_name);
+                return this._Name;
             }
             set
             {
-                if (!String.IsNullOrEmpty(value))
-                {
-                    _name = String.Copy(value);
-                    NotifyPropertyChanged("Name");
-                }
+                this.Set(ref this._Name, value);
             }
         }
+        #endregion
 
+        #region Public Methods
         /// <summary>
         /// Overrides the ToString method
         /// </summary>
@@ -56,33 +53,16 @@ namespace BudgetApplication.Model
             return Name;
         }
 
-        /// <summary>
-        /// Implementation of INotifyPropertyChanged
-        /// </summary>
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Private Helpers
-        /// <summary>
-        /// Helper function to simplify raising the PropertyChanged event
-        /// </summary>
-        /// <param name="propertyName">The property that has been changed</param>
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
         public int CompareTo(object obj)
         {
             return this.Name.CompareTo((obj as Category).Name);
         }
+        public Category Copy()
+        {
+            Category copy = new Category(string.Copy(this.Name));
 
+            return copy;
+        }
         #endregion
     }
 }

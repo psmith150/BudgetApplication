@@ -3,9 +3,9 @@ namespace BudgetApplication.Base.Enums
 {
     public enum GraphType
     {
-        [Display(Name = "Pie Chart")]
+        [Display(Description = "Pie Chart")]
         Pie,
-        [Display(Name = "Line Chart")]
+        [Display(Description = "Line Chart")]
         Line
     }
 }

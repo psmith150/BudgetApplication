@@ -1,23 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using BudgetApplication.Model;
+using GalaSoft.MvvmLight;
 
 namespace BudgetApplication.Model
 {
     /// <summary>
     /// Class to represent a payment transaction.
     /// </summary>
-    public class Transaction : INotifyPropertyChanged
+    public class Transaction : ObservableObject
     {
-        private DateTime _date; //Transaction date
-        private String _item;   //String used to identify purchased item
-        private String _payee;  //String used to identify where item was purchased
-        private decimal _amount;    //US dollar amount of purchase
-        private Category _category; //The category used to classify the payment
-        private String _comment;    //String used to store user comments
-        private PaymentMethod _paymentMethod;   //The payment method used for the purchase
-
         /// <summary>
         /// Instantiates a new transaction object. Null parameter constructor allows use of insertion row in datagrid.
         /// Generates default values for all fields.
@@ -37,8 +28,8 @@ namespace BudgetApplication.Model
             this.PaymentMethod = paymentMethod;
         }
 
-        #region Getters and setters
-
+        #region Public Properties
+        private DateTime _Date; //Transaction date
         /// <summary>
         /// The purchase date.
         /// </summary>
@@ -46,15 +37,14 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return _date;
+                return this._Date;
             }
             set
             {
-                _date = value;
-                NotifyPropertyChanged("Date");
+                this.Set(ref this._Date, value);
             }
         }
-
+        private String _Item;   //String used to identify purchased item
         /// <summary>
         /// The item purchased.
         /// </summary>
@@ -62,18 +52,14 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return String.Copy(_item);
+                return this._Item;
             }
             set
             {
-                if (!String.IsNullOrEmpty(value))
-                {
-                    _item = String.Copy(value);
-                    NotifyPropertyChanged("Item");
-                }
+                this.Set(ref this._Item, value);
             }
         }
-
+        private String _Payee;  //String used to identify where item was purchased
         /// <summary>
         /// The vendor the item was purchased from.
         /// </summary>
@@ -81,18 +67,14 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return String.Copy(_payee);
+                return this._Payee;
             }
             set
             {
-                if (!String.IsNullOrEmpty(value))
-                {
-                    _payee = String.Copy(value);
-                    NotifyPropertyChanged("Payee");
-                }
+                this.Set(ref this._Payee, value);
             }
         }
-
+        private decimal _Amount;    //US dollar amount of purchase
         /// <summary>
         /// The amount of the purchase.
         /// It shoud be noted that the default amount is positive. For example, if the transaction is part of an expenditure group, a positive value represents money spent.
@@ -102,15 +84,14 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return _amount;
+                return _Amount;
             }
             set
             {
-                _amount = value;
-                NotifyPropertyChanged("Amount");
+                this.Set(ref this._Amount, value);
             }
         }
-
+        private Category _Category; //The category used to classify the payment
         /// <summary>
         /// The category the purchase falls under.
         /// </summary>
@@ -118,16 +99,14 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return _category;
+                return _Category;
             }
             set
             {
-                _category = value;
-                //_category.PropertyChanged += CategoryModified;
-                NotifyPropertyChanged("Category");
+                this.Set(ref this._Category, value);
             }
         }
-
+        private String _Comment;    //String used to store user comments
         /// <summary>
         /// User comments.
         /// </summary>
@@ -135,7 +114,7 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return String.Copy(_comment);
+                return this._Comment;
             }
             set
             {
@@ -143,11 +122,10 @@ namespace BudgetApplication.Model
                 {
                     value = "";
                 }
-                _comment = value;
-                NotifyPropertyChanged("Comment");
+                this.Set(ref this._Comment, value);
             }
         }
-
+        private PaymentMethod _PaymentMethod;   //The payment method used for the purchase
         /// <summary>
         /// The payment method used
         /// </summary>
@@ -155,17 +133,14 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return _paymentMethod;
+                return this._PaymentMethod;
             }
             set
             {
-                _paymentMethod = value;
-                NotifyPropertyChanged("PaymentMethod");
+                this.Set(ref this._PaymentMethod, value);
             }
         }
-
         #endregion
-
         #region Public Methods
         public Transaction Copy()
         {
@@ -183,17 +158,7 @@ namespace BudgetApplication.Model
         }
         #endregion
 
-        /// <summary>
-        /// Implementation of INotifyPropertyChanged
-        /// </summary>
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Private Helpers
-
+        #region Private Methods
         /// <summary>
         /// 1/4/2017: Believed to no longer be needed due to outside changes.
         /// </summary>
@@ -201,21 +166,8 @@ namespace BudgetApplication.Model
         /// <param name="e"></param>
         private void CategoryModified(object sender, PropertyChangedEventArgs e)
         {
-            NotifyPropertyChanged("Category");
+            this.RaisePropertyChanged("Category");
         }
-
-        /// <summary>
-        /// Helper function to simplify raising the PropertyChanged event
-        /// </summary>
-        /// <param name="propertyName">The property that has been changed</param>
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
         #endregion
     }
 }

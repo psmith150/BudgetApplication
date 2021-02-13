@@ -7,66 +7,68 @@
              mc:Ignorable="d" 
              Height="400" Width="450"
              d:DataContext="{d:DesignInstance Type=local:GroupAndCategoriesViewModel}">
-    <Grid Background="{DynamicResource MainBackgroundColor}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="5*"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch">
+    <Border Style="{DynamicResource PopupBorderStyle}">
+        <Grid Background="{DynamicResource MainBackgroundColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Orientation="Horizontal" Width="Auto">
-                <Button Name="AddGroupButton" Style="{DynamicResource AddButtonSquareStyle}" Command="{Binding AddGroupCommand}"/>
-                <Button Name="RemoveGroupButton" Style="{DynamicResource RemoveButtonSquareStyle}" Command="{Binding RemoveGroupCommand}"/>
-            </StackPanel>
-            <StackPanel Grid.Column="2" DockPanel.Dock="Right" Orientation="Horizontal" Width="Auto" >
-                <Button Name="GroupUpButton" Style="{DynamicResource MoveUpButtonStyle}" Command="{Binding MoveGroupUpCommand}"/>
-                <Button Name="GroupDownButton" Style="{DynamicResource MoveDownButtonStyle}" Command="{Binding MoveGroupDownCommand}"/>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <Button Name="AddCategoryButton" Style="{DynamicResource AddButtonSquareStyle}"  Command="{Binding AddCategoryCommand}">
-                </Button>
-                <Button Name="RemoveCategoryButton" Style="{DynamicResource RemoveButtonSquareStyle}" Command="{Binding RemoveCategoryCommand}"/>
-            </StackPanel>
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <Button Name="CategoryUpButton" Style="{DynamicResource MoveUpButtonStyle}"  Command="{Binding MoveCategoryUpCommand}"/>
-                <Button Name="CategoryDownButton" Style="{DynamicResource MoveDownButtonStyle}" Command="{Binding MoveCategoryDownCommand}"/>
-            </StackPanel>
-        </Grid>
-        <DataGrid Name="GroupList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Groups}" 
+            <Grid Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Width="Auto">
+                    <Button Name="AddGroupButton" Style="{DynamicResource AddButtonSquareStyle}" Command="{Binding AddGroupCommand}"/>
+                    <Button Name="RemoveGroupButton" Style="{DynamicResource RemoveButtonSquareStyle}" Command="{Binding RemoveGroupCommand}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" DockPanel.Dock="Right" Orientation="Horizontal" Width="Auto" >
+                    <Button Name="GroupUpButton" Style="{DynamicResource MoveUpButtonStyle}" Command="{Binding MoveGroupUpCommand}"/>
+                    <Button Name="GroupDownButton" Style="{DynamicResource MoveDownButtonStyle}" Command="{Binding MoveGroupDownCommand}"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Button Name="AddCategoryButton" Style="{DynamicResource AddButtonSquareStyle}"  Command="{Binding AddCategoryCommand}">
+                    </Button>
+                    <Button Name="RemoveCategoryButton" Style="{DynamicResource RemoveButtonSquareStyle}" Command="{Binding RemoveCategoryCommand}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <Button Name="CategoryUpButton" Style="{DynamicResource MoveUpButtonStyle}"  Command="{Binding MoveCategoryUpCommand}"/>
+                    <Button Name="CategoryDownButton" Style="{DynamicResource MoveDownButtonStyle}" Command="{Binding MoveCategoryDownCommand}"/>
+                </StackPanel>
+            </Grid>
+            <DataGrid Name="GroupList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Groups}" 
                   AutoGenerateColumns="False" CellStyle="{StaticResource SelectedCellStyle}"
                   CanUserAddRows="False" CanUserDeleteRows="False" SelectedIndex="{Binding SelectedGroupIndex}" SelectedItem="{Binding SelectedGroupItem}">
-            <DataGrid.Resources>
-            </DataGrid.Resources>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Group" Binding="{Binding Path=Name}" Width="*"/>
-                <DataGridCheckBoxColumn Header="Is Income?" Binding="{Binding Path=IsIncome}" Width="Auto"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <DataGrid Name="CategoryList" Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding CategoriesView}"
+                <DataGrid.Resources>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Group" Binding="{Binding Path=Name}" Width="*"/>
+                    <DataGridCheckBoxColumn Header="Is Income?" Binding="{Binding Path=IsIncome}" Width="Auto"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Name="CategoryList" Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding CategoriesView}"
                   CellStyle="{StaticResource SelectedCellStyle}" CanUserAddRows="False" CanUserSortColumns="False" 
                   SelectedIndex="{Binding SelectedCategoryIndex}" SelectedItem="{Binding SelectedCategoryItem}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Category" Binding="{Binding Path=Name, Mode=TwoWay}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Vertical">
-            <Button Content="Close" Command="{Binding ClosePopupCommand}" Width="100"/>
-        </StackPanel>
-    </Grid>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Category" Binding="{Binding Path=Name, Mode=TwoWay}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Vertical">
+                <Button Content="Close" Command="{Binding ClosePopupCommand}" Width="100"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>

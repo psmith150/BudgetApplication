@@ -6,24 +6,26 @@
              xmlns:local="clr-namespace:BudgetApplication.Popups"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=local:ChangeYearViewModel}">
-    <Grid Background="{StaticResource MainBackgroundColor}" Width="300" Height="150">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <TextBlock Text="Change Year" FontSize="{StaticResource ExtraLargeFontSize}" FontWeight="Bold" HorizontalAlignment="Center"/>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Budget Year" />
-                <Separator Width="15" Background="Transparent"/>
-                <TextBox Text="{Binding CurrentYear}" Width="100"/>
+    <Border Style="{DynamicResource PopupBorderStyle}">
+        <Grid Background="{StaticResource MainBackgroundColor}" Width="300" Height="150">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="Change Year" FontSize="{StaticResource ExtraLargeFontSize}" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Budget Year" />
+                    <Separator Width="15" Background="Transparent"/>
+                    <TextBox Text="{Binding CurrentYear}" Width="100"/>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Close" Command="{Binding ExitPopupCommand}" Width="50"/>
-            <Separator Width="25" Background="Transparent"/>
-            <Button Content="Save" Command="{Binding SaveCommand}" Width="50"/>
-        </StackPanel>
-    </Grid>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Close" Command="{Binding ExitPopupCommand}" Width="50"/>
+                <Separator Width="25" Background="Transparent"/>
+                <Button Content="Save" Command="{Binding SaveCommand}" Width="50"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>

@@ -3,9 +3,9 @@ namespace BudgetApplication.Base.Enums
 {
     public enum PieGraphType
     {
-        [Display(Name = "Transactions")]
+        [Display(Description = "Transactions")]
         Transaction,
-        [Display(Name = "Budget")]
+        [Display(Description = "Budget")]
         Budget
     }
 }

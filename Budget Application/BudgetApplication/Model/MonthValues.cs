@@ -1,21 +1,19 @@
-﻿using System;
-using System.ComponentModel;
+﻿using GalaSoft.MvvmLight;
+using System;
 
 namespace BudgetApplication.Model
 {
     /// <summary>
     /// Represents a value for each month. Used in MoneyGridRow.
     /// </summary>
-    public class MonthValues :  INotifyPropertyChanged
+    public class MonthValues :  ObservableObject
     {
-        private decimal[] _values;  //The array of values
 
         /// <summary>
         /// Null parameter constructor for creating new instances automatically.
         /// </summary>
-        public MonthValues()
+        public MonthValues() : this(new decimal[12])
         {
-            _values = new decimal[12];
         }
 
         /// <summary>
@@ -24,7 +22,7 @@ namespace BudgetApplication.Model
         /// <param name="vals"></param>
         public MonthValues(decimal[] vals)
         {
-            _values = vals;
+            this.Values = vals;
         }
 
         /// <summary>
@@ -36,15 +34,14 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return _values[index];
+                return this.Values[index];
             }
             set
             {
-                _values[index] = value;
-                NotifyPropertyChanged("Value");
+                this.Set(ref this._Values[index], value);
             }
         }
-
+        private decimal[] _Values;  //The array of values
         /// <summary>
         /// The array of values
         /// </summary>
@@ -52,12 +49,11 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return _values;
+                return _Values;
             }
             set
             {
-                _values = value;
-                NotifyPropertyChanged("Values");
+                this.Set(ref this._Values, value);
             }
         }
 
@@ -68,38 +64,16 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return _values.Length;
+                return this.Values.Length;
             }
         }
-
+        #region Public Methods
         public MonthValues Copy()
         {
             MonthValues copy = new MonthValues();
             this.Values.CopyTo(copy.Values, 0);
             return copy;
         }
-        /// <summary>
-        /// Implementation of INotifyPropertyChanged
-        /// </summary>
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Private Helpers
-        /// <summary>
-        /// Helper function to simplify raising the PropertyChanged event
-        /// </summary>
-        /// <param name="propertyName">The property that has been changed</param>
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
         #endregion
     }
 }

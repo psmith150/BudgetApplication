@@ -1,5 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+﻿using GalaSoft.MvvmLight;
+using System;
 
 namespace BudgetApplication.Model
 {
@@ -7,20 +7,13 @@ namespace BudgetApplication.Model
     /// Represents a group used for organizing and categorizing budgets.
     /// </summary>
     [Serializable]
-    public class Group : INotifyPropertyChanged
+    public class Group : ObservableObject
     {
-        private String _name;   //Name of the group
-        private bool _isIncome; //Whether or not the group represents an income or expense
-        private MyObservableCollection<Category> _categories;   //Collection of the categories associated with the group
-
         /// <summary>
         /// Null parameter constructor for creating instances automatically.
         /// </summary>
-        public Group()
+        public Group() : this(false)
         {
-            _isIncome = false;
-            _name = "New Group";
-            _categories = new MyObservableCollection<Category>();
         }
 
         /// <summary>
@@ -30,11 +23,12 @@ namespace BudgetApplication.Model
         /// <param name="name">The name of the group.</param>
         public Group(bool isIncome = false, String name = "New Group")
         {
-            _isIncome = isIncome;
-            _name = String.Copy(name);
-            _categories = new MyObservableCollection<Category>();
+            _IsIncome = isIncome;
+            _Name = String.Copy(name);
+            _Categories = new MyObservableCollection<Category>();
         }
-
+        #region Public Properties
+        private String _Name;   //Name of the group
         /// <summary>
         /// The name of the group.
         /// </summary>
@@ -42,18 +36,14 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return String.Copy(_name);
+                return this._Name;
             }
             set
             {
-                if (!String.IsNullOrEmpty(value))
-                {
-                    _name = String.Copy(value);
-                    NotifyPropertyChanged("Name");
-                }
+                this.Set(ref this._Name, value);
             }
         }
-
+        private bool _IsIncome; //Whether or not the group represents an income or expense
         /// <summary>
         /// Returns whether or not the group represents an income.
         /// Income groups treat money normally; expenditure groups flip the sign.
@@ -62,15 +52,14 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return _isIncome;
+                return this._IsIncome;
             }
             set
             {
-                _isIncome = value;
-                NotifyPropertyChanged("IsIncome");
+                this.Set(ref this._IsIncome, value);
             }
         }
-
+        private MyObservableCollection<Category> _Categories;   //Collection of the categories associated with the group
         /// <summary>
         /// The collection of categories associated with the group.
         /// MyObservableCollection used to capture changes to category name.
@@ -79,16 +68,15 @@ namespace BudgetApplication.Model
         {
             get
             {
-                return _categories;
+                return this._Categories;
             }
             set
             {
-                _categories = value;
-                NotifyPropertyChanged("Categories");
+                this.Set(ref this._Categories, value);
             }
         }
-
-
+        #endregion
+        #region Public Methods
         /// <summary>
         /// Overrides the ToString method
         /// </summary>
@@ -98,28 +86,18 @@ namespace BudgetApplication.Model
             return Name;
         }
 
-        /// <summary>
-        /// Implementation of INotifyPropertyChanged
-        /// </summary>
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Private Helpers
-        /// <summary>
-        /// Helper function to simplify raising the PropertyChanged event
-        /// </summary>
-        /// <param name="propertyName">The property that has been changed</param>
-        private void NotifyPropertyChanged(string propertyName)
+        public Group Copy()
         {
-            if (PropertyChanged != null)
+            Group copy = new Group();
+            copy.Name = string.Copy(this.Name);
+            copy.IsIncome = this.IsIncome;
+            foreach (Category category in this.Categories)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                copy.Categories.Add(category.Copy());
             }
-        }
 
+            return copy;
+        }
         #endregion
     }
 }
