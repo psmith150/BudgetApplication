@@ -3,15 +3,19 @@ namespace BudgetApplication.Base.Enums
 {
     public enum TransactionGraphGrouping
     {
-        [Display(Name = "Month")]
+        [Display(Description = "Month")]
         Month,
-        [Display(Name = "Category")]
+        [Display(Description = "Category")]
         Category,
-        [Display(Name = "Group")]
+        [Display(Description = "Group")]
         Group,
-        [Display(Name = "Payment Method")]
+        [Display(Description = "Payment Method")]
         PaymentMethod,
-        [Display(Name = "Income vs Expeditures")]
-        IsIncome
+        [Display(Description = "Income/Expeditures")]
+        IsIncome,
+        [Display(Description = "Payee")]
+        Payee,
+        [Display(Description = "Item")]
+        Item
     }
 }

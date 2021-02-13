@@ -3,11 +3,11 @@ namespace BudgetApplication.Base.Enums
 {
     public enum IncomeFilterOption
     {
-        [Display(Name = "Both")]
+        [Display(Description = "Both")]
         Both,
-        [Display(Name = "Income")]
+        [Display(Description = "Income")]
         Income,
-        [Display(Name = "Expenditures")]
+        [Display(Description = "Expenditures")]
         Expenditures
     }
 }

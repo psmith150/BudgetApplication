@@ -8,6 +8,7 @@
              xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
+             xmlns:converters="clr-namespace:BudgetApplication.ValueConverters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="700"
              d:DataContext="{d:DesignInstance Type=local:TransactionsViewModel}">

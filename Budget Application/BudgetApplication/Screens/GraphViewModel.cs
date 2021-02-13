@@ -367,6 +367,42 @@ namespace BudgetApplication.Screens
                         LabelPosition = PieLabelPosition.OutsideSlice
                     });
                     break;
+                case TransactionGraphGrouping.Payee:
+                    var payeeGroups = filteredTransactions.GroupBy(x => x.Payee);
+                    foreach (var group in payeeGroups)
+                    {
+                        sum = 0.0M;
+                        sum = group.Sum(x => x.Amount);
+                        if (sum < 0.0M)
+                            sum = 0.0M;
+                        this.Series.Add(new PieSeries
+                        {
+                            Title = group.Key,
+                            Values = new ChartValues<decimal> { sum },
+                            DataLabels = true,
+                            LabelPoint = this.PointLabel,
+                            LabelPosition = PieLabelPosition.OutsideSlice,
+                        });
+                    }
+                    break;
+                case TransactionGraphGrouping.Item:
+                    var itemGroups = filteredTransactions.GroupBy(x => x.Item);
+                    foreach (var group in itemGroups)
+                    {
+                        sum = 0.0M;
+                        sum = group.Sum(x => x.Amount);
+                        if (sum < 0.0M)
+                            sum = 0.0M;
+                        this.Series.Add(new PieSeries
+                        {
+                            Title = group.Key,
+                            Values = new ChartValues<decimal> { sum },
+                            DataLabels = true,
+                            LabelPoint = this.PointLabel,
+                            LabelPosition = PieLabelPosition.OutsideSlice,
+                        });
+                    }
+                    break;
                 default:
                     break;
             }

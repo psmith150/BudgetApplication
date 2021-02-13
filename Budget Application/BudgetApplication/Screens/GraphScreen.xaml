@@ -22,6 +22,7 @@
         <CollectionViewSource x:Key="StartMonthsView" Source="{Binding Months}"/>
         <CollectionViewSource x:Key="EndMonthsView" Source="{Binding Months}"/>
         <CollectionViewSource x:Key="PieGraphTypesView" Source="{Binding PieGraphTypes}"/>
+        <converters:EnumToStringConverter x:Key="EnumToStringConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -31,7 +32,13 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,0,0,0">
             <Label Content="Select Graph Type:"/>
-            <ComboBox ItemsSource="{Binding Source={StaticResource PieGraphTypesView}}" SelectedItem="{Binding SelectedPieGraph}" Width="150"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource PieGraphTypesView}}" SelectedItem="{Binding SelectedPieGraph}" Width="150">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumToStringConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </StackPanel>
         <StackPanel Grid.Row="1" x:Name="TransactionGraphConfiguration" Visibility="{Binding ShowTransactionPieGraph, Converter={StaticResource BooleanToVisibilityConverter}}" Orientation="Horizontal" HorizontalAlignment="Center">
             <StackPanel.Resources>
@@ -45,7 +52,13 @@
             <Border>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Grouping:" Margin="1"/>
-                    <ComboBox ItemsSource="{Binding Source={StaticResource TransactionGraphGroupingsView}}" SelectedItem="{Binding TransactionGraphConfiguration.Grouping}" Width="100" Margin="1"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource TransactionGraphGroupingsView}}" SelectedItem="{Binding TransactionGraphConfiguration.Grouping}" Width="100" Margin="1">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=., Converter={StaticResource EnumToStringConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </StackPanel>
             </Border>
             <Border>
@@ -122,7 +135,13 @@
                 <StackPanel Orientation="Horizontal" Margin="1">
                     <Label Content="Income Filter:" Margin="1"/>
                     <CheckBox IsChecked="{Binding TransactionGraphConfiguration.IncomeFilterActive}" VerticalAlignment="Center" Margin="0,0,2,0"/>
-                    <ComboBox ItemsSource="{Binding Source={StaticResource IncomeFilterView}}" SelectedItem="{Binding TransactionGraphConfiguration.IncomeFilter}" Width="100" Margin="1"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource IncomeFilterView}}" SelectedItem="{Binding TransactionGraphConfiguration.IncomeFilter}" Width="100" Margin="1">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=., Converter={StaticResource EnumToStringConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </StackPanel>
             </Border>
             <Button Content="Refresh" Command="{Binding RefreshChartCommand}" Width="50"/>
@@ -139,7 +158,13 @@
             <Border>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Grouping:" Margin="1"/>
-                    <ComboBox ItemsSource="{Binding Source={StaticResource BudgetGraphGroupingsView}}" SelectedItem="{Binding BudgetGraphConfiguration.Grouping}" Width="100" Margin="1"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource BudgetGraphGroupingsView}}" SelectedItem="{Binding BudgetGraphConfiguration.Grouping}" Width="100" Margin="1">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=., Converter={StaticResource EnumToStringConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </StackPanel>
             </Border>
             <Border>
@@ -216,7 +241,13 @@
                 <StackPanel Orientation="Horizontal" Margin="1">
                     <Label Content="Income Filter:" Margin="1"/>
                     <CheckBox IsChecked="{Binding BudgetGraphConfiguration.IncomeFilterActive}" VerticalAlignment="Center" Margin="0,0,2,0"/>
-                    <ComboBox ItemsSource="{Binding Source={StaticResource IncomeFilterView}}" SelectedItem="{Binding BudgetGraphConfiguration.IncomeFilter}" Width="100" Margin="1"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource IncomeFilterView}}" SelectedItem="{Binding BudgetGraphConfiguration.IncomeFilter}" Width="100" Margin="1">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=., Converter={StaticResource EnumToStringConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </StackPanel>
             </Border>
             <Button Content="Refresh" Command="{Binding RefreshChartCommand}" Width="50"/>

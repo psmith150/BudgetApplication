@@ -3,13 +3,13 @@ namespace BudgetApplication.Base.Enums
 {
     public enum BudgetGraphGrouping
     {
-        [Display(Name = "Month")]
+        [Display(Description = "Month")]
         Month,
-        [Display(Name = "Category")]
+        [Display(Description = "Category")]
         Category,
-        [Display(Name = "Group")]
+        [Display(Description = "Group")]
         Group,
-        [Display(Name = "Income vs Expeditures")]
+        [Display(Description = "Income vs Expeditures")]
         IsIncome
     }
 }
