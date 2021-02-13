@@ -12,6 +12,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.ComponentModel;
 using GalaSoft.MvvmLight.Messaging;
+using System.Collections.Generic;
 
 namespace BudgetApplication.Screens
 {
@@ -250,6 +251,31 @@ namespace BudgetApplication.Screens
                 this.Set(ref this._creditRowHeight, value);
             }
         }
+
+        private List<string> _Items;
+        public List<string> Items
+        {
+            get
+            {
+                return this._Items;
+            }
+            private set
+            {
+                this.Set(ref this._Items, value);
+            }
+        }
+        private List<string> _Payees;
+        public List<string> Payees
+        {
+            get
+            {
+                return this._Payees;
+            }
+            private set
+            {
+                this.Set(ref this._Payees, value);
+            }
+        }
         #endregion
 
         #region Private Methods
@@ -322,15 +348,35 @@ namespace BudgetApplication.Screens
         {
             //this.PaymentTransactionsView.Refresh();
             this.RecalculateCreditValues();
+            this.UpdateItemsList();
+            this.UpdatePayeesList();
         }
 
         private void TransactionPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             this.RecalculateCreditValues();
+            Transaction transaction = sender as Transaction;
+            if (e.PropertyName.Equals("Item"))
+            {
+                this.UpdateItemsList();
+            }
+            else if (e.PropertyName.Equals("Payee"))
+            {
+                this.UpdatePayeesList();
+            }
             if (!this.PaymentTransactionsView.IsEditingItem)
             {
                 this.PaymentTransactionsView.Refresh();
             }
+        }
+
+        private void UpdateItemsList()
+        {
+            this.Items = new List<string>(this.Transactions.Select(x => x.Item).Distinct());
+        }
+        private void UpdatePayeesList()
+        {
+            this.Payees = new List<string>(this.Transactions.Select(x => x.Payee).Distinct());
         }
         #endregion
     }

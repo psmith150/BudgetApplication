@@ -7,6 +7,7 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:Model="clr-namespace:BudgetApplication.Model"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=local:PaymentsViewModel}">
@@ -88,8 +89,32 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Item" Binding="{Binding Path=Item, Mode=TwoWay}" Width="10*"/>
-                    <DataGridTextColumn Header="Payee" Binding="{Binding Path=Payee}" Width="10*"/>
+                    <DataGridTemplateColumn Header="Item" SortMemberPath="Item" Width="10*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Item}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <xctk:AutoSelectTextBox AutoSelectBehavior="OnFocus" Text="{Binding Item}" behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding Path=DataContext.Items, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+		                            behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Payee" SortMemberPath="Payee" Width="10*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Payee}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <xctk:AutoSelectTextBox AutoSelectBehavior="OnFocus" Text="{Binding Payee}" behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding Path=DataContext.Payees, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+		                            behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Amount" Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat=\{0:C\}}" Width="10*"/>
                     <DataGridComboBoxColumn Header="Category" SelectedValueBinding="{Binding Category}" DisplayMemberPath="Name" Width="15*">
                         <DataGridComboBoxColumn.ElementStyle>
