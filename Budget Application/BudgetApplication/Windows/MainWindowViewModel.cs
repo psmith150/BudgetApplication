@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using BudgetApplication.Screens;
 using BudgetApplication.Services;
-using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 using System.IO;
 using System.Xml.Serialization;
@@ -68,7 +68,7 @@ namespace BudgetApplication.Windows
             }
             this.LastFiles.CollectionChanged += ((o, e) => SaveLastFiles());
             // Set the starting page
-            this.NavigationService.NavigateTo<BudgetViewModel>();
+            //this.NavigationService.NavigateTo<BudgetViewModel>();
         }
         #endregion
 

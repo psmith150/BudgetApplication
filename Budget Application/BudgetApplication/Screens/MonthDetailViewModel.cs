@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using BudgetApplication.Popups;
 using BudgetApplication.Services;
-using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Command;
 using System;
 using BudgetApplication.Model;
 using System.Windows.Data;
