@@ -68,7 +68,7 @@ namespace BudgetApplication.Windows
             }
             this.LastFiles.CollectionChanged += ((o, e) => SaveLastFiles());
             // Set the starting page
-            //this.NavigationService.NavigateTo<BudgetViewModel>();
+            this.NavigationService.NavigateTo<BudgetViewModel>();
         }
         #endregion
 

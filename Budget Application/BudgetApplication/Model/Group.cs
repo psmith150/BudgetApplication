@@ -24,7 +24,7 @@ namespace BudgetApplication.Model
         public Group(bool isIncome = false, String name = "New Group")
         {
             _IsIncome = isIncome;
-            _Name = String.Copy(name);
+            _Name = name;
             _Categories = new MyObservableCollection<Category>();
         }
         #region Public Properties
@@ -89,7 +89,7 @@ namespace BudgetApplication.Model
         public Group Copy()
         {
             Group copy = new Group();
-            copy.Name = string.Copy(this.Name);
+            copy.Name = this.Name;
             copy.IsIncome = this.IsIncome;
             foreach (Category category in this.Categories)
             {

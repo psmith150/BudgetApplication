@@ -78,9 +78,9 @@ namespace BudgetApplication.Model
         public CheckingAccount Copy()
         {
             CheckingAccount copy = new CheckingAccount();
-            copy.Name = string.Copy(this.Name);
+            copy.Name = this.Name;
             copy.AccountNumber = this.AccountNumber;
-            copy.Bank = string.Copy(this.Bank);
+            copy.Bank = this.Bank;
             copy.StartDate = this.StartDate;
             copy.EndDate = this.EndDate;
 

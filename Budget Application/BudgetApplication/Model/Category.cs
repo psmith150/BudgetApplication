@@ -23,7 +23,7 @@ namespace BudgetApplication.Model
         /// <param name="name">The desired category name.</param>
         public Category(String name = "New Category")
         {
-            this.Name = String.Copy(name);
+            this.Name = name;
         }
         #region Public Properties
         private String _Name;   //Category name
@@ -59,7 +59,7 @@ namespace BudgetApplication.Model
         }
         public Category Copy()
         {
-            Category copy = new Category(string.Copy(this.Name));
+            Category copy = new Category(this.Name);
 
             return copy;
         }

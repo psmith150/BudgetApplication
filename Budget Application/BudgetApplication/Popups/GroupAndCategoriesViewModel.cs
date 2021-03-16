@@ -161,11 +161,11 @@ namespace BudgetApplication.Popups
                 nameExists = false;
                 if (index == 0)
                 {
-                    name = String.Copy(group.Name);
+                    name = group.Name;
                 }
                 else
                 {
-                    name = String.Copy(group.Name) + index.ToString();
+                    name = group.Name + index.ToString();
                 }
                 foreach (Group currGroup in _groups)
                 {
@@ -285,11 +285,11 @@ namespace BudgetApplication.Popups
                 nameExists = false;
                 if (index == 0)
                 {
-                    name = String.Copy(category.Name);
+                    name = category.Name;
                 }
                 else
                 {
-                    name = String.Copy(category.Name) + index.ToString();
+                    name = category.Name + index.ToString();
                 }
                 foreach (Category currCategory in _categories)
                 {

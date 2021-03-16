@@ -114,7 +114,7 @@ namespace BudgetApplication.Model
                 result = Decimal.Parse(ex.Evaluate().ToString());
                 //result = Decimal.Parse(ex.Evaluate());
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 result = 0;
                 success = false;
@@ -126,7 +126,7 @@ namespace BudgetApplication.Model
         public CreditCard Copy()
         {
             CreditCard copy = new CreditCard();
-            copy.Name = string.Copy(this.Name);
+            copy.Name = this.Name;
             copy.StartDate = this.StartDate;
             copy.EndDate = this.EndDate;
             copy.CreditLimit = this.CreditLimit;
