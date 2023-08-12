@@ -53,7 +53,7 @@ namespace BudgetApplication.Model
             {
                 if (value >= 0)
                 {
-                    this.Set(ref this._AccountNumber, value);
+                    this.SetProperty(ref this._AccountNumber, value);
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Bank, value);
+                this.SetProperty(ref this._Bank, value);
             }
         }
         #endregion

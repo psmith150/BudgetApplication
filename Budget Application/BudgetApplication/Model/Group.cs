@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 
 namespace BudgetApplication.Model
@@ -40,7 +40,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Name, value);
+                this.SetProperty(ref this._Name, value);
             }
         }
         private bool _IsIncome; //Whether or not the group represents an income or expense
@@ -56,7 +56,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._IsIncome, value);
+                this.SetProperty(ref this._IsIncome, value);
             }
         }
         private MyObservableCollection<Category> _Categories;   //Collection of the categories associated with the group
@@ -72,7 +72,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Categories, value);
+                this.SetProperty(ref this._Categories, value);
             }
         }
         #endregion

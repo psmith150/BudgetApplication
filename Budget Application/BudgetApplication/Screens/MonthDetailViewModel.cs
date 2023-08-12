@@ -53,9 +53,9 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                Set(ref _selectedMonth, value);
+                this.SetProperty(ref _selectedMonth, value);
                 this.UpdateMonthDetails();
-                this.RaisePropertyChanged("PercentMonth");
+                this.OnPropertyChanged(nameof(PercentMonth));
                 //RaisePropertyChanged("MonthDetails");
                 //RaisePropertyChanged("PercentMonth");
             }
@@ -99,7 +99,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                Set(ref _monthDetails, value);
+                this.SetProperty(ref _monthDetails, value);
             }
         }
         #endregion

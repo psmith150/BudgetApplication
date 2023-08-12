@@ -74,7 +74,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._Series, value);
+                this.SetProperty(ref this._Series, value);
             }
         }
         public Func<ChartPoint, string> PointLabel { get; set; }
@@ -88,7 +88,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._TransactionGraphConfiguration, value);
+                this.SetProperty(ref this._TransactionGraphConfiguration, value);
             }
         }
         private BudgetGraphConfiguration _BudgetGraphConfiguration;
@@ -100,7 +100,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._BudgetGraphConfiguration, value);
+                this.SetProperty(ref this._BudgetGraphConfiguration, value);
             }
         }
         public Array TransactionGraphGroupings
@@ -141,7 +141,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._TransactionCategoryFilterPopupVisible, value);
+                this.SetProperty(ref this._TransactionCategoryFilterPopupVisible, value);
             }
         }
         private bool _TransactionGroupFilterPopupVisible;
@@ -153,7 +153,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._TransactionGroupFilterPopupVisible, value);
+                this.SetProperty(ref this._TransactionGroupFilterPopupVisible, value);
             }
         }
         private bool _BudgetCategoryFilterPopupVisible;
@@ -165,7 +165,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._BudgetCategoryFilterPopupVisible, value);
+                this.SetProperty(ref this._BudgetCategoryFilterPopupVisible, value);
             }
         }
         private bool _BudgetGroupFilterPopupVisible;
@@ -177,7 +177,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._BudgetGroupFilterPopupVisible, value);
+                this.SetProperty(ref this._BudgetGroupFilterPopupVisible, value);
             }
         }
         public Array PieGraphTypes
@@ -196,7 +196,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._SelectedPieGraph, value);
+                this.SetProperty(ref this._SelectedPieGraph, value);
                 this.RefreshChart();
                 this.UpdateGraphVisiblity();
             }
@@ -211,7 +211,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._ShowBudgetPieGraph, value);
+                this.SetProperty(ref this._ShowBudgetPieGraph, value);
             }
         }
 
@@ -224,7 +224,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._ShowTransactionPieGraph, value);
+                this.SetProperty(ref this._ShowTransactionPieGraph, value);
             }
         }
         #endregion

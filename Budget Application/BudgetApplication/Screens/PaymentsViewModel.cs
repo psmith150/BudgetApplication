@@ -72,7 +72,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._selectedPaymentMethod, value);
+                this.SetProperty(ref this._selectedPaymentMethod, value);
                 this._selectedPaymentMethod.PropertyChanged += ((o,a) => RecalculateCreditValues());
                 this.SelectedStartDate = this.SelectedPaymentMethod.StartDate;
                 this.SelectedEndDate = this.SelectedPaymentMethod.EndDate;
@@ -90,7 +90,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._selectedStartDate, value);
+                this.SetProperty(ref this._selectedStartDate, value);
                 if (this.SelectedPaymentMethod != this.AllPaymentsCollection[0])
                     (this.SelectedPaymentMethod as PaymentMethod).StartDate = this.SelectedStartDate;
                 this.PaymentTransactionsView.Refresh();
@@ -106,7 +106,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._selectedEndDate, value);
+                this.SetProperty(ref this._selectedEndDate, value);
                 if (this.SelectedPaymentMethod != this.AllPaymentsCollection[0])
                     (this.SelectedPaymentMethod as PaymentMethod).EndDate = this.SelectedEndDate;
                 this.PaymentTransactionsView.Refresh();
@@ -161,7 +161,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._Transactions, value);
+                this.SetProperty(ref this._Transactions, value);
             }
         }
         private Transaction _SelectedTransaction;
@@ -173,7 +173,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._SelectedTransaction, value);
+                this.SetProperty(ref this._SelectedTransaction, value);
             }
         }
 
@@ -196,7 +196,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._creditLimit, value);
+                this.SetProperty(ref this._creditLimit, value);
             }
         }
 
@@ -209,7 +209,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._totalBill, value);
+                this.SetProperty(ref this._totalBill, value);
             }
         }
 
@@ -222,7 +222,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._netBill, value);
+                this.SetProperty(ref this._netBill, value);
             }
         }
 
@@ -235,7 +235,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._remainingCredit, value);
+                this.SetProperty(ref this._remainingCredit, value);
             }
         }
 
@@ -248,7 +248,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._creditRowHeight, value);
+                this.SetProperty(ref this._creditRowHeight, value);
             }
         }
 
@@ -261,7 +261,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._Items, value);
+                this.SetProperty(ref this._Items, value);
             }
         }
         private List<string> _Payees;
@@ -273,7 +273,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._Payees, value);
+                this.SetProperty(ref this._Payees, value);
             }
         }
         #endregion

@@ -52,7 +52,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._defaultDirectory, value);
+                this.SetProperty(ref this._defaultDirectory, value);
                 this.savingNeeded = true;
             }
         }
@@ -65,7 +65,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._ApplicationTheme, value);
+                this.SetProperty(ref this._ApplicationTheme, value);
                 this.savingNeeded = true;
                 this.ChangeSkin();
             }

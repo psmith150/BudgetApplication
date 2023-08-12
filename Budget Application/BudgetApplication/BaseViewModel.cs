@@ -1,10 +1,10 @@
 ﻿using BudgetApplication.Services;
-using GalaSoft.MvvmLight;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Reflection;
 
 namespace BudgetApplication
 {
-    public abstract class BaseViewModel : ViewModelBase
+    public abstract class BaseViewModel : ObservableRecipient
     {
         private SessionService _Session;
         public SessionService Session
@@ -15,7 +15,7 @@ namespace BudgetApplication
             }
             private set
             {
-                this.Set(ref this._Session, value);
+                this.SetProperty(ref this._Session, value);
             }
         }
 

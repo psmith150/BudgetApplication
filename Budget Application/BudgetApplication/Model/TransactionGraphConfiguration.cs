@@ -1,5 +1,5 @@
 ﻿using BudgetApplication.Base.Enums;
-using GalaSoft.MvvmLight;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Specialized;
 using System.Linq;
@@ -33,7 +33,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Grouping, value);
+                this.SetProperty(ref this._Grouping, value);
                 this.RaiseGroupingChanged();
             }
         }
@@ -47,7 +47,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._DateFilterActive, value);
+                this.SetProperty(ref this._DateFilterActive, value);
                 this.RaiseFilterChanged();
 
             }
@@ -61,7 +61,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._StartDate, value);
+                this.SetProperty(ref this._StartDate, value);
                 if (this.DateFilterActive)
                     this.RaiseFilterChanged();
             }
@@ -75,7 +75,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._EndDate, value);
+                this.SetProperty(ref this._EndDate, value);
                 if (this.DateFilterActive)
                     this.RaiseFilterChanged();
             }
@@ -89,7 +89,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._CategoryFilterActive, value);
+                this.SetProperty(ref this._CategoryFilterActive, value);
                 this.RaiseFilterChanged();
             }
         }
@@ -102,7 +102,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._CategoryFilter, value);
+                this.SetProperty(ref this._CategoryFilter, value);
                 this.CategoryFilter.CollectionChanged += this.CategoryFilterCollectionChanged;
             }
         }
@@ -115,7 +115,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._GroupFilterActive, value);
+                this.SetProperty(ref this._GroupFilterActive, value);
                 this.RaiseFilterChanged();
             }
         }
@@ -128,7 +128,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._GroupFilter, value);
+                this.SetProperty(ref this._GroupFilter, value);
                 this.GroupFilter.CollectionChanged += this.GroupFilterCollectionChanged;
             }
         }
@@ -141,7 +141,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._IncomeFilterActive, value);
+                this.SetProperty(ref this._IncomeFilterActive, value);
                 this.RaiseFilterChanged();
             }
         }
@@ -154,7 +154,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._IncomeFilter, value);
+                this.SetProperty(ref this._IncomeFilter, value);
                 if (this.IncomeFilterActive)
                     this.RaiseFilterChanged();
             }
@@ -249,7 +249,7 @@ namespace BudgetApplication.Model
                     item.PropertyChanged -= ((o, a) => this.UpdateCategoryListFilter());
                 }
             }
-            this.RaisePropertyChanged("SelectedCategories");
+            this.OnPropertyChanged(nameof(SelectedCategories));
         }
         private void GroupFilterCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -267,19 +267,19 @@ namespace BudgetApplication.Model
                     item.PropertyChanged -= ((o, a) => this.UpdateGroupListFilter());
                 }
             }
-            this.RaisePropertyChanged("SelectedGroups");
+            this.OnPropertyChanged(nameof(SelectedGroups));
         }
         private void UpdateCategoryListFilter()
         {
             if (this.CategoryFilterActive)
                 this.RaiseFilterChanged();
-            this.RaisePropertyChanged("SelectedCategories");
+            this.OnPropertyChanged(nameof(SelectedCategories));
         }
         private void UpdateGroupListFilter()
         {
             if (this.GroupFilterActive)
                 this.RaiseFilterChanged();
-            this.RaisePropertyChanged("SelectedGroups");
+            this.OnPropertyChanged(nameof(SelectedGroups));
         }
         #endregion
     }

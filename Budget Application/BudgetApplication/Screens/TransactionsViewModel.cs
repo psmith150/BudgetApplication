@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using System.Collections.Specialized;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace BudgetApplication.Screens
 {
@@ -135,7 +136,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._Items, value);
+                this.SetProperty(ref this._Items, value);
             }
         }
         private List<string> _Payees;
@@ -147,7 +148,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._Payees, value);
+                this.SetProperty(ref this._Payees, value);
             }
         }
         private ListCollectionView _FilterView;
@@ -159,7 +160,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._FilterView, value);
+                this.SetProperty(ref this._FilterView, value);
                 this.FilterView.SortDescriptions.Add(new SortDescription("Item", ListSortDirection.Ascending));
                 Type sourceType = this.FilterView.SourceCollection.GetType().GetGenericArguments().Single().GetGenericArguments().Single();
                 if (sourceType == typeof(string))
@@ -186,7 +187,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._FilterSearchText, value);
+                this.SetProperty(ref this._FilterSearchText, value);
                this.FilterView.Refresh();
             }
         }
@@ -199,7 +200,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._FilterPopupOpen, value);
+                this.SetProperty(ref this._FilterPopupOpen, value);
             }
         }
         private MyObservableCollection<CheckedListItem<DateTime>> _FilterDates;
@@ -211,7 +212,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._FilterDates, value);
+                this.SetProperty(ref this._FilterDates, value);
             }
         }
 
@@ -224,7 +225,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._FilterItems, value);
+                this.SetProperty(ref this._FilterItems, value);
             }
         }
 
@@ -237,7 +238,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._FilterPayees, value);
+                this.SetProperty(ref this._FilterPayees, value);
             }
         }
         private MyObservableCollection<CheckedListItem<decimal>> _FilterAmount;
@@ -249,7 +250,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._FilterAmount, value);
+                this.SetProperty(ref this._FilterAmount, value);
             }
         }
         private MyObservableCollection<CheckedListItem<Category>> _FilterCategories;
@@ -261,7 +262,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._FilterCategories, value);
+                this.SetProperty(ref this._FilterCategories, value);
             }
         }
         private MyObservableCollection<CheckedListItem<PaymentMethod>> _FilterPaymentMethods;
@@ -273,7 +274,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._FilterPaymentMethods, value);
+                this.SetProperty(ref this._FilterPaymentMethods, value);
             }
         }
         private MyObservableCollection<CheckedListItem<string>> _FilterComments;
@@ -285,7 +286,7 @@ namespace BudgetApplication.Screens
             }
             private set
             {
-                this.Set(ref this._FilterComments, value);
+                this.SetProperty(ref this._FilterComments, value);
             }
         }
         #endregion
@@ -311,7 +312,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                this.Set(ref this._SelectedTransaction, value);
+                this.SetProperty(ref this._SelectedTransaction, value);
             }
         }
         private string activeColumnName;
@@ -348,7 +349,7 @@ namespace BudgetApplication.Screens
         {
             Transaction newTransaction = new Transaction();
             this.Transactions.Add(newTransaction);
-            Messenger.Default.Send(new TransactionMessage(newTransaction));
+            WeakReferenceMessenger.Default.Send(new TransactionMessage(newTransaction));
         }
         private void DeleteTransaction()
         {
@@ -362,7 +363,7 @@ namespace BudgetApplication.Screens
                 Transaction newTransaction = this.SelectedTransaction.Copy();
                 newTransaction.Item += " - Copy";
                 this.Transactions.Add(newTransaction);
-                Messenger.Default.Send(new TransactionMessage(newTransaction));
+                WeakReferenceMessenger.Default.Send(new TransactionMessage(newTransaction));
             }
         }
         private void Transactions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

@@ -48,7 +48,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._currentYear, value);
+                this.SetProperty(ref this._currentYear, value);
                 this.savingNeeded = true;
             }
         }

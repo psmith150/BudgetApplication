@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.ComponentModel;
 
@@ -35,7 +35,7 @@ namespace BudgetApplication.Model
             }
             private set
             {
-                this.Set(ref this._Group, value);
+                this.SetProperty(ref this._Group, value);
             }
         }
         private Category _Category;
@@ -47,7 +47,7 @@ namespace BudgetApplication.Model
             }
             private set
             {
-                this.Set(ref this._Category, value);
+                this.SetProperty(ref this._Category, value);
             }
         }
         private decimal _BudgetedAmount;
@@ -59,7 +59,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._BudgetedAmount, value);
+                this.SetProperty(ref this._BudgetedAmount, value);
                 UpdatePercentSpent();
             }
         }
@@ -72,7 +72,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._SpentAmount, value);
+                this.SetProperty(ref this._SpentAmount, value);
                 UpdatePercentSpent();
             }
         }
@@ -85,7 +85,7 @@ namespace BudgetApplication.Model
             }
             private set
             {
-                this.Set(ref this._PercentSpent, value);
+                this.SetProperty(ref this._PercentSpent, value);
             }
         }
         private double _PercentMonth;
@@ -97,7 +97,7 @@ namespace BudgetApplication.Model
             }
             private set
             {
-                this.Set(ref this._PercentMonth, value);
+                this.SetProperty(ref this._PercentMonth, value);
             }
         }
         private bool _OnTarget;
@@ -109,7 +109,7 @@ namespace BudgetApplication.Model
             }
             private set
             {
-                this.Set(ref this._OnTarget, value);
+                this.SetProperty(ref this._OnTarget, value);
             }
         }
         #endregion
@@ -145,7 +145,7 @@ namespace BudgetApplication.Model
         /// <param name="e"></param>
         private void CategoryModified(object sender, PropertyChangedEventArgs e)
         {
-            this.RaisePropertyChanged("Category");
+            this.OnPropertyChanged(nameof(Category));
         }
         #endregion
         #region Public Methods

@@ -90,7 +90,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._selectedGroupIndex, value);
+                this.SetProperty(ref this._selectedGroupIndex, value);
             }
         }
 
@@ -103,7 +103,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._selectedGroupItem, value);
+                this.SetProperty(ref this._selectedGroupItem, value);
                 this.CategoriesView.Refresh();
             }
         }
@@ -117,7 +117,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._selectedCategoryIndex, value);
+                this.SetProperty(ref this._selectedCategoryIndex, value);
             }
         }
 
@@ -130,7 +130,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._selectedCategoryItem, value);
+                this.SetProperty(ref this._selectedCategoryItem, value);
             }
         }
         #endregion

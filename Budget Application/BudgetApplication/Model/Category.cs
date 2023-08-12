@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 
 namespace BudgetApplication.Model
@@ -38,7 +38,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Name, value);
+                this.SetProperty(ref this._Name, value);
             }
         }
         #endregion

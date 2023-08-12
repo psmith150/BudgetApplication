@@ -82,7 +82,7 @@ namespace BudgetApplication.Windows
             }
             private set
             {
-                this.Set(ref this._NavigationService, value);
+                this.SetProperty(ref this._NavigationService, value);
             }
         }
 
@@ -95,7 +95,7 @@ namespace BudgetApplication.Windows
             }
             set
             {
-                this.Set(ref this._MessageViewer, value);
+                this.SetProperty(ref this._MessageViewer, value);
             }
         }
         private ObservableCollection<string> _lastFiles;
@@ -107,7 +107,7 @@ namespace BudgetApplication.Windows
             }
             private set
             {
-                this.Set(ref this._lastFiles, value);
+                this.SetProperty(ref this._lastFiles, value);
             }
         }
         #endregion
