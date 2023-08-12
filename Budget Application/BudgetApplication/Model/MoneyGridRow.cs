@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.ComponentModel;
 
@@ -40,7 +40,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Group, value);
+                this.SetProperty(ref this._Group, value);
             }
         }
         private Category _Category; //The category of the row
@@ -55,7 +55,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Category, value);
+                this.SetProperty(ref this._Category, value);
             }
         }
         private MonthValues _Values;    //The set of monthly values
@@ -70,7 +70,7 @@ namespace BudgetApplication.Model
             }
             private set
             {
-                this.Set(ref this._Values, value);
+                this.SetProperty(ref this._Values, value);
                 this.Values.PropertyChanged += this.ValuesModified;
             }
         }
@@ -86,7 +86,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._IsSum, value);
+                this.SetProperty(ref this._IsSum, value);
             }
         }
 
@@ -122,11 +122,11 @@ namespace BudgetApplication.Model
             {
                 if (Double.IsNaN(value))
                 {
-                    this.Set(ref this._Percentage, 0.0);
+                    this.SetProperty(ref this._Percentage, 0.0);
                 }
                 else
                 {
-                    this.Set(ref this._Percentage, value);
+                    this.SetProperty(ref this._Percentage, value);
                 }
             }
         }
@@ -139,7 +139,7 @@ namespace BudgetApplication.Model
         /// <param name="e">The arguments</param>
         private void CategoryModified(object sender, PropertyChangedEventArgs e)
         {
-            this.RaisePropertyChanged("Category");
+            this.OnPropertyChanged(nameof(Category));
         }
         /// <summary>
         /// Helper function for a group being modified.
@@ -148,7 +148,7 @@ namespace BudgetApplication.Model
         /// <param name="e">The arguments</param>
         private void GroupModified(object sender, PropertyChangedEventArgs e)
         {
-            this.RaisePropertyChanged("Group");
+            this.OnPropertyChanged(nameof(Group));
         }
         /// <summary>
         /// Helper function for the values being modified.
@@ -157,8 +157,8 @@ namespace BudgetApplication.Model
         /// <param name="e">The arguments</param>
         private void ValuesModified(object sender, PropertyChangedEventArgs e)
         {
-            this.RaisePropertyChanged("Values");
-            this.RaisePropertyChanged("Sum");
+            this.OnPropertyChanged(nameof(Values));
+            this.OnPropertyChanged(nameof(Sum));
         }
         #endregion
         #region Public Methods

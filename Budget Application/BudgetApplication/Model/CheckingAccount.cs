@@ -53,7 +53,7 @@ namespace BudgetApplication.Model
             {
                 if (value >= 0)
                 {
-                    this.Set(ref this._AccountNumber, value);
+                    this.SetProperty(ref this._AccountNumber, value);
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Bank, value);
+                this.SetProperty(ref this._Bank, value);
             }
         }
         #endregion
@@ -78,9 +78,9 @@ namespace BudgetApplication.Model
         public CheckingAccount Copy()
         {
             CheckingAccount copy = new CheckingAccount();
-            copy.Name = string.Copy(this.Name);
+            copy.Name = this.Name;
             copy.AccountNumber = this.AccountNumber;
-            copy.Bank = string.Copy(this.Bank);
+            copy.Bank = this.Bank;
             copy.StartDate = this.StartDate;
             copy.EndDate = this.EndDate;
 

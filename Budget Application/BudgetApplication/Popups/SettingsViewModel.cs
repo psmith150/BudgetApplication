@@ -1,5 +1,5 @@
 ﻿using BudgetApplication.Services;
-using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Forms;
 using BudgetApplication.Base.AbstractClasses;
 using BudgetApplication.Base.EventArgs;
 using BudgetApplication.Base.Enums;
+using System.Windows.Forms;
 
 namespace BudgetApplication.Popups
 {
@@ -52,7 +52,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._defaultDirectory, value);
+                this.SetProperty(ref this._defaultDirectory, value);
                 this.savingNeeded = true;
             }
         }
@@ -65,7 +65,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._ApplicationTheme, value);
+                this.SetProperty(ref this._ApplicationTheme, value);
                 this.savingNeeded = true;
                 this.ChangeSkin();
             }

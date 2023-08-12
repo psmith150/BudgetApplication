@@ -336,7 +336,7 @@ namespace BudgetApplication.Services
                     data = (DataWrapper)dataSerializer.Deserialize(file);
                 }
             }
-            catch (IOException ex) //File does not exist; set everything to defaults
+            catch (IOException) //File does not exist; set everything to defaults
             {
                 await CreateNewFile(Properties.Settings.Default.DefaultDirectory + "\\data_new.xml");
             }
@@ -387,7 +387,7 @@ namespace BudgetApplication.Services
                 {
                     transaction.Category = this.Categories.Single(x => x.Name.Equals(categoryName));
                 }
-                catch (ArgumentException ex)
+                catch (ArgumentException)
                 {
                     throw new ArgumentException("Cannot find matching category " + transaction.Category.Name + " in categories list");
                 }
@@ -395,7 +395,7 @@ namespace BudgetApplication.Services
                 {
                     transaction.PaymentMethod = this.PaymentMethods.Single(x => x.Name.Equals(paymentName));
                 }
-                catch (ArgumentException ex)
+                catch (ArgumentException)
                 {
                     throw new ArgumentException("Cannot find matching payment method " + transaction.PaymentMethod.Name + " in payment methods list");
                 }

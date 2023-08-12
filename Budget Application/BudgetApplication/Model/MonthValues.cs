@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 
 namespace BudgetApplication.Model
@@ -38,7 +38,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Values[index], value);
+                this.SetProperty(ref this._Values[index], value);
             }
         }
         private decimal[] _Values;  //The array of values
@@ -53,7 +53,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Values, value);
+                this.SetProperty(ref this._Values, value);
             }
         }
 

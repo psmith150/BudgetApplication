@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using BudgetApplication.Popups;
 using BudgetApplication.Services;
-using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Command;
 using System;
 using BudgetApplication.Model;
 using System.Windows.Data;
@@ -53,9 +53,9 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                Set(ref _selectedMonth, value);
+                this.SetProperty(ref _selectedMonth, value);
                 this.UpdateMonthDetails();
-                this.RaisePropertyChanged("PercentMonth");
+                this.OnPropertyChanged(nameof(PercentMonth));
                 //RaisePropertyChanged("MonthDetails");
                 //RaisePropertyChanged("PercentMonth");
             }
@@ -99,7 +99,7 @@ namespace BudgetApplication.Screens
             }
             set
             {
-                Set(ref _monthDetails, value);
+                this.SetProperty(ref _monthDetails, value);
             }
         }
         #endregion

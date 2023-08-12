@@ -1,6 +1,6 @@
 ﻿using BudgetApplication.Model;
 using BudgetApplication.Services;
-using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,7 +90,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._selectedGroupIndex, value);
+                this.SetProperty(ref this._selectedGroupIndex, value);
             }
         }
 
@@ -103,7 +103,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._selectedGroupItem, value);
+                this.SetProperty(ref this._selectedGroupItem, value);
                 this.CategoriesView.Refresh();
             }
         }
@@ -117,7 +117,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._selectedCategoryIndex, value);
+                this.SetProperty(ref this._selectedCategoryIndex, value);
             }
         }
 
@@ -130,7 +130,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._selectedCategoryItem, value);
+                this.SetProperty(ref this._selectedCategoryItem, value);
             }
         }
         #endregion
@@ -161,11 +161,11 @@ namespace BudgetApplication.Popups
                 nameExists = false;
                 if (index == 0)
                 {
-                    name = String.Copy(group.Name);
+                    name = group.Name;
                 }
                 else
                 {
-                    name = String.Copy(group.Name) + index.ToString();
+                    name = group.Name + index.ToString();
                 }
                 foreach (Group currGroup in _groups)
                 {
@@ -285,11 +285,11 @@ namespace BudgetApplication.Popups
                 nameExists = false;
                 if (index == 0)
                 {
-                    name = String.Copy(category.Name);
+                    name = category.Name;
                 }
                 else
                 {
-                    name = String.Copy(category.Name) + index.ToString();
+                    name = category.Name + index.ToString();
                 }
                 foreach (Category currCategory in _categories)
                 {

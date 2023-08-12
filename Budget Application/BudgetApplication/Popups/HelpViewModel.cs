@@ -54,7 +54,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._HelpMessage, value);
+                this.SetProperty(ref this._HelpMessage, value);
             }
         }
         #endregion

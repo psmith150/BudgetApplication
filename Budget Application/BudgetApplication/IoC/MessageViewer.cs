@@ -3,7 +3,7 @@ using BudgetApplication.Base.EventArgs;
 using BudgetApplication.Base.AbstractClasses;
 using BudgetApplication.Services;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;

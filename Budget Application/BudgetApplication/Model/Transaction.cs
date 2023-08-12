@@ -1,6 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.ComponentModel;
-using GalaSoft.MvvmLight;
 
 namespace BudgetApplication.Model
 {
@@ -41,7 +41,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Date, value);
+                this.SetProperty(ref this._Date, value);
             }
         }
         private String _Item;   //String used to identify purchased item
@@ -56,7 +56,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Item, value);
+                this.SetProperty(ref this._Item, value);
             }
         }
         private String _Payee;  //String used to identify where item was purchased
@@ -71,7 +71,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Payee, value);
+                this.SetProperty(ref this._Payee, value);
             }
         }
         private decimal _Amount;    //US dollar amount of purchase
@@ -88,7 +88,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Amount, value);
+                this.SetProperty(ref this._Amount, value);
             }
         }
         private Category _Category; //The category used to classify the payment
@@ -103,7 +103,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Category, value);
+                this.SetProperty(ref this._Category, value);
             }
         }
         private String _Comment;    //String used to store user comments
@@ -122,7 +122,7 @@ namespace BudgetApplication.Model
                 {
                     value = "";
                 }
-                this.Set(ref this._Comment, value);
+                this.SetProperty(ref this._Comment, value);
             }
         }
         private PaymentMethod _PaymentMethod;   //The payment method used for the purchase
@@ -137,7 +137,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._PaymentMethod, value);
+                this.SetProperty(ref this._PaymentMethod, value);
             }
         }
         #endregion
@@ -166,7 +166,7 @@ namespace BudgetApplication.Model
         /// <param name="e"></param>
         private void CategoryModified(object sender, PropertyChangedEventArgs e)
         {
-            this.RaisePropertyChanged("Category");
+            this.OnPropertyChanged(nameof(Category));
         }
         #endregion
     }

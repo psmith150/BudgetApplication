@@ -1,5 +1,5 @@
 ﻿using BudgetApplication.Services;
-using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +36,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._ErrorMessage, value);
+                this.SetProperty(ref this._ErrorMessage, value);
             }
         }
         

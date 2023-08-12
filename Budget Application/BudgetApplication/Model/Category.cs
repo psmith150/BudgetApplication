@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 
 namespace BudgetApplication.Model
@@ -23,7 +23,7 @@ namespace BudgetApplication.Model
         /// <param name="name">The desired category name.</param>
         public Category(String name = "New Category")
         {
-            this.Name = String.Copy(name);
+            this.Name = name;
         }
         #region Public Properties
         private String _Name;   //Category name
@@ -38,7 +38,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Name, value);
+                this.SetProperty(ref this._Name, value);
             }
         }
         #endregion
@@ -59,7 +59,7 @@ namespace BudgetApplication.Model
         }
         public Category Copy()
         {
-            Category copy = new Category(string.Copy(this.Name));
+            Category copy = new Category(this.Name);
 
             return copy;
         }

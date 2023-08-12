@@ -6,7 +6,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Diagnostics;
 using BudgetApplication.Model;
-using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Command;
 
 namespace BudgetApplication.CustomControls
 {

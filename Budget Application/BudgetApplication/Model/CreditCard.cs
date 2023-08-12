@@ -56,7 +56,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._CreditLimit, value);
+                this.SetProperty(ref this._CreditLimit, value);
             }
         }
         private decimal _PaymentAmount;
@@ -69,7 +69,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._PaymentAmount, value);
+                this.SetProperty(ref this._PaymentAmount, value);
             }
         }
         private String _PaymentExpression;  //The expression used to evaluate the payment amount
@@ -82,7 +82,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._PaymentExpression, value);
+                this.SetProperty(ref this._PaymentExpression, value);
                 decimal amount = 0.0M;
                 if (EvaluateExpression(this.PaymentExpression, out amount))
                 {
@@ -114,7 +114,7 @@ namespace BudgetApplication.Model
                 result = Decimal.Parse(ex.Evaluate().ToString());
                 //result = Decimal.Parse(ex.Evaluate());
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 result = 0;
                 success = false;
@@ -126,7 +126,7 @@ namespace BudgetApplication.Model
         public CreditCard Copy()
         {
             CreditCard copy = new CreditCard();
-            copy.Name = string.Copy(this.Name);
+            copy.Name = this.Name;
             copy.StartDate = this.StartDate;
             copy.EndDate = this.EndDate;
             copy.CreditLimit = this.CreditLimit;

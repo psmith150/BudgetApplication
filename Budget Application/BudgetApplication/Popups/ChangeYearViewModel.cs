@@ -1,5 +1,5 @@
 ﻿using BudgetApplication.Services;
-using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Forms;
 using BudgetApplication.Base.AbstractClasses;
 using BudgetApplication.Base.Enums;
 using BudgetApplication.Base.EventArgs;
@@ -49,7 +48,7 @@ namespace BudgetApplication.Popups
             }
             set
             {
-                this.Set(ref this._currentYear, value);
+                this.SetProperty(ref this._currentYear, value);
                 this.savingNeeded = true;
             }
         }

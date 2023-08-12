@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight;
-using System.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BudgetApplication.Model
 {
@@ -42,7 +41,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Item, value);
+                this.SetProperty(ref this._Item, value);
             }
         }
         private bool _IsChecked;    //If the item has been checked
@@ -57,7 +56,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._IsChecked, value);
+                this.SetProperty(ref this._IsChecked, value);
             }
         }
         private bool _IsHidden; //If the item is hidden from view
@@ -72,7 +71,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._IsHidden, value);
+                this.SetProperty(ref this._IsHidden, value);
             }
         }
         #endregion

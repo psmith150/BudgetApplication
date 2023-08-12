@@ -90,7 +90,7 @@
             <ContentPresenter Content="{Binding NavigationService.ActiveViewModel, Converter={StaticResource ViewModelToViewConverter}}" />
         </DockPanel>
 
-        <!-- Popup -->
+        <!-- Popup --><!--
         <Grid Background="Transparent" Visibility="{Binding NavigationService.IsPopupActive, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -107,7 +107,7 @@
             <ContentPresenter Grid.Row="1" Grid.Column="1" Content="{Binding NavigationService.ActivePopupViewModel, Converter={StaticResource ViewModelToViewConverter}}" />
         </Grid>
 
-        <!-- Message Window -->
+        --><!-- Message Window --><!--
         <Grid Background="Transparent" Visibility="{Binding MessageViewer.IsMessageActive, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -151,7 +151,7 @@
             </Border>
         </Grid>
 
-        <!-- Busy Window -->
+        --><!-- Busy Window --><!--
         <Grid Background="Transparent" Visibility="{Binding Session.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -174,6 +174,6 @@
                     <ProgressBar Grid.Row="2" IsIndeterminate="True" Height="25" Margin="10" />
                 </Grid>
             </Border>
-        </Grid>
+        </Grid>-->
     </Grid>
 </Window>

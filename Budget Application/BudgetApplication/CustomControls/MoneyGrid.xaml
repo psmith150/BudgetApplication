@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BudgetApplication.CustomControls"
              xmlns:converters="clr-namespace:BudgetApplication.ValueConverters"
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:test="clr-namespace:System.Windows.Data;assembly=PresentationFramework"
              mc:Ignorable="d" 

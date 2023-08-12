@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.ComponentModel;
 using System.Xml.Serialization;
@@ -54,7 +54,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._Name, value);
+                this.SetProperty(ref this._Name, value);
             }
         }
         private DateTime _StartDate;    //The start date of the date filter. Used to store data used on the Payments tab.
@@ -70,7 +70,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._StartDate, value);
+                this.SetProperty(ref this._StartDate, value);
             }
         }
         private DateTime _EndDate;  //The end date of the date filter. Used to store data used on the Payments tab
@@ -86,7 +86,7 @@ namespace BudgetApplication.Model
             }
             set
             {
-                this.Set(ref this._EndDate, value);
+                this.SetProperty(ref this._EndDate, value);
             }
         }
 
